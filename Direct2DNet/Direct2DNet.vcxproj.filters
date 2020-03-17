@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Direct2DNet">
+      <UniqueIdentifier>{6bb00d07-939b-4206-b58a-ad8767974dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Direct2DNet">
+      <UniqueIdentifier>{805a9ed5-60b4-493a-8ed0-5b2e18ef7554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Direct2DNet\Exception">
+      <UniqueIdentifier>{e6c51a4e-9b7f-4725-ac7f-194014366e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Direct2DNet\Exception">
+      <UniqueIdentifier>{7e513a06-a32f-4c7c-bfeb-fcaae05b437a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Direct2DNet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DNetHeaders.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\Exception\DXException.h">
+      <Filter>헤더 파일\Direct2DNet\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\IDirect2DObject.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Factory.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1HwndRenderTarget.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DSettings.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DMath.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Resource.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Brush.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1RenderTarget.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1SolidColorBrush.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1StrokeStyle.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Direct2DNet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\Exception\DXException.cpp">
+      <Filter>소스 파일\Direct2DNet\Exception</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Factory.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1HwndRenderTarget.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Resource.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1SolidColorBrush.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1RenderTarget.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1StrokeStyle.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
