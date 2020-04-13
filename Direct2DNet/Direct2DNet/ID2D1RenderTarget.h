@@ -5,11 +5,14 @@
 #include "D2DSettings.h"
 #include "ID2D1Resource.h"
 
+using namespace System::Runtime::InteropServices;
+
 namespace Direct2DNet
 {
     ref class ID2D1Brush;
     ref class ID2D1SolidColorBrush;
     ref class ID2D1StrokeStyle;
+    ref class ID2D1Geometry;
 
     /// <summary>
     /// Represents an object that can receive drawing commands. Classes that inherit
@@ -23,6 +26,83 @@ namespace Direct2DNet
 
     public:
         /// <summary>
+        /// Draws a line using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>
+        /// and with <paramref name="strokeStyle"/>.
+        /// </summary>
+        /// <param name="point0">Start point.</param>
+        /// <param name="point1">End point.</param>
+        /// <param name="strokeWidth">Width of the stroke in pixels.
+        /// The default value is 1.0.</param>
+        /// <param name="strokeStyle">Stroke style applied to the stroke.
+        /// This value can be null. The default value is null.</param>
+        void DrawLine(
+            Direct2DNet::D2D1_POINT_2F point0,
+            Direct2DNet::D2D1_POINT_2F point1,
+            Direct2DNet::ID2D1Brush ^brush,
+            [OptionalAttribute] System::Nullable<float> strokeWidth,
+            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
+        );
+
+        /// <summary>
+        /// Draws the geometry using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>
+        /// and with <paramref name="strokeStyle"/>.
+        /// </summary>
+        /// <param name="strokeWidth">Width of the stroke in pixels.
+        /// The default value is 1.0.</param>
+        /// <param name="strokeStyle">Stroke style applied to the stroke.
+        /// This value can be null. The default value is null.</param>
+        void DrawGeometry(
+            Direct2DNet::ID2D1Geometry ^geometry,
+            Direct2DNet::ID2D1Brush ^brush,
+            [OptionalAttribute] System::Nullable<float> strokeWidth,
+            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
+        );
+
+        // Need to implement fill geometry with opacity brush later.
+
+        /// <summary>
+        /// Fills inside of the geometry using the <paramref name="brush"/>.
+        /// </summary>
+        void FillGeometry(
+            Direct2DNet::ID2D1Geometry ^geometry,
+            Direct2DNet::ID2D1Brush ^brush
+        );
+
+        /// <summary>
+        /// Gets and sets the antialias mode of the render target.
+        /// </summary>
+        property Direct2DNet::D2D1_ANTIALIAS_MODE AntialiasMode
+        {
+            Direct2DNet::D2D1_ANTIALIAS_MODE get()
+            {
+                return (Direct2DNet::D2D1_ANTIALIAS_MODE)(
+                    (int)((::ID2D1RenderTarget *)m_pResource)->GetAntialiasMode());
+            }
+
+            void set(Direct2DNet::D2D1_ANTIALIAS_MODE value)
+            {
+                ((::ID2D1RenderTarget *)m_pResource)->SetAntialiasMode((::D2D1_ANTIALIAS_MODE)((int)value));
+            }
+        }
+
+        /// <summary>
+        /// Gets and sets the text antialias mode of the render target.
+        /// </summary>
+        property Direct2DNet::D2D1_TEXT_ANTIALIAS_MODE TextAntialiasMode
+        {
+            Direct2DNet::D2D1_TEXT_ANTIALIAS_MODE get()
+            {
+                return (Direct2DNet::D2D1_TEXT_ANTIALIAS_MODE)(
+                    (int)((::ID2D1RenderTarget *)m_pResource)->GetTextAntialiasMode());
+            }
+
+            void set(Direct2DNet::D2D1_TEXT_ANTIALIAS_MODE value)
+            {
+                ((::ID2D1RenderTarget *)m_pResource)->SetTextAntialiasMode((::D2D1_TEXT_ANTIALIAS_MODE)((int)value));
+            }
+        }
+
+        /// <summary>
         /// Start drawing on this render target. Draw calls can only be issued between a
         /// BeginDraw and EndDraw call.
         /// </summary>
@@ -33,7 +113,7 @@ namespace Direct2DNet
         /// or when calling flush.
         /// </summary>
         /// <returns>
-        /// The result code.
+        /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
         /// </returns>
         HRESULT EndDraw();
 
@@ -56,18 +136,20 @@ namespace Direct2DNet
         /// specified for both, the system DPI is chosen. If one is zero and the other
         /// unspecified, the DPI is not changed.
         /// </summary>
-        property System::Tuple<float, float> ^Dpi
+        property System::ValueTuple<float, float> Dpi
         {
-            System::Tuple<float, float> ^get()
+            System::ValueTuple<float, float> get()
             {
                 float dpiX, dpiY;
-                ((::ID2D1RenderTarget *)m_pResource)->GetDpi(&dpiX, &dpiY);
-                return gcnew System::Tuple<float, float>(dpiX, dpiY);
+                pin_ptr<float> pDpiX = &dpiX, pDpiY = &dpiY;
+                ((::ID2D1RenderTarget *)m_pResource)->GetDpi((float *)pDpiX, (float *)pDpiY);
+                pDpiX = nullptr; pDpiY = nullptr;
+                return System::ValueTuple<float, float>(dpiX, dpiY);
             }
 
-            void set(System::Tuple<float, float> ^value)
+            void set(System::ValueTuple<float, float> value)
             {
-                ((::ID2D1RenderTarget *)m_pResource)->SetDpi(value->Item1, value->Item2);
+                ((::ID2D1RenderTarget *)m_pResource)->SetDpi(value.Item1, value.Item2);
             }
         }
 
@@ -81,14 +163,18 @@ namespace Direct2DNet
             float get()
             {
                 float dpiX, dpiY;
-                ((::ID2D1RenderTarget *)m_pResource)->GetDpi(&dpiX, &dpiY);
+                pin_ptr<float> pDpiX = &dpiX, pDpiY = &dpiY;
+                ((::ID2D1RenderTarget *)m_pResource)->GetDpi((float *)pDpiX, (float *)pDpiY);
+                pDpiX = nullptr; pDpiY = nullptr;
                 return dpiX;
             }
 
             void set(float value)
             {
                 float dpiX, dpiY;
-                ((::ID2D1RenderTarget *)m_pResource)->GetDpi(&dpiX, &dpiY);
+                pin_ptr<float> pDpiX = &dpiX, pDpiY = &dpiY;
+                ((::ID2D1RenderTarget *)m_pResource)->GetDpi((float *)pDpiX, (float *)pDpiY);
+                pDpiX = nullptr; pDpiY = nullptr;
                 ((::ID2D1RenderTarget *)m_pResource)->SetDpi(value, dpiY);
             }
         }
@@ -103,14 +189,18 @@ namespace Direct2DNet
             float get()
             {
                 float dpiX, dpiY;
-                ((::ID2D1RenderTarget *)m_pResource)->GetDpi(&dpiX, &dpiY);
+                pin_ptr<float> pDpiX = &dpiX, pDpiY = &dpiY;
+                ((::ID2D1RenderTarget *)m_pResource)->GetDpi((float *)pDpiX, (float *)pDpiY);
+                pDpiX = nullptr; pDpiY = nullptr;
                 return dpiY;
             }
 
             void set(float value)
             {
                 float dpiX, dpiY;
-                ((::ID2D1RenderTarget *)m_pResource)->GetDpi(&dpiX, &dpiY);
+                pin_ptr<float> pDpiX = &dpiX, pDpiY = &dpiY;
+                ((::ID2D1RenderTarget *)m_pResource)->GetDpi((float *)pDpiX, (float *)pDpiY);
+                pDpiX = nullptr; pDpiY = nullptr;
                 ((::ID2D1RenderTarget *)m_pResource)->SetDpi(dpiX, value);
             }
         }
@@ -156,35 +246,34 @@ namespace Direct2DNet
         /// <summary>
         /// Returns true if the given properties are supported by this render target. The
         /// DPI is ignored. NOTE: If the render target type is software, then neither
-        /// D2D1_FEATURE_LEVEL_9 nor D2D1_FEATURE_LEVEL_10 will be considered to be
-        /// supported.
+        /// <see cref="Direct2DNet::D2D1_FEATURE_LEVEL::FEATURE_LEVEL_9"/>nor
+        /// <see cref="Direct2DNet::D2D1_FEATURE_LEVEL::FEATURE_LEVEL_10"/> will be considered
+        /// to be supported.
         /// </summary>
         bool IsSupported(Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES properties);
 
         /// <summary>
         /// Gets <see cref="Direct2DNet::ID2D1SolidColorBrush"/> instance of the <paramref name="color"/>.
         /// </summary>
+        /// <exception cref="Direct2DNet::Exception::DxException">
+        /// Thrown when it failed to create the brush.
+        /// </exception>
         Direct2DNet::ID2D1SolidColorBrush ^CreateSolidColorBrush(Direct2DNet::D2D1_COLOR_F color);
 
         /// <summary>
-        /// Draws the rectangle using the <paramref name="brush"/>.
-        /// </summary>
-        void DrawRectangle(Direct2DNet::D2D1_RECT_F rect, Direct2DNet::ID2D1Brush ^brush);
-
-        /// <summary>
-        /// Draws the rectangle using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>.
-        /// </summary>
-        void DrawRectangle(Direct2DNet::D2D1_RECT_F rect, Direct2DNet::ID2D1Brush ^brush, float strokeWidth);
-
-        /// <summary>
         /// Draws the rectangle using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>
-        /// and <paramref name="strokeStyle"/>.
+        /// and with <paramref name="strokeStyle"/>.
         /// </summary>
+        /// <param name="strokeWidth">Width of the stroke in pixels.
+        /// The default value is 1.0.</param>
+        /// <param name="strokeStyle">Stroke style applied to the stroke.
+        /// This value can be null. The default value is null.</param>
         void DrawRectangle(
             Direct2DNet::D2D1_RECT_F rect,
             Direct2DNet::ID2D1Brush ^brush,
-            float strokeWidth,
-            Direct2DNet::ID2D1StrokeStyle ^strokeStyle);
+            [OptionalAttribute] System::Nullable<float> strokeWidth,
+            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
+        );
 
         /// <summary>
         /// Fills the rectangle using the <paramref name="brush"/>.
@@ -192,9 +281,72 @@ namespace Direct2DNet
         void FillRectangle(Direct2DNet::D2D1_RECT_F rect, Direct2DNet::ID2D1Brush ^brush);
 
         /// <summary>
-        /// Sets the transformation matrix of the render target.
+        /// Draws the rounded rectangle using the <paramref name="brush"/> in width
+        /// <paramref name="strokeWidth"/> and with <paramref name="strokeStyle"/>.
         /// </summary>
-        void SetTransform(Direct2DNet::D2D1_MATRIX_3X2_F transform);
+        /// <param name="strokeWidth">Width of the stroke in pixels.
+        /// The default value is 1.0.</param>
+        /// <param name="strokeStyle">Stroke style applied to the stroke.
+        /// This value can be null. The default value is null.</param>
+        void DrawRoundedRectangle(
+            Direct2DNet::D2D1_ROUNDED_RECT roundedRect,
+            Direct2DNet::ID2D1Brush ^brush,
+            [OptionalAttribute] System::Nullable<float> strokeWidth,
+            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
+        );
+
+        /// <summary>
+        /// Fills the rounded rectangle using the <paramref name="brush"/>.
+        /// </summary>
+        void FillRoundedRectangle(
+            Direct2DNet::D2D1_ROUNDED_RECT roundedRect,
+            Direct2DNet::ID2D1Brush ^brush
+        );
+
+        /// <summary>
+        /// Draws the ellipse using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>
+        /// and with <paramref name="strokeStyle"/>.
+        /// </summary>
+        /// <param name="strokeWidth">Width of the stroke in pixels.
+        /// The default value is 1.0.</param>
+        /// <param name="strokeStyle">Stroke style applied to the stroke.
+        /// This value can be null. The default value is null.</param>
+        void DrawEllipse(
+            Direct2DNet::D2D1_ELLIPSE ellipse,
+            Direct2DNet::ID2D1Brush ^brush,
+            [OptionalAttribute] System::Nullable<float> strokeWidth,
+            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
+        );
+
+        /// <summary>
+        /// Fills the ellipse using the <paramref name="brush"/>.
+        /// </summary>
+        void FillEllipse(
+            Direct2DNet::D2D1_ELLIPSE ellipse,
+            Direct2DNet::ID2D1Brush ^brush
+        );
+
+        /// <summary>
+        /// Gets and sets the transformation matrix of the render target.
+        /// </summary>
+        property Direct2DNet::D2D1_MATRIX_3X2_F Transform
+        {
+            Direct2DNet::D2D1_MATRIX_3X2_F get()
+            {
+                ::D2D1_MATRIX_3X2_F temp;
+                pin_ptr<::D2D1_MATRIX_3X2_F> pTemp = &temp;
+                ((::ID2D1RenderTarget *)m_pResource)->GetTransform((::D2D1_MATRIX_3X2_F *)pTemp);
+                pTemp = nullptr;
+                return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(temp);
+            }
+
+            void set(Direct2DNet::D2D1_MATRIX_3X2_F value)
+            {
+                ((::ID2D1RenderTarget *)m_pResource)->SetTransform(
+                    static_cast<::D2D1_MATRIX_3X2_F>(value)
+                );
+            }
+        }
 
         /// <summary>
         /// Clears the render target with the color <paramref name="clearColor"/>.

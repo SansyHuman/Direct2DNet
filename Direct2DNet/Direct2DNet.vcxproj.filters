@@ -69,6 +69,33 @@
     <ClInclude Include="Direct2DNet\ID2D1StrokeStyle.h">
       <Filter>헤더 파일\Direct2DNet</Filter>
     </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1RectangleGeometry.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Geometry.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1RoundedRectangleGeometry.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1EllipseGeometry.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1PathGeometry.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1NativeGeometryInfoContainer.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1TransformedGeometry.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1GeometryGroup.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Mesh.h">
+      <Filter>헤더 파일\Direct2DNet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Direct2DNet.cpp">
@@ -98,6 +125,30 @@
     <ClCompile Include="Direct2DNet\ID2D1StrokeStyle.cpp">
       <Filter>소스 파일\Direct2DNet</Filter>
     </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1RectangleGeometry.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1RoundedRectangleGeometry.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1EllipseGeometry.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Geometry.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1PathGeometry.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1TransformedGeometry.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1GeometryGroup.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Mesh.cpp">
+      <Filter>소스 파일\Direct2DNet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -108,5 +159,8 @@
     <Image Include="app.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\LICENSE" />
   </ItemGroup>
 </Project>

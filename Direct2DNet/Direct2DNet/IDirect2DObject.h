@@ -7,5 +7,13 @@ namespace Direct2DNet
     /// </summary>
     public interface class IDirect2DObject
     {
+        /// <summary>
+        /// Gets the pointer to the Direct2D interfaces which
+        /// wrapper class contains.
+        /// </summary>
+        property void *NativePointer
+        {
+            void *get();
+        }
     };
 }

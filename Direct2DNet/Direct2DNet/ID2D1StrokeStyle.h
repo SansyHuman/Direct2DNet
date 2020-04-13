@@ -15,10 +15,14 @@ namespace Direct2DNet
     /// </summary>
     public ref class ID2D1StrokeStyle : Direct2DNet::ID2D1Resource
     {
+    private:
+        Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES m_properties;
+        array<float> ^m_dashes;
+
     internal:
         ID2D1StrokeStyle(
             Direct2DNet::ID2D1Factory ^factory,
-            Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES properties,
+            Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES %properties,
             array<float> ^dashes
         );
 
@@ -30,8 +34,7 @@ namespace Direct2DNet
         {
             Direct2DNet::D2D1_CAP_STYLE get()
             {
-                return static_cast<Direct2DNet::D2D1_CAP_STYLE>(
-                    ((::ID2D1StrokeStyle *)m_pResource)->GetStartCap());
+                return m_properties.startCap;
             }
         }
 
@@ -42,8 +45,7 @@ namespace Direct2DNet
         {
             Direct2DNet::D2D1_CAP_STYLE get()
             {
-                return static_cast<Direct2DNet::D2D1_CAP_STYLE>(
-                    ((::ID2D1StrokeStyle *)m_pResource)->GetEndCap());
+                return m_properties.endCap;
             }
         }
 
@@ -54,8 +56,7 @@ namespace Direct2DNet
         {
             Direct2DNet::D2D1_CAP_STYLE get()
             {
-                return static_cast<Direct2DNet::D2D1_CAP_STYLE>(
-                    ((::ID2D1StrokeStyle *)m_pResource)->GetDashCap());
+                return m_properties.dashCap;
             }
         }
 
@@ -66,7 +67,7 @@ namespace Direct2DNet
         {
             float get()
             {
-                return ((::ID2D1StrokeStyle *)m_pResource)->GetMiterLimit();
+                return m_properties.miterLimit;
             }
         }
 
@@ -77,8 +78,7 @@ namespace Direct2DNet
         {
             Direct2DNet::D2D1_LINE_JOIN get()
             {
-                return static_cast<Direct2DNet::D2D1_LINE_JOIN>(
-                    ((::ID2D1StrokeStyle *)m_pResource)->GetLineJoin());
+                return m_properties.lineJoin;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Direct2DNet
         {
             float get()
             {
-                return ((::ID2D1StrokeStyle *)m_pResource)->GetDashOffset();
+                return m_properties.dashOffset;
             }
         }
 
@@ -100,8 +100,7 @@ namespace Direct2DNet
         {
             Direct2DNet::D2D1_DASH_STYLE get()
             {
-                return static_cast<Direct2DNet::D2D1_DASH_STYLE>(
-                    ((::ID2D1StrokeStyle *)m_pResource)->GetDashStyle());
+                return m_properties.dashStyle;
             }
         }
 
@@ -112,7 +111,7 @@ namespace Direct2DNet
         {
             unsigned int get()
             {
-                return ((::ID2D1StrokeStyle *)m_pResource)->GetDashesCount();
+                return m_dashes->Length;
             }
         }
 
@@ -126,9 +125,7 @@ namespace Direct2DNet
                 unsigned int count = DashesCount;
                 array<float> ^value = gcnew array<float>(count);
 
-                pin_ptr<float> pValue = &value[0];
-                ((::ID2D1StrokeStyle *)m_pResource)->GetDashes((float *)pValue, count);
-                pValue = nullptr;
+                m_dashes->CopyTo(value, 0);
 
                 return value;
             }

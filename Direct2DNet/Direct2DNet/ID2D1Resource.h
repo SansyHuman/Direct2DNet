@@ -17,7 +17,7 @@ namespace Direct2DNet
     {
     internal:
         ::ID2D1Resource *m_pResource;
-        Direct2DNet::ID2D1Factory ^factory;
+        Direct2DNet::ID2D1Factory ^m_factory;
 
     protected:
         ID2D1Resource(Direct2DNet::ID2D1Factory ^factory);
@@ -25,6 +25,14 @@ namespace Direct2DNet
     public:
         ~ID2D1Resource();
         !ID2D1Resource();
+
+        virtual property void *NativePointer
+        {
+            virtual void *get()
+            {
+                return reinterpret_cast<void *>(m_pResource);
+            }
+        }
 
     public:
         /// <summary>
@@ -34,7 +42,7 @@ namespace Direct2DNet
         {
             Direct2DNet::ID2D1Factory ^get()
             {
-                return factory;
+                return m_factory;
             }
         }
     };

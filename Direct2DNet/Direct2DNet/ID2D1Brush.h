@@ -47,7 +47,9 @@ namespace Direct2DNet
             Direct2DNet::D2D1_MATRIX_3X2_F get()
             {
                 ::D2D1_MATRIX_3X2_F temp;
-                ((::ID2D1Brush *)m_pResource)->GetTransform(&temp);
+                pin_ptr<::D2D1_MATRIX_3X2_F> pTemp = &temp;
+                ((::ID2D1Brush *)m_pResource)->GetTransform((::D2D1_MATRIX_3X2_F *)pTemp);
+                pTemp = nullptr;
                 return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(temp);
             }
 

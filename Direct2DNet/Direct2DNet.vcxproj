@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -81,6 +81,7 @@
       </PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d2d1.lib;dwrite.lib;WindowsCodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -93,6 +94,7 @@
       </PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d2d1.lib;dwrite.lib;WindowsCodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -105,6 +107,7 @@
       </PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d2d1.lib;dwrite.lib;WindowsCodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -117,6 +120,7 @@
       </PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d2d1.lib;dwrite.lib;WindowsCodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -129,23 +133,43 @@
     <ClInclude Include="Direct2DNet\D2DNetHeaders.h" />
     <ClInclude Include="Direct2DNet\Exception\DXException.h" />
     <ClInclude Include="Direct2DNet\ID2D1Brush.h" />
+    <ClInclude Include="Direct2DNet\ID2D1EllipseGeometry.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Geometry.h" />
+    <ClInclude Include="Direct2DNet\ID2D1GeometryGroup.h" />
     <ClInclude Include="Direct2DNet\ID2D1HwndRenderTarget.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Mesh.h" />
+    <ClInclude Include="Direct2DNet\ID2D1NativeGeometryInfoContainer.h" />
+    <ClInclude Include="Direct2DNet\ID2D1PathGeometry.h" />
+    <ClInclude Include="Direct2DNet\ID2D1RectangleGeometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1RenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1Resource.h" />
+    <ClInclude Include="Direct2DNet\ID2D1RoundedRectangleGeometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1SolidColorBrush.h" />
     <ClInclude Include="Direct2DNet\ID2D1StrokeStyle.h" />
+    <ClInclude Include="Direct2DNet\ID2D1TransformedGeometry.h" />
     <ClInclude Include="Direct2DNet\IDirect2DObject.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Direct2DNet\ID2D1GeometryGroup.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Mesh.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1TransformedGeometry.cpp" />
+    <Text Include="..\LICENSE">
+      <FileType>Text</FileType>
+    </Text>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="Direct2DNet.cpp" />
     <ClCompile Include="Direct2DNet\Exception\DXException.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1EllipseGeometry.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Factory.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Geometry.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1HwndRenderTarget.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1PathGeometry.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1RectangleGeometry.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1RenderTarget.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Resource.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1RoundedRectangleGeometry.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1SolidColorBrush.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1StrokeStyle.cpp" />
   </ItemGroup>

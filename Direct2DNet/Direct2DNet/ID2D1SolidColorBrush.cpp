@@ -5,7 +5,7 @@ namespace Direct2DNet
 {
     ID2D1SolidColorBrush::ID2D1SolidColorBrush(
         Direct2DNet::ID2D1RenderTarget ^renderTarget,
-        Direct2DNet::D2D1_COLOR_F color)
+        Direct2DNet::D2D1_COLOR_F %color)
         : Direct2DNet::ID2D1Brush(renderTarget->Factory)
     {
         HRESULT hr = S_OK;

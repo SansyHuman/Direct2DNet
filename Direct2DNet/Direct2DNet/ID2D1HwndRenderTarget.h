@@ -44,6 +44,9 @@ namespace Direct2DNet
         /// from it when EndDraw is called. In addition an appropriate failure result will
         /// be returned from Resize.
         /// </summary>
+        /// <returns>
+        /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+        /// </returns>
         HRESULT Resize(Direct2DNet::D2D1_SIZE_U pixelSize);
 
         /// <summary>
@@ -54,6 +57,9 @@ namespace Direct2DNet
         /// from it when EndDraw is called. In addition an appropriate failure result will
         /// be returned from Resize.
         /// </summary>
+        /// <returns>
+        /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+        /// </returns>
         HRESULT Resize(unsigned int pixelWidth, unsigned int pixelHeight);
 
         /// <summary>

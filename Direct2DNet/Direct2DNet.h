@@ -8,6 +8,6 @@ using namespace System;
 namespace Direct2DNet {
 	public ref class Class1
 	{
-		
+
 	};
 }

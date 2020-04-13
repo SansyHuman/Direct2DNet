@@ -15,14 +15,77 @@ namespace Direct2DNet
         /// Reference counts on resources are interlocked, however, resource and render
         /// target state is not protected from multi-threaded access.
         /// </summary>
-        D2D1_FACTORY_TYPE_SINGLE_THREADED = 0,
+        SINGLE_THREADED = 0,
 
         /// <summary>
         /// The resulting factory may be invoked from multiple threads. Returned resources
         /// use interlocked reference counting and their state is protected.
         /// </summary>
-        D2D1_FACTORY_TYPE_MULTI_THREADED = 1,
-        D2D1_FACTORY_TYPE_FORCE_DWORD = 0xffffffff
+        MULTI_THREADED = 1,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
+    /// Indicates the debug level to be output by the debug layer.
+    /// </summary>
+    public enum class D2D1_DEBUG_LEVEL
+    {
+        /// <summary>
+        /// Direct2D does not produce any debugging output.
+        /// </summary>
+        LEVEL_NONE = 0,
+
+        /// <summary>
+        /// Direct2D sends error messages to the debug layer.
+        /// </summary>
+        LEVEL_ERROR = 1,
+
+        /// <summary>
+        /// Direct2D sends error messages and warnings to the debug layer.
+        /// </summary>
+        LEVEL_WARNING = 2,
+
+        /// <summary>
+        /// Direct2D sends error messages, warnings, and additional diagnostic information
+        /// that can help improve performance to the debug layer.
+        /// </summary>
+        LEVEL_INFORMATION = 3,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
+    /// Allows additional parameters for factory creation.
+    /// </summary>
+    public value struct D2D1_FACTORY_OPTIONS
+    {
+        /// <summary>
+        /// Requests a certain level of debugging information from the debug layer. This
+        /// parameter is ignored if the debug layer DLL is not present.
+        /// </summary>
+        Direct2DNet::D2D1_DEBUG_LEVEL debugLevel;
+
+        D2D1_FACTORY_OPTIONS(Direct2DNet::D2D1_DEBUG_LEVEL debugLevel)
+            : debugLevel(debugLevel) {}
+
+        static operator ::D2D1_FACTORY_OPTIONS(Direct2DNet::D2D1_FACTORY_OPTIONS %rhs)
+        {
+            ::D2D1_FACTORY_OPTIONS value;
+            value.debugLevel = (::D2D1_DEBUG_LEVEL)((int)rhs.debugLevel);
+
+            return value;
+        }
+
+        static operator Direct2DNet::D2D1_FACTORY_OPTIONS(::D2D1_FACTORY_OPTIONS %rhs)
+        {
+            Direct2DNet::D2D1_FACTORY_OPTIONS value;
+            value.debugLevel = (Direct2DNet::D2D1_DEBUG_LEVEL)((int)rhs.debugLevel);
+
+            return value;
+        }
     };
 
     /// <summary>
@@ -34,18 +97,20 @@ namespace Direct2DNet
         /// <summary>
         /// D2D is free to choose the render target type for the caller.
         /// </summary>
-        D2D1_RENDER_TARGET_TYPE_DEFAULT = 0,
+        DEFAULT = 0,
 
         /// <summary>
         /// The render target will render using the CPU.
         /// </summary>
-        D2D1_RENDER_TARGET_TYPE_SOFTWARE = 1,
+        SOFTWARE = 1,
 
         /// <summary>
         /// The render target will render using the GPU.
         /// </summary>
-        D2D1_RENDER_TARGET_TYPE_HARDWARE = 2,
-        D2D1_RENDER_TARGET_TYPE_FORCE_DWORD = 0xffffffff
+        HARDWARE = 2,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
     };
 
     /// <summary>
@@ -56,111 +121,111 @@ namespace Direct2DNet
     public enum class DXGI_FORMAT
     {
         /// <summary>The format is not known.</summary>
-        DXGI_FORMAT_UNKNOWN = 0,
+        FORMAT_UNKNOWN = 0,
 
         /// <summary>A four-component, 128-bit typeless format that supports
         /// 32 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R32G32B32A32_TYPELESS = 1,
+        FORMAT_R32G32B32A32_TYPELESS = 1,
 
         /// <summary>A four-component, 128-bit floating-point format that supports
         /// 32 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R32G32B32A32_FLOAT = 2,
+        FORMAT_R32G32B32A32_FLOAT = 2,
 
         /// <summary>A four-component, 128-bit unsigned-integer format that
         /// supports 32 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R32G32B32A32_UINT = 3,
+        FORMAT_R32G32B32A32_UINT = 3,
 
         /// <summary>A four-component, 128-bit signed-integer format that
         /// supports 32 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R32G32B32A32_SINT = 4,
+        FORMAT_R32G32B32A32_SINT = 4,
 
         /// <summary>A three-component, 96-bit typeless format that supports
         /// 32 bits per color channel.</summary>
-        DXGI_FORMAT_R32G32B32_TYPELESS = 5,
+        FORMAT_R32G32B32_TYPELESS = 5,
 
         /// <summary>A three-component, 96-bit floating-point format that supports
         /// 32 bits per color channel.</summary>
-        DXGI_FORMAT_R32G32B32_FLOAT = 6,
+        FORMAT_R32G32B32_FLOAT = 6,
 
         /// <summary>A three-component, 96-bit unsigned-integer format that
         /// supports 32 bits per color channel.</summary>
-        DXGI_FORMAT_R32G32B32_UINT = 7,
+        FORMAT_R32G32B32_UINT = 7,
 
         /// <summary>A three-component, 96-bit signed-integer format that supports
         /// 32 bits per color channel.</summary>
-        DXGI_FORMAT_R32G32B32_SINT = 8,
+        FORMAT_R32G32B32_SINT = 8,
 
         /// <summary>A four-component, 64-bit typeless format that supports
         /// 16 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R16G16B16A16_TYPELESS = 9,
+        FORMAT_R16G16B16A16_TYPELESS = 9,
 
         /// <summary>A four-component, 64-bit floating-point format that supports
         /// 16 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R16G16B16A16_FLOAT = 10,
+        FORMAT_R16G16B16A16_FLOAT = 10,
 
         /// <summary>A four-component, 64-bit unsigned-normalized-integer format
         /// that supports 16 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R16G16B16A16_UNORM = 11,
+        FORMAT_R16G16B16A16_UNORM = 11,
 
         /// <summary>A four-component, 64-bit unsigned-integer format that
         /// supports 16 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R16G16B16A16_UINT = 12,
+        FORMAT_R16G16B16A16_UINT = 12,
 
         /// <summary>A four-component, 64-bit signed-normalized-integer format
         /// that supports 16 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R16G16B16A16_SNORM = 13,
+        FORMAT_R16G16B16A16_SNORM = 13,
 
         /// <summary>A four-component, 64-bit signed-integer format that supports
         /// 16 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R16G16B16A16_SINT = 14,
+        FORMAT_R16G16B16A16_SINT = 14,
 
         /// <summary>A two-component, 64-bit typeless format that supports
         /// 32 bits for the red channel and 32 bits for the green channel.</summary>
-        DXGI_FORMAT_R32G32_TYPELESS = 15,
+        FORMAT_R32G32_TYPELESS = 15,
 
         /// <summary>A two-component, 64-bit floating-point format that supports
         /// 32 bits for the red channel and 32 bits for the green channel.</summary>
-        DXGI_FORMAT_R32G32_FLOAT = 16,
+        FORMAT_R32G32_FLOAT = 16,
 
         /// <summary>A two-component, 64-bit unsigned-integer format that supports
         /// 32 bits for the red channel and 32 bits for the green channel.</summary>
-        DXGI_FORMAT_R32G32_UINT = 17,
+        FORMAT_R32G32_UINT = 17,
 
         /// <summary>A two-component, 64-bit signed-integer format that supports
         /// 32 bits for the red channel and 32 bits for the green channel.</summary>
-        DXGI_FORMAT_R32G32_SINT = 18,
+        FORMAT_R32G32_SINT = 18,
 
         /// <summary>A two-component, 64-bit typeless format that supports
         /// 32 bits for the red channel, 8 bits for the green channel,
         /// and 24 bits are unused.</summary>
-        DXGI_FORMAT_R32G8X24_TYPELESS = 19,
+        FORMAT_R32G8X24_TYPELESS = 19,
 
         /// <summary>A 32-bit floating-point component, and two unsigned-integer
         /// components (with an additional 32 bits). This format supports
         /// 32-bit depth, 8-bit stencil, and 24 bits are unused.</summary>
-        DXGI_FORMAT_D32_FLOAT_S8X24_UINT = 20,
+        FORMAT_D32_FLOAT_S8X24_UINT = 20,
 
         /// <summary>A 32-bit floating-point component, and two typeless
         /// components (with an additional 32 bits). This format supports 32-bit
         /// red channel, 8 bits are unused, and 24 bits are unused.</summary>
-        DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS = 21,
+        FORMAT_R32_FLOAT_X8X24_TYPELESS = 21,
 
         /// <summary>A 32-bit typeless component, and two unsigned-integer components
         /// (with an additional 32 bits). This format has 32 bits unused, 8 bits for
         /// green channel, and 24 bits are unused.</summary>
-        DXGI_FORMAT_X32_TYPELESS_G8X24_UINT = 22,
+        FORMAT_X32_TYPELESS_G8X24_UINT = 22,
 
         /// <summary>A four-component, 32-bit typeless format that supports
         /// 10 bits for each color and 2 bits for alpha.</summary>
-        DXGI_FORMAT_R10G10B10A2_TYPELESS = 23,
+        FORMAT_R10G10B10A2_TYPELESS = 23,
 
         /// <summary>A four-component, 32-bit unsigned-normalized-integer format
         /// that supports 10 bits for each color and 2 bits for alpha.</summary>
-        DXGI_FORMAT_R10G10B10A2_UNORM = 24,
+        FORMAT_R10G10B10A2_UNORM = 24,
 
         /// <summary>A four-component, 32-bit unsigned-integer format that supports
         /// 10 bits for each color and 2 bits for alpha.</summary>
-        DXGI_FORMAT_R10G10B10A2_UINT = 25,
+        FORMAT_R10G10B10A2_UINT = 25,
 
         /// <summary>Three partial-precision floating-point numbers encoded into a
         /// single 32-bit value (a variant of s10e5, which is sign bit, 10-bit
@@ -168,172 +233,172 @@ namespace Direct2DNet
         /// There are no sign bits, andthere is a 5 - bit biased(15) exponent for
         /// each channel, 6 - bit mantissa for R andG, anda 5 - bit mantissa
         /// for B.</summary>
-        DXGI_FORMAT_R11G11B10_FLOAT = 26,
+        FORMAT_R11G11B10_FLOAT = 26,
 
         /// <summary>A four-component, 32-bit typeless format that supports
         /// 8 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R8G8B8A8_TYPELESS = 27,
+        FORMAT_R8G8B8A8_TYPELESS = 27,
 
         /// <summary>A four-component, 32-bit unsigned-normalized-integer format
         /// that supports 8 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R8G8B8A8_UNORM = 28,
+        FORMAT_R8G8B8A8_UNORM = 28,
 
         /// <summary>A four-component, 32-bit unsigned-normalized integer sRGB
         /// format that supports 8 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R8G8B8A8_UNORM_SRGB = 29,
+        FORMAT_R8G8B8A8_UNORM_SRGB = 29,
 
         /// <summary>A four-component, 32-bit unsigned-integer format that supports
         /// 8 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R8G8B8A8_UINT = 30,
+        FORMAT_R8G8B8A8_UINT = 30,
 
         /// <summary>A four-component, 32-bit signed-normalized-integer format
         /// that supports 8 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R8G8B8A8_SNORM = 31,
+        FORMAT_R8G8B8A8_SNORM = 31,
 
         /// <summary>A four-component, 32-bit signed-integer format that supports
         /// 8 bits per channel including alpha.</summary>
-        DXGI_FORMAT_R8G8B8A8_SINT = 32,
+        FORMAT_R8G8B8A8_SINT = 32,
 
         /// <summary>A two-component, 32-bit typeless format that supports 16 bits
         /// for the red channel and 16 bits for the green channel.</summary>
-        DXGI_FORMAT_R16G16_TYPELESS = 33,
+        FORMAT_R16G16_TYPELESS = 33,
 
         /// <summary>A two-component, 32-bit floating-point format that supports
         /// 16 bits for the red channel and 16 bits for the green channel.</summary>
-        DXGI_FORMAT_R16G16_FLOAT = 34,
+        FORMAT_R16G16_FLOAT = 34,
 
         /// <summary>A two-component, 32-bit unsigned-normalized-integer format
         /// that supports 16 bits each for the green and red channels.</summary>
-        DXGI_FORMAT_R16G16_UNORM = 35,
+        FORMAT_R16G16_UNORM = 35,
 
         /// <summary>A two-component, 32-bit unsigned-integer format that supports
         /// 16 bits for the red channel and 16 bits for the green channel.</summary>
-        DXGI_FORMAT_R16G16_UINT = 36,
+        FORMAT_R16G16_UINT = 36,
 
         /// <summary>A two-component, 32-bit signed-normalized-integer format that
         /// supports 16 bits for the red channel and 16 bits for the green
         /// channel.</summary>
-        DXGI_FORMAT_R16G16_SNORM = 37,
+        FORMAT_R16G16_SNORM = 37,
 
         /// <summary>A two-component, 32-bit signed-integer format that supports
         /// 16 bits for the red channel and 16 bits for the green channel.</summary>
-        DXGI_FORMAT_R16G16_SINT = 38,
+        FORMAT_R16G16_SINT = 38,
 
         /// <summary>A single-component, 32-bit typeless format that supports
         /// 32 bits for the red channel.</summary>
-        DXGI_FORMAT_R32_TYPELESS = 39,
+        FORMAT_R32_TYPELESS = 39,
 
         /// <summary>A single-component, 32-bit floating-point format that supports
         /// 32 bits for depth.</summary>
-        DXGI_FORMAT_D32_FLOAT = 40,
+        FORMAT_D32_FLOAT = 40,
 
         /// <summary>A single-component, 32-bit floating-point format that supports
         /// 32 bits for the red channel.</summary>
-        DXGI_FORMAT_R32_FLOAT = 41,
+        FORMAT_R32_FLOAT = 41,
 
         /// <summary>A single-component, 32-bit unsigned-integer format that
         /// supports 32 bits for the red channel.</summary>
-        DXGI_FORMAT_R32_UINT = 42,
+        FORMAT_R32_UINT = 42,
 
         /// <summary>A single-component, 32-bit signed-integer format that supports
         /// 32 bits for the red channel.</summary>
-        DXGI_FORMAT_R32_SINT = 43,
+        FORMAT_R32_SINT = 43,
 
         /// <summary>A two-component, 32-bit typeless format that supports
         /// 24 bits for the red channel and 8 bits for the green channel.</summary>
-        DXGI_FORMAT_R24G8_TYPELESS = 44,
+        FORMAT_R24G8_TYPELESS = 44,
 
         /// <summary>A 32-bit z-buffer format that supports 24 bits for depth
         /// and 8 bits for stencil.</summary>
-        DXGI_FORMAT_D24_UNORM_S8_UINT = 45,
+        FORMAT_D24_UNORM_S8_UINT = 45,
 
         /// <summary>A 32-bit format, that contains a 24 bit, single-component,
         /// unsigned-normalized integer, with an additional typeless 8 bits.
         /// This format has 24 bits red channel and 8 bits unused.</summary>
-        DXGI_FORMAT_R24_UNORM_X8_TYPELESS = 46,
+        FORMAT_R24_UNORM_X8_TYPELESS = 46,
 
         /// <summary>A 32-bit format, that contains a 24 bit, single-component,
         /// typeless format, with an additional 8 bit unsigned integer component.
         /// This format has 24 bits unused and 8 bits green channel.</summary>
-        DXGI_FORMAT_X24_TYPELESS_G8_UINT = 47,
+        FORMAT_X24_TYPELESS_G8_UINT = 47,
 
         /// <summary>A two-component, 16-bit typeless format that supports
         /// 8 bits for the red channel and 8 bits for the green channel.</summary>
-        DXGI_FORMAT_R8G8_TYPELESS = 48,
+        FORMAT_R8G8_TYPELESS = 48,
 
         /// <summary>A two-component, 16-bit unsigned-normalized-integer format
         /// that supports 8 bits for the red channel and 8 bits for the
         /// green channel.</summary>
-        DXGI_FORMAT_R8G8_UNORM = 49,
+        FORMAT_R8G8_UNORM = 49,
 
         /// <summary>A two-component, 16-bit unsigned-integer format that supports
         /// 8 bits for the red channel and 8 bits for the green channel.</summary>
-        DXGI_FORMAT_R8G8_UINT = 50,
+        FORMAT_R8G8_UINT = 50,
 
         /// <summary>A two-component, 16-bit signed-normalized-integer format
         /// that supports 8 bits for the red channel and 8 bits for the
         /// green channel.</summary>
-        DXGI_FORMAT_R8G8_SNORM = 51,
+        FORMAT_R8G8_SNORM = 51,
 
         /// <summary>A two-component, 16-bit signed-integer format that supports
         /// 8 bits for the red channel and 8 bits for the green channel.</summary>
-        DXGI_FORMAT_R8G8_SINT = 52,
+        FORMAT_R8G8_SINT = 52,
 
         /// <summary>A single-component, 16-bit typeless format that supports
         /// 16 bits for the red channel.</summary>
-        DXGI_FORMAT_R16_TYPELESS = 53,
+        FORMAT_R16_TYPELESS = 53,
 
         /// <summary>A single-component, 16-bit floating-point format that supports
         /// 16 bits for the red channel.</summary>
-        DXGI_FORMAT_R16_FLOAT = 54,
+        FORMAT_R16_FLOAT = 54,
 
         /// <summary>A single-component, 16-bit unsigned-normalized-integer format
         /// that supports 16 bits for depth.</summary>
-        DXGI_FORMAT_D16_UNORM = 55,
+        FORMAT_D16_UNORM = 55,
 
         /// <summary>A single-component, 16-bit unsigned-normalized-integer format
         /// that supports 16 bits for the red channel.</summary>
-        DXGI_FORMAT_R16_UNORM = 56,
+        FORMAT_R16_UNORM = 56,
 
         /// <summary>A single-component, 16-bit unsigned-integer format that
         /// supports 16 bits for the red channel.</summary>
-        DXGI_FORMAT_R16_UINT = 57,
+        FORMAT_R16_UINT = 57,
 
         /// <summary>A single-component, 16-bit signed-normalized-integer format
         /// that supports 16 bits for the red channel.</summary>
-        DXGI_FORMAT_R16_SNORM = 58,
+        FORMAT_R16_SNORM = 58,
 
         /// <summary>A single-component, 16-bit signed-integer format that supports
         /// 16 bits for the red channel.</summary>
-        DXGI_FORMAT_R16_SINT = 59,
+        FORMAT_R16_SINT = 59,
 
         /// <summary>A single-component, 8-bit typeless format that supports 8 bits
         /// for the red channel.</summary>
-        DXGI_FORMAT_R8_TYPELESS = 60,
+        FORMAT_R8_TYPELESS = 60,
 
         /// <summary>A single-component, 8-bit unsigned-normalized-integer format
         /// that supports 8 bits for the red channel.</summary>
-        DXGI_FORMAT_R8_UNORM = 61,
+        FORMAT_R8_UNORM = 61,
 
         /// <summary>A single-component, 8-bit unsigned-integer format
         /// that supports 8 bits for the red channel.</summary>
-        DXGI_FORMAT_R8_UINT = 62,
+        FORMAT_R8_UINT = 62,
 
         /// <summary>A single-component, 8-bit signed-normalized-integer format
         /// that supports 8 bits for the red channel.</summary>
-        DXGI_FORMAT_R8_SNORM = 63,
+        FORMAT_R8_SNORM = 63,
 
         /// <summary>A single-component, 8-bit signed-integer format that supports
         /// 8 bits for the red channel.</summary>
-        DXGI_FORMAT_R8_SINT = 64,
+        FORMAT_R8_SINT = 64,
 
         /// <summary>A single-component, 8-bit unsigned-normalized-integer format
         /// for alpha only.</summary>
-        DXGI_FORMAT_A8_UNORM = 65,
+        FORMAT_A8_UNORM = 65,
 
         /// <summary>A single-component, 1-bit unsigned-normalized integer format
         /// that supports 1 bit for the red channel.</summary>
-        DXGI_FORMAT_R1_UNORM = 66,
+        FORMAT_R1_UNORM = 66,
 
         /// <summary>Three partial-precision floating-point numbers encoded into
         /// a single 32-bit value all sharing the same 5-bit exponent (variant
@@ -341,66 +406,66 @@ namespace Direct2DNet
         /// (15) exponent).
         /// There is no sign bit, and there is a shared 5 - bit biased(15)
         /// exponent and a 9 - bit mantissa for each channel</summary>
-        DXGI_FORMAT_R9G9B9E5_SHAREDEXP = 67,
+        FORMAT_R9G9B9E5_SHAREDEXP = 67,
 
         /// <summary>A four-component, 32-bit unsigned-normalized-integer format.
         /// This packed RGB format is analogous to the UYVY format.
         /// Each 32-bit block describes a pair of pixels: (R8, G8, B8) and
         /// (R8, G8, B8) where the R8/B8 values are repeated, and the G8 values
         /// are unique to each pixel. Width must be even.</summary>
-        DXGI_FORMAT_R8G8_B8G8_UNORM = 68,
+        FORMAT_R8G8_B8G8_UNORM = 68,
 
         /// <summary>A four-component, 32-bit unsigned-normalized-integer format.
         /// This packed RGB format is analogous to the YUY2 format.
         /// Each 32-bit block describes a pair of pixels: (R8, G8, B8) and
         /// (R8, G8, B8) where the R8/B8 values are repeated, and the G8 values
         /// are unique to each pixel. Width must be even.</summary>
-        DXGI_FORMAT_G8R8_G8B8_UNORM = 69,
+        FORMAT_G8R8_G8B8_UNORM = 69,
 
         /// <summary>Four-component typeless block-compression format.</summary>
-        DXGI_FORMAT_BC1_TYPELESS = 70,
+        FORMAT_BC1_TYPELESS = 70,
 
         /// <summary>Four-component block-compression format.</summary>
-        DXGI_FORMAT_BC1_UNORM = 71,
+        FORMAT_BC1_UNORM = 71,
 
         /// <summary>Four-component block-compression format for sRGB data.</summary>
-        DXGI_FORMAT_BC1_UNORM_SRGB = 72,
+        FORMAT_BC1_UNORM_SRGB = 72,
 
         /// <summary>Four-component typeless block-compression format.</summary>
-        DXGI_FORMAT_BC2_TYPELESS = 73,
+        FORMAT_BC2_TYPELESS = 73,
 
         /// <summary>Four-component block-compression format.</summary>
-        DXGI_FORMAT_BC2_UNORM = 74,
+        FORMAT_BC2_UNORM = 74,
 
         /// <summary>Four-component block-compression format for sRGB data.</summary>
-        DXGI_FORMAT_BC2_UNORM_SRGB = 75,
+        FORMAT_BC2_UNORM_SRGB = 75,
 
         /// <summary>Four-component typeless block-compression format.</summary>
-        DXGI_FORMAT_BC3_TYPELESS = 76,
+        FORMAT_BC3_TYPELESS = 76,
 
         /// <summary>Four-component block-compression format.</summary>
-        DXGI_FORMAT_BC3_UNORM = 77,
+        FORMAT_BC3_UNORM = 77,
 
         /// <summary>Four-component block-compression format for sRGB data.</summary>
-        DXGI_FORMAT_BC3_UNORM_SRGB = 78,
+        FORMAT_BC3_UNORM_SRGB = 78,
 
         /// <summary>One-component typeless block-compression format.</summary>
-        DXGI_FORMAT_BC4_TYPELESS = 79,
+        FORMAT_BC4_TYPELESS = 79,
 
         /// <summary>One-component block-compression format.</summary>
-        DXGI_FORMAT_BC4_UNORM = 80,
+        FORMAT_BC4_UNORM = 80,
             
         /// <summary>One-component block-compression format.</summary>
-        DXGI_FORMAT_BC4_SNORM = 81,
+        FORMAT_BC4_SNORM = 81,
 
         /// <summary>Two-component typeless block-compression format.</summary>
-        DXGI_FORMAT_BC5_TYPELESS = 82,
+        FORMAT_BC5_TYPELESS = 82,
 
         /// <summary>Two-component block-compression format.</summary>
-        DXGI_FORMAT_BC5_UNORM = 83,
+        FORMAT_BC5_UNORM = 83,
 
         /// <summary>Two-component block-compression format.</summary>
-        DXGI_FORMAT_BC5_SNORM = 84,
+        FORMAT_BC5_SNORM = 84,
 
         /// <summary>A three-component, 16-bit unsigned-normalized-integer format
         /// that supports 5 bits for blue, 6 bits for green, and 5 bits for red.
@@ -410,7 +475,7 @@ namespace Direct2DNet
         /// </remarks>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_B5G6R5_UNORM = 85,
+        FORMAT_B5G6R5_UNORM = 85,
 
         /// <summary>A four-component, 16-bit unsigned-normalized-integer format
         /// that supports 5 bits for each color channel and 1-bit alpha.</summary>
@@ -419,98 +484,98 @@ namespace Direct2DNet
         /// </remarks>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_B5G5R5A1_UNORM = 86,
+        FORMAT_B5G5R5A1_UNORM = 86,
 
         /// <summary>A four-component, 32-bit unsigned-normalized-integer format
         /// that supports 8 bits for each color channel and 8-bit alpha.</summary>
-        DXGI_FORMAT_B8G8R8A8_UNORM = 87,
+        FORMAT_B8G8R8A8_UNORM = 87,
 
         /// <summary>A four-component, 32-bit unsigned-normalized-integer format
         /// that supports 8 bits for each color channel and 8 bits unused.</summary>
-        DXGI_FORMAT_B8G8R8X8_UNORM = 88,
+        FORMAT_B8G8R8X8_UNORM = 88,
 
         /// <summary>A four-component, 32-bit 2.8-biased fixed-point format
         /// that supports 10 bits for each color channel and 2-bit alpha.</summary>
-        DXGI_FORMAT_R10G10B10_XR_BIAS_A2_UNORM = 89,
+        FORMAT_R10G10B10_XR_BIAS_A2_UNORM = 89,
 
         /// <summary>A four-component, 32-bit typeless format that supports
         /// 8 bits for each channel including alpha.</summary>
-        DXGI_FORMAT_B8G8R8A8_TYPELESS = 90,
+        FORMAT_B8G8R8A8_TYPELESS = 90,
 
         /// <summary>A four-component, 32-bit unsigned-normalized standard
         /// RGB format that supports 8 bits for each channel including alpha.</summary>
-        DXGI_FORMAT_B8G8R8A8_UNORM_SRGB = 91,
+        FORMAT_B8G8R8A8_UNORM_SRGB = 91,
 
         /// <summary>A four-component, 32-bit typeless format that supports 8 bits
         /// for each color channel, and 8 bits are unused.</summary>
-        DXGI_FORMAT_B8G8R8X8_TYPELESS = 92,
+        FORMAT_B8G8R8X8_TYPELESS = 92,
 
         /// <summary>A four-component, 32-bit unsigned-normalized standard RGB
         /// format that supports 8 bits for each color channel, and 8 bits are
         /// unused.</summary>
-        DXGI_FORMAT_B8G8R8X8_UNORM_SRGB = 93,
+        FORMAT_B8G8R8X8_UNORM_SRGB = 93,
 
         /// <summary>A typeless block-compression format.</summary>
-        DXGI_FORMAT_BC6H_TYPELESS = 94,
+        FORMAT_BC6H_TYPELESS = 94,
 
         /// <summary>A block-compression format.</summary>
-        DXGI_FORMAT_BC6H_UF16 = 95,
+        FORMAT_BC6H_UF16 = 95,
 
         /// <summary>A block-compression format.</summary>
-        DXGI_FORMAT_BC6H_SF16 = 96,
+        FORMAT_BC6H_SF16 = 96,
 
         /// <summary>A typeless block-compression format.</summary>
-        DXGI_FORMAT_BC7_TYPELESS = 97,
+        FORMAT_BC7_TYPELESS = 97,
 
         /// <summary>A block-compression format.</summary>
-        DXGI_FORMAT_BC7_UNORM = 98,
+        FORMAT_BC7_UNORM = 98,
 
         /// <summary>A block-compression format.</summary>
-        DXGI_FORMAT_BC7_UNORM_SRGB = 99,
+        FORMAT_BC7_UNORM_SRGB = 99,
 
         /// <summary>Most common YUV 4:4:4 video resource format.
         /// Valid view formats for this video resource format are
-        /// DXGI_FORMAT_R8G8B8A8_UNORM and DXGI_FORMAT_R8G8B8A8_UINT.
-        /// For UAVs, an additional valid view format is DXGI_FORMAT_R32_UINT.
-        /// By using DXGI_FORMAT_R32_UINT for UAVs, you can both read and write
-        /// as opposed to just write for DXGI_FORMAT_R8G8B8A8_UNORM and
-        /// DXGI_FORMAT_R8G8B8A8_UINT. Supported view types are SRV, RTV, and UAV.
+        /// FORMAT_R8G8B8A8_UNORM and FORMAT_R8G8B8A8_UINT.
+        /// For UAVs, an additional valid view format is FORMAT_R32_UINT.
+        /// By using FORMAT_R32_UINT for UAVs, you can both read and write
+        /// as opposed to just write for FORMAT_R8G8B8A8_UNORM and
+        /// FORMAT_R8G8B8A8_UINT. Supported view types are SRV, RTV, and UAV.
         /// One view provides a straightforward mapping of the entire surface.
         /// The mapping to the view channel is V->R8, U->G8, Y->B8, andA->A8.</summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_AYUV = 100,
+        FORMAT_AYUV = 100,
 
         /// <summary>10-bit per channel packed YUV 4:4:4 video resource format.
         /// Valid view formats for this video resource format are
-        /// DXGI_FORMAT_R10G10B10A2_UNORM and DXGI_FORMAT_R10G10B10A2_UINT.
-        /// For UAVs, an additional valid view format is DXGI_FORMAT_R32_UINT.
-        /// By using DXGI_FORMAT_R32_UINT for UAVs, you can both read and write
-        /// as opposed to just write for DXGI_FORMAT_R10G10B10A2_UNORM and
-        /// DXGI_FORMAT_R10G10B10A2_UINT. Supported view types are SRV and UAV.
+        /// FORMAT_R10G10B10A2_UNORM and FORMAT_R10G10B10A2_UINT.
+        /// For UAVs, an additional valid view format is FORMAT_R32_UINT.
+        /// By using FORMAT_R32_UINT for UAVs, you can both read and write
+        /// as opposed to just write for FORMAT_R10G10B10A2_UNORM and
+        /// FORMAT_R10G10B10A2_UINT. Supported view types are SRV and UAV.
         /// One view provides a straightforward mapping of the entire surface.
         /// The mapping to the view channel is U->R10, Y->G10, V->B10, andA->A2.
         /// </summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_Y410 = 101,
+        FORMAT_Y410 = 101,
 
         /// <summary>16-bit per channel packed YUV 4:4:4 video resource format.
         /// Valid view formats for this video resource format are
-        /// DXGI_FORMAT_R16G16B16A16_UNORM and DXGI_FORMAT_R16G16B16A16_UINT.
+        /// FORMAT_R16G16B16A16_UNORM and FORMAT_R16G16B16A16_UINT.
         /// Supported view types are SRV and UAV. One view provides a straightforward
         /// mapping of the entire surface. The mapping to the view channel is
         /// U->R16, Y->G16, V->B16, andA->A16.</summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_Y416 = 102,
+        FORMAT_Y416 = 102,
 
         /// <summary>Most common YUV 4:2:0 video resource format.
         /// Valid luminance data view formats for this video resource format are
-        /// DXGI_FORMAT_R8_UNORM and DXGI_FORMAT_R8_UINT.
+        /// FORMAT_R8_UNORM and FORMAT_R8_UINT.
         /// Valid chrominance data view formats (width and height are each 1/2 of
         /// luminance view) for this video resource format are
-        /// DXGI_FORMAT_R8G8_UNORM and DXGI_FORMAT_R8G8_UINT.
+        /// FORMAT_R8G8_UNORM and FORMAT_R8G8_UINT.
         /// Supported view types are SRV, RTV, and UAV. For luminance data view,
         /// the mapping to the view channel is Y->R8. For chrominance data view,
         /// the mapping to the view channel is U->R8 and V->G8.</summary>
@@ -530,22 +595,22 @@ namespace Direct2DNet
         /// </remarks>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_NV12 = 103,
+        FORMAT_NV12 = 103,
 
         /// <summary>10-bit per channel planar YUV 4:2:0 video resource format.
         /// Valid luminance data view formats for this video resource format are
-        /// DXGI_FORMAT_R16_UNORM and DXGI_FORMAT_R16_UINT. The runtime does not
+        /// FORMAT_R16_UNORM and FORMAT_R16_UINT. The runtime does not
         /// enforce whether the lowest 6 bits are 0 (given that this video resource
         /// format is a 10-bit format that uses 16 bits). If required, application
         /// shader code would have to enforce this manually. From the runtime's
-        /// point of view, DXGI_FORMAT_P010 is no different than DXGI_FORMAT_P016.
+        /// point of view, FORMAT_P010 is no different than FORMAT_P016.
         /// Valid chrominance data view formats (width and height are each 1/2 of
         /// luminance view) for this video resource format are
-        /// DXGI_FORMAT_R16G16_UNORM and DXGI_FORMAT_R16G16_UINT.
+        /// FORMAT_R16G16_UNORM and FORMAT_R16G16_UINT.
         /// For UAVs, an additional valid chrominance data view format is
-        /// DXGI_FORMAT_R32_UINT. By using DXGI_FORMAT_R32_UINT for UAVs,
+        /// FORMAT_R32_UINT. By using FORMAT_R32_UINT for UAVs,
         /// you can both read and write as opposed to just write for
-        /// DXGI_FORMAT_R16G16_UNORM and DXGI_FORMAT_R16G16_UINT.
+        /// FORMAT_R16G16_UNORM and FORMAT_R16G16_UINT.
         /// Supported view types are SRV, RTV, and UAV. For luminance data view,
         /// the mapping to the view channel is Y->R16. For chrominance data view,
         /// the mapping to the view channel is U->R16 and V->G16.</summary>
@@ -565,17 +630,17 @@ namespace Direct2DNet
         /// </remarks>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_P010 = 104,
+        FORMAT_P010 = 104,
 
         /// <summary>16-bit per channel planar YUV 4:2:0 video resource format.
         /// Valid luminance data view formats for this video resource format are
-        /// DXGI_FORMAT_R16_UNORM and DXGI_FORMAT_R16_UINT. Valid chrominance data
+        /// FORMAT_R16_UNORM and FORMAT_R16_UINT. Valid chrominance data
         /// view formats (width and height are each 1/2 of luminance view) for
-        /// this video resource format are DXGI_FORMAT_R16G16_UNORM and
-        /// DXGI_FORMAT_R16G16_UINT. For UAVs, an additional valid chrominance
-        /// data view format is DXGI_FORMAT_R32_UINT. By using DXGI_FORMAT_R32_UINT
+        /// this video resource format are FORMAT_R16G16_UNORM and
+        /// FORMAT_R16G16_UINT. For UAVs, an additional valid chrominance
+        /// data view format is FORMAT_R32_UINT. By using FORMAT_R32_UINT
         /// for UAVs, you can both read and write as opposed to just write for
-        /// DXGI_FORMAT_R16G16_UNORM and DXGI_FORMAT_R16G16_UINT. Supported view types
+        /// FORMAT_R16G16_UNORM and FORMAT_R16G16_UINT. Supported view types
         /// are SRV, RTV, and UAV. For luminance data view, the mapping to the
         /// view channel is Y->R16. For chrominance data view, the mapping to the
         /// view channel is U->R16 and V->G16.</summary>
@@ -595,7 +660,7 @@ namespace Direct2DNet
         /// </remarks>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_P016 = 105,
+        FORMAT_P016 = 105,
 
         /// <summary>8-bit per channel planar YUV 4:2:0 video resource format.
         /// This format is subsampled where each pixel has its own Y value,
@@ -603,7 +668,7 @@ namespace Direct2DNet
         /// requires that the width and height of all resources that are created
         /// with this format are multiples of 2. The runtime also requires that the
         /// left, right, top, and bottom members of any RECT that are used for this
-        /// format are multiples of 2. This format differs from DXGI_FORMAT_NV12
+        /// format are multiples of 2. This format differs from FORMAT_NV12
         /// in that the layout of the data within the resource is completely opaque
         /// to applications. Applications cannot use the CPU to map the resource
         /// and then access the data within the resource. You cannot use shaders
@@ -626,23 +691,23 @@ namespace Direct2DNet
         /// </remarks>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_420_OPAQUE = 106,
+        FORMAT_420_OPAQUE = 106,
 
         /// <summary>
         /// <para>Most common YUV 4:2:2 video resource format.
         /// Valid view formats for this video resource format are
-        /// DXGI_FORMAT_R8G8B8A8_UNORM and DXGI_FORMAT_R8G8B8A8_UINT.
-        /// For UAVs, an additional valid view format is DXGI_FORMAT_R32_UINT.
-        /// By using DXGI_FORMAT_R32_UINT for UAVs, you can both read and write
-        /// as opposed to just write for DXGI_FORMAT_R8G8B8A8_UNORM and
-        /// DXGI_FORMAT_R8G8B8A8_UINT. Supported view types are SRV and UAV.
+        /// FORMAT_R8G8B8A8_UNORM and FORMAT_R8G8B8A8_UINT.
+        /// For UAVs, an additional valid view format is FORMAT_R32_UINT.
+        /// By using FORMAT_R32_UINT for UAVs, you can both read and write
+        /// as opposed to just write for FORMAT_R8G8B8A8_UNORM and
+        /// FORMAT_R8G8B8A8_UINT. Supported view types are SRV and UAV.
         /// One view provides a straightforward mapping of the entire surface.
         /// The mapping to the view channel is Y0->R8, U0->G8, Y1->B8, andV0->A8.
         /// </para>
         /// <para>A unique valid view format for this video resource format is
-        /// DXGI_FORMAT_R8G8_B8G8_UNORM. With this view format, the width of the
-        /// view appears to be twice what the DXGI_FORMAT_R8G8B8A8_UNORM or
-        /// DXGI_FORMAT_R8G8B8A8_UINT view would be when hardware reconstructs
+        /// FORMAT_R8G8_B8G8_UNORM. With this view format, the width of the
+        /// view appears to be twice what the FORMAT_R8G8B8A8_UNORM or
+        /// FORMAT_R8G8B8A8_UINT view would be when hardware reconstructs
         /// RGBA automatically on read and before filtering. This Direct3D
         /// hardware behavior is legacy and is likely not useful any more.
         /// With this view format, the mapping to the view channel is Y0->R8,
@@ -652,39 +717,39 @@ namespace Direct2DNet
         /// </summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_YUY2 = 107,
+        FORMAT_YUY2 = 107,
 
         /// <summary>10-bit per channel packed YUV 4:2:2 video resource format.
         /// Valid view formats for this video resource format are
-        /// DXGI_FORMAT_R16G16B16A16_UNORM and DXGI_FORMAT_R16G16B16A16_UINT.
+        /// FORMAT_R16G16B16A16_UNORM and FORMAT_R16G16B16A16_UINT.
         /// The runtime does not enforce whether the lowest 6 bits are 0
         /// (given that this video resource format is a 10-bit format that uses
         /// 16 bits). If required, application shader code would have to enforce
-        /// this manually. From the runtime's point of view, DXGI_FORMAT_Y210 is
-        /// no different than DXGI_FORMAT_Y216. Supported view types are SRV and UAV.
+        /// this manually. From the runtime's point of view, FORMAT_Y210 is
+        /// no different than FORMAT_Y216. Supported view types are SRV and UAV.
         /// One view provides a straightforward mapping of the entire surface.
         /// The mapping to the view channel is Y0->R16, U->G16, Y1->B16, andV->A16.
         /// Width must be even.</summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_Y210 = 108,
+        FORMAT_Y210 = 108,
 
         /// <summary>16-bit per channel packed YUV 4:2:2 video resource format.
         /// Valid view formats for this video resource format are
-        /// DXGI_FORMAT_R16G16B16A16_UNORM and DXGI_FORMAT_R16G16B16A16_UINT.
+        /// FORMAT_R16G16B16A16_UNORM and FORMAT_R16G16B16A16_UINT.
         /// Supported view types are SRV and UAV. One view provides a
         /// straightforward mapping of the entire surface.
         /// The mapping to the view channel is Y0->R16, U->G16, Y1->B16, andV->A16.
         /// Width must be even.</summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_Y216 = 109,
+        FORMAT_Y216 = 109,
 
         /// <summary>Most common planar YUV 4:1:1 video resource format.
         /// Valid luminance data view formats for this video resource format are
-        /// DXGI_FORMAT_R8_UNORM and DXGI_FORMAT_R8_UINT. Valid chrominance data
+        /// FORMAT_R8_UNORM and FORMAT_R8_UINT. Valid chrominance data
         /// view formats (width and height are each 1/4 of luminance view) for this
-        /// video resource format are DXGI_FORMAT_R8G8_UNORM and DXGI_FORMAT_R8G8_UINT.
+        /// video resource format are FORMAT_R8G8_UNORM and FORMAT_R8G8_UINT.
         /// Supported view types are SRV, RTV, and UAV. For luminance data view,
         /// the mapping to the view channel is Y->R8. For chrominance data view,
         /// the mapping to the view channel is U->R8 and V->G8.</summary>
@@ -696,49 +761,51 @@ namespace Direct2DNet
         /// </remarks>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_NV11 = 110,
+        FORMAT_NV11 = 110,
 
         /// <summary>4-bit palletized YUV format that is commonly used for
         /// DVD subpicture.</summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_AI44 = 111,
+        FORMAT_AI44 = 111,
 
         /// <summary>4-bit palletized YUV format that is commonly used for
         /// DVD subpicture.</summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_IA44 = 112,
+        FORMAT_IA44 = 112,
 
         /// <summary>8-bit palletized format that is used for palletized RGB data
         /// when the processor processes ISDB-T data and for palletized YUV data
         /// when the processor processes BluRay data.</summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_P8 = 113,
+        FORMAT_P8 = 113,
 
         /// <summary>8-bit palletized format with 8 bits of alpha that is used
         /// for palletized YUV data when the processor processes BluRay data.</summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_A8P8 = 114,
+        FORMAT_A8P8 = 114,
 
         /// <summary>A four-component, 16-bit unsigned-normalized integer format
         /// that supports 4 bits for each channel including alpha.</summary>
         /// <remarks>Direct3D 11.1:  This value is not supported until Windows 8.
         /// </remarks>
-        DXGI_FORMAT_B4G4R4A4_UNORM = 115,
+        FORMAT_B4G4R4A4_UNORM = 115,
 
         /// <summary>A video format; an 8-bit version of a hybrid planar 4:2:2 format.
         /// </summary>
-        DXGI_FORMAT_P208 = 130,
+        FORMAT_P208 = 130,
 
         /// <summary>An 8 bit YCbCrA 4:4 rendering format.</summary>
-        DXGI_FORMAT_V208 = 131,
+        FORMAT_V208 = 131,
 
         /// <summary>An 8 bit YCbCrA 4:4:4:4 rendering format.</summary>
-        DXGI_FORMAT_V408 = 132,
-        DXGI_FORMAT_FORCE_UINT = 0xffffffff
+        FORMAT_V408 = 132,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_UINT = 0xffffffff
     };
 
     /// <summary>
@@ -751,23 +818,24 @@ namespace Direct2DNet
         /// Alpha mode should be determined implicitly. Some target surfaces do not supply
         /// or imply this information in which case alpha must be specified.
         /// </summary>
-        D2D1_ALPHA_MODE_UNKNOWN = 0,
+        UNKNOWN = 0,
 
         /// <summary>
         /// Treat the alpha as premultipled.
         /// </summary>
-        D2D1_ALPHA_MODE_PREMULTIPLIED = 1,
+        PREMULTIPLIED = 1,
 
         /// <summary>
         /// Opacity is in the 'A' component only.
         /// </summary>
-        D2D1_ALPHA_MODE_STRAIGHT = 2,
+        STRAIGHT = 2,
 
         /// <summary>
         /// Ignore any alpha channel information.
         /// </summary>
-        D2D1_ALPHA_MODE_IGNORE = 3,
+        IGNORE_ALPHA = 3,
 
+        [System::ObsoleteAttribute("Do not use this value.", true)]
         D2D1_ALPHA_MODE_FORCE_DWORD = 0xffffffff
     };
 
@@ -776,10 +844,21 @@ namespace Direct2DNet
     /// </summary>
     public value struct D2D1_PIXEL_FORMAT
     {
+        /// <summary>
+        /// The format of the pixel. See <see cref="Direct2DNet::DXGI_FORMAT"/>
+        /// for more informations.
+        /// </summary>
         Direct2DNet::DXGI_FORMAT format;
+
+        /// <summary>
+        /// Qualifies how alpha is to be treated. See
+        /// <see cref="Direct2DNet::D2D1_ALPHA_MODE"/> for more informations.
+        /// </summary>
         Direct2DNet::D2D1_ALPHA_MODE alphaMode;
 
-    internal:
+        D2D1_PIXEL_FORMAT(Direct2DNet::DXGI_FORMAT format, Direct2DNet::D2D1_ALPHA_MODE alphaMode)
+            : format(format), alphaMode(alphaMode) {}
+
         static operator ::D2D1_PIXEL_FORMAT(Direct2DNet::D2D1_PIXEL_FORMAT %rhs)
         {
             ::D2D1_PIXEL_FORMAT value;
@@ -801,9 +880,9 @@ namespace Direct2DNet
     public:
         /// <summary>
         /// Gets the default pixel format, which is
-        /// <see cref="Direct2DNet::DXGI_FORMAT::DXGI_FORMAT_UNKNOWN"/> for
+        /// <see cref="Direct2DNet::DXGI_FORMAT::FORMAT_UNKNOWN"/> for
         /// <see cref="format"/> and
-        /// <see cref="Direct2DNet::D2D1_ALPHA_MODE::D2D1_ALPHA_MODE_UNKNOWN"/> for
+        /// <see cref="Direct2DNet::D2D1_ALPHA_MODE::UNKNOWN"/> for
         /// <see cref="alphaMode"/>
         /// </summary>
         static property Direct2DNet::D2D1_PIXEL_FORMAT Default
@@ -821,22 +900,25 @@ namespace Direct2DNet
     /// GDI-compatible. This enumeration allows a bitwise combination of its member
     /// values.
     /// </summary>
+    [System::FlagsAttribute]
     public enum class D2D1_RENDER_TARGET_USAGE
     {
-        D2D1_RENDER_TARGET_USAGE_NONE = 0x00000000,
+        NONE = 0x00000000,
 
         /// <summary>
         /// Rendering will occur locally, if a terminal-services session is established, the
         /// bitmap updates will be sent to the terminal services client.
         /// </summary>
-        D2D1_RENDER_TARGET_USAGE_FORCE_BITMAP_REMOTING = 0x00000001,
+        FORCE_BITMAP_REMOTING = 0x00000001,
 
         /// <summary>
         /// The render target will allow a call to GetDC on the ID2D1GdiInteropRenderTarget
         /// interface. Rendering will also occur locally.
         /// </summary>
-        D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE = 0x00000002,
-        D2D1_RENDER_TARGET_USAGE_FORCE_DWORD = 0xffffffff
+        GDI_COMPATIBLE = 0x00000002,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
     };
 
     /// <summary>
@@ -848,18 +930,20 @@ namespace Direct2DNet
         /// <summary>
         /// The caller does not require a particular underlying D3D device level.
         /// </summary>
-        D2D1_FEATURE_LEVEL_DEFAULT = 0,
+        DEFAULT = 0,
 
         /// <summary>
         /// The D3D device level is DX9 compatible.
         /// </summary>
-        D2D1_FEATURE_LEVEL_9 = D3D_FEATURE_LEVEL_9_1,
+        FEATURE_LEVEL_9 = D3D_FEATURE_LEVEL_9_1,
 
         /// <summary>
         /// The D3D device level is DX10 compatible.
         /// </summary>
-        D2D1_FEATURE_LEVEL_10 = D3D_FEATURE_LEVEL_10_0,
-        D2D1_FEATURE_LEVEL_FORCE_DWORD = 0xffffffff
+        FEATURE_LEVEL_10 = D3D_FEATURE_LEVEL_10_0,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
     };
 
     /// <summary>
@@ -869,14 +953,48 @@ namespace Direct2DNet
     /// </summary>
     public value struct D2D1_RENDER_TARGET_PROPERTIES
     {
+        /// <summary>
+        /// Rendering mode of the render target.
+        /// See <see cref="Direct2DNet::D2D1_RENDER_TARGET_TYPE"/> for more informations.
+        /// </summary>
         Direct2DNet::D2D1_RENDER_TARGET_TYPE type;
+
+        /// <summary>
+        /// Pixel format of the render target.
+        /// See <see cref="Direct2DNet::D2D1_PIXEL_FORMAT"/> for more informations.
+        /// </summary>
         Direct2DNet::D2D1_PIXEL_FORMAT pixelFormat;
+
+        /// <summary>
+        /// DPI in x axis.
+        /// </summary>
         float dpiX;
+
+        /// <summary>
+        /// DPI in y axis.
+        /// </summary>
         float dpiY;
+
+        /// <summary>
+        /// Describes how a render target is remoted and whether it should be GDI-compatible.
+        /// See <see cref="Direct2DNet::D2D1_RENDER_TARGET_USAGE"/> for more informations.
+        /// </summary>
         Direct2DNet::D2D1_RENDER_TARGET_USAGE usage;
+
+        /// <summary>
+        /// Minimum DirectX support required.
+        /// </summary>
         Direct2DNet::D2D1_FEATURE_LEVEL minLevel;
 
-    internal:
+        D2D1_RENDER_TARGET_PROPERTIES(
+            Direct2DNet::D2D1_RENDER_TARGET_TYPE type,
+            Direct2DNet::D2D1_PIXEL_FORMAT pixelFormat,
+            float dpiX,
+            float dpiY,
+            Direct2DNet::D2D1_RENDER_TARGET_USAGE usage,
+            Direct2DNet::D2D1_FEATURE_LEVEL minLevel
+        ) : type(type), pixelFormat(pixelFormat), dpiX(dpiX), dpiY(dpiY), usage(usage), minLevel(minLevel) {}
+
         static operator ::D2D1_RENDER_TARGET_PROPERTIES(Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %rhs)
         {
             ::D2D1_RENDER_TARGET_PROPERTIES value;
@@ -903,15 +1021,14 @@ namespace Direct2DNet
             return value;
         }
 
-    public:
         /// <summary>
         /// Gets the default render target property, which is
-        /// <see cref="Direct2DNet::D2D1_RENDER_TARGET_TYPE::D2D1_RENDER_TARGET_TYPE_DEFAULT"/> for
+        /// <see cref="Direct2DNet::D2D1_RENDER_TARGET_TYPE::DEFAULT"/> for
         /// <see cref="type"/>, <see cref="Direct2DNet::D2D1_PIXEL_FORMAT::Default"/> for
         /// <see cref="pixelFormat"/>, <c>0</c> for
         /// <see cref="dpiX"/> and <see cref="dpiY"/>
-        /// <see cref="Direct2DNet::D2D1_RENDER_TARGET_USAGE::D2D1_RENDER_TARGET_USAGE_NONE"/> for
-        /// <see cref="usage"/>, and <see cref="Direct2DNet::D2D1_FEATURE_LEVEL::D2D1_FEATURE_LEVEL_DEFAULT"/> for
+        /// <see cref="Direct2DNet::D2D1_RENDER_TARGET_USAGE::NONE"/> for
+        /// <see cref="usage"/>, and <see cref="Direct2DNet::D2D1_FEATURE_LEVEL::DEFAULT"/> for
         /// <see cref="minLevel"/>.
         /// </summary>
         static property Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES Default
@@ -924,22 +1041,74 @@ namespace Direct2DNet
     };
 
     /// <summary>
+    /// Enum which describes the manner in which we render edges of non-text primitives.
+    /// </summary>
+    public enum class D2D1_ANTIALIAS_MODE
+    {
+
+        /// <summary>
+        /// The edges of each primitive are antialiased sequentially.
+        /// </summary>
+        PER_PRIMITIVE = 0,
+
+        /// <summary>
+        /// Each pixel is rendered if its pixel center is contained by the geometry.
+        /// </summary>
+        ALIASED = 1,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
+    /// Describes the antialiasing mode used for drawing text.
+    /// </summary>
+    public enum class D2D1_TEXT_ANTIALIAS_MODE
+    {
+
+        /// <summary>
+        /// Render text using the current system setting.
+        /// </summary>
+        DEFAULT = 0,
+
+        /// <summary>
+        /// Render text using ClearType.
+        /// </summary>
+        CLEARTYPE = 1,
+
+        /// <summary>
+        /// Render text using gray-scale.
+        /// </summary>
+        GRAYSCALE = 2,
+
+        /// <summary>
+        /// Render text aliased.
+        /// </summary>
+        ALIASED = 3,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
     /// Describes how present should behave.
     /// </summary>
     public enum class D2D1_PRESENT_OPTIONS
     {
-        D2D1_PRESENT_OPTIONS_NONE = 0x00000000,
+        NONE = 0x00000000,
 
         /// <summary>
         /// Keep the target contents intact through present.
         /// </summary>
-        D2D1_PRESENT_OPTIONS_RETAIN_CONTENTS = 0x00000001,
+        RETAIN_CONTENTS = 0x00000001,
 
         /// <summary>
         /// Do not wait for display refresh to commit changes to display.
         /// </summary>
-        D2D1_PRESENT_OPTIONS_IMMEDIATELY = 0x00000002,
-        D2D1_PRESENT_OPTIONS_FORCE_DWORD = 0xffffffff
+        IMMEDIATELY = 0x00000002,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
     };
 
     /// <summary>
@@ -948,11 +1117,28 @@ namespace Direct2DNet
     /// </summary>
     public value struct D2D1_HWND_RENDER_TARGET_PROPERTIES
     {
+        /// <summary>
+        /// Handle to the window to render.
+        /// </summary>
         System::IntPtr hwnd;
+
+        /// <summary>
+        /// Size of the render target in pixels.
+        /// </summary>
         Direct2DNet::D2D1_SIZE_U pixelSize;
+
+        /// <summary>
+        /// Present option of the render target.
+        /// See <see cref="Direct2DNet::D2D1_PRESENT_OPTIONS"/> for more informations.
+        /// </summary>
         Direct2DNet::D2D1_PRESENT_OPTIONS presentOptions;
 
-    internal:
+        D2D1_HWND_RENDER_TARGET_PROPERTIES(
+            System::IntPtr hwnd,
+            Direct2DNet::D2D1_SIZE_U pixelSize,
+            Direct2DNet::D2D1_PRESENT_OPTIONS presentOptions
+        ) : hwnd(hwnd), pixelSize(pixelSize), presentOptions(presentOptions) {}
+
         static operator ::D2D1_HWND_RENDER_TARGET_PROPERTIES(Direct2DNet::D2D1_HWND_RENDER_TARGET_PROPERTIES %rhs)
         {
             ::D2D1_HWND_RENDER_TARGET_PROPERTIES value;
@@ -973,11 +1159,10 @@ namespace Direct2DNet
             return value;
         }
 
-    public:
         /// <summary>
         /// Gets the default hwnd render target property, which is
         /// 0 width and 0 height for
-        /// <see cref="pixelSize"/> and <see cref="Direct2DNet::D2D1_PRESENT_OPTIONS::D2D1_PRESENT_OPTIONS_NONE"/> for
+        /// <see cref="pixelSize"/> and <see cref="Direct2DNet::D2D1_PRESENT_OPTIONS::NONE"/> for
         /// <see cref="presentOptions"/>.
         /// </summary>
         /// <param name="hwnd">Handle to the window to draw.</param>
@@ -994,11 +1179,13 @@ namespace Direct2DNet
     public enum class D2D1_WINDOW_STATE
     {
         /// <summary>The window is not occluded.</summary>
-        D2D1_WINDOW_STATE_NONE = 0x0000000,
+        NONE = 0x0000000,
 
         /// <summary>The window is occluded.</summary>
-        D2D1_WINDOW_STATE_OCCLUDED = 0x0000001,
-        D2D1_WINDOW_STATE_FORCE_DWORD = 0xffffffff
+        OCCLUDED = 0x0000001,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
     };
 
     /// <summary>
@@ -1009,23 +1196,25 @@ namespace Direct2DNet
         /// <summary>
         /// Flat line cap.
         /// </summary>
-        D2D1_CAP_STYLE_FLAT = 0,
+        FLAT = 0,
 
         /// <summary>
         /// Square line cap.
         /// </summary>
-        D2D1_CAP_STYLE_SQUARE = 1,
+        SQUARE = 1,
 
         /// <summary>
         /// Round line cap.
         /// </summary>
-        D2D1_CAP_STYLE_ROUND = 2,
+        ROUND = 2,
 
         /// <summary>
         /// Triangle line cap.
         /// </summary>
-        D2D1_CAP_STYLE_TRIANGLE = 3,
-        D2D1_CAP_STYLE_FORCE_DWORD = 0xffffffff
+        TRIANGLE = 3,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
     };
 
     /// <summary>
@@ -1036,23 +1225,25 @@ namespace Direct2DNet
         /// <summary>
         /// Miter join.
         /// </summary>
-        D2D1_LINE_JOIN_MITER = 0,
+        MITER = 0,
 
         /// <summary>
         /// Bevel join.
         /// </summary>
-        D2D1_LINE_JOIN_BEVEL = 1,
+        BEVEL = 1,
 
         /// <summary>
         /// Round join.
         /// </summary>
-        D2D1_LINE_JOIN_ROUND = 2,
+        ROUND = 2,
 
         /// <summary>
         /// Miter/Bevel join.
         /// </summary>
-        D2D1_LINE_JOIN_MITER_OR_BEVEL = 3,
-        D2D1_LINE_JOIN_FORCE_DWORD = 0xffffffff
+        MITER_OR_BEVEL = 3,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
     };
 
     /// <summary>
@@ -1061,32 +1252,34 @@ namespace Direct2DNet
     public enum class D2D1_DASH_STYLE
     {
         /// <summary>A solid line with no breaks.</summary>
-        D2D1_DASH_STYLE_SOLID = 0,
+        SOLID = 0,
 
         /// <summary>A dash followed by a gap of equal length.
         /// The dash and the gap are each twice as long as the stroke thickness.
-        /// The equivalent dash array for D2D1_DASH_STYLE_DASH is{ 2, 2 }.</summary>
-        D2D1_DASH_STYLE_DASH = 1,
+        /// The equivalent dash array for DASH is{ 2, 2 }.</summary>
+        DASH = 1,
 
         /// <summary>A dot followed by a longer gap.
-        /// The equivalent dash array for D2D1_DASH_STYLE_DOT is{ 0, 2 }.</summary>
-        D2D1_DASH_STYLE_DOT = 2,
+        /// The equivalent dash array for DOT is{ 0, 2 }.</summary>
+        DOT = 2,
 
         /// <summary>A dash, followed by a gap, followed by a dot, followed by
-        /// another gap.The equivalent dash array for D2D1_DASH_STYLE_DASH_DOT is
+        /// another gap.The equivalent dash array for DASH_DOT is
         /// { 2, 2, 0, 2 }.</summary>
-        D2D1_DASH_STYLE_DASH_DOT = 3,
+        DASH_DOT = 3,
 
         /// <summary>A dash, followed by a gap, followed by a dot, followed by another
         /// gap, followed by another dot, followed by another gap.
-        ///The equivalent dash array for D2D1_DASH_STYLE_DASH_DOT_DOT is
-        ///{ 2, 2, 0, 2, 0, 2 }.</summary>
-        D2D1_DASH_STYLE_DASH_DOT_DOT = 4,
+        /// The equivalent dash array for DASH_DOT_DOT is
+        /// { 2, 2, 0, 2, 0, 2 }.</summary>
+        DASH_DOT_DOT = 4,
 
         /// <summary>The dash pattern is specified by an array of
         /// floating-point values.</summary>
-        D2D1_DASH_STYLE_CUSTOM = 5,
-        D2D1_DASH_STYLE_FORCE_DWORD = 0xffffffff
+        CUSTOM = 5,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
     };
 
     /// <summary>
@@ -1094,12 +1287,43 @@ namespace Direct2DNet
     /// </summary>
     public value struct D2D1_STROKE_STYLE_PROPERTIES
     {
+        /// <summary>
+        /// Cap style applied to the start of stroke.
+        /// </summary>
         Direct2DNet::D2D1_CAP_STYLE startCap;
+
+        /// <summary>
+        /// Cap style applied to the end of stroke.
+        /// </summary>
         Direct2DNet::D2D1_CAP_STYLE endCap;
+
+        /// <summary>
+        /// Cap style applied to the each end of all dashes in stroke.
+        /// </summary>
         Direct2DNet::D2D1_CAP_STYLE dashCap;
+
+        /// <summary>
+        /// Describes how segments are joined.
+        /// See <see cref="Direct2DNet::D2D1_LINE_JOIN"/> for more informations.
+        /// </summary>
         Direct2DNet::D2D1_LINE_JOIN lineJoin;
+
+        /// <summary>
+        /// The limit of the thickness of the join on a mitered corner.
+        /// </summary>
         float miterLimit;
+
+        /// <summary>
+        /// The dash style of the stroke.
+        /// See <see cref="Direct2DNet::D2D1_DASH_STYLE"/> for more informations.
+        /// </summary>
         Direct2DNet::D2D1_DASH_STYLE dashStyle;
+
+        /// <summary>
+        /// An offset in the dash sequence in the unit of stroke width.
+        /// Positive offset shifts the pattern toward the start of the stroke.
+        /// Negative offset shifts the pattern toward the end of the stroke.
+        /// </summary>
         float dashOffset;
 
         D2D1_STROKE_STYLE_PROPERTIES(
@@ -1115,7 +1339,6 @@ namespace Direct2DNet
         {
         }
 
-    internal:
         static operator ::D2D1_STROKE_STYLE_PROPERTIES(Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES %rhs)
         {
             ::D2D1_STROKE_STYLE_PROPERTIES value;
@@ -1129,5 +1352,212 @@ namespace Direct2DNet
 
             return value;
         }
+
+        static operator Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES(::D2D1_STROKE_STYLE_PROPERTIES %rhs)
+        {
+            Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES value;
+            value.startCap = (Direct2DNet::D2D1_CAP_STYLE)((int)rhs.startCap);
+            value.endCap = (Direct2DNet::D2D1_CAP_STYLE)((int)rhs.endCap);
+            value.dashCap = (Direct2DNet::D2D1_CAP_STYLE)((int)rhs.dashCap);
+            value.lineJoin = (Direct2DNet::D2D1_LINE_JOIN)((int)rhs.lineJoin);
+            value.miterLimit = rhs.miterLimit;
+            value.dashStyle = (Direct2DNet::D2D1_DASH_STYLE)((int)rhs.dashStyle);
+            value.dashOffset = rhs.dashOffset;
+
+            return value;
+        }
+    };
+
+    /// <summary>
+    /// Describes how one geometry object is spatially related to another geometry
+    /// object.
+    /// </summary>
+    public enum class D2D1_GEOMETRY_RELATION
+    {
+        /// <summary>
+        /// The relation between the geometries couldn't be determined. This value is never
+        /// returned by any D2D method.
+        /// </summary>
+        UNKNOWN = 0,
+
+        /// <summary>
+        /// The two geometries do not intersect at all.
+        /// </summary>
+        DISJOINT = 1,
+
+        /// <summary>
+        /// The passed in geometry is entirely contained by the object.
+        /// </summary>
+        IS_CONTAINED = 2,
+
+        /// <summary>
+        /// The object entirely contains the passed in geometry.
+        /// </summary>
+        CONTAINS = 3,
+
+        /// <summary>
+        /// The two geometries overlap but neither completely contains the other.
+        /// </summary>
+        OVERLAP = 4,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
+    /// Specifies how simple the output of a simplified geometry sink should be.
+    /// </summary>
+    public enum class D2D1_GEOMETRY_SIMPLIFICATION_OPTION
+    {
+        /// <summary>
+        /// The output can contain cubic Bezier curves and line segments.
+        /// </summary>
+        CUBICS_AND_LINES = 0,
+
+        /// <summary>
+        /// The output is flattened so that it contains only line segments.
+        /// </summary>
+        LINES = 1,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
+    /// Specifies how the intersecting areas of geometries or figures are combined to
+    /// form the area of the composite geometry.
+    /// </summary>
+    public enum class D2D1_FILL_MODE
+    {
+        /// <summary>
+        /// Determines whether a point is in the fill region by drawing a ray from that point to
+        /// infinity in any direction, and then counting the number of path segments within the
+        /// given shape that the ray crosses. If this number is odd, the point is in the fill region;
+        /// if even, the point is outside the fill region.
+        /// </summary>
+        MODE_ALTERNATE = 0,
+
+        /// <summary>
+        /// Determines whether a point is in the fill region of the path by drawing a ray from
+        /// that point to infinity in any direction, and then examining the places where a segment
+        /// of the shape crosses the ray. Starting with a count of zero, add one each time a segment
+        /// crosses the ray from left to right and subtract one each time a path segment crosses
+        /// the ray from right to left, as long as left and right are seen from the perspective of
+        /// the ray. After counting the crossings, if the result is zero, then the point is outside
+        /// the path. Otherwise, it is inside the path.
+        /// </summary>
+        MODE_WINDING = 1,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+
+    /// <summary>
+    /// This enumeration describes the type of combine operation to be performed.
+    /// </summary>
+    public enum class D2D1_COMBINE_MODE
+    {
+        /// <summary>
+        /// Produce a geometry representing the set of points contained in either the first
+        /// or the second geometry.
+        /// </summary>
+        MODE_UNION = 0,
+
+        /// <summary>
+        /// Produce a geometry representing the set of points common to the first and the
+        /// second geometries.
+        /// </summary>
+        MODE_INTERSECT = 1,
+
+        /// <summary>
+        /// Produce a geometry representing the set of points contained in the first
+        /// geometry or the second geometry, but not both.
+        /// </summary>
+        MODE_XOR = 2,
+
+        /// <summary>
+        /// Produce a geometry representing the set of points contained in the first
+        /// geometry but not the second geometry.
+        /// </summary>
+        MODE_EXCLUDE = 3,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
+    /// Indicates whether the given segment should be stroked, or, if the join between
+    /// this segment and the previous one should be smooth.
+    /// This enumeration allows a bitwise combination of its member values.
+    /// </summary>
+    [System::FlagsAttribute]
+    public enum class D2D1_PATH_SEGMENT
+    {
+        /// <summary>
+        /// The segment is joined as specified by the <see cref="Direct2DNet::ID2D1StrokeStyle"/>
+        /// class, and it is stroked.
+        /// </summary>
+        NONE = 0x00000000,
+
+        /// <summary>
+        /// The segment is not stroked.
+        /// </summary>
+        FORCE_UNSTROKED = 0x00000001,
+
+        /// <summary>
+        /// The segment is always joined with the one preceding it using a round line join,
+        /// regardless of which <see cref="Direct2DNet::D2D1_LINE_JOIN"/> enumeration is specified by
+        /// the <see cref="Direct2DNet::ID2D1StrokeStyle"/> class. If this segment is the first
+        /// segment and the figure is closed, a round line join is used to connect the closing segment
+        /// with the first segment. If the figure is not closed, this setting has no effect on the first
+        /// segment of the figure. If <see cref="Direct2DNet::ID2D1PathGeometry::SetSegmentFlags"/>
+        /// is called just before <see cref="Direct2DNet::ID2D1PathGeometry::EndFigure"/>, the join
+        /// between the closing segment and the last explicitly specified segment is affected.
+        /// </summary>
+        FORCE_ROUND_LINE_JOIN = 0x00000002,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
+    /// Indicates whether the given figure is filled or hollow.
+    /// </summary>
+    public enum class D2D1_FIGURE_BEGIN
+    {
+        /// <summary>
+        /// Indicates the figure will be filled by the FillGeometry method.
+        /// </summary>
+        FILLED = 0,
+
+        /// <summary>
+        /// Indicates the figure will not be filled by the FillGeometry method and will only consist
+        /// of an outline. Moreover, the bounds of a hollow figure are zero.
+        /// HOLLOW should be used for stroking, or for other geometry operations.
+        /// </summary>
+        HOLLOW = 1,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
+    /// Indicates whether the figure is open or closed on its end point.
+    /// </summary>
+    public enum class D2D1_FIGURE_END
+    {
+        /// <summary>
+        /// The figure is open.
+        /// </summary>
+        OPEN = 0,
+
+        /// <summary>
+        /// The figure is closed.
+        /// </summary>
+        CLOSED = 1,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
     };
 }
