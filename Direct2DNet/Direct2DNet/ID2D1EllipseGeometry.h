@@ -12,6 +12,7 @@ namespace Direct2DNet
     /// <summary>
     /// Represents an ellipse.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("E5DB6297-76DD-4CC3-B706-70A65BA064C0")]
     public ref class ID2D1EllipseGeometry : Direct2DNet::ID2D1Geometry
     {
     private:

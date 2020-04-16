@@ -14,6 +14,7 @@ namespace Direct2DNet
     /// <summary>
     /// Renders drawing instructions to a window.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("A804A679-80D3-43FE-93D5-75171B3427E2")]
     public ref class ID2D1HwndRenderTarget : ID2D1RenderTarget
     {
     internal:

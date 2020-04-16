@@ -25,129 +25,204 @@
     <Filter Include="소스 파일\Direct2DNet\Exception">
       <UniqueIdentifier>{7e513a06-a32f-4c7c-bfeb-fcaae05b437a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Direct2DNet\geometry">
+      <UniqueIdentifier>{5f25d83a-f412-4692-97e1-8d1c43d4882e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Direct2DNet\geometry">
+      <UniqueIdentifier>{3377ee43-12b1-414f-b028-7cdbad9ab451}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Direct2DNet\brush">
+      <UniqueIdentifier>{afb84328-f627-4d78-9760-54f7f6fa855b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Direct2DNet\brush">
+      <UniqueIdentifier>{78eb6f89-3621-473f-accc-aa8b6015776e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Direct2DNet\core">
+      <UniqueIdentifier>{5e6b960c-1d36-4467-bf8b-e52d6e35cac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Direct2DNet\core">
+      <UniqueIdentifier>{9ad2e470-a178-4564-854c-04f588cdc879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Direct2DNet\image">
+      <UniqueIdentifier>{1a839983-6d19-41cc-94c8-f1eb5c2db57c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Direct2DNet\image">
+      <UniqueIdentifier>{0a3b9d6a-1f9b-4f98-9eba-bf5d45856bc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Direct2DNet.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\D2DNetHeaders.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DNet\Exception\DXException.h">
       <Filter>헤더 파일\Direct2DNet\Exception</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DNet\IDirect2DObject.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1Factory.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1HwndRenderTarget.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\D2DSettings.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\D2DMath.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1Resource.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1Brush.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1RenderTarget.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1SolidColorBrush.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1StrokeStyle.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1RectangleGeometry.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
+    <ClInclude Include="Direct2DNet\ID2D1EllipseGeometry.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DNet\ID2D1Geometry.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1RoundedRectangleGeometry.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1EllipseGeometry.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1PathGeometry.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1NativeGeometryInfoContainer.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1TransformedGeometry.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DNet\ID2D1GeometryGroup.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1NativeGeometryInfoContainer.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1PathGeometry.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1RectangleGeometry.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1RoundedRectangleGeometry.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1TransformedGeometry.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Brush.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1SolidColorBrush.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Factory.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1HwndRenderTarget.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1RenderTarget.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Resource.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\IDirect2DObject.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DMath.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DNetHeaders.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DSettings.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1LinearGradientBrush.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1GradientStopCollection.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1RadialGradientBrush.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DError.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DImageLoader.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Image.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Bitmap.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1StrokeStyle.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DNet\ID2D1Mesh.h">
-      <Filter>헤더 파일\Direct2DNet</Filter>
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DNet_brush.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIDs.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DNet_core.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DNet_geometry.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DNet_image.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Direct2DNet.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="AssemblyInfo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Direct2DNet\Exception\DXException.cpp">
       <Filter>소스 파일\Direct2DNet\Exception</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1Factory.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1HwndRenderTarget.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1Resource.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1SolidColorBrush.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1RenderTarget.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1StrokeStyle.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1RectangleGeometry.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1RoundedRectangleGeometry.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1EllipseGeometry.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
     </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1Geometry.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1PathGeometry.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1TransformedGeometry.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
     </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1GeometryGroup.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1PathGeometry.cpp">
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1RectangleGeometry.cpp">
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1RoundedRectangleGeometry.cpp">
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1TransformedGeometry.cpp">
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1SolidColorBrush.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Factory.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1HwndRenderTarget.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1RenderTarget.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Resource.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1LinearGradientBrush.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1RadialGradientBrush.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\D2DError.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\D2DImageLoader.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1StrokeStyle.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
     </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1Mesh.cpp">
-      <Filter>소스 파일\Direct2DNet</Filter>
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Bitmap.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIDs.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -189,6 +189,7 @@ namespace Direct2DNet
     /// <summary>
     /// Represents a complex shape that may be composed of arcs, curves, and lines.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("B3FA79A9-E5C3-4A64-8223-245E966B155F")]
     public ref class ID2D1PathGeometry : Direct2DNet::ID2D1Geometry
     {
     private:

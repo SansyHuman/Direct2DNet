@@ -14,6 +14,7 @@ namespace Direct2DNet
     /// <summary>
     /// Represents a set of vertices that form a list of triangles.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("0B571E07-A5DB-48E2-B1DC-F1F180C67CDE")]
     public ref class ID2D1Mesh : Direct2DNet::ID2D1Resource
     {
     private:

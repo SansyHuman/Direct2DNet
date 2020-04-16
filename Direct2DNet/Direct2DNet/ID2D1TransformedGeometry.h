@@ -12,6 +12,7 @@ namespace Direct2DNet
     /// <summary>
     /// Represents a geometry that has been transformed.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("6608FAFB-12D7-4553-9E48-8FCF629F93EA")]
     public ref class ID2D1TransformedGeometry : Direct2DNet::ID2D1Geometry
     {
     private:

@@ -20,6 +20,7 @@ namespace Direct2DNet
     /// <summary>
     /// The root factory interface for all of D2D's objects.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("A804A679-80D3-43FE-93D5-75171B3427E2")]
     public ref class ID2D1Factory : public IDirect2DObject
     {
     internal:

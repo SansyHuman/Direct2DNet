@@ -10,6 +10,7 @@ namespace Direct2DNet
     /// <summary>
     /// Describes a rounded rectangle.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("C3BD849A-0933-4C56-9C7B-63A9022B61F4")]
     public ref class ID2D1RoundedRectangleGeometry : Direct2DNet::ID2D1Geometry
     {
     private:

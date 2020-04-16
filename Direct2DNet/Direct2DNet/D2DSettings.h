@@ -1560,4 +1560,172 @@ namespace Direct2DNet
         [System::ObsoleteAttribute("Do not use this value.", true)]
         FORCE_DWORD = 0xffffffff
     };
+
+    /// <summary>
+    /// Contains the position and color of a gradient stop.
+    /// </summary>
+    public value struct D2D1_GRADIENT_STOP
+    {
+        float position;
+        Direct2DNet::D2D1_COLOR_F color;
+
+        D2D1_GRADIENT_STOP(float position, Direct2DNet::D2D1_COLOR_F color)
+            : position(position), color(color) {}
+
+        static operator ::D2D1_GRADIENT_STOP(Direct2DNet::D2D1_GRADIENT_STOP %rhs)
+        {
+            ::D2D1_GRADIENT_STOP value;
+            value.position = rhs.position;
+            value.color = static_cast<::D2D1_COLOR_F>(rhs.color);
+
+            return value;
+        }
+
+        static operator Direct2DNet::D2D1_GRADIENT_STOP(::D2D1_GRADIENT_STOP %rhs)
+        {
+            Direct2DNet::D2D1_GRADIENT_STOP value;
+            value.position = rhs.position;
+            value.color = static_cast<Direct2DNet::D2D1_COLOR_F>(rhs.color);
+
+            return value;
+        }
+    };
+
+    /// <summary>
+    /// Contains the starting point and endpoint of the gradient axis for an
+    /// ID2D1LinearGradientBrush.
+    /// </summary>
+    public value struct D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES
+    {
+        Direct2DNet::D2D1_POINT_2F startPoint;
+        Direct2DNet::D2D1_POINT_2F endPoint;
+
+        D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES(
+            Direct2DNet::D2D1_POINT_2F startPoint,
+            Direct2DNet::D2D1_POINT_2F endPoint
+        ) : startPoint(startPoint), endPoint(endPoint) {}
+
+        static operator ::D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES(Direct2DNet::D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES %rhs)
+        {
+            ::D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES value;
+            value.startPoint = static_cast<::D2D1_POINT_2F>(rhs.startPoint);
+            value.endPoint = static_cast<::D2D1_POINT_2F>(rhs.endPoint);
+
+            return value;
+        }
+
+        static operator Direct2DNet::D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES(::D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES %rhs)
+        {
+            Direct2DNet::D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES value;
+            value.startPoint = static_cast<Direct2DNet::D2D1_POINT_2F>(rhs.startPoint);
+            value.endPoint = static_cast<Direct2DNet::D2D1_POINT_2F>(rhs.endPoint);
+
+            return value;
+        }
+    };
+
+    /// <summary>
+    /// Contains the gradient origin offset and the size and position of the gradient
+    /// ellipse for an ID2D1RadialGradientBrush.
+    /// </summary>
+    public value struct D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES
+    {
+        /// <summary>
+        /// In the brush's coordinate space, the center of the gradient ellipse.
+        /// </summary>
+        Direct2DNet::D2D1_POINT_2F center;
+
+        /// <summary>
+        /// In the brush's coordinate space, the offset of the gradient origin relative to
+        /// the gradient ellipse's center.
+        /// </summary>
+        Direct2DNet::D2D1_POINT_2F gradientOriginOffset;
+
+        /// <summary>
+        /// In the brush's coordinate space, the x-radius of the gradient ellipse.
+        /// </summary>
+        float radiusX;
+
+        /// <summary>
+        /// In the brush's coordinate space, the y-radius of the gradient ellipse.
+        /// </summary>
+        float radiusY;
+
+        D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES(
+            Direct2DNet::D2D1_POINT_2F center,
+            Direct2DNet::D2D1_POINT_2F gradientOriginOffset,
+            float radiusX,
+            float radiusY
+        ) : center(center), gradientOriginOffset(gradientOriginOffset), radiusX(radiusX), radiusY(radiusY) {}
+
+        static operator ::D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES(Direct2DNet::D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES %rhs)
+        {
+            ::D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES value;
+            value.center = static_cast<::D2D1_POINT_2F>(rhs.center);
+            value.gradientOriginOffset = static_cast<::D2D1_POINT_2F>(rhs.gradientOriginOffset);
+            value.radiusX = rhs.radiusX;
+            value.radiusY = rhs.radiusY;
+
+            return value;
+        }
+
+        static operator Direct2DNet::D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES(::D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES %rhs)
+        {
+            Direct2DNet::D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES value;
+            value.center = static_cast<Direct2DNet::D2D1_POINT_2F>(rhs.center);
+            value.gradientOriginOffset = static_cast<Direct2DNet::D2D1_POINT_2F>(rhs.gradientOriginOffset);
+            value.radiusX = rhs.radiusX;
+            value.radiusY = rhs.radiusY;
+
+            return value;
+        }
+    };
+
+    /// <summary>
+    /// This determines what gamma is used for interpolation/blending.
+    /// </summary>
+    public enum class D2D1_GAMMA
+    {
+
+        /// <summary>
+        /// Colors are manipulated in 2.2 gamma color space.
+        /// </summary>
+        GAMMA_2_2 = 0,
+
+        /// <summary>
+        /// Colors are manipulated in 1.0 gamma color space.
+        /// </summary>
+        GAMMA_1_0 = 1,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
+
+    /// <summary>
+    /// Enum which describes how to sample from a source outside its base tile.
+    /// </summary>
+    public enum class D2D1_EXTEND_MODE
+    {
+
+        /// <summary>
+        /// Extend the edges of the source out by clamping sample points outside the source
+        /// to the edges.
+        /// </summary>
+        CLAMP = 0,
+
+        /// <summary>
+        /// The base tile is drawn untransformed and the remainder are filled by repeating
+        /// the base tile.
+        /// </summary>
+        WRAP = 1,
+
+        /// <summary>
+        /// The same as wrap, but alternate tiles are flipped  The base tile is drawn
+        /// untransformed.
+        /// </summary>
+        MIRROR = 2,
+
+        [System::ObsoleteAttribute("Do not use this value.", true)]
+        FORCE_DWORD = 0xffffffff
+    };
 }

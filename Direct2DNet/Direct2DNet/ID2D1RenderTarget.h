@@ -11,6 +11,9 @@ namespace Direct2DNet
 {
     ref class ID2D1Brush;
     ref class ID2D1SolidColorBrush;
+    ref class ID2D1GradientStopCollection;
+    ref class ID2D1LinearGradientBrush;
+    ref class ID2D1Mesh;
     ref class ID2D1StrokeStyle;
     ref class ID2D1Geometry;
 
@@ -19,12 +22,78 @@ namespace Direct2DNet
     /// from <see cref="Direct2DNet::ID2D1RenderTarget"/> render the drawing commands
     /// they receive in different ways.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("BDD55256-ED4C-4B9D-B340-1E5F8D811682")]
     public ref class ID2D1RenderTarget abstract : Direct2DNet::ID2D1Resource
     {
     protected:
         ID2D1RenderTarget(Direct2DNet::ID2D1Factory ^factory) : ID2D1Resource(factory) {}
 
     public:
+        /// <summary>
+        /// Gets <see cref="Direct2DNet::ID2D1SolidColorBrush"/> instance of the <paramref name="color"/>.
+        /// </summary>
+        /// <exception cref="Direct2DNet::Exception::DxException">
+        /// Thrown when it failed to create the brush.
+        /// </exception>
+        Direct2DNet::ID2D1SolidColorBrush ^CreateSolidColorBrush(Direct2DNet::D2D1_COLOR_F color);
+
+        /// <summary>
+        /// Gets <see cref="Direct2DNet::ID2D1GradientStopCollection"/> instance.
+        /// A gradient stop collection represents a set of stops in an ideal unit length.
+        /// This is the source resource for a linear gradient and radial gradient brush.
+        /// </summary>
+        /// <param name="colorInterpolationGamma">Specifies which space the color
+        /// interpolation occurs in.</param>
+        /// <param name="extendMode">Specifies how the gradient will be extended outside of
+        /// the unit length.</param>
+        /// <exception cref="Direct2DNet::Exception::DxException">
+        /// Thrown when it failed to create the collection.
+        /// </exception>
+        Direct2DNet::ID2D1GradientStopCollection ^CreateGradientStopCollection(
+            array<Direct2DNet::D2D1_GRADIENT_STOP> ^gradientStops,
+            [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_GAMMA> colorInterpolationGamma,
+            [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_EXTEND_MODE> extendMode
+        );
+
+        /// <summary>
+        /// Gets <see cref="Direct2DNet::ID2D1LinearGradientBrush"/> instance.
+        /// </summary>
+        /// <param name="startPoint">Start point of the gradient in local coordinate space.</param>
+        /// <param name="endPoint">End point of the gradient in local coordinate space.</param>
+        /// <param name="gradientStopCollection"><see cref="Direct2DNet::ID2D1GradientStopCollection"/>
+        /// used to draw.</param>
+        /// <exception cref="Direct2DNet::Exception::DxException">
+        /// Thrown when it failed to create the brush.
+        /// </exception>
+        Direct2DNet::ID2D1LinearGradientBrush ^CreateLinearGradientBrush(
+            Direct2DNet::D2D1_POINT_2F startPoint,
+            Direct2DNet::D2D1_POINT_2F endPoint,
+            Direct2DNet::ID2D1GradientStopCollection ^gradientStopCollection
+        );
+
+        /// <summary>
+        /// Gets <see cref="Direct2DNet::ID2D1LinearGradientBrush"/> instance.
+        /// </summary>
+        /// <param name="startPoint">Start point of the gradient in local coordinate space.</param>
+        /// <param name="endPoint">End point of the gradient in local coordinate space.</param>
+        /// <param name="gradientStopCollection"><see cref="Direct2DNet::ID2D1GradientStopCollection"/>
+        /// used to draw.</param>
+        /// <exception cref="Direct2DNet::Exception::DxException">
+        /// Thrown when it failed to create the brush.
+        /// </exception>
+        Direct2DNet::ID2D1LinearGradientBrush ^CreateLinearGradientBrush(
+            Direct2DNet::D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES properties,
+            Direct2DNet::ID2D1GradientStopCollection ^gradientStopCollection
+        );
+
+        /// <summary>
+        /// Gets <see cref="Direct2DNet::ID2D1Mesh"/> instance.
+        /// </summary>
+        /// <exception cref="Direct2DNet::Exception::DxException">
+        /// Thrown when it failed to create the mesh.
+        /// </exception>
+        Direct2DNet::ID2D1Mesh ^CreateMesh();
+
         /// <summary>
         /// Draws a line using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>
         /// and with <paramref name="strokeStyle"/>.
@@ -41,6 +110,72 @@ namespace Direct2DNet
             Direct2DNet::ID2D1Brush ^brush,
             [OptionalAttribute] System::Nullable<float> strokeWidth,
             [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
+        );
+
+        /// <summary>
+        /// Draws the rectangle using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>
+        /// and with <paramref name="strokeStyle"/>.
+        /// </summary>
+        /// <param name="strokeWidth">Width of the stroke in pixels.
+        /// The default value is 1.0.</param>
+        /// <param name="strokeStyle">Stroke style applied to the stroke.
+        /// This value can be null. The default value is null.</param>
+        void DrawRectangle(
+            Direct2DNet::D2D1_RECT_F rect,
+            Direct2DNet::ID2D1Brush ^brush,
+            [OptionalAttribute] System::Nullable<float> strokeWidth,
+            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
+        );
+
+        /// <summary>
+        /// Fills the rectangle using the <paramref name="brush"/>.
+        /// </summary>
+        void FillRectangle(Direct2DNet::D2D1_RECT_F rect, Direct2DNet::ID2D1Brush ^brush);
+
+        /// <summary>
+        /// Draws the rounded rectangle using the <paramref name="brush"/> in width
+        /// <paramref name="strokeWidth"/> and with <paramref name="strokeStyle"/>.
+        /// </summary>
+        /// <param name="strokeWidth">Width of the stroke in pixels.
+        /// The default value is 1.0.</param>
+        /// <param name="strokeStyle">Stroke style applied to the stroke.
+        /// This value can be null. The default value is null.</param>
+        void DrawRoundedRectangle(
+            Direct2DNet::D2D1_ROUNDED_RECT roundedRect,
+            Direct2DNet::ID2D1Brush ^brush,
+            [OptionalAttribute] System::Nullable<float> strokeWidth,
+            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
+        );
+
+        /// <summary>
+        /// Fills the rounded rectangle using the <paramref name="brush"/>.
+        /// </summary>
+        void FillRoundedRectangle(
+            Direct2DNet::D2D1_ROUNDED_RECT roundedRect,
+            Direct2DNet::ID2D1Brush ^brush
+        );
+
+        /// <summary>
+        /// Draws the ellipse using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>
+        /// and with <paramref name="strokeStyle"/>.
+        /// </summary>
+        /// <param name="strokeWidth">Width of the stroke in pixels.
+        /// The default value is 1.0.</param>
+        /// <param name="strokeStyle">Stroke style applied to the stroke.
+        /// This value can be null. The default value is null.</param>
+        void DrawEllipse(
+            Direct2DNet::D2D1_ELLIPSE ellipse,
+            Direct2DNet::ID2D1Brush ^brush,
+            [OptionalAttribute] System::Nullable<float> strokeWidth,
+            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
+        );
+
+        /// <summary>
+        /// Fills the ellipse using the <paramref name="brush"/>.
+        /// </summary>
+        void FillEllipse(
+            Direct2DNet::D2D1_ELLIPSE ellipse,
+            Direct2DNet::ID2D1Brush ^brush
         );
 
         /// <summary>
@@ -67,6 +202,37 @@ namespace Direct2DNet
             Direct2DNet::ID2D1Geometry ^geometry,
             Direct2DNet::ID2D1Brush ^brush
         );
+
+        /// <summary>
+        /// Fills a mesh. Since meshes can only render aliased content, the render target
+        /// antialiasing mode must be set to aliased.
+        /// </summary>
+        void FillMesh(
+            Direct2DNet::ID2D1Mesh ^mesh,
+            Direct2DNet::ID2D1Brush ^brush
+        );
+
+        /// <summary>
+        /// Gets and sets the transformation matrix of the render target.
+        /// </summary>
+        property Direct2DNet::D2D1_MATRIX_3X2_F Transform
+        {
+            Direct2DNet::D2D1_MATRIX_3X2_F get()
+            {
+                ::D2D1_MATRIX_3X2_F temp;
+                pin_ptr<::D2D1_MATRIX_3X2_F> pTemp = &temp;
+                ((::ID2D1RenderTarget *)m_pResource)->GetTransform((::D2D1_MATRIX_3X2_F *)pTemp);
+                pTemp = nullptr;
+                return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(temp);
+            }
+
+            void set(Direct2DNet::D2D1_MATRIX_3X2_F value)
+            {
+                ((::ID2D1RenderTarget *)m_pResource)->SetTransform(
+                    static_cast<::D2D1_MATRIX_3X2_F>(value)
+                );
+            }
+        }
 
         /// <summary>
         /// Gets and sets the antialias mode of the render target.
@@ -101,6 +267,11 @@ namespace Direct2DNet
                 ((::ID2D1RenderTarget *)m_pResource)->SetTextAntialiasMode((::D2D1_TEXT_ANTIALIAS_MODE)((int)value));
             }
         }
+
+        /// <summary>
+        /// Clears the render target with the color <paramref name="clearColor"/>.
+        /// </summary>
+        void Clear(Direct2DNet::D2D1_COLOR_F clearColor);
 
         /// <summary>
         /// Start drawing on this render target. Draw calls can only be issued between a
@@ -251,106 +422,5 @@ namespace Direct2DNet
         /// to be supported.
         /// </summary>
         bool IsSupported(Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES properties);
-
-        /// <summary>
-        /// Gets <see cref="Direct2DNet::ID2D1SolidColorBrush"/> instance of the <paramref name="color"/>.
-        /// </summary>
-        /// <exception cref="Direct2DNet::Exception::DxException">
-        /// Thrown when it failed to create the brush.
-        /// </exception>
-        Direct2DNet::ID2D1SolidColorBrush ^CreateSolidColorBrush(Direct2DNet::D2D1_COLOR_F color);
-
-        /// <summary>
-        /// Draws the rectangle using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>
-        /// and with <paramref name="strokeStyle"/>.
-        /// </summary>
-        /// <param name="strokeWidth">Width of the stroke in pixels.
-        /// The default value is 1.0.</param>
-        /// <param name="strokeStyle">Stroke style applied to the stroke.
-        /// This value can be null. The default value is null.</param>
-        void DrawRectangle(
-            Direct2DNet::D2D1_RECT_F rect,
-            Direct2DNet::ID2D1Brush ^brush,
-            [OptionalAttribute] System::Nullable<float> strokeWidth,
-            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
-        );
-
-        /// <summary>
-        /// Fills the rectangle using the <paramref name="brush"/>.
-        /// </summary>
-        void FillRectangle(Direct2DNet::D2D1_RECT_F rect, Direct2DNet::ID2D1Brush ^brush);
-
-        /// <summary>
-        /// Draws the rounded rectangle using the <paramref name="brush"/> in width
-        /// <paramref name="strokeWidth"/> and with <paramref name="strokeStyle"/>.
-        /// </summary>
-        /// <param name="strokeWidth">Width of the stroke in pixels.
-        /// The default value is 1.0.</param>
-        /// <param name="strokeStyle">Stroke style applied to the stroke.
-        /// This value can be null. The default value is null.</param>
-        void DrawRoundedRectangle(
-            Direct2DNet::D2D1_ROUNDED_RECT roundedRect,
-            Direct2DNet::ID2D1Brush ^brush,
-            [OptionalAttribute] System::Nullable<float> strokeWidth,
-            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
-        );
-
-        /// <summary>
-        /// Fills the rounded rectangle using the <paramref name="brush"/>.
-        /// </summary>
-        void FillRoundedRectangle(
-            Direct2DNet::D2D1_ROUNDED_RECT roundedRect,
-            Direct2DNet::ID2D1Brush ^brush
-        );
-
-        /// <summary>
-        /// Draws the ellipse using the <paramref name="brush"/> in width <paramref name="strokeWidth"/>
-        /// and with <paramref name="strokeStyle"/>.
-        /// </summary>
-        /// <param name="strokeWidth">Width of the stroke in pixels.
-        /// The default value is 1.0.</param>
-        /// <param name="strokeStyle">Stroke style applied to the stroke.
-        /// This value can be null. The default value is null.</param>
-        void DrawEllipse(
-            Direct2DNet::D2D1_ELLIPSE ellipse,
-            Direct2DNet::ID2D1Brush ^brush,
-            [OptionalAttribute] System::Nullable<float> strokeWidth,
-            [OptionalAttribute] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
-        );
-
-        /// <summary>
-        /// Fills the ellipse using the <paramref name="brush"/>.
-        /// </summary>
-        void FillEllipse(
-            Direct2DNet::D2D1_ELLIPSE ellipse,
-            Direct2DNet::ID2D1Brush ^brush
-        );
-
-        /// <summary>
-        /// Gets and sets the transformation matrix of the render target.
-        /// </summary>
-        property Direct2DNet::D2D1_MATRIX_3X2_F Transform
-        {
-            Direct2DNet::D2D1_MATRIX_3X2_F get()
-            {
-                ::D2D1_MATRIX_3X2_F temp;
-                pin_ptr<::D2D1_MATRIX_3X2_F> pTemp = &temp;
-                ((::ID2D1RenderTarget *)m_pResource)->GetTransform((::D2D1_MATRIX_3X2_F *)pTemp);
-                pTemp = nullptr;
-                return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(temp);
-            }
-
-            void set(Direct2DNet::D2D1_MATRIX_3X2_F value)
-            {
-                ((::ID2D1RenderTarget *)m_pResource)->SetTransform(
-                    static_cast<::D2D1_MATRIX_3X2_F>(value)
-                );
-            }
-        }
-
-        /// <summary>
-        /// Clears the render target with the color <paramref name="clearColor"/>.
-        /// </summary>
-        void Clear(Direct2DNet::D2D1_COLOR_F clearColor);
     };
 }

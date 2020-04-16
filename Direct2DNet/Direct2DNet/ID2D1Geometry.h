@@ -21,6 +21,7 @@ namespace Direct2DNet
     /// manipulating and measuring geometric shapes. Interfaces that inherit from
     /// ID2D1Geometry define specific shapes.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("E5DB6297-76DD-4CC3-B706-70A65BA064C0")]
     public ref class ID2D1Geometry abstract : Direct2DNet::ID2D1Resource
     {
     protected:

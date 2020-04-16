@@ -13,6 +13,7 @@ namespace Direct2DNet
     /// <summary>
     /// Paints an area with a solid color.
     /// </summary>
+    [System::Runtime::InteropServices::GuidAttribute("9E74DE10-214D-44BB-9654-C08581BB4D18")]
     public ref class ID2D1SolidColorBrush : Direct2DNet::ID2D1Brush
     {
     internal:
