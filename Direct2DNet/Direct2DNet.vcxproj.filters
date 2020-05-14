@@ -49,6 +49,36 @@
     <Filter Include="소스 파일\Direct2DNet\image">
       <UniqueIdentifier>{0a3b9d6a-1f9b-4f98-9eba-bf5d45856bc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\DWriteNet">
+      <UniqueIdentifier>{e4dbe0e6-808e-42bd-b06d-bde91b5cb065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DWriteNet">
+      <UniqueIdentifier>{db617762-1e29-4358-90ac-fa89f536f661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DWriteNet\core">
+      <UniqueIdentifier>{2a857298-0fac-4fbd-a07c-840001cd490e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DWriteNet\Exception">
+      <UniqueIdentifier>{e51d3673-5230-44d2-913a-9a6512eecd71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DWriteNet\core">
+      <UniqueIdentifier>{9c4fdde8-dca4-495d-a4af-9fb741246bf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DWriteNet\Exception">
+      <UniqueIdentifier>{e1cab216-d2c5-42ba-a929-1dfd1a9a78a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DWriteNet\text">
+      <UniqueIdentifier>{c399ba8c-6e4c-4bd4-849b-b1548d6c11e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DWriteNet\text">
+      <UniqueIdentifier>{cb5d6172-97e5-44b4-936a-b8c7e3790c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DWriteNet\font">
+      <UniqueIdentifier>{894bf461-8533-4655-9a74-e58e024455c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DWriteNet\font">
+      <UniqueIdentifier>{2e35be13-3ffb-4b8b-87c9-b812e746aaf7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -153,6 +183,42 @@
     <ClInclude Include="Direct2DNet\D2DNet_image.h">
       <Filter>헤더 파일\Direct2DNet\image</Filter>
     </ClInclude>
+    <ClInclude Include="Namespace.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteFactory.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\DWNetHeaders.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDirectWriteObject.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\Exception\DWriteException.h">
+      <Filter>헤더 파일\DWriteNet\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\DWriteSettings.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteTextFormat.h">
+      <Filter>헤더 파일\DWriteNet\text</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\DWNet_core.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\DWNet_text.h">
+      <Filter>헤더 파일\DWriteNet\text</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1BitmapBrush.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Layer.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1DCRenderTarget.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -223,6 +289,27 @@
     </ClCompile>
     <ClCompile Include="GUIDs.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\Exception\DWriteException.cpp">
+      <Filter>소스 파일\DWriteNet\Exception</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteFactory.cpp">
+      <Filter>소스 파일\DWriteNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteTextFormat.cpp">
+      <Filter>소스 파일\DWriteNet\text</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1BitmapBrush.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Layer.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\D2DSettings.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1DCRenderTarget.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

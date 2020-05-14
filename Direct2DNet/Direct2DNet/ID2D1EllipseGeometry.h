@@ -5,29 +5,32 @@
 #include "D2DSettings.h"
 #include "ID2D1Geometry.h"
 
-namespace Direct2DNet
+namespace D2DNet
 {
-    // Done.
-
-    /// <summary>
-    /// Represents an ellipse.
-    /// </summary>
-    [System::Runtime::InteropServices::GuidAttribute("E5DB6297-76DD-4CC3-B706-70A65BA064C0")]
-    public ref class ID2D1EllipseGeometry : Direct2DNet::ID2D1Geometry
+    namespace Direct2DNet
     {
-    private:
-        Direct2DNet::D2D1_ELLIPSE m_ellipse;
+        // Done.
 
-    internal:
-        ID2D1EllipseGeometry(Direct2DNet::ID2D1Factory ^factory, Direct2DNet::D2D1_ELLIPSE %ellipse);
-
-    public:
-        property Direct2DNet::D2D1_ELLIPSE Ellipse
+        /// <summary>
+        /// Represents an ellipse.
+        /// </summary>
+        [System::Runtime::InteropServices::GuidAttribute("E5DB6297-76DD-4CC3-B706-70A65BA064C0")]
+        public ref class ID2D1EllipseGeometry : Direct2DNet::ID2D1Geometry
         {
-            Direct2DNet::D2D1_ELLIPSE get()
+        private:
+            Direct2DNet::D2D1_ELLIPSE m_ellipse;
+
+        internal:
+            ID2D1EllipseGeometry(Direct2DNet::ID2D1Factory ^factory, Direct2DNet::D2D1_ELLIPSE %ellipse);
+
+        public:
+            property Direct2DNet::D2D1_ELLIPSE Ellipse
             {
-                return m_ellipse;
+                Direct2DNet::D2D1_ELLIPSE get()
+                {
+                    return m_ellipse;
+                }
             }
-        }
-    };
+        };
+    }
 }

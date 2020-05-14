@@ -5,27 +5,30 @@
 #include "D2DSettings.h"
 #include "ID2D1Geometry.h"
 
-namespace Direct2DNet
+namespace D2DNet
 {
-    /// <summary>
-    /// Describes a rounded rectangle.
-    /// </summary>
-    [System::Runtime::InteropServices::GuidAttribute("C3BD849A-0933-4C56-9C7B-63A9022B61F4")]
-    public ref class ID2D1RoundedRectangleGeometry : Direct2DNet::ID2D1Geometry
+    namespace Direct2DNet
     {
-    private:
-        Direct2DNet::D2D1_ROUNDED_RECT m_rect;
-
-    internal:
-        ID2D1RoundedRectangleGeometry(Direct2DNet::ID2D1Factory ^factory, Direct2DNet::D2D1_ROUNDED_RECT %roundedRectangle);
-
-    public:
-        property Direct2DNet::D2D1_ROUNDED_RECT RoundedRect
+        /// <summary>
+        /// Describes a rounded rectangle.
+        /// </summary>
+        [System::Runtime::InteropServices::GuidAttribute("C3BD849A-0933-4C56-9C7B-63A9022B61F4")]
+        public ref class ID2D1RoundedRectangleGeometry : Direct2DNet::ID2D1Geometry
         {
-            Direct2DNet::D2D1_ROUNDED_RECT get()
+        private:
+            Direct2DNet::D2D1_ROUNDED_RECT m_rect;
+
+        internal:
+            ID2D1RoundedRectangleGeometry(Direct2DNet::ID2D1Factory ^factory, Direct2DNet::D2D1_ROUNDED_RECT %roundedRectangle);
+
+        public:
+            property Direct2DNet::D2D1_ROUNDED_RECT RoundedRect
             {
-                return m_rect;
+                Direct2DNet::D2D1_ROUNDED_RECT get()
+                {
+                    return m_rect;
+                }
             }
-        }
-    };
+        };
+    }
 }

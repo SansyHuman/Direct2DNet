@@ -5,38 +5,41 @@
 #include "D2DSettings.h"
 #include "ID2D1Brush.h"
 
-namespace Direct2DNet
+namespace D2DNet
 {
-    // Done.
-    ref class ID2D1RenderTarget;
-
-    /// <summary>
-    /// Paints an area with a solid color.
-    /// </summary>
-    [System::Runtime::InteropServices::GuidAttribute("9E74DE10-214D-44BB-9654-C08581BB4D18")]
-    public ref class ID2D1SolidColorBrush : Direct2DNet::ID2D1Brush
+    namespace Direct2DNet
     {
-    internal:
-        ID2D1SolidColorBrush(Direct2DNet::ID2D1RenderTarget ^renderTarget, Direct2DNet::D2D1_COLOR_F %color);
+        // Done.
+        ref class ID2D1RenderTarget;
 
-    public:
         /// <summary>
-        /// Gets and sets the color of the brush.
+        /// Paints an area with a solid color.
         /// </summary>
-        property Direct2DNet::D2D1_COLOR_F Color
+        [System::Runtime::InteropServices::GuidAttribute("9E74DE10-214D-44BB-9654-C08581BB4D18")]
+        public ref class ID2D1SolidColorBrush : Direct2DNet::ID2D1Brush
         {
-            Direct2DNet::D2D1_COLOR_F get()
-            {
-                return static_cast<Direct2DNet::D2D1_COLOR_F>(
-                    ((::ID2D1SolidColorBrush *)m_pResource)->GetColor());
-            }
+        internal:
+            ID2D1SolidColorBrush(Direct2DNet::ID2D1RenderTarget ^renderTarget, Direct2DNet::D2D1_COLOR_F %color);
 
-            void set(Direct2DNet::D2D1_COLOR_F value)
+        public:
+            /// <summary>
+            /// Gets and sets the color of the brush.
+            /// </summary>
+            property Direct2DNet::D2D1_COLOR_F Color
             {
-                ((::ID2D1SolidColorBrush *)m_pResource)->SetColor(
-                    static_cast<::D2D1_COLOR_F>(value)
-                );
+                Direct2DNet::D2D1_COLOR_F get()
+                {
+                    return static_cast<Direct2DNet::D2D1_COLOR_F>(
+                        ((::ID2D1SolidColorBrush *)m_pResource)->GetColor());
+                }
+
+                void set(Direct2DNet::D2D1_COLOR_F value)
+                {
+                    ((::ID2D1SolidColorBrush *)m_pResource)->SetColor(
+                        static_cast<::D2D1_COLOR_F>(value)
+                    );
+                }
             }
-        }
-    };
+        };
+    }
 }

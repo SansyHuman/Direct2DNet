@@ -5,29 +5,32 @@
 #include "D2DSettings.h"
 #include "ID2D1Geometry.h"
 
-namespace Direct2DNet
+namespace D2DNet
 {
-    // Done.
-
-    /// <summary>
-    /// Describes a two-dimensional rectangle.
-    /// </summary>
-    [System::Runtime::InteropServices::GuidAttribute("BF328DCA-243C-4DE4-97FB-E2D75FF0916E")]
-    public ref class ID2D1RectangleGeometry : Direct2DNet::ID2D1Geometry
+    namespace Direct2DNet
     {
-    private:
-        Direct2DNet::D2D1_RECT_F m_rect;
+        // Done.
 
-    internal:
-        ID2D1RectangleGeometry(Direct2DNet::ID2D1Factory ^factory, Direct2DNet::D2D1_RECT_F %rectangle);
-
-    public:
-        property Direct2DNet::D2D1_RECT_F Rect
+        /// <summary>
+        /// Describes a two-dimensional rectangle.
+        /// </summary>
+        [System::Runtime::InteropServices::GuidAttribute("BF328DCA-243C-4DE4-97FB-E2D75FF0916E")]
+        public ref class ID2D1RectangleGeometry : Direct2DNet::ID2D1Geometry
         {
-            Direct2DNet::D2D1_RECT_F get()
+        private:
+            Direct2DNet::D2D1_RECT_F m_rect;
+
+        internal:
+            ID2D1RectangleGeometry(Direct2DNet::ID2D1Factory ^factory, Direct2DNet::D2D1_RECT_F %rectangle);
+
+        public:
+            property Direct2DNet::D2D1_RECT_F Rect
             {
-                return m_rect;
+                Direct2DNet::D2D1_RECT_F get()
+                {
+                    return m_rect;
+                }
             }
-        }
-    };
+        };
+    }
 }

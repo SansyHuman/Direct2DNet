@@ -6,134 +6,137 @@
 #include "ID2D1Brush.h"
 #include "ID2D1GradientStopCollection.h"
 
-namespace Direct2DNet
+namespace D2DNet
 {
-    ref class ID2D1RenderTarget;
-
-    // Done.
-
-    /// <summary>
-    /// Paints an area with a radial gradient.
-    /// </summary>
-    [System::Runtime::InteropServices::GuidAttribute("1C8279B3-DE5C-4E89-97C3-6D49B5B182B7")]
-    public ref class ID2D1RadialGradientBrush : Direct2DNet::ID2D1Brush
+    namespace Direct2DNet
     {
-    private:
-        Direct2DNet::ID2D1GradientStopCollection ^m_collection;
+        ref class ID2D1RenderTarget;
 
-    internal:
-        ID2D1RadialGradientBrush(
-            Direct2DNet::ID2D1RenderTarget ^renderTarget,
-            Direct2DNet::D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES %properties,
-            Direct2DNet::ID2D1GradientStopCollection ^collection
-        );
+        // Done.
 
-    public:
         /// <summary>
-        /// Gets and sets the center of the radial gradient in local coordinate space.
+        /// Paints an area with a radial gradient.
         /// </summary>
-        property Direct2DNet::D2D1_POINT_2F Center
+        [System::Runtime::InteropServices::GuidAttribute("1C8279B3-DE5C-4E89-97C3-6D49B5B182B7")]
+        public ref class ID2D1RadialGradientBrush : Direct2DNet::ID2D1Brush
         {
-            Direct2DNet::D2D1_POINT_2F get()
+        private:
+            Direct2DNet::ID2D1GradientStopCollection ^m_collection;
+
+        internal:
+            ID2D1RadialGradientBrush(
+                Direct2DNet::ID2D1RenderTarget ^renderTarget,
+                Direct2DNet::D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES %properties,
+                Direct2DNet::ID2D1GradientStopCollection ^collection
+            );
+
+        public:
+            /// <summary>
+            /// Gets and sets the center of the radial gradient in local coordinate space.
+            /// </summary>
+            property Direct2DNet::D2D1_POINT_2F Center
             {
-                return static_cast<Direct2DNet::D2D1_POINT_2F>(
-                    ((::ID2D1RadialGradientBrush *)m_pResource)->GetCenter()
+                Direct2DNet::D2D1_POINT_2F get()
+                {
+                    return static_cast<Direct2DNet::D2D1_POINT_2F>(
+                        ((::ID2D1RadialGradientBrush *)m_pResource)->GetCenter()
+                        );
+                }
+
+                void set(Direct2DNet::D2D1_POINT_2F value)
+                {
+                    ((::ID2D1RadialGradientBrush *)m_pResource)->SetCenter(
+                        static_cast<::D2D1_POINT_2F>(value)
                     );
+                }
             }
 
-            void set(Direct2DNet::D2D1_POINT_2F value)
+            /// <summary>
+            /// Gets and sets the offset of the origin relative to the radial gradient center.
+            /// </summary>
+            property Direct2DNet::D2D1_POINT_2F GradientOriginOffset
             {
-                ((::ID2D1RadialGradientBrush *)m_pResource)->SetCenter(
-                    static_cast<::D2D1_POINT_2F>(value)
-                );
-            }
-        }
+                Direct2DNet::D2D1_POINT_2F get()
+                {
+                    return static_cast<Direct2DNet::D2D1_POINT_2F>(
+                        ((::ID2D1RadialGradientBrush *)m_pResource)->GetGradientOriginOffset()
+                        );
+                }
 
-        /// <summary>
-        /// Gets and sets the offset of the origin relative to the radial gradient center.
-        /// </summary>
-        property Direct2DNet::D2D1_POINT_2F GradientOriginOffset
-        {
-            Direct2DNet::D2D1_POINT_2F get()
-            {
-                return static_cast<Direct2DNet::D2D1_POINT_2F>(
-                    ((::ID2D1RadialGradientBrush *)m_pResource)->GetGradientOriginOffset()
+                void set(Direct2DNet::D2D1_POINT_2F value)
+                {
+                    ((::ID2D1RadialGradientBrush *)m_pResource)->SetGradientOriginOffset(
+                        static_cast<::D2D1_POINT_2F>(value)
                     );
+                }
             }
 
-            void set(Direct2DNet::D2D1_POINT_2F value)
+            /// <summary>
+            /// Gets and sets the x-radius of the gradient ellipse.
+            /// </summary>
+            property float RadiusX
             {
-                ((::ID2D1RadialGradientBrush *)m_pResource)->SetGradientOriginOffset(
-                    static_cast<::D2D1_POINT_2F>(value)
-                );
-            }
-        }
+                float get()
+                {
+                    return ((::ID2D1RadialGradientBrush *)m_pResource)->GetRadiusX();
+                }
 
-        /// <summary>
-        /// Gets and sets the x-radius of the gradient ellipse.
-        /// </summary>
-        property float RadiusX
-        {
-            float get()
+                void set(float value)
+                {
+                    ((::ID2D1RadialGradientBrush *)m_pResource)->SetRadiusX(value);
+                }
+            }
+
+            /// <summary>
+            /// Gets and sets the y-radius of the gradient ellipse.
+            /// </summary>
+            property float RadiusY
             {
-                return ((::ID2D1RadialGradientBrush *)m_pResource)->GetRadiusX();
+                float get()
+                {
+                    return ((::ID2D1RadialGradientBrush *)m_pResource)->GetRadiusY();
+                }
+
+                void set(float value)
+                {
+                    ((::ID2D1RadialGradientBrush *)m_pResource)->SetRadiusY(value);
+                }
             }
 
-            void set(float value)
+            /// <summary>
+            /// Gets and sets the gradient ellipse.
+            /// </summary>
+            property Direct2DNet::D2D1_ELLIPSE GradientEllipse
             {
-                ((::ID2D1RadialGradientBrush *)m_pResource)->SetRadiusX(value);
-            }
-        }
+                Direct2DNet::D2D1_ELLIPSE get()
+                {
+                    Direct2DNet::D2D1_ELLIPSE value;
+                    value.point = static_cast<Direct2DNet::D2D1_POINT_2F>(((::ID2D1RadialGradientBrush *)m_pResource)->GetCenter());
+                    value.radiusX = ((::ID2D1RadialGradientBrush *)m_pResource)->GetRadiusX();
+                    value.radiusY = ((::ID2D1RadialGradientBrush *)m_pResource)->GetRadiusY();
 
-        /// <summary>
-        /// Gets and sets the y-radius of the gradient ellipse.
-        /// </summary>
-        property float RadiusY
-        {
-            float get()
+                    return value;
+                }
+
+                void set(Direct2DNet::D2D1_ELLIPSE value)
+                {
+                    ((::ID2D1RadialGradientBrush *)m_pResource)->SetCenter(static_cast<::D2D1_POINT_2F>(value.point));
+                    ((::ID2D1RadialGradientBrush *)m_pResource)->SetRadiusX(value.radiusX);
+                    ((::ID2D1RadialGradientBrush *)m_pResource)->SetRadiusY(value.radiusY);
+                }
+            }
+
+            /// <summary>
+            /// Gets the <see cref="Direct2DNet::ID2D1GradientStopCollection"/> instance 
+            /// associated with this radial gradient brush object.
+            /// </summary>
+            property Direct2DNet::ID2D1GradientStopCollection ^GradientStopCollection
             {
-                return ((::ID2D1RadialGradientBrush *)m_pResource)->GetRadiusY();
+                Direct2DNet::ID2D1GradientStopCollection ^get()
+                {
+                    return m_collection;
+                }
             }
-
-            void set(float value)
-            {
-                ((::ID2D1RadialGradientBrush *)m_pResource)->SetRadiusY(value);
-            }
-        }
-
-        /// <summary>
-        /// Gets and sets the gradient ellipse.
-        /// </summary>
-        property Direct2DNet::D2D1_ELLIPSE GradientEllipse
-        {
-            Direct2DNet::D2D1_ELLIPSE get()
-            {
-                Direct2DNet::D2D1_ELLIPSE value;
-                value.point = static_cast<Direct2DNet::D2D1_POINT_2F>(((::ID2D1RadialGradientBrush *)m_pResource)->GetCenter());
-                value.radiusX = ((::ID2D1RadialGradientBrush *)m_pResource)->GetRadiusX();
-                value.radiusY = ((::ID2D1RadialGradientBrush *)m_pResource)->GetRadiusY();
-
-                return value;
-            }
-
-            void set(Direct2DNet::D2D1_ELLIPSE value)
-            {
-                ((::ID2D1RadialGradientBrush *)m_pResource)->SetCenter(static_cast<::D2D1_POINT_2F>(value.point));
-                ((::ID2D1RadialGradientBrush *)m_pResource)->SetRadiusX(value.radiusX);
-                ((::ID2D1RadialGradientBrush *)m_pResource)->SetRadiusY(value.radiusY);
-            }
-        }
-
-        /// <summary>
-        /// Gets the <see cref="Direct2DNet::ID2D1GradientStopCollection"/> instance 
-        /// associated with this radial gradient brush object.
-        /// </summary>
-        property Direct2DNet::ID2D1GradientStopCollection ^GradientStopCollection
-        {
-            Direct2DNet::ID2D1GradientStopCollection ^get()
-            {
-                return m_collection;
-            }
-        }
-    };
+        };
+    }
 }

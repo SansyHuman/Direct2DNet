@@ -1,20 +1,23 @@
 #pragma once
 
-namespace Direct2DNet
+namespace D2DNet
 {
-    /// <summary>
-    /// The root interface for all of D2D's objects.
-    /// </summary>
-    [System::Runtime::InteropServices::GuidAttribute("E5DB6297-76DD-4CC3-B706-70A65BA064C0")]
-    public interface class IDirect2DObject
+    namespace Direct2DNet
     {
         /// <summary>
-        /// Gets the pointer to the Direct2D interfaces which
-        /// wrapper class contains.
+        /// The root interface for all of D2D's objects.
         /// </summary>
-        property void *NativePointer
+        [System::Runtime::InteropServices::GuidAttribute("E5DB6297-76DD-4CC3-B706-70A65BA064C0")]
+        public interface class IDirect2DObject
         {
-            void *get();
-        }
-    };
+            /// <summary>
+            /// Gets the pointer to the Direct2D interfaces which
+            /// wrapper class contains.
+            /// </summary>
+            property void *NativePointer
+            {
+                void *get();
+            }
+        };
+    }
 }

@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>Direct2DNet</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -138,13 +138,16 @@
     <ClInclude Include="Direct2DNet\D2DNetHeaders.h" />
     <ClInclude Include="Direct2DNet\Exception\DXException.h" />
     <ClInclude Include="Direct2DNet\ID2D1Bitmap.h" />
+    <ClInclude Include="Direct2DNet\ID2D1BitmapBrush.h" />
     <ClInclude Include="Direct2DNet\ID2D1Brush.h" />
+    <ClInclude Include="Direct2DNet\ID2D1DCRenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1EllipseGeometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1Geometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1GeometryGroup.h" />
     <ClInclude Include="Direct2DNet\ID2D1GradientStopCollection.h" />
     <ClInclude Include="Direct2DNet\ID2D1HwndRenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1Image.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Layer.h" />
     <ClInclude Include="Direct2DNet\ID2D1LinearGradientBrush.h" />
     <ClInclude Include="Direct2DNet\ID2D1Mesh.h" />
     <ClInclude Include="Direct2DNet\ID2D1NativeGeometryInfoContainer.h" />
@@ -159,19 +162,40 @@
     <ClInclude Include="Direct2DNet\ID2D1TransformedGeometry.h" />
     <ClInclude Include="Direct2DNet\IDirect2DObject.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory.h" />
+    <ClInclude Include="DWriteNet\DWNetHeaders.h" />
+    <ClInclude Include="DWriteNet\DWNet_core.h" />
+    <ClInclude Include="DWriteNet\DWNet_text.h" />
+    <ClInclude Include="DWriteNet\DWriteSettings.h" />
+    <ClInclude Include="DWriteNet\Exception\DWriteException.h" />
+    <ClInclude Include="DWriteNet\IDirectWriteObject.h" />
+    <ClInclude Include="DWriteNet\IDWriteFactory.h" />
+    <ClInclude Include="DWriteNet\IDWriteTextFormat.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="GUIDs.h" />
+    <ClInclude Include="Namespace.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Direct2DNet\D2DError.cpp" />
     <ClCompile Include="Direct2DNet\D2DImageLoader.cpp" />
+    <ClCompile Include="Direct2DNet\D2DSettings.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Bitmap.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1BitmapBrush.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1DCRenderTarget.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GeometryGroup.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Layer.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1LinearGradientBrush.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Mesh.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1RadialGradientBrush.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1TransformedGeometry.cpp" />
+    <ClCompile Include="DWriteNet\Exception\DWriteException.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteFactory.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteTextFormat.cpp" />
     <ClCompile Include="GUIDs.cpp" />
     <Text Include="..\LICENSE">
       <FileType>Text</FileType>
