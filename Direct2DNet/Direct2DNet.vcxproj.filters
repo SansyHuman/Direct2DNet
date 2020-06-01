@@ -79,6 +79,30 @@
     <Filter Include="소스 파일\DWriteNet\font">
       <UniqueIdentifier>{2e35be13-3ffb-4b8b-87c9-b812e746aaf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Direct3D11Net">
+      <UniqueIdentifier>{c91e35ea-a904-419b-b752-6854e6733e12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Direct3D11Net\core">
+      <UniqueIdentifier>{0789bc58-1859-467d-b61f-7b9bbb568372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Direc3D11Net">
+      <UniqueIdentifier>{a495cbe5-15d5-4646-8003-ba73964117aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Direc3D11Net\core">
+      <UniqueIdentifier>{f5204eeb-6d38-4d80-af29-123c49155317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DXGINet">
+      <UniqueIdentifier>{55d807ab-4f50-4670-869d-b6dd28cbc703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\DXGINet\core">
+      <UniqueIdentifier>{749896e2-a0a6-45d1-95aa-7368626bbc48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DXGINet">
+      <UniqueIdentifier>{5ce4515e-36ba-4c97-8289-1932b3aded96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DXGINet\core">
+      <UniqueIdentifier>{cacbacf8-d224-4cc6-aa22-1087aa57f861}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -110,9 +134,6 @@
     </ClInclude>
     <ClInclude Include="Direct2DNet\ID2D1TransformedGeometry.h">
       <Filter>헤더 파일\Direct2DNet\geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1Brush.h">
-      <Filter>헤더 파일\Direct2DNet\brush</Filter>
     </ClInclude>
     <ClInclude Include="Direct2DNet\ID2D1SolidColorBrush.h">
       <Filter>헤더 파일\Direct2DNet\brush</Filter>
@@ -219,6 +240,114 @@
     <ClInclude Include="Direct2DNet\ID2D1DCRenderTarget.h">
       <Filter>헤더 파일\Direct2DNet\core</Filter>
     </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteRenderingParams.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1DrawingStateBlock.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1BitmapRenderTarget.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Factory1.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\Direct2D.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1StrokeStyle1.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1PathGeometry1.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D11Net\D3D11NetHeaders.h">
+      <Filter>헤더 파일\Direct3D11Net\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D11Net\D3D11Settings.h">
+      <Filter>헤더 파일\Direct3D11Net\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D11Net\ID3D11Device.h">
+      <Filter>헤더 파일\Direct3D11Net\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D11Net\IDirect3D11Object.h">
+      <Filter>헤더 파일\Direct3D11Net\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D11Net\ID3D11DeviceChild.h">
+      <Filter>헤더 파일\Direct3D11Net\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D11Net\ID3D11DeviceContext.h">
+      <Filter>헤더 파일\Direct3D11Net\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXCommonSettings.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\DXGINetHeaders.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGIObject.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGIDevice.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Device.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D11Net\D3D11Net_core.h">
+      <Filter>헤더 파일\Direct3D11Net\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\DXGINet_core.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1DeviceContext.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\DXGISettings.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGIAdapter.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGIFactory.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGISwapChain.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="IUnknown.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGIDeviceSubObject.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGISurface.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1ColorContext.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Bitmap1.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1GradientStopCollection1.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Properties.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DBuiltinEffects.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Effect.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1ImageBrush.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Brush.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -310,6 +439,78 @@
     </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1DCRenderTarget.cpp">
       <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteRenderingParams.cpp">
+      <Filter>소스 파일\DWriteNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1DrawingStateBlock.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1BitmapRenderTarget.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\Direct2D.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Factory1.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1StrokeStyle1.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1PathGeometry1.cpp">
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct3D11Net\ID3D11Device.cpp">
+      <Filter>소스 파일\Direc3D11Net\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct3D11Net\ID3D11DeviceChild.cpp">
+      <Filter>소스 파일\Direc3D11Net\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct3D11Net\ID3D11DeviceContext.cpp">
+      <Filter>소스 파일\Direc3D11Net\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGIDevice.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Device.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1DeviceContext.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGIAdapter.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGIFactory.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGIDeviceSubObject.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGISwapChain.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGISurface.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1ColorContext.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Bitmap1.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection1.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Properties.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Effect.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Image.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,7 @@ namespace D2DNet
             /// Use <see cref="Exception::HResult"/> property
             /// to get Direct2D error code.
             /// </summary>
+            [System::SerializableAttribute]
             public ref class DxException : System::Exception
             {
             public:

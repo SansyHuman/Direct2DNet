@@ -1,5 +1,6 @@
 #include "ID2D1PathGeometry.h"
 #include "ID2D1Factory.h"
+#include "ID2D1Factory1.h"
 
 namespace D2DNet
 {
@@ -83,6 +84,12 @@ namespace D2DNet
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1PathGeometry", (int)hr);
+        }
+
+        ID2D1PathGeometry::ID2D1PathGeometry(Direct2DNet::ID2D1Factory1 ^factory1)
+            : Direct2DNet::ID2D1Geometry(factory1), m_pSink(nullptr)
+        {
+            
         }
 
         ID2D1PathGeometry::~ID2D1PathGeometry()

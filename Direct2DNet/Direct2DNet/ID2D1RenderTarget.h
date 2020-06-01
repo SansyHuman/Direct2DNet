@@ -16,6 +16,7 @@ namespace D2DNet
     namespace DWriteNet
     {
         ref class IDWriteTextFormat;
+        ref class IDWriteRenderingParams;
     }
 
     namespace Direct2DNet
@@ -27,10 +28,12 @@ namespace D2DNet
         ref class ID2D1GradientStopCollection;
         ref class ID2D1LinearGradientBrush;
         ref class ID2D1RadialGradientBrush;
+        ref class ID2D1BitmapRenderTarget;
         ref class ID2D1Layer;
         ref class ID2D1Mesh;
         ref class ID2D1StrokeStyle;
         ref class ID2D1Geometry;
+        ref class ID2D1DrawingStateBlock;
 
         /// <summary>
         /// Represents an object that can receive drawing commands. Classes that inherit
@@ -40,6 +43,9 @@ namespace D2DNet
         [System::Runtime::InteropServices::GuidAttribute("BDD55256-ED4C-4B9D-B340-1E5F8D811682")]
         public ref class ID2D1RenderTarget abstract : Direct2DNet::ID2D1Resource
         {
+        private:
+            DWriteNet::IDWriteRenderingParams ^m_params = nullptr;
+
         protected:
             ID2D1RenderTarget(Direct2DNet::ID2D1Factory ^factory) : ID2D1Resource(factory) {}
 
@@ -79,11 +85,17 @@ namespace D2DNet
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties
             );
 
+            // CreateBitmapFromWicBitmap
+
+            // CreateSharedBitmap
 
             /// <summary>
             /// Creates a bitmap brush. The bitmap is scaled, rotated, skewed or tiled to fill
             /// or pen a geometry.
             /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the bitmap brush.
+            /// </exception>
             Direct2DNet::ID2D1BitmapBrush ^CreateBitmapBrush(
                 Direct2DNet::ID2D1Bitmap ^bitmap
             );
@@ -159,6 +171,33 @@ namespace D2DNet
             );
 
             /// <summary>
+            /// Creates a bitmap render target whose bitmap can be used as a source for
+            /// rendering in the API.
+            /// </summary>
+            /// <param name="desiredSize">The requested size of the target in DIPs. If the pixel
+            /// size is not specified, the DPI is inherited from the parent target. However, the
+            /// render target will never contain a fractional number of pixels.</param>
+            /// <param name="desiredPixelSize">The requested size of the render target in
+            /// pixels. If the DIP size is also specified, the DPI is calculated from these two
+            /// values. If the desired size is not specified, the DPI is inherited from the
+            /// parent render target. If neither value is specified, the compatible render
+            /// target will be the same size and have the same DPI as the parent target.</param>
+            /// <param name="desiredFormat">The desired pixel format. The format must be
+            /// compatible with the parent render target type. If the format is not specified,
+            /// it will be inherited from the parent render target.</param>
+            /// <param name="options">Allows the caller to retrieve a GDI compatible render
+            /// target.</param>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the render target.
+            /// </exception>
+            Direct2DNet::ID2D1BitmapRenderTarget ^CreateCompatibleRenderTarget(
+                Direct2DNet::D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS options,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_SIZE_F> desiredSize,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_SIZE_U> desiredPixelSize,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_PIXEL_FORMAT> desiredFormat
+            );
+
+            /// <summary>
             /// Creates a layer resource that can be used on any target and which will resize
             /// under the covers if necessary.
             /// </summary>
@@ -168,6 +207,9 @@ namespace D2DNet
             /// transform. If the size is unspecified, the returned resource is a placeholder
             /// and the backing store will be allocated to be the minimum size that can hold the
             /// content when the layer is pushed. The default value is null.</param>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the layer.
+            /// </exception>
             Direct2DNet::ID2D1Layer ^CreateLayer(
                 [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_SIZE_F> size
             );
@@ -432,6 +474,96 @@ namespace D2DNet
             }
 
             /// <summary>
+            /// Gets and sets the text rendering parameters of the render target.
+            /// If you set the rendering parameters to null, it will use the default settings.
+            /// </summary>
+            property DWriteNet::IDWriteRenderingParams ^TextRenderingParams
+            {
+                DWriteNet::IDWriteRenderingParams ^get()
+                {
+                    return m_params;
+                }
+
+                void set(DWriteNet::IDWriteRenderingParams ^value);
+            }
+
+            /// <summary>
+            /// Gets and sets tags to correspond to the succeeding primitives. If an error occurs
+            /// rendering a primitive, the tags can be returned from the Flush or EndDraw call.
+            /// </summary>
+            property System::ValueTuple<D2D1_TAG, D2D1_TAG> Tags
+            {
+                System::ValueTuple<D2D1_TAG, D2D1_TAG> get()
+                {
+                    D2D1_TAG tag1, tag2;
+                    ((::ID2D1RenderTarget *)m_pResource)->GetTags(&tag1, &tag2);
+                    return System::ValueTuple<D2D1_TAG, D2D1_TAG>(tag1, tag2);
+                }
+
+                void set(System::ValueTuple<D2D1_TAG, D2D1_TAG> value)
+                {
+                    ((::ID2D1RenderTarget *)m_pResource)->SetTags(value.Item1, value.Item2);
+                }
+            }
+
+            /// <summary>
+            /// Gets and sets the first tag to correspond to the succeeding primitives. If an error occurs
+            /// rendering a primitive, the tags can be returned from the Flush or EndDraw call.
+            /// </summary>
+            property D2D1_TAG Tag1
+            {
+                D2D1_TAG get()
+                {
+                    D2D1_TAG tag1;
+                    ((::ID2D1RenderTarget *)m_pResource)->GetTags(&tag1, __nullptr);
+                    return tag1;
+                }
+
+                void set(D2D1_TAG value)
+                {
+                    D2D1_TAG tag2;
+                    ((::ID2D1RenderTarget *)m_pResource)->GetTags(__nullptr, &tag2);
+                    ((::ID2D1RenderTarget *)m_pResource)->SetTags(value, tag2);
+                }
+            }
+
+            /// <summary>
+            /// Gets and sets the second tag to correspond to the succeeding primitives. If an error occurs
+            /// rendering a primitive, the tags can be returned from the Flush or EndDraw call.
+            /// </summary>
+            property D2D1_TAG Tag2
+            {
+                D2D1_TAG get()
+                {
+                    D2D1_TAG tag2;
+                    ((::ID2D1RenderTarget *)m_pResource)->GetTags(__nullptr, &tag2);
+                    return tag2;
+                }
+
+                void set(D2D1_TAG value)
+                {
+                    D2D1_TAG tag1;
+                    ((::ID2D1RenderTarget *)m_pResource)->GetTags(&tag1, __nullptr);
+                    ((::ID2D1RenderTarget *)m_pResource)->SetTags(tag1, value);
+                }
+            }
+
+            /// <summary>
+            /// Set tags to correspond to the succeeding primitives. If an error occurs
+            /// rendering a primitive, the tags can be returned from the Flush or EndDraw call.
+            /// </summary>
+            void SetTags(D2D1_TAG tag1, D2D1_TAG tag2);
+
+            /// <summary>
+            /// Retrieves the currently set tags. This does not retrieve the tags corresponding
+            /// to any primitive that is in error.
+            /// </summary>
+            void GetTags(
+                [OutAttribute] D2D1_TAG %tag1,
+                [OutAttribute] D2D1_TAG %tag2
+            );
+
+            /// <summary>
             /// Start a layer of drawing calls. The way in which the layer must be resolved is
             /// specified first as well as the logical resource that stores the layer
             /// parameters. The supplied layer resource might grow if the specified content
@@ -448,6 +580,54 @@ namespace D2DNet
             /// Ends a layer that was defined with particular layer resources.
             /// </summary>
             void PopLayer();
+
+            /// <summary>
+            /// Executes all pending drawing commands.
+            /// </summary>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT Flush();
+
+            /// <summary>
+            /// Executes all pending drawing commands and returns the tag for drawing operations that
+            /// caused errors or 0 if there were no errors.
+            /// </summary>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT Flush(
+                [OutAttribute] D2D1_TAG %tag1,
+                [OutAttribute] D2D1_TAG %tag2
+            );
+
+            /// <summary>
+            /// Gets the current drawing state and saves it into the supplied
+            /// ID2D1DrawingStatckBlock.
+            /// </summary>
+            void SaveDrawingState(Direct2DNet::ID2D1DrawingStateBlock ^drawingStateBlock);
+
+            /// <summary>
+            /// Copies the state stored in the block interface.
+            /// </summary>
+            void RestoreDrawingState(Direct2DNet::ID2D1DrawingStateBlock ^drawingStateBlock);
+
+            /// <summary>
+            /// Pushes a clip. The clip can be antialiased. The clip must be axis aligned. If
+            /// the current world transform is not axis preserving, then the bounding box of the
+            /// transformed clip rect will be used. The clip will remain in effect until a
+            /// PopAxisAligned clip call is made.
+            /// </summary>
+            void PushAxisAlignedClip(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RECT_F %clipRect,
+                Direct2DNet::D2D1_ANTIALIAS_MODE antialiasMode
+            );
+
+            /// <summary>
+            /// Removes the last axis-aligned clip from the render target. After this method is called,
+            /// the clip is no longer applied to subsequent drawing operations.
+            /// </summary>
+            void PopAxisAlignedClip();
 
             /// <summary>
             /// Clears the render target with the color <paramref name="clearColor"/>.
@@ -468,6 +648,18 @@ namespace D2DNet
             /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
             /// </returns>
             HRESULT EndDraw();
+
+            /// <summary>
+            /// Ends drawing on the render target and returns the tag for drawing operations that
+            /// caused errors or 0 if there were no errors.
+            /// </summary>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT EndDraw(
+                [OutAttribute] D2D1_TAG %tag1,
+                [OutAttribute] D2D1_TAG %tag2
+            );
 
             /// <summary>
             /// Gets the pixel format of the render target.
@@ -502,6 +694,7 @@ namespace D2DNet
                     ((::ID2D1RenderTarget *)m_pResource)->SetDpi(value.Item1, value.Item2);
                 }
             }
+
             /// <summary>
             /// Gets and the DPI on the render target.
             /// </summary>

@@ -29,6 +29,14 @@ namespace D2DNet
                 array<float> ^dashes
             );
 
+        protected:
+            // For ID2D1StrokeStyle1
+            ID2D1StrokeStyle(
+                Direct2DNet::ID2D1Factory ^factory,
+                Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES1 %properties,
+                array<float> ^dashes
+            );
+
         public:
             /// <summary>
             /// Gets the start cap style.
@@ -120,6 +128,7 @@ namespace D2DNet
 
             /// <summary>
             /// Gets the array of custom dash settings in the unit of stroke width.
+            /// This value can be null if not using the custom dash settings.
             /// </summary>
             property array<float> ^Dashes
             {

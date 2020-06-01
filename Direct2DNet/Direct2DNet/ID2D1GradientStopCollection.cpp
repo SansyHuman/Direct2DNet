@@ -1,5 +1,6 @@
 #include "ID2D1GradientStopCollection.h"
 #include "ID2D1RenderTarget.h"
+#include "ID2D1DeviceContext.h"
 
 namespace D2DNet
 {
@@ -35,5 +36,13 @@ namespace D2DNet
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1GradientStopCollection", (int)hr);
         }
+
+        ID2D1GradientStopCollection::ID2D1GradientStopCollection(
+            Direct2DNet::ID2D1DeviceContext ^deviceContext
+        ) : Direct2DNet::ID2D1Resource(deviceContext->m_factory)
+        {
+            
+        }
+
     }
 }

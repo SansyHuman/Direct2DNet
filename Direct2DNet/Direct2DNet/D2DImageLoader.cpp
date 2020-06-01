@@ -35,12 +35,10 @@ namespace D2DNet
             marshal_context context;
 
             PCWSTR nativePath = context.marshal_as<const wchar_t *>(filePath);
-            Direct2DNet::ID2D1Bitmap ^bitmap = gcnew Direct2DNet::ID2D1Bitmap(renderTarget->m_factory);
 
             HRESULT hr = S_OK;
-            pin_ptr<::ID2D1Resource *> ppBitmapResource = &bitmap->m_pResource;
-            hr = LoadFromFile((::ID2D1RenderTarget *)renderTarget->m_pResource, nativePath, (::ID2D1Bitmap **)ppBitmapResource);
-            ppBitmapResource = nullptr;
+            ::ID2D1Bitmap *pBitmap = __nullptr;
+            hr = LoadFromFile((::ID2D1RenderTarget *)renderTarget->m_pResource, nativePath, &pBitmap);
 
             if(FAILED(hr))
             {
@@ -50,9 +48,7 @@ namespace D2DNet
                     throw gcnew DxException("Cannot load the image file.", hr);
             }
 
-            bitmap->UpdateBitmapInfo();
-
-            return bitmap;
+            return gcnew Direct2DNet::ID2D1Bitmap(renderTarget->m_factory, pBitmap);
         }
 
         HRESULT D2DImageLoader::LoadFromFile(

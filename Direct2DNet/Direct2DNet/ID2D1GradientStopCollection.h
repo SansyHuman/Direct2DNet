@@ -10,6 +10,7 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ref class ID2D1RenderTarget;
+        ref class ID2D1DeviceContext;
 
         // Done.
 
@@ -20,7 +21,7 @@ namespace D2DNet
         [System::Runtime::InteropServices::GuidAttribute("18DBA6DA-A09F-4BD2-A5B4-287EA3BDC71C")]
         public ref class ID2D1GradientStopCollection : Direct2DNet::ID2D1Resource
         {
-        private:
+        protected:
             array<Direct2DNet::D2D1_GRADIENT_STOP> ^m_gradientStops;
             Direct2DNet::D2D1_GAMMA m_gamma;
             Direct2DNet::D2D1_EXTEND_MODE m_extendMode;
@@ -31,6 +32,11 @@ namespace D2DNet
                 array<Direct2DNet::D2D1_GRADIENT_STOP> ^gradientStops,
                 Direct2DNet::D2D1_GAMMA gamma,
                 Direct2DNet::D2D1_EXTEND_MODE extendMode
+            );
+
+        protected:
+            ID2D1GradientStopCollection(
+                Direct2DNet::ID2D1DeviceContext ^deviceContext
             );
 
         public:

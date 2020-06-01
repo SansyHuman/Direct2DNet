@@ -1,6 +1,7 @@
 #include "D2DSettings.h"
 #include "ID2D1Geometry.h"
 #include "ID2D1Brush.h"
+#include "ID2D1ColorContext.h"
 
 namespace D2DNet
 {
@@ -19,5 +20,19 @@ namespace D2DNet
 
             return value;
         }
+
+        D2D1_BITMAP_PROPERTIES1::operator ::D2D1_BITMAP_PROPERTIES1(Direct2DNet::D2D1_BITMAP_PROPERTIES1 %rhs)
+        {
+            ::D2D1_BITMAP_PROPERTIES1 value;
+            value.pixelFormat = static_cast<::D2D1_PIXEL_FORMAT>(rhs.pixelFormat);
+            value.dpiX = rhs.dpiX;
+            value.dpiY = rhs.dpiY;
+            value.bitmapOptions = (::D2D1_BITMAP_OPTIONS)((int)rhs.bitmapOptions);
+            value.colorContext = 
+                rhs.colorContext == nullptr ? __nullptr : (::ID2D1ColorContext *)rhs.colorContext->m_pResource;
+
+            return value;
+        }
+
     }
 }

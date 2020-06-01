@@ -186,6 +186,8 @@ namespace D2DNet
             }
         };
 
+        ref class ID2D1Factory1;
+
         // Done.
 
         /// <summary>
@@ -202,6 +204,10 @@ namespace D2DNet
 
         internal:
             ID2D1PathGeometry(Direct2DNet::ID2D1Factory ^factory);
+
+        protected:
+            // For ID2D1PathGeometry1
+            ID2D1PathGeometry(Direct2DNet::ID2D1Factory1 ^factory1);
 
         public:
             ~ID2D1PathGeometry();

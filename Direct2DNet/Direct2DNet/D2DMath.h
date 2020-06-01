@@ -2,6 +2,9 @@
 
 #include "D2DNetHeaders.h"
 
+using namespace System::Runtime::InteropServices;
+using namespace System::Runtime::CompilerServices;
+
 namespace D2DNet
 {
     namespace Direct2DNet
@@ -293,6 +296,14 @@ namespace D2DNet
                 return value;
             }
 
+            static bool operator==(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RECT_U %lhs,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RECT_U %rhs)
+            {
+                return (lhs.left == rhs.left) && (lhs.top == rhs.top) &&
+                    (lhs.right == rhs.right) && (lhs.bottom == rhs.bottom);
+            }
+
             static property Direct2DNet::D2D1_RECT_U InfiniteRectU
             {
                 static Direct2DNet::D2D1_RECT_U get()
@@ -502,6 +513,13 @@ namespace D2DNet
             unsigned int height;
 
             D2D1_SIZE_U(unsigned int width, unsigned int height) : width(width), height(height) {}
+
+            static bool operator==(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_SIZE_U %lhs,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_SIZE_U %rhs)
+            {
+                return (lhs.width == rhs.width) && (lhs.height == rhs.height);
+            }
 
             static operator ::D2D1_SIZE_U(Direct2DNet::D2D1_SIZE_U %rhs)
             {
@@ -771,7 +789,8 @@ namespace D2DNet
             /// </summary>
             /// <param name="trans"><see cref="Direct2DNet::D2D1_SIZE_F::width"/> is a translation in x axis.
             /// <see cref="Direct2DNet::D2D1_SIZE_F::height"/> is a translation in y axis.</param>
-            static Direct2DNet::D2D1_MATRIX_3X2_F Translation(Direct2DNet::D2D1_SIZE_F trans)
+            static Direct2DNet::D2D1_MATRIX_3X2_F Translation(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_SIZE_F %trans)
             {
                 return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(
                     D2D1::Matrix3x2F::Translation(static_cast<::D2D1_SIZE_F>(trans)));
@@ -794,7 +813,9 @@ namespace D2DNet
             /// <param name="scaleFactor"><see cref="Direct2DNet::D2D1_SIZE_F::width"/> is a scale factor in x axis.
             /// <see cref="Direct2DNet::D2D1_SIZE_F::height"/> is a scale factor in y axis.</param>
             /// <param name="center">The point about which the scale is performed.</param>
-            static Direct2DNet::D2D1_MATRIX_3X2_F Scale(Direct2DNet::D2D1_SIZE_F scaleFactor, Direct2DNet::D2D1_POINT_2F center)
+            static Direct2DNet::D2D1_MATRIX_3X2_F Scale(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_SIZE_F %scaleFactor,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %center)
             {
                 return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(
                     D2D1::Matrix3x2F::Scale(
@@ -809,7 +830,8 @@ namespace D2DNet
             /// <param name="scaleX">scale factor in x axis.</param>
             /// <param name="scaleY">scale factor in Y axis.</param>
             /// <param name="center">The point about which the scale is performed.</param>
-            static Direct2DNet::D2D1_MATRIX_3X2_F Scale(float scaleX, float scaleY, Direct2DNet::D2D1_POINT_2F center)
+            static Direct2DNet::D2D1_MATRIX_3X2_F Scale(float scaleX, float scaleY,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %center)
             {
                 return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(
                     D2D1::Matrix3x2F::Scale(scaleX, scaleY, static_cast<::D2D1_POINT_2F>(center)));
@@ -820,7 +842,8 @@ namespace D2DNet
             /// </summary>
             /// <param name="angle">Rotation angle in degrees.</param>
             /// <param name="center">The point about which the rotation is performed.</param>
-            static Direct2DNet::D2D1_MATRIX_3X2_F Rotation(float angle, Direct2DNet::D2D1_POINT_2F center)
+            static Direct2DNet::D2D1_MATRIX_3X2_F Rotation(float angle,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %center)
             {
                 return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(
                     D2D1::Matrix3x2F::Rotation(angle, static_cast<::D2D1_POINT_2F>(center)));
@@ -834,7 +857,8 @@ namespace D2DNet
             /// <param name="scaleY">Skew angle in y axis. It is measured in degrees
             /// clockwise from x axis.</param>
             /// <param name="center">The point about which the skew is performed.</param>
-            static Direct2DNet::D2D1_MATRIX_3X2_F Skew(float angleX, float angleY, Direct2DNet::D2D1_POINT_2F center)
+            static Direct2DNet::D2D1_MATRIX_3X2_F Skew(float angleX, float angleY,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %center)
             {
                 return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(
                     D2D1::Matrix3x2F::Skew(angleX, angleY, static_cast<::D2D1_POINT_2F>(center)));
@@ -905,7 +929,9 @@ namespace D2DNet
             /// <summary>
             /// Multiplies two matrix and stores the value in this matrix.
             /// </summary>
-            void SetProduct(Direct2DNet::D2D1_MATRIX_3X2_F a, Direct2DNet::D2D1_MATRIX_3X2_F b)
+            void SetProduct(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_3X2_F %a,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_3X2_F %b)
             {
                 _11 = a._11 * b._11 + a._12 * b._21;
                 _12 = a._11 * b._12 + a._12 * b._22;
@@ -915,7 +941,9 @@ namespace D2DNet
                 _32 = a._31 * b._12 + a._32 * b._22 + b._32;
             }
 
-            static Direct2DNet::D2D1_MATRIX_3X2_F operator*(Direct2DNet::D2D1_MATRIX_3X2_F lhs, Direct2DNet::D2D1_MATRIX_3X2_F rhs)
+            static Direct2DNet::D2D1_MATRIX_3X2_F operator*(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_3X2_F %lhs,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_3X2_F %rhs)
             {
                 Direct2DNet::D2D1_MATRIX_3X2_F result;
                 result.SetProduct(lhs, rhs);
@@ -926,7 +954,8 @@ namespace D2DNet
             /// <summary>
             /// Uses this matrix to transform the specified point and returns the result.
             /// </summary>
-            Direct2DNet::D2D1_POINT_2F TransformPoint(Direct2DNet::D2D1_POINT_2F point)
+            Direct2DNet::D2D1_POINT_2F TransformPoint(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %point)
             {
                 return Direct2DNet::D2D1_POINT_2F(
                     point.x * _11 + point.y * _21 + _31,
@@ -935,7 +964,8 @@ namespace D2DNet
             }
 
             static Direct2DNet::D2D1_POINT_2F operator*(
-                Direct2DNet::D2D1_POINT_2F lhs, Direct2DNet::D2D1_MATRIX_3X2_F rhs)
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %lhs,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_3X2_F %rhs)
             {
                 return rhs.TransformPoint(lhs);
             }
@@ -966,5 +996,51 @@ namespace D2DNet
                 return value;
             }
         };
+
+        /// <summary>
+        /// Describes a point along a path.
+        /// </summary>
+        public value struct D2D1_POINT_DESCRIPTION
+        {
+            /// <summary>
+            /// The end point after walking the path.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point;
+
+            /// <summary>
+            /// A unit vector indicating the tangent point.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F unitTangentVector;
+
+            /// <summary>
+            /// The index of the segment on which point resides.
+            /// This index is global to the entire path, not just to a particular figure.
+            /// </summary>
+            unsigned int endSegment;
+
+            /// <summary>
+            /// The index of the figure on which point resides.
+            /// </summary>
+            unsigned int endFigure;
+
+            /// <summary>
+            /// The length of the section of the path stretching from the start of the path
+            /// to the start of endSegment.
+            /// </summary>
+            float lengthToEndSegment;
+
+            static operator Direct2DNet::D2D1_POINT_DESCRIPTION(::D2D1_POINT_DESCRIPTION %rhs)
+            {
+                Direct2DNet::D2D1_POINT_DESCRIPTION value;
+                value.point = static_cast<Direct2DNet::D2D1_POINT_2F>(rhs.point);
+                value.unitTangentVector = static_cast<Direct2DNet::D2D1_POINT_2F>(rhs.unitTangentVector);
+                value.endSegment = rhs.endSegment;
+                value.endFigure = rhs.endFigure;
+                value.lengthToEndSegment = rhs.lengthToEndSegment;
+
+                return value;
+            }
+        };
+
     }
 }

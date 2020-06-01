@@ -13,6 +13,7 @@ namespace D2DNet
             /// Use <see cref="Exception::HResult"/> property
             /// to get DirectWrite error code.
             /// </summary>
+            [System::SerializableAttribute]
             public ref class DWriteException : System::Exception
             {
             public:

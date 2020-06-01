@@ -23,12 +23,12 @@ namespace D2DNet
             /// Shared factory allow for re-use of cached font data across multiple in process components.
             /// Such factories also take advantage of cross process font caching components for better performance.
             /// </summary>
-            SHARED,
+            SHARED = ::DWRITE_FACTORY_TYPE_SHARED,
 
             /// <summary>
             /// Objects created from the isolated factory do not interact with internal DirectWrite state from other components.
             /// </summary>
-            ISOLATED
+            ISOLATED = ::DWRITE_FACTORY_TYPE_ISOLATED
         };
 
         /// <summary>
@@ -456,5 +456,105 @@ namespace D2DNet
             /// </summary>
             GDI_NATURAL = ::DWRITE_MEASURING_MODE_GDI_NATURAL
         };
+
+        /// <summary>
+        /// Represents the internal structure of a device pixel (i.e., the physical arrangement of red,
+        /// green, and blue color components) that is assumed for purposes of rendering text.
+        /// </summary>
+        public enum class DWRITE_PIXEL_GEOMETRY
+        {
+            /// <summary>
+            /// The red, green, and blue color components of each pixel are assumed to occupy the same point.
+            /// </summary>
+            FLAT = ::DWRITE_PIXEL_GEOMETRY_FLAT,
+
+            /// <summary>
+            /// Each pixel comprises three vertical stripes, with red on the left, green in the center, and 
+            /// blue on the right. This is the most common pixel geometry for LCD monitors.
+            /// </summary>
+            RGB = ::DWRITE_PIXEL_GEOMETRY_RGB,
+
+            /// <summary>
+            /// Each pixel comprises three vertical stripes, with blue on the left, green in the center, and 
+            /// red on the right.
+            /// </summary>
+            BGR = ::DWRITE_PIXEL_GEOMETRY_BGR
+        };
+
+        /// <summary>
+        /// Represents a method of rendering glyphs.
+        /// </summary>
+        public enum class DWRITE_RENDERING_MODE
+        {
+            /// <summary>
+            /// Specifies that the rendering mode is determined automatically based on the font and size.
+            /// </summary>
+            DEFAULT = ::DWRITE_RENDERING_MODE_DEFAULT,
+
+            /// <summary>
+            /// Specifies that no antialiasing is performed. Each pixel is either set to the foreground 
+            /// color of the text or retains the color of the background.
+            /// </summary>
+            ALIASED = ::DWRITE_RENDERING_MODE_ALIASED,
+
+            /// <summary>
+            /// Specifies that antialiasing is performed in the horizontal direction and the appearance
+            /// of glyphs is layout-compatible with GDI using CLEARTYPE_QUALITY. Use DWRITE_MEASURING_MODE_GDI_CLASSIC 
+            /// to get glyph advances. The antialiasing may be either ClearType or grayscale depending on
+            /// the text antialiasing mode.
+            /// </summary>
+            GDI_CLASSIC = ::DWRITE_RENDERING_MODE_GDI_CLASSIC,
+
+            /// <summary>
+            /// Specifies that antialiasing is performed in the horizontal direction and the appearance
+            /// of glyphs is layout-compatible with GDI using CLEARTYPE_NATURAL_QUALITY. Glyph advances
+            /// are close to the font design advances, but are still rounded to whole pixels. Use
+            /// DWRITE_MEASURING_MODE_GDI_NATURAL to get glyph advances. The antialiasing may be either
+            /// ClearType or grayscale depending on the text antialiasing mode.
+            /// </summary>
+            GDI_NATURAL = ::DWRITE_RENDERING_MODE_GDI_NATURAL,
+
+            /// <summary>
+            /// Specifies that antialiasing is performed in the horizontal direction. This rendering
+            /// mode allows glyphs to be positioned with subpixel precision and is therefore suitable
+            /// for natural (i.e., resolution-independent) layout. The antialiasing may be either
+            /// ClearType or grayscale depending on the text antialiasing mode.
+            /// </summary>
+            NATURAL = ::DWRITE_RENDERING_MODE_NATURAL,
+
+            /// <summary>
+            /// Similar to natural mode except that antialiasing is performed in both the horizontal
+            /// and vertical directions. This is typically used at larger sizes to make curves and
+            /// diagonal lines look smoother. The antialiasing may be either ClearType or grayscale
+            /// depending on the text antialiasing mode.
+            /// </summary>
+            NATURAL_SYMMETRIC = ::DWRITE_RENDERING_MODE_NATURAL_SYMMETRIC,
+
+            /// <summary>
+            /// Specifies that rendering should bypass the rasterizer and use the outlines directly. 
+            /// This is typically used at very large sizes.
+            /// </summary>
+            OUTLINE = ::DWRITE_RENDERING_MODE_OUTLINE,
+
+            [System::ObsoleteAttribute("The following names are obsolete, but are kept as aliases to avoid breaking existing code. Each of these rendering modes may result in either ClearType or grayscale antialiasing depending on the DWRITE_TEXT_ANTIALIASING_MODE.", false)]
+            CLEARTYPE_GDI_CLASSIC = ::DWRITE_RENDERING_MODE_GDI_CLASSIC,
+
+            [System::ObsoleteAttribute("The following names are obsolete, but are kept as aliases to avoid breaking existing code. Each of these rendering modes may result in either ClearType or grayscale antialiasing depending on the DWRITE_TEXT_ANTIALIASING_MODE.", false)]
+            CLEARTYPE_GDI_NATURAL = ::DWRITE_RENDERING_MODE_GDI_NATURAL,
+            
+            [System::ObsoleteAttribute("The following names are obsolete, but are kept as aliases to avoid breaking existing code. Each of these rendering modes may result in either ClearType or grayscale antialiasing depending on the DWRITE_TEXT_ANTIALIASING_MODE.", false)]
+            CLEARTYPE_NATURAL = ::DWRITE_RENDERING_MODE_NATURAL,
+
+            [System::ObsoleteAttribute("The following names are obsolete, but are kept as aliases to avoid breaking existing code. Each of these rendering modes may result in either ClearType or grayscale antialiasing depending on the DWRITE_TEXT_ANTIALIASING_MODE.", false)]
+            CLEARTYPE_NATURAL_SYMMETRIC = ::DWRITE_RENDERING_MODE_NATURAL_SYMMETRIC
+        };
     }
 }
+
+#ifndef NEAR
+#define NEAR near
+#endif
+
+#ifndef FAR
+#define FAR far
+#endif

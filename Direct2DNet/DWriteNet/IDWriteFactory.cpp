@@ -1,4 +1,5 @@
 #include "IDWriteFactory.h"
+#include "IDWriteRenderingParams.h"
 #include "IDWriteTextFormat.h"
 
 namespace D2DNet
@@ -16,7 +17,7 @@ namespace D2DNet
             ppFactory = nullptr;
 
             if(FAILED(hr))
-                throw gcnew DWriteNet::Exception::DWriteException("Failed to create IDWriteFactory", (int)hr);
+                throw gcnew DWriteNet::Exception::DWriteException("Failed to create IDWriteFactory.", (int)hr);
         }
 
         IDWriteFactory::~IDWriteFactory()
@@ -36,6 +37,33 @@ namespace D2DNet
         DWriteNet::IDWriteFactory ^IDWriteFactory::CreateFactory(DWriteNet::DWRITE_FACTORY_TYPE factoryType)
         {
             return gcnew DWriteNet::IDWriteFactory(factoryType);
+        }
+
+        DWriteNet::IDWriteRenderingParams ^IDWriteFactory::CreateRenderingParams()
+        {
+            return gcnew DWriteNet::IDWriteRenderingParams(this);
+        }
+
+        DWriteNet::IDWriteRenderingParams ^IDWriteFactory::CreateMonitorRenderingParams(
+            System::IntPtr %monitor)
+        {
+            return gcnew DWriteNet::IDWriteRenderingParams(this, monitor);
+        }
+
+        DWriteNet::IDWriteRenderingParams ^IDWriteFactory::CreateCustomRenderingParams(
+            float gamma, 
+            float enhancedContrast, 
+            float clearTypeLevel, 
+            DWriteNet::DWRITE_PIXEL_GEOMETRY pixelGeometry, 
+            DWriteNet::DWRITE_RENDERING_MODE renderingMode)
+        {
+            return gcnew DWriteNet::IDWriteRenderingParams(this,
+                gamma,
+                enhancedContrast,
+                clearTypeLevel,
+                pixelGeometry,
+                renderingMode
+            );
         }
 
         DWriteNet::IDWriteTextFormat ^IDWriteFactory::CreateTextFormat(

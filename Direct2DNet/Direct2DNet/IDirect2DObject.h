@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../IUnknown.h"
+
 namespace D2DNet
 {
     namespace Direct2DNet
@@ -8,16 +10,9 @@ namespace D2DNet
         /// The root interface for all of D2D's objects.
         /// </summary>
         [System::Runtime::InteropServices::GuidAttribute("E5DB6297-76DD-4CC3-B706-70A65BA064C0")]
-        public interface class IDirect2DObject
+        public interface class IDirect2DObject : D2DNet::IUnknown
         {
-            /// <summary>
-            /// Gets the pointer to the Direct2D interfaces which
-            /// wrapper class contains.
-            /// </summary>
-            property void *NativePointer
-            {
-                void *get();
-            }
+
         };
     }
 }

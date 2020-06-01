@@ -10,10 +10,16 @@ using namespace System::Runtime::CompilerServices;
 
 namespace D2DNet
 {
+    namespace DXGINet
+    {
+        ref class IDXGISurface;
+    }
+
     namespace Direct2DNet
     {
         ref class ID2D1Factory;
         ref class ID2D1RenderTarget;
+        ref class ID2D1DeviceContext;
 
         /// <summary>
         /// Root bitmap resource, linearly scaled on a draw call.
@@ -29,10 +35,7 @@ namespace D2DNet
             float m_dpiY;
 
         internal:
-            // Only used in D2DImageLoader.
-            ID2D1Bitmap(Direct2DNet::ID2D1Factory ^factory);
-            // Only used in D2DImageLoader. Called after loading native ID2D1Bitmap object.
-            void UpdateBitmapInfo();
+            ID2D1Bitmap(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Bitmap *pBitmap);
 
             ID2D1Bitmap(
                 Direct2DNet::ID2D1RenderTarget ^renderTarget,
@@ -47,6 +50,14 @@ namespace D2DNet
                 unsigned int pitch,
                 Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties
             );
+
+        protected:
+            ID2D1Bitmap(
+                Direct2DNet::ID2D1DeviceContext ^deviceContext
+            );
+
+            // Called after loading native ID2D1Bitmap object.
+            void UpdateBitmapInfo();
 
         public:
             /// <summary>

@@ -5,11 +5,15 @@
 #include "IDirectWriteObject.h"
 #include "Exception/DWriteException.h"
 
+using namespace System::Runtime::InteropServices;
+using namespace System::Runtime::CompilerServices;
+
 namespace D2DNet
 {
     namespace DWriteNet
     {
         ref class IDWriteTextFormat;
+        ref class IDWriteRenderingParams;
 
         // TODO: Implement IDWriteFontCollection.
 
@@ -38,6 +42,48 @@ namespace D2DNet
             }
 
             /// <summary>
+            /// Creates a rendering parameters object with default settings for the primary monitor.
+            /// </summary>
+            /// <exception cref="DWriteNet::Exception::DWriteException">
+            /// Thrown when it failed to create the rendering params.
+            /// </exception>
+            DWriteNet::IDWriteRenderingParams ^CreateRenderingParams();
+
+            /// <summary>
+            /// Creates a rendering parameters object with default settings for the specified monitor.
+            /// </summary>
+            /// <param name="monitor">The monitor to read the default values from.</param>
+            /// <exception cref="DWriteNet::Exception::DWriteException">
+            /// Thrown when it failed to create the rendering params.
+            /// </exception>
+            DWriteNet::IDWriteRenderingParams ^CreateMonitorRenderingParams(
+                [InAttribute][IsReadOnlyAttribute] System::IntPtr %monitor
+            );
+
+            /// <summary>
+            /// Creates a rendering parameters object with the specified properties.
+            /// </summary>
+            /// <param name="gamma">The gamma value used for gamma correction, which must be greater than
+            /// zero and cannot exceed 256.</param>
+            /// <param name="enhancedContrast">The amount of contrast enhancement, zero or greater.</param>
+            /// <param name="clearTypeLevel">The degree of ClearType level, from 0.0f (no ClearType) to
+            /// 1.0f (full ClearType).</param>
+            /// <param name="pixelGeometry">The geometry of a device pixel.</param>
+            /// <param name="renderingMode">Method of rendering glyphs. In most cases, this should be
+            /// <see cref="DWriteNet::DWRITE_RENDERING_MODE::DEFAULT"/> to automatically use an appropriate
+            /// mode.</param>
+            /// <exception cref="DWriteNet::Exception::DWriteException">
+            /// Thrown when it failed to create the rendering params.
+            /// </exception>
+            DWriteNet::IDWriteRenderingParams ^CreateCustomRenderingParams(
+                float gamma,
+                float enhancedContrast,
+                float clearTypeLevel,
+                DWriteNet::DWRITE_PIXEL_GEOMETRY pixelGeometry,
+                DWriteNet::DWRITE_RENDERING_MODE renderingMode
+            );
+
+            /// <summary>
             /// Create a text format object used for text layout.
             /// </summary>
             /// <param name="fontFamilyName">Name of the font family</param>
@@ -53,6 +99,9 @@ namespace D2DNet
             /// The system font collection is used, grouped by typographic family name
             /// (DWRITE_FONT_FAMILY_MODEL_WEIGHT_STRETCH_STYLE) without downloadable fonts.
             /// </remarks>
+            /// <exception cref="DWriteNet::Exception::DWriteException">
+            /// Thrown when it failed to create the text format.
+            /// </exception>
             DWriteNet::IDWriteTextFormat ^CreateTextFormat(
                 System::String ^fontFamilyName,
                 DWriteNet::DWRITE_FONT_WEIGHT fontWeight,

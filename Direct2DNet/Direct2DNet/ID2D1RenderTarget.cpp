@@ -5,11 +5,14 @@
 #include "ID2D1GradientStopCollection.h"
 #include "ID2D1LinearGradientBrush.h"
 #include "ID2D1RadialGradientBrush.h"
+#include "ID2D1BitmapRenderTarget.h"
 #include "ID2D1Layer.h"
 #include "ID2D1Mesh.h"
 #include "ID2D1StrokeStyle.h"
 #include "ID2D1Geometry.h"
+#include "ID2D1DrawingStateBlock.h"
 #include "../DWriteNet/IDWriteTextFormat.h"
+#include "../DWriteNet/IDWriteRenderingParams.h"
 
 namespace D2DNet
 {
@@ -81,6 +84,21 @@ namespace D2DNet
             Direct2DNet::ID2D1GradientStopCollection ^gradientStopCollection)
         {
             return gcnew Direct2DNet::ID2D1RadialGradientBrush(this, properties, gradientStopCollection);
+        }
+
+        Direct2DNet::ID2D1BitmapRenderTarget ^ID2D1RenderTarget::CreateCompatibleRenderTarget(
+            Direct2DNet::D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS options, 
+            System::Nullable<Direct2DNet::D2D1_SIZE_F> desiredSize, 
+            System::Nullable<Direct2DNet::D2D1_SIZE_U> desiredPixelSize, 
+            System::Nullable<Direct2DNet::D2D1_PIXEL_FORMAT> desiredFormat)
+        {
+            return gcnew Direct2DNet::ID2D1BitmapRenderTarget(
+                this,
+                desiredSize,
+                desiredPixelSize,
+                desiredFormat,
+                options
+            );
         }
 
         Direct2DNet::ID2D1Layer ^ID2D1RenderTarget::CreateLayer(System::Nullable<Direct2DNet::D2D1_SIZE_F> size)
@@ -310,6 +328,27 @@ namespace D2DNet
             );
         }
 
+        void ID2D1RenderTarget::TextRenderingParams::set(DWriteNet::IDWriteRenderingParams ^value)
+        {
+            ((::ID2D1RenderTarget *)m_pResource)->SetTextRenderingParams(
+                value == nullptr ? __nullptr : value->m_pParams
+            );
+            m_params = value;
+        }
+
+        void ID2D1RenderTarget::SetTags(D2D1_TAG tag1, D2D1_TAG tag2)
+        {
+            ((::ID2D1RenderTarget *)m_pResource)->SetTags(tag1, tag2);
+        }
+
+        void ID2D1RenderTarget::GetTags(D2D1_TAG %tag1, D2D1_TAG %tag2)
+        {
+            pin_ptr<D2D1_TAG> pTag1 = &tag1, pTag2 = &tag2;
+            ((::ID2D1RenderTarget *)m_pResource)->GetTags((D2D1_TAG *)pTag1, (D2D1_TAG *)pTag2);
+            pTag1 = nullptr;
+            pTag2 = nullptr;
+        }
+
         void ID2D1RenderTarget::PushLayer(
             Direct2DNet::D2D1_LAYER_PARAMETERS %layerParameters, 
             Direct2DNet::ID2D1Layer ^layer)
@@ -323,6 +362,52 @@ namespace D2DNet
         void ID2D1RenderTarget::PopLayer()
         {
             ((::ID2D1RenderTarget *)m_pResource)->PopLayer();
+        }
+
+        HRESULT ID2D1RenderTarget::Flush()
+        {
+            return ((::ID2D1RenderTarget *)m_pResource)->Flush();
+        }
+
+        HRESULT ID2D1RenderTarget::Flush(D2D1_TAG %tag1, D2D1_TAG %tag2)
+        {
+            HRESULT hr = S_OK;
+
+            pin_ptr<D2D1_TAG> pTag1 = &tag1, pTag2 = &tag2;
+            hr = ((::ID2D1RenderTarget *)m_pResource)->Flush((D2D1_TAG *)pTag1, (D2D1_TAG *)pTag2);
+            pTag1 = nullptr;
+            pTag2 = nullptr;
+
+            return hr;
+        }
+
+        void ID2D1RenderTarget::SaveDrawingState(Direct2DNet::ID2D1DrawingStateBlock ^drawingStateBlock)
+        {
+            ((::ID2D1RenderTarget *)m_pResource)->SaveDrawingState(
+                (::ID2D1DrawingStateBlock *)drawingStateBlock->m_pResource
+            );
+        }
+
+        void ID2D1RenderTarget::RestoreDrawingState(Direct2DNet::ID2D1DrawingStateBlock ^drawingStateBlock)
+        {
+            ((::ID2D1RenderTarget *)m_pResource)->RestoreDrawingState(
+                (::ID2D1DrawingStateBlock *)drawingStateBlock->m_pResource
+            );
+        }
+
+        void ID2D1RenderTarget::PushAxisAlignedClip(
+            Direct2DNet::D2D1_RECT_F %clipRect, 
+            Direct2DNet::D2D1_ANTIALIAS_MODE antialiasMode)
+        {
+            ((::ID2D1RenderTarget *)m_pResource)->PushAxisAlignedClip(
+                static_cast<Direct2DNet::D2D1_RECT_F>(clipRect),
+                (::D2D1_ANTIALIAS_MODE)((int)antialiasMode)
+            );
+        }
+
+        void ID2D1RenderTarget::PopAxisAlignedClip()
+        {
+            ((::ID2D1RenderTarget *)m_pResource)->PopAxisAlignedClip();
         }
 
         void ID2D1RenderTarget::Clear(Direct2DNet::D2D1_COLOR_F %clearColor)
@@ -340,6 +425,12 @@ namespace D2DNet
         HRESULT ID2D1RenderTarget::EndDraw()
         {
             return ((::ID2D1RenderTarget *)m_pResource)->EndDraw();
+        }
+
+        HRESULT ID2D1RenderTarget::EndDraw(D2D1_TAG %tag1, D2D1_TAG %tag2)
+        {
+            pin_ptr<D2D1_TAG> pTag1 = &tag1, pTag2 = &tag2;
+            return ((::ID2D1RenderTarget *)m_pResource)->EndDraw((D2D1_TAG *)pTag1, (D2D1_TAG *)pTag2);
         }
 
         void ID2D1RenderTarget::GetDpi(float %dpiX, float %dpiY)

@@ -33,7 +33,7 @@ namespace D2DNet
             ppFormat = nullptr;
 
             if(FAILED(hr))
-                throw gcnew DWriteNet::Exception::DWriteException("Failed to create IDWriteFactory", (int)hr);
+                throw gcnew DWriteNet::Exception::DWriteException("Failed to create IDWriteTextFormat.", (int)hr);
 
             UINT32 localeNameLength = m_pFormat->GetLocaleNameLength();
             array<WCHAR> ^nLocaleName = gcnew array<WCHAR>(localeNameLength + 1);

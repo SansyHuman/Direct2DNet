@@ -10,6 +10,11 @@ using namespace System::Runtime::CompilerServices;
 
 namespace D2DNet
 {
+    namespace DWriteNet
+    {
+        ref class IDWriteRenderingParams;
+    }
+
     namespace Direct2DNet
     {
         ref class ID2D1Geometry;
@@ -19,6 +24,7 @@ namespace D2DNet
         ref class ID2D1GeometryGroup;
         ref class ID2D1TransformedGeometry;
         ref class ID2D1PathGeometry;
+        ref class ID2D1DrawingStateBlock;
         ref class ID2D1HwndRenderTarget;
         ref class ID2D1DCRenderTarget;
         ref class ID2D1StrokeStyle;
@@ -32,6 +38,18 @@ namespace D2DNet
         internal:
             ::ID2D1Factory *m_pFactory;
             Direct2DNet::D2D1_FACTORY_TYPE m_type;
+
+        protected:
+            ID2D1Factory(
+                Direct2DNet::D2D1_FACTORY_TYPE type,
+                System::Guid guid
+            );
+
+            ID2D1Factory(
+                Direct2DNet::D2D1_FACTORY_TYPE type,
+                Direct2DNet::D2D1_FACTORY_OPTIONS %options,
+                System::Guid guid
+            );
 
         public:
 
@@ -82,34 +100,6 @@ namespace D2DNet
                     return m_type;
                 }
             }
-
-            /// <summary>
-            /// Creates <see cref="Direct2DNet::ID2D1Factory"/> object.
-            /// The type of the object can determine whether the factory
-            /// and the derived resources can be invoked from single thread
-            /// or multi thread.
-            /// </summary>
-            /// <exception cref="Direct2DNet::Exception::DxException">
-            /// Thrown when it failed to create the factory.
-            /// </exception>
-            /// <seealso cref="Direct2DNet::D2D1_FACTORY_TYPE"/>
-            static Direct2DNet::ID2D1Factory ^CreateFactory(Direct2DNet::D2D1_FACTORY_TYPE type);
-
-            /// <summary>
-            /// Creates <see cref="Direct2DNet::ID2D1Factory"/> object.
-            /// The type of the object can determine whether the factory
-            /// and the derived resources can be invoked from single thread
-            /// or multi thread.
-            /// The options determine the debug layer level.
-            /// </summary>
-            /// <exception cref="Direct2DNet::Exception::DxException">
-            /// Thrown when it failed to create the factory.
-            /// </exception>
-            /// <seealso cref="Direct2DNet::D2D1_FACTORY_TYPE"/>
-            /// <seealso cref="Direct2DNet::D2D1_FACTORY_OPTIONS"/>
-            static Direct2DNet::ID2D1Factory ^CreateFactory(
-                Direct2DNet::D2D1_FACTORY_TYPE type, 
-                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_FACTORY_OPTIONS %options);
 
             /// <summary>
             /// Cause the factory to refresh any system metrics that it might have been snapped
@@ -213,7 +203,7 @@ namespace D2DNet
             /// The first element sets the length of a dash, the second element sets the length of a space,
             /// the third element sets the length of a dash, and so on.
             /// the length is in unit of stroke width.
-            /// This value can be null if you don't use custom dash style.
+            /// This value should be null if you don't use custom dash style. Do not use the empty array.
             /// </param>
             /// <exception cref="Direct2DNet::Exception::DxException">
             /// Thrown when it failed to create the stroke style.
@@ -224,7 +214,26 @@ namespace D2DNet
                 array<float> ^dashes
             );
 
-            // CreateDrawingStateBlock
+            /// <summary>
+            /// Creates a new drawing state block, this can be used in subsequent
+            /// SaveDrawingState and RestoreDrawingState operations on the render target.
+            /// </summary>
+            /// <param name="drawingStateDescription">
+            /// A structure that contains antialiasing, transform, and tags information. The default value
+            /// is null.
+            /// </param>
+            /// <param name="textRenderingParams">
+            /// Optional text parameters that indicate how text should be rendered. The default value is null.
+            /// </param>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the block.
+            /// </exception>
+            Direct2DNet::ID2D1DrawingStateBlock ^CreateDrawingStateBlock(
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION> drawingStateDescription,
+                [OptionalAttribute] D2DNet::DWriteNet::IDWriteRenderingParams ^textRenderingParams
+            );
+
+            // CreateWicBitmapRenderTarget
 
             /// <summary>
             /// Creates a render target that appears on the display.

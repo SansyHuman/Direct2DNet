@@ -1,14 +1,18 @@
 #include "ID2D1Bitmap.h"
 #include "ID2D1Factory.h"
 #include "ID2D1RenderTarget.h"
+#include "ID2D1DeviceContext.h"
 
 namespace D2DNet
 {
     namespace Direct2DNet
     {
-        ID2D1Bitmap::ID2D1Bitmap(ID2D1Factory ^factory) : Direct2DNet::ID2D1Image(factory)
+        ID2D1Bitmap::ID2D1Bitmap(ID2D1Factory ^factory, ::ID2D1Bitmap *pBitmap)
+            : Direct2DNet::ID2D1Image(factory)
         {
+            m_pResource = pBitmap;
 
+            UpdateBitmapInfo();
         }
 
         ID2D1Bitmap::ID2D1Bitmap(
@@ -55,6 +59,12 @@ namespace D2DNet
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Bitmap", (int)hr);
 
             UpdateBitmapInfo();
+        }
+
+        ID2D1Bitmap::ID2D1Bitmap(Direct2DNet::ID2D1DeviceContext ^deviceContext)
+            : Direct2DNet::ID2D1Image(deviceContext->m_factory)
+        {
+            
         }
 
         void ID2D1Bitmap::UpdateBitmapInfo()
