@@ -21,7 +21,7 @@ namespace D2DNet
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1DCRenderTarget", (int)hr);
         }
 
-        HRESULT ID2D1DCRenderTarget::BindDC(System::IntPtr %hDC, Direct2DNet::RECT %subRect)
+        HRESULT ID2D1DCRenderTarget::BindDC(System::IntPtr %hDC, D2DNet::RECT %subRect)
         {
             return ((::ID2D1DCRenderTarget *)m_pResource)->BindDC(
                 (HDC)hDC.ToPointer(),

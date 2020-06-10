@@ -32,22 +32,28 @@ UID_ ## type = System::Guid(attributeHolder->Value);
     public value struct D2DNetGUID abstract sealed
     {
         D2DNET_GUID(ID2D1BitmapRenderTarget);
+        D2DNET_GUID(ID2D1CommandList);
+        D2DNET_GUID(ID2D1CommandSink);
         D2DNET_GUID(ID2D1DCRenderTarget);
         D2DNET_GUID(ID2D1Device);
         D2DNET_GUID(ID2D1DeviceContext);
         D2DNET_GUID(ID2D1DrawingStateBlock);
+        D2DNET_GUID(ID2D1DrawingStateBlock1);
         D2DNET_GUID(ID2D1Factory);
         D2DNET_GUID(ID2D1Factory1);
         D2DNET_GUID(ID2D1HwndRenderTarget);
         D2DNET_GUID(ID2D1Layer);
+        D2DNET_GUID(ID2D1Multithread);
         D2DNET_GUID(ID2D1RenderTarget);
         D2DNET_GUID(ID2D1Resource);
         D2DNET_GUID(IDirect2DObject);
 
         D2DNET_GUID(ID2D1BitmapBrush);
+        D2DNET_GUID(ID2D1BitmapBrush1);
         D2DNET_GUID(ID2D1Brush);
         D2DNET_GUID(ID2D1GradientStopCollection);
         D2DNET_GUID(ID2D1GradientStopCollection1);
+        D2DNET_GUID(ID2D1ImageBrush);
         D2DNET_GUID(ID2D1LinearGradientBrush);
         D2DNET_GUID(ID2D1RadialGradientBrush);
         D2DNET_GUID(ID2D1SolidColorBrush);
@@ -98,22 +104,28 @@ UID_ ## type = System::Guid(attributeHolder->Value);
             GuidAttribute ^guid;
 
             D2DNET_GET_GUID(Direct2DNet, ID2D1BitmapRenderTarget, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1CommandList, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1CommandSink, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DCRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Device, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DeviceContext, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DrawingStateBlock, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1DrawingStateBlock1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1HwndRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Layer, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1Multithread, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1RenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Resource, guid);
             D2DNET_GET_GUID(Direct2DNet, IDirect2DObject, guid);
 
             D2DNET_GET_GUID(Direct2DNet, ID2D1BitmapBrush, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1BitmapBrush1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Brush, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1GradientStopCollection, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1GradientStopCollection1, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1ImageBrush, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1LinearGradientBrush, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1RadialGradientBrush, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1SolidColorBrush, guid);

@@ -15,10 +15,14 @@ namespace D2DNet
         /// The root brush class. All brushes can be used to fill or pen a geometry.
         /// </summary>
         [System::Runtime::InteropServices::GuidAttribute("365806FA-8CC3-44F6-B6EC-1110371FB617")]
-        public ref class ID2D1Brush abstract : Direct2DNet::ID2D1Resource
+        public ref class ID2D1Brush : Direct2DNet::ID2D1Resource
         {
         protected:
             ID2D1Brush(Direct2DNet::ID2D1Factory ^factory) : ID2D1Resource(factory) {}
+
+        internal:
+            // Called by ID2D1CommandSink
+            ID2D1Brush(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Brush *pBrush);
 
         public:
             /// <summary>

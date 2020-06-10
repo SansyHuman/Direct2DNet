@@ -417,6 +417,11 @@ namespace D2DNet
             );
         }
 
+        void ID2D1RenderTarget::Clear()
+        {
+            ((::ID2D1RenderTarget *)m_pResource)->Clear();
+        }
+
         void ID2D1RenderTarget::BeginDraw()
         {
             ((::ID2D1RenderTarget *)m_pResource)->BeginDraw();

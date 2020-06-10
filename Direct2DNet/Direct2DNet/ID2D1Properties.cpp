@@ -18,6 +18,18 @@ namespace D2DNet
             }
         }
 
+        bool ID2D1Properties::Equals(System::Object ^other)
+        {
+            try
+            {
+                return this->m_pProperties == safe_cast<Direct2DNet::ID2D1Properties ^>(other)->m_pProperties;
+            }
+            catch(System::Exception ^)
+            {
+                return false;
+            }
+        }
+
         unsigned int ID2D1Properties::GetPropertyIndex(System::String ^name)
         {
             marshal_context context;

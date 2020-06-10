@@ -48,7 +48,9 @@ namespace D2DNet
             {
                 array<Direct2DNet::ID2D1Geometry ^> ^get()
                 {
-                    return m_geometries;
+                    array<Direct2DNet::ID2D1Geometry ^> ^value = gcnew array<Direct2DNet::ID2D1Geometry ^>(m_geometries->Length);
+                    m_geometries->CopyTo(value, 0);
+                    return value;
                 }
             }
         };

@@ -72,6 +72,12 @@ namespace D2DNet
                 [InAttribute][IsReadOnlyAttribute] System::Guid %guid,
                 [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_FACTORY_OPTIONS> options
             );
+
+            static Direct2DNet::D2D1_COLOR_F ConvertColorSpace(
+                Direct2DNet::D2D1_COLOR_SPACE sourceColorSpace,
+                Direct2DNet::D2D1_COLOR_SPACE destinationColorSpace,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_COLOR_F %color
+            );
         };
     }
 }

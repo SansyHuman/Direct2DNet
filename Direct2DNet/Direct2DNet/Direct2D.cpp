@@ -39,5 +39,19 @@ namespace D2DNet
             }
         }
 
+        Direct2DNet::D2D1_COLOR_F Direct2D::ConvertColorSpace(
+            Direct2DNet::D2D1_COLOR_SPACE sourceColorSpace,
+            Direct2DNet::D2D1_COLOR_SPACE destinationColorSpace,
+            Direct2DNet::D2D1_COLOR_F %color)
+        {
+            return static_cast<Direct2DNet::D2D1_COLOR_F>(
+                D2D1ConvertColorSpace(
+                (::D2D1_COLOR_SPACE)((int)sourceColorSpace),
+                    (::D2D1_COLOR_SPACE)((int)destinationColorSpace),
+                    &static_cast<::D2D1_COLOR_F>(color)
+                )
+                );
+        }
+
     }
 }

@@ -635,6 +635,11 @@ namespace D2DNet
             void Clear([InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_COLOR_F %clearColor);
 
             /// <summary>
+            /// Clears the render target with transparent black.
+            /// </summary>
+            void Clear();
+
+            /// <summary>
             /// Start drawing on this render target. Draw calls can only be issued between a
             /// BeginDraw and EndDraw call.
             /// </summary>

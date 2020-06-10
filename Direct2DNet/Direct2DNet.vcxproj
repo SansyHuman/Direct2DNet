@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>Direct2DNet</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -142,13 +142,17 @@
     <ClInclude Include="Direct2DNet\ID2D1Bitmap.h" />
     <ClInclude Include="Direct2DNet\ID2D1Bitmap1.h" />
     <ClInclude Include="Direct2DNet\ID2D1BitmapBrush.h" />
+    <ClInclude Include="Direct2DNet\ID2D1BitmapBrush1.h" />
     <ClInclude Include="Direct2DNet\ID2D1BitmapRenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1Brush.h" />
     <ClInclude Include="Direct2DNet\ID2D1ColorContext.h" />
+    <ClInclude Include="Direct2DNet\ID2D1CommandList.h" />
+    <ClInclude Include="Direct2DNet\ID2D1CommandSink.h" />
     <ClInclude Include="Direct2DNet\ID2D1DCRenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1Device.h" />
     <ClInclude Include="Direct2DNet\ID2D1DeviceContext.h" />
     <ClInclude Include="Direct2DNet\ID2D1DrawingStateBlock.h" />
+    <ClInclude Include="Direct2DNet\ID2D1DrawingStateBlock1.h" />
     <ClInclude Include="Direct2DNet\ID2D1Effect.h" />
     <ClInclude Include="Direct2DNet\ID2D1EllipseGeometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory1.h" />
@@ -162,6 +166,7 @@
     <ClInclude Include="Direct2DNet\ID2D1Layer.h" />
     <ClInclude Include="Direct2DNet\ID2D1LinearGradientBrush.h" />
     <ClInclude Include="Direct2DNet\ID2D1Mesh.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Multithread.h" />
     <ClInclude Include="Direct2DNet\ID2D1NativeGeometryInfoContainer.h" />
     <ClInclude Include="Direct2DNet\ID2D1PathGeometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1PathGeometry1.h" />
@@ -222,21 +227,28 @@
     <ClCompile Include="Direct2DNet\ID2D1Bitmap.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Bitmap1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1BitmapBrush.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1BitmapBrush1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1BitmapRenderTarget.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Brush.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1ColorContext.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1CommandList.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1CommandSink.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DCRenderTarget.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Device.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DeviceContext.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DrawingStateBlock.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1DrawingStateBlock1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Effect.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Factory1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GeometryGroup.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Image.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1ImageBrush.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Layer.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1LinearGradientBrush.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Mesh.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Multithread.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1PathGeometry1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Properties.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1RadialGradientBrush.cpp" />

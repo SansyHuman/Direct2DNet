@@ -24,5 +24,17 @@ namespace D2DNet
                 m_pResource = nullptr;
             }
         }
+
+        bool ID2D1Resource::Equals(System::Object ^other)
+        {
+            try
+            {
+                return this->m_pResource == safe_cast<Direct2DNet::ID2D1Resource ^>(other)->m_pResource;
+            }
+            catch(System::Exception ^)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -9,6 +9,8 @@ namespace D2DNet
 {
     namespace Direct2DNet
     {
+
+
         /// <summary>
         /// Represents an x-coordinate and y-coordinate pair in two-dimensional space.
         /// </summary>
@@ -69,6 +71,35 @@ namespace D2DNet
             virtual System::String ^ToString() override
             {
                 return "(" + x + ", " + y + ")";
+            }
+        };
+
+        /// <summary>
+        /// Represents the x- and y- coordinates of a point.
+        /// </summary>
+        public value struct D2D1_POINT_2L
+        {
+            LONG x;
+            LONG y;
+
+            D2D1_POINT_2L(LONG x, LONG y) : x(x), y(y) {}
+
+            static operator ::D2D1_POINT_2L(Direct2DNet::D2D1_POINT_2L %rhs)
+            {
+                ::D2D1_POINT_2L value;
+                value.x = rhs.x;
+                value.y = rhs.y;
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_POINT_2L(::D2D1_POINT_2L %rhs)
+            {
+                Direct2DNet::D2D1_POINT_2L value;
+                value.x = rhs.x;
+                value.y = rhs.y;
+
+                return value;
             }
         };
 
@@ -317,18 +348,18 @@ namespace D2DNet
         /// Represents a rectangle defined by the int-type coordinates of the upper-left corner
         /// (left, top) and the coordinates of the lower-right corner (right, bottom).
         /// </summary>
-        public value struct RECT
+        public value struct D2D1_RECT_L
         {
             LONG left;
             LONG top;
             LONG right;
             LONG bottom;
 
-            RECT(LONG left, LONG top, LONG right, LONG bottom) : left(left), top(top), right(right), bottom(bottom) {}
+            D2D1_RECT_L(LONG left, LONG top, LONG right, LONG bottom) : left(left), top(top), right(right), bottom(bottom) {}
 
-            static operator ::RECT(Direct2DNet::RECT %rhs)
+            static operator ::D2D1_RECT_L(Direct2DNet::D2D1_RECT_L %rhs)
             {
-                ::RECT value;
+                ::D2D1_RECT_L value;
                 value.left = rhs.left;
                 value.top = rhs.top;
                 value.right = rhs.right;
@@ -337,9 +368,9 @@ namespace D2DNet
                 return value;
             }
 
-            static operator Direct2DNet::RECT(::RECT %rhs)
+            static operator Direct2DNet::D2D1_RECT_L(::D2D1_RECT_L %rhs)
             {
-                Direct2DNet::RECT value;
+                Direct2DNet::D2D1_RECT_L value;
                 value.left = rhs.left;
                 value.top = rhs.top;
                 value.right = rhs.right;
@@ -759,13 +790,191 @@ namespace D2DNet
         };
 
         /// <summary>
+        /// A vector of 2 float values (x, y).
+        /// </summary>
+        public value struct D2D1_VECTOR_2F
+        {
+            float x;
+            float y;
+
+            D2D1_VECTOR_2F(float x, float y) : x(x), y(y) {}
+
+            property float Length
+            {
+                float get()
+                {
+                    return sqrtf((x * x) + (y * y));
+                }
+            }
+
+            property float SqrLength
+            {
+                float get()
+                {
+                    return (x * x) + (y * y);
+                }
+            }
+
+            static operator ::D2D1_VECTOR_2F(Direct2DNet::D2D1_VECTOR_2F %rhs)
+            {
+                ::D2D1_VECTOR_2F value;
+                value.x = rhs.x;
+                value.y = rhs.y;
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_VECTOR_2F(::D2D1_VECTOR_2F %rhs)
+            {
+                Direct2DNet::D2D1_VECTOR_2F value;
+                value.x = rhs.x;
+                value.y = rhs.y;
+
+                return value;
+            }
+        };
+
+        /// <summary>
+        /// A vector of 3 float values (x, y, z).
+        /// </summary>
+        public value struct D2D1_VECTOR_3F
+        {
+            float x;
+            float y;
+            float z;
+
+            D2D1_VECTOR_3F(float x, float y, float z) : x(x), y(y), z(z) {}
+
+            property float Length
+            {
+                float get()
+                {
+                    return sqrtf((x * x) + (y * y) + (z * z));
+                }
+            }
+
+            property float SqrLength
+            {
+                float get()
+                {
+                    return (x * x) + (y * y) + (z * z);
+                }
+            }
+
+            static operator ::D2D1_VECTOR_3F(Direct2DNet::D2D1_VECTOR_3F %rhs)
+            {
+                ::D2D1_VECTOR_3F value;
+                value.x = rhs.x;
+                value.y = rhs.y;
+                value.z = rhs.z;
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_VECTOR_3F(::D2D1_VECTOR_3F %rhs)
+            {
+                Direct2DNet::D2D1_VECTOR_3F value;
+                value.x = rhs.x;
+                value.y = rhs.y;
+                value.z = rhs.z;
+
+                return value;
+            }
+        };
+
+        /// <summary>
+        /// A vector of 4 float values (x, y, z, w).
+        /// </summary>
+        public value struct D2D1_VECTOR_4F
+        {
+            float x;
+            float y;
+            float z;
+            float w;
+
+            D2D1_VECTOR_4F(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
+
+            property float Length
+            {
+                float get()
+                {
+                    return sqrtf((x * x) + (y * y) + (z * z) + (w * w));
+                }
+            }
+
+            property float SqrLength
+            {
+                float get()
+                {
+                    return (x * x) + (y * y) + (z * z) + (w * w);
+                }
+            }
+
+            static operator ::D2D1_VECTOR_4F(Direct2DNet::D2D1_VECTOR_4F %rhs)
+            {
+                ::D2D1_VECTOR_4F value;
+                value.x = rhs.x;
+                value.y = rhs.y;
+                value.z = rhs.z;
+                value.w = rhs.w;
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_VECTOR_4F(::D2D1_VECTOR_4F %rhs)
+            {
+                Direct2DNet::D2D1_VECTOR_4F value;
+                value.x = rhs.x;
+                value.y = rhs.y;
+                value.z = rhs.z;
+                value.w = rhs.w;
+
+                return value;
+            }
+        };
+
+        /// <summary>
         /// Represents a 3-by-2 matrix.
         /// </summary>
+        [StructLayoutAttribute(LayoutKind::Explicit)]
         public value struct D2D1_MATRIX_3X2_F
         {
-            float _11, _12;
-            float _21, _22;
-            float _31, _32;
+            [FieldOffsetAttribute(0)] float _11;
+            [FieldOffsetAttribute(4)] float _12;
+            [FieldOffsetAttribute(8)] float _21;
+            [FieldOffsetAttribute(12)] float _22;
+            [FieldOffsetAttribute(16)] float _31;
+            [FieldOffsetAttribute(20)] float _32;
+
+            /// <summary>
+            /// Horizontal scaling / cosine of rotation
+            /// </summary>
+            [FieldOffsetAttribute(0)] float m11;
+
+            /// <summary>
+            /// Vertical shear / sine of rotation
+            /// </summary>
+            [FieldOffsetAttribute(4)] float m12;
+
+            /// <summary>
+            /// Horizontal shear / negative sine of rotation
+            /// </summary>
+            [FieldOffsetAttribute(8)] float m21;
+
+            /// <summary>
+            /// Vertical scaling / cosine of rotation
+            /// </summary>
+            [FieldOffsetAttribute(12)] float m22;
+
+            /// <summary>
+            /// Horizontal shift (always orthogonal regardless of rotation)
+            /// </summary>
+            [FieldOffsetAttribute(16)] float dx;
+
+            /// <summary>
+            /// Vertical shift (always orthogonal regardless of rotation)
+            /// </summary>
+            [FieldOffsetAttribute(20)] float dy;
 
             D2D1_MATRIX_3X2_F(float _11, float _12, float _21, float _22, float _31, float _32) : _11(_11), _12(_12), _21(_21), _22(_22), _31(_31), _32(_32) {}
 
@@ -792,8 +1001,13 @@ namespace D2DNet
             static Direct2DNet::D2D1_MATRIX_3X2_F Translation(
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_SIZE_F %trans)
             {
-                return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(
-                    D2D1::Matrix3x2F::Translation(static_cast<::D2D1_SIZE_F>(trans)));
+                Direct2DNet::D2D1_MATRIX_3X2_F translation;
+
+                translation._11 = 1.0; translation._12 = 0.0;
+                translation._21 = 0.0; translation._22 = 1.0;
+                translation._31 = trans.width; translation._32 = trans.height;
+
+                return translation;
             }
 
             /// <summary>
@@ -803,8 +1017,13 @@ namespace D2DNet
             /// <param name="transY">Translation in y axis.</param>
             static Direct2DNet::D2D1_MATRIX_3X2_F Translation(float transX, float transY)
             {
-                return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(
-                    D2D1::Matrix3x2F::Translation(transX, transY));
+                Direct2DNet::D2D1_MATRIX_3X2_F translation;
+
+                translation._11 = 1.0; translation._12 = 0.0;
+                translation._21 = 0.0; translation._22 = 1.0;
+                translation._31 = transX; translation._32 = transY;
+
+                return translation;
             }
 
             /// <summary>
@@ -817,11 +1036,14 @@ namespace D2DNet
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_SIZE_F %scaleFactor,
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %center)
             {
-                return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(
-                    D2D1::Matrix3x2F::Scale(
-                        static_cast<::D2D1_SIZE_F>(scaleFactor),
-                        static_cast<::D2D1_POINT_2F>(center)
-                    ));
+                Direct2DNet::D2D1_MATRIX_3X2_F scale;
+
+                scale._11 = scaleFactor.width; scale._12 = 0.0;
+                scale._21 = 0.0; scale._22 = scaleFactor.height;
+                scale._31 = center.x - scaleFactor.width * center.x;
+                scale._32 = center.y - scaleFactor.height * center.y;
+
+                return scale;
             }
 
             /// <summary>
@@ -833,8 +1055,14 @@ namespace D2DNet
             static Direct2DNet::D2D1_MATRIX_3X2_F Scale(float scaleX, float scaleY,
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %center)
             {
-                return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(
-                    D2D1::Matrix3x2F::Scale(scaleX, scaleY, static_cast<::D2D1_POINT_2F>(center)));
+                Direct2DNet::D2D1_MATRIX_3X2_F scale;
+
+                scale._11 = scaleX; scale._12 = 0.0;
+                scale._21 = 0.0; scale._22 = scaleY;
+                scale._31 = center.x - scaleX * center.x;
+                scale._32 = center.y - scaleY * center.y;
+
+                return scale;
             }
 
             /// <summary>
@@ -992,6 +1220,482 @@ namespace D2DNet
                 value._22 = rhs._22;
                 value._31 = rhs._31;
                 value._32 = rhs._32;
+
+                return value;
+            }
+        };
+
+        /// <summary>
+        /// Represents a 4-by-3 matrix.
+        /// </summary>
+        public value struct D2D1_MATRIX_4X3_F
+        {
+            float _11, _12, _13;
+            float _21, _22, _23;
+            float _31, _32, _33;
+            float _41, _42, _43;
+
+            D2D1_MATRIX_4X3_F(
+                float m11, float m12, float m13,
+                float m21, float m22, float m23,
+                float m31, float m32, float m33,
+                float m41, float m42, float m43
+            ) : _11(m11), _12(m12), _13(m13), _21(m21), _22(m22), _23(m23),
+                _31(m31), _32(m32), _33(m33), _41(m41), _42(m42), _43(m43) {}
+
+            static property Direct2DNet::D2D1_MATRIX_4X3_F Identity
+            {
+                static Direct2DNet::D2D1_MATRIX_4X3_F get()
+                {
+                    return Direct2DNet::D2D1_MATRIX_4X3_F(
+                        1, 0, 0,
+                        0, 1, 0,
+                        0, 0, 1,
+                        0, 0, 0
+                    );
+                }
+            }
+
+            static operator ::D2D1_MATRIX_4X3_F(Direct2DNet::D2D1_MATRIX_4X3_F %rhs)
+            {
+                ::D2D1_MATRIX_4X3_F value;
+                value._11 = rhs._11;
+                value._12 = rhs._12;
+                value._13 = rhs._13;
+                value._21 = rhs._21;
+                value._22 = rhs._22;
+                value._23 = rhs._23;
+                value._31 = rhs._31;
+                value._32 = rhs._32;
+                value._33 = rhs._33;
+                value._41 = rhs._41;
+                value._42 = rhs._42;
+                value._43 = rhs._43;
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_MATRIX_4X3_F(::D2D1_MATRIX_4X3_F %rhs)
+            {
+                Direct2DNet::D2D1_MATRIX_4X3_F value;
+                value._11 = rhs._11;
+                value._12 = rhs._12;
+                value._13 = rhs._13;
+                value._21 = rhs._21;
+                value._22 = rhs._22;
+                value._23 = rhs._23;
+                value._31 = rhs._31;
+                value._32 = rhs._32;
+                value._33 = rhs._33;
+                value._41 = rhs._41;
+                value._42 = rhs._42;
+                value._43 = rhs._43;
+
+                return value;
+            }
+        };
+
+        /// <summary>
+        /// Represents a 4-by-4 matrix.
+        /// </summary>
+        public value struct D2D1_MATRIX_4X4_F
+        {
+            float _11, _12, _13, _14;
+            float _21, _22, _23, _24;
+            float _31, _32, _33, _34;
+            float _41, _42, _43, _44;
+
+            D2D1_MATRIX_4X4_F(
+                float m11, float m12, float m13, float m14,
+                float m21, float m22, float m23, float m24,
+                float m31, float m32, float m33, float m34,
+                float m41, float m42, float m43, float m44
+            ) : _11(m11), _12(m12), _13(m13), _14(m14), _21(m21), _22(m22), _23(m23), _24(m24),
+                _31(m31), _32(m32), _33(m33), _34(m34), _41(m41), _42(m42), _43(m43), _44(m44) {}
+
+            static property Direct2DNet::D2D1_MATRIX_4X4_F Identity
+            {
+                static Direct2DNet::D2D1_MATRIX_4X4_F get()
+                {
+                    return Direct2DNet::D2D1_MATRIX_4X4_F(
+                        1, 0, 0, 0,
+                        0, 1, 0, 0,
+                        0, 0, 1, 0,
+                        0, 0, 0, 1
+                    );
+                }
+            }
+
+            bool operator==(Direct2DNet::D2D1_MATRIX_4X4_F %r)
+            {
+                return _11 == r._11 && _12 == r._12 && _13 == r._13 && _14 == r._14 &&
+                    _21 == r._21 && _22 == r._22 && _23 == r._23 && _24 == r._24 &&
+                    _31 == r._31 && _32 == r._32 && _33 == r._33 && _34 == r._34 &&
+                    _41 == r._41 && _42 == r._42 && _43 == r._43 && _44 == r._44;
+            }
+
+            bool operator!=(Direct2DNet::D2D1_MATRIX_4X4_F %r)
+            {
+                return !(*this == r);
+            }
+
+            static Direct2DNet::D2D1_MATRIX_4X4_F Translation(float x, float y, float z)
+            {
+                Direct2DNet::D2D1_MATRIX_4X4_F translation;
+
+                translation._11 = 1.0; translation._12 = 0.0; translation._13 = 0.0; translation._14 = 0.0;
+                translation._21 = 0.0; translation._22 = 1.0; translation._23 = 0.0; translation._24 = 0.0;
+                translation._31 = 0.0; translation._32 = 0.0; translation._33 = 1.0; translation._34 = 0.0;
+                translation._41 = x;   translation._42 = y;   translation._43 = z;   translation._44 = 1.0;
+
+                return translation;
+            }
+
+            static Direct2DNet::D2D1_MATRIX_4X4_F Scale(float x, float y, float z)
+            {
+                Direct2DNet::D2D1_MATRIX_4X4_F scale;
+
+                scale._11 = x;   scale._12 = 0.0; scale._13 = 0.0; scale._14 = 0.0;
+                scale._21 = 0.0; scale._22 = y;   scale._23 = 0.0; scale._24 = 0.0;
+                scale._31 = 0.0; scale._32 = 0.0; scale._33 = z;   scale._34 = 0.0;
+                scale._41 = 0.0; scale._42 = 0.0; scale._43 = 0.0; scale._44 = 1.0;
+
+                return scale;
+            }
+
+            static Direct2DNet::D2D1_MATRIX_4X4_F RotationX(float degreeX)
+            {
+                float angleInRadian = degreeX * (3.141592654f / 180.0f);
+
+                float sinAngle = 0.0;
+                float cosAngle = 0.0;
+                ::D2D1SinCos(angleInRadian, &sinAngle, &cosAngle);
+
+                Direct2DNet::D2D1_MATRIX_4X4_F rotationX(
+                    1, 0, 0, 0,
+                    0, cosAngle, sinAngle, 0,
+                    0, -sinAngle, cosAngle, 0,
+                    0, 0, 0, 1
+                );
+
+                return rotationX;
+            }
+
+            static Direct2DNet::D2D1_MATRIX_4X4_F RotationY(float degreeY)
+            {
+                float angleInRadian = degreeY * (3.141592654f / 180.0f);
+
+                float sinAngle = 0.0;
+                float cosAngle = 0.0;
+                ::D2D1SinCos(angleInRadian, &sinAngle, &cosAngle);
+
+                Direct2DNet::D2D1_MATRIX_4X4_F rotationY(
+                    cosAngle, 0, -sinAngle, 0,
+                    0, 1, 0, 0,
+                    sinAngle, 0, cosAngle, 0,
+                    0, 0, 0, 1
+                );
+
+                return rotationY;
+            }
+
+            static Direct2DNet::D2D1_MATRIX_4X4_F RotationZ(float degreeZ)
+            {
+                float angleInRadian = degreeZ * (3.141592654f / 180.0f);
+
+                float sinAngle = 0.0;
+                float cosAngle = 0.0;
+                ::D2D1SinCos(angleInRadian, &sinAngle, &cosAngle);
+
+                Direct2DNet::D2D1_MATRIX_4X4_F rotationZ(
+                    cosAngle, sinAngle, 0, 0,
+                    -sinAngle, cosAngle, 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1
+                );
+
+                return rotationZ;
+            }
+
+            static Direct2DNet::D2D1_MATRIX_4X4_F RotationArbitraryAxis(float x, float y, float z, float degree)
+            {
+                float magnitude = ::D2D1Vec3Length(x, y, z);
+                x /= magnitude;
+                y /= magnitude;
+                z /= magnitude;
+
+                float angleInRadian = degree * (3.141592654f / 180.0f);
+
+                float sinAngle = 0.0;
+                float cosAngle = 0.0;
+                ::D2D1SinCos(angleInRadian, &sinAngle, &cosAngle);
+
+                float oneMinusCosAngle = 1 - cosAngle;
+
+                Direct2DNet::D2D1_MATRIX_4X4_F rotationArb(
+                    1 + oneMinusCosAngle * (x * x - 1),
+                    z * sinAngle + oneMinusCosAngle * x * y,
+                    -y * sinAngle + oneMinusCosAngle * x * z,
+                    0,
+
+                    -z * sinAngle + oneMinusCosAngle * y * x,
+                    1 + oneMinusCosAngle * (y * y - 1),
+                    x * sinAngle + oneMinusCosAngle * y * z,
+                    0,
+
+                    y * sinAngle + oneMinusCosAngle * z * x,
+                    -x * sinAngle + oneMinusCosAngle * z * y,
+                    1 + oneMinusCosAngle * (z * z - 1),
+                    0,
+
+                    0, 0, 0, 1
+                );
+
+                return rotationArb;
+            }
+
+            static Direct2DNet::D2D1_MATRIX_4X4_F SkewX(float degreeX)
+            {
+                float angleInRadian = degreeX * (3.141592654f / 180.0f);
+
+                float tanAngle = D2D1Tan(angleInRadian);
+
+                Direct2DNet::D2D1_MATRIX_4X4_F skewX(
+                    1, 0, 0, 0,
+                    tanAngle, 1, 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1
+                );
+
+                return skewX;
+            }
+
+            static Direct2DNet::D2D1_MATRIX_4X4_F SkewY(float degreeY)
+            {
+                float angleInRadian = degreeY * (3.141592654f / 180.0f);
+
+                float tanAngle = D2D1Tan(angleInRadian);
+
+                Direct2DNet::D2D1_MATRIX_4X4_F skewY(
+                    1, tanAngle, 0, 0,
+                    0, 1, 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1
+                );
+
+                return skewY;
+            }
+
+            static Direct2DNet::D2D1_MATRIX_4X4_F PerspectiveProjection(float depth)
+            {
+                float proj = 0;
+
+                if(depth > 0)
+                {
+                    proj = -1 / depth;
+                }
+
+                Direct2DNet::D2D1_MATRIX_4X4_F projection(
+                    1, 0, 0, 0,
+                    0, 1, 0, 0,
+                    0, 0, 1, proj,
+                    0, 0, 0, 1
+                );
+
+                return projection;
+            }
+
+            property float Determinant
+            {
+                float get()
+                {
+                    float minor1 = _41 * (_12 * (_23 * _34 - _33 * _24) - _13 * (_22 * _34 - _24 * _32) + _14 * (_22 * _33 - _23 * _32));
+                    float minor2 = _42 * (_11 * (_21 * _34 - _31 * _24) - _13 * (_21 * _34 - _24 * _31) + _14 * (_21 * _33 - _23 * _31));
+                    float minor3 = _43 * (_11 * (_22 * _34 - _32 * _24) - _12 * (_21 * _34 - _24 * _31) + _14 * (_21 * _32 - _22 * _31));
+                    float minor4 = _44 * (_11 * (_22 * _33 - _32 * _23) - _12 * (_21 * _33 - _23 * _31) + _13 * (_21 * _32 - _22 * _31));
+
+                    return minor1 - minor2 + minor3 - minor4;
+                }
+            }
+
+            property bool IsIdentity
+            {
+                bool get()
+                {
+                    return _11 == 1.f && _12 == 0.f && _13 == 0.f && _14 == 0.f
+                        && _21 == 0.f && _22 == 1.f && _23 == 0.f && _24 == 0.f
+                        && _31 == 0.f && _32 == 0.f && _33 == 1.f && _34 == 0.f
+                        && _41 == 0.f && _42 == 0.f && _43 == 0.f && _44 == 1.f;
+                }
+            }
+
+            void SetProduct(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_4X4_F %a,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_4X4_F %b
+            )
+            {
+                _11 = a._11 * b._11 + a._12 * b._21 + a._13 * b._31 + a._14 * b._41;
+                _12 = a._11 * b._12 + a._12 * b._22 + a._13 * b._32 + a._14 * b._42;
+                _13 = a._11 * b._13 + a._12 * b._23 + a._13 * b._33 + a._14 * b._43;
+                _14 = a._11 * b._14 + a._12 * b._24 + a._13 * b._34 + a._14 * b._44;
+
+                _21 = a._21 * b._11 + a._22 * b._21 + a._23 * b._31 + a._24 * b._41;
+                _22 = a._21 * b._12 + a._22 * b._22 + a._23 * b._32 + a._24 * b._42;
+                _23 = a._21 * b._13 + a._22 * b._23 + a._23 * b._33 + a._24 * b._43;
+                _24 = a._21 * b._14 + a._22 * b._24 + a._23 * b._34 + a._24 * b._44;
+
+                _31 = a._31 * b._11 + a._32 * b._21 + a._33 * b._31 + a._34 * b._41;
+                _32 = a._31 * b._12 + a._32 * b._22 + a._33 * b._32 + a._34 * b._42;
+                _33 = a._31 * b._13 + a._32 * b._23 + a._33 * b._33 + a._34 * b._43;
+                _34 = a._31 * b._14 + a._32 * b._24 + a._33 * b._34 + a._34 * b._44;
+
+                _41 = a._41 * b._11 + a._42 * b._21 + a._43 * b._31 + a._44 * b._41;
+                _42 = a._41 * b._12 + a._42 * b._22 + a._43 * b._32 + a._44 * b._42;
+                _43 = a._41 * b._13 + a._42 * b._23 + a._43 * b._33 + a._44 * b._43;
+                _44 = a._41 * b._14 + a._42 * b._24 + a._43 * b._34 + a._44 * b._44;
+            }
+
+            Direct2DNet::D2D1_MATRIX_4X4_F operator*(Direct2DNet::D2D1_MATRIX_4X4_F %rhs)
+            {
+                Direct2DNet::D2D1_MATRIX_4X4_F result;
+
+                result.SetProduct(*this, rhs);
+
+                return result;
+            }
+
+            static operator ::D2D1_MATRIX_4X4_F(Direct2DNet::D2D1_MATRIX_4X4_F %rhs)
+            {
+                ::D2D1_MATRIX_4X4_F value;
+                value._11 = rhs._11;
+                value._12 = rhs._12;
+                value._13 = rhs._13;
+                value._14 = rhs._14;
+                value._21 = rhs._21;
+                value._22 = rhs._22;
+                value._23 = rhs._23;
+                value._24 = rhs._24;
+                value._31 = rhs._31;
+                value._32 = rhs._32;
+                value._33 = rhs._33;
+                value._34 = rhs._34;
+                value._41 = rhs._41;
+                value._42 = rhs._42;
+                value._43 = rhs._43;
+                value._44 = rhs._44;
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_MATRIX_4X4_F(::D2D1_MATRIX_4X4_F %rhs)
+            {
+                Direct2DNet::D2D1_MATRIX_4X4_F value;
+                value._11 = rhs._11;
+                value._12 = rhs._12;
+                value._13 = rhs._13;
+                value._14 = rhs._14;
+                value._21 = rhs._21;
+                value._22 = rhs._22;
+                value._23 = rhs._23;
+                value._24 = rhs._24;
+                value._31 = rhs._31;
+                value._32 = rhs._32;
+                value._33 = rhs._33;
+                value._34 = rhs._34;
+                value._41 = rhs._41;
+                value._42 = rhs._42;
+                value._43 = rhs._43;
+                value._44 = rhs._44;
+
+                return value;
+            }
+        };
+
+        /// <summary>
+        /// Represents a 5-by-4 matrix.
+        /// </summary>
+        public value struct D2D1_MATRIX_5X4_F
+        {
+            float _11, _12, _13, _14;
+            float _21, _22, _23, _24;
+            float _31, _32, _33, _34;
+            float _41, _42, _43, _44;
+            float _51, _52, _53, _54;
+
+            D2D1_MATRIX_5X4_F(
+                float m11, float m12, float m13, float m14,
+                float m21, float m22, float m23, float m24,
+                float m31, float m32, float m33, float m34,
+                float m41, float m42, float m43, float m44,
+                float m51, float m52, float m53, float m54
+            ) : _11(m11), _12(m12), _13(m13), _14(m14), _21(m21), _22(m22), _23(m23), _24(m24),
+                _31(m31), _32(m32), _33(m33), _34(m34), _41(m41), _42(m42), _43(m43), _44(m44),
+                _51(m51), _52(m52), _53(m53), _54(m54) {}
+
+            static property Direct2DNet::D2D1_MATRIX_5X4_F Identity
+            {
+                static Direct2DNet::D2D1_MATRIX_5X4_F get()
+                {
+                    return Direct2DNet::D2D1_MATRIX_5X4_F(
+                        1, 0, 0, 0,
+                        0, 1, 0, 0,
+                        0, 0, 1, 0,
+                        0, 0, 0, 1,
+                        0, 0, 0, 0
+                    );
+                }
+            }
+
+            static operator ::D2D1_MATRIX_5X4_F(Direct2DNet::D2D1_MATRIX_5X4_F %rhs)
+            {
+                ::D2D1_MATRIX_5X4_F value;
+                value._11 = rhs._11;
+                value._12 = rhs._12;
+                value._13 = rhs._13;
+                value._14 = rhs._14;
+                value._21 = rhs._21;
+                value._22 = rhs._22;
+                value._23 = rhs._23;
+                value._24 = rhs._24;
+                value._31 = rhs._31;
+                value._32 = rhs._32;
+                value._33 = rhs._33;
+                value._34 = rhs._34;
+                value._41 = rhs._41;
+                value._42 = rhs._42;
+                value._43 = rhs._43;
+                value._44 = rhs._44;
+                value._51 = rhs._51;
+                value._52 = rhs._52;
+                value._53 = rhs._53;
+                value._54 = rhs._54;
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_MATRIX_5X4_F(::D2D1_MATRIX_5X4_F %rhs)
+            {
+                Direct2DNet::D2D1_MATRIX_5X4_F value;
+                value._11 = rhs._11;
+                value._12 = rhs._12;
+                value._13 = rhs._13;
+                value._14 = rhs._14;
+                value._21 = rhs._21;
+                value._22 = rhs._22;
+                value._23 = rhs._23;
+                value._24 = rhs._24;
+                value._31 = rhs._31;
+                value._32 = rhs._32;
+                value._33 = rhs._33;
+                value._34 = rhs._34;
+                value._41 = rhs._41;
+                value._42 = rhs._42;
+                value._43 = rhs._43;
+                value._44 = rhs._44;
+                value._51 = rhs._51;
+                value._52 = rhs._52;
+                value._53 = rhs._53;
+                value._54 = rhs._54;
 
                 return value;
             }

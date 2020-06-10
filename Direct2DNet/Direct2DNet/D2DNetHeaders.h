@@ -3,6 +3,7 @@
 #include <Windows.h>
 
 #include <vector>
+#include <math.h>
 
 #include <d2d1.h>
 #include <d2d1helper.h>

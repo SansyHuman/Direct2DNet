@@ -13,9 +13,6 @@ namespace D2DNet
             Direct2DNet::D2D1_EXTEND_MODE extendMode
         ) : Direct2DNet::ID2D1Resource(renderTarget->m_factory), m_gamma(gamma), m_extendMode(extendMode)
         {
-            m_gradientStops = gcnew array<Direct2DNet::D2D1_GRADIENT_STOP>(gradientStops->Length);
-            gradientStops->CopyTo(m_gradientStops, 0);
-
             std::vector<::D2D1_GRADIENT_STOP> nativeStops(gradientStops->Length);
             for(int i = 0; i < nativeStops.size(); i++)
             {
@@ -35,6 +32,9 @@ namespace D2DNet
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1GradientStopCollection", (int)hr);
+
+            m_gradientStops = gcnew array<Direct2DNet::D2D1_GRADIENT_STOP>(gradientStops->Length);
+            gradientStops->CopyTo(m_gradientStops, 0);
         }
 
         ID2D1GradientStopCollection::ID2D1GradientStopCollection(

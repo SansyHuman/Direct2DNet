@@ -348,6 +348,21 @@
     <ClInclude Include="Direct2DNet\ID2D1Brush.h">
       <Filter>헤더 파일\Direct2DNet\brush</Filter>
     </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1BitmapBrush1.h">
+      <Filter>헤더 파일\Direct2DNet\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1CommandSink.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1CommandList.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1DrawingStateBlock1.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Multithread.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -511,6 +526,27 @@
     </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1Image.cpp">
       <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1ImageBrush.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1CommandList.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1BitmapBrush1.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1DrawingStateBlock1.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Multithread.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1CommandSink.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Brush.cpp">
+      <Filter>소스 파일\Direct2DNet\brush</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

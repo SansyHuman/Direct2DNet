@@ -11,6 +11,7 @@ namespace D2DNet
     {
         ref class ID2D1RenderTarget;
         ref class ID2D1Bitmap;
+        ref class ID2D1DeviceContext;
 
         // Done.
 
@@ -26,6 +27,12 @@ namespace D2DNet
         internal:
             ID2D1BitmapBrush(
                 Direct2DNet::ID2D1RenderTarget ^renderTarget,
+                Direct2DNet::ID2D1Bitmap ^bitmap
+            );
+
+        protected:
+            ID2D1BitmapBrush(
+                Direct2DNet::ID2D1DeviceContext ^deviceContext,
                 Direct2DNet::ID2D1Bitmap ^bitmap
             );
 
@@ -48,7 +55,7 @@ namespace D2DNet
             }
 
             /// <summary>
-            /// Gets and sets how the bitmap is to be treated outside of its natural extent on the X
+            /// Gets and sets how the bitmap is to be treated outside of its natural extent on the Y
             /// axis.
             /// </summary>
             property Direct2DNet::D2D1_EXTEND_MODE ExtendModeY
@@ -85,6 +92,9 @@ namespace D2DNet
                 }
             }
 
+            /// <summary>
+            /// Gets and sets the interpolation mode used when this brush is used.
+            /// </summary>
             property Direct2DNet::D2D1_BITMAP_INTERPOLATION_MODE InterpolationMode
             {
                 Direct2DNet::D2D1_BITMAP_INTERPOLATION_MODE get()
@@ -92,9 +102,6 @@ namespace D2DNet
                     return (Direct2DNet::D2D1_BITMAP_INTERPOLATION_MODE)((int)((::ID2D1BitmapBrush *)m_pResource)->GetInterpolationMode());
                 }
 
-                /// <summary>
-                /// Gets and sets the interpolation mode used when this brush is used.
-                /// </summary>
                 void set(Direct2DNet::D2D1_BITMAP_INTERPOLATION_MODE value)
                 {
                     ((::ID2D1BitmapBrush *)m_pResource)->SetInterpolationMode((::D2D1_BITMAP_INTERPOLATION_MODE)((int)value));

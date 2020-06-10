@@ -36,6 +36,9 @@ namespace D2DNet
                 DWriteNet::DWRITE_RENDERING_MODE renderingMode
             ); // CreateCustomRenderingParams
 
+            // Used in ID2D1CommandSink
+            IDWriteRenderingParams(::IDWriteRenderingParams *pParams) : m_pParams(pParams) {}
+
             ~IDWriteRenderingParams();
             !IDWriteRenderingParams();
 

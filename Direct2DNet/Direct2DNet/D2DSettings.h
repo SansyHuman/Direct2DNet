@@ -1343,7 +1343,12 @@ namespace D2DNet
             {
                 static Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION get()
                 {
-                    return static_cast<Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION>(D2D1::DrawingStateDescription());
+                    return Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION(
+                        Direct2DNet::D2D1_ANTIALIAS_MODE::PER_PRIMITIVE,
+                        Direct2DNet::D2D1_TEXT_ANTIALIAS_MODE::DEFAULT,
+                        0, 0,
+                        Direct2DNet::D2D1_MATRIX_3X2_F::Identity
+                    );
                 }
             }
         };
@@ -1452,10 +1457,32 @@ namespace D2DNet
         /// </summary>
         public enum class D2D1_PRIMITIVE_BLEND
         {
+            /// <summary>
+            /// The standard source-over-destination blend mode.
+            /// </summary>
             SOURCE_OVER = 0,
+
+            /// <summary>
+            /// The source is copied to the destination; the destination pixels are ignored.
+            /// </summary>
             COPY = 1,
+
+            /// <summary>
+            /// The resulting pixel values use the minimum of the source and destination pixel values.
+            /// Available in Windows 8 and later.
+            /// </summary>
             MIN = 2,
+
+            /// <summary>
+            /// The resulting pixel values are the sum of the source and destination pixel values.
+            /// Available in Windows 8 and later.
+            /// </summary>
             ADD = 3,
+
+            /// <summary>
+            /// The resulting pixel values use the maximum of the source and destination pixel values.
+            /// Available in Windows 10 and later
+            /// </summary>
             MAX = 4,
 
             [System::ObsoleteAttribute("Do not use this value.", true)]
@@ -1486,7 +1513,61 @@ namespace D2DNet
             Direct2DNet::D2D1_MATRIX_3X2_F transform;
             Direct2DNet::D2D1_PRIMITIVE_BLEND primitiveBlend;
             Direct2DNet::D2D1_UNIT_MODE unitMode;
+            
+            D2D1_DRAWING_STATE_DESCRIPTION1(
+                Direct2DNet::D2D1_ANTIALIAS_MODE antialiasMode,
+                Direct2DNet::D2D1_TEXT_ANTIALIAS_MODE textAntialiasMode,
+                D2D1_TAG tag1,
+                D2D1_TAG tag2,
+                Direct2DNet::D2D1_MATRIX_3X2_F transform,
+                Direct2DNet::D2D1_PRIMITIVE_BLEND primitiveBlend,
+                Direct2DNet::D2D1_UNIT_MODE unitMode
+                ) : antialiasMode(antialiasMode), textAntialiasMode(textAntialiasMode), tag1(tag1), tag2(tag2),
+                transform(transform), primitiveBlend(primitiveBlend), unitMode(unitMode) {}
 
+
+            static operator ::D2D1_DRAWING_STATE_DESCRIPTION1(Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1 %rhs)
+            {
+                ::D2D1_DRAWING_STATE_DESCRIPTION1 value;
+                value.antialiasMode = (::D2D1_ANTIALIAS_MODE)((int)rhs.antialiasMode);
+                value.textAntialiasMode = (::D2D1_TEXT_ANTIALIAS_MODE)((int)rhs.textAntialiasMode);
+                value.tag1 = rhs.tag1;
+                value.tag2 = rhs.tag2;
+                value.transform = static_cast<::D2D1_MATRIX_3X2_F>(rhs.transform);
+                value.primitiveBlend = (::D2D1_PRIMITIVE_BLEND)((int)rhs.primitiveBlend);
+                value.unitMode = (::D2D1_UNIT_MODE)((int)rhs.unitMode);
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1(::D2D1_DRAWING_STATE_DESCRIPTION1 %rhs)
+            {
+                Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1 value;
+                value.antialiasMode = (Direct2DNet::D2D1_ANTIALIAS_MODE)((int)rhs.antialiasMode);
+                value.textAntialiasMode = (Direct2DNet::D2D1_TEXT_ANTIALIAS_MODE)((int)rhs.textAntialiasMode);
+                value.tag1 = rhs.tag1;
+                value.tag2 = rhs.tag2;
+                value.transform = static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(rhs.transform);
+                value.primitiveBlend = (Direct2DNet::D2D1_PRIMITIVE_BLEND)((int)rhs.primitiveBlend);
+                value.unitMode = (Direct2DNet::D2D1_UNIT_MODE)((int)rhs.unitMode);
+
+                return value;
+            }
+
+            static property Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1 Default
+            {
+                static Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1 get()
+                {
+                    return Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1(
+                        Direct2DNet::D2D1_ANTIALIAS_MODE::PER_PRIMITIVE,
+                        Direct2DNet::D2D1_TEXT_ANTIALIAS_MODE::DEFAULT,
+                        0, 0,
+                        Direct2DNet::D2D1_MATRIX_3X2_F::Identity,
+                        Direct2DNet::D2D1_PRIMITIVE_BLEND::SOURCE_OVER,
+                        Direct2DNet::D2D1_UNIT_MODE::DIPS
+                    );
+                }
+            }
         };
 
         /// <summary>
@@ -1756,6 +1837,45 @@ namespace D2DNet
         };
 
         /// <summary>
+        /// This defines the list of system properties present on the root effect property
+        /// interface.
+        /// </summary>
+        public enum class D2D1_PROPERTY : unsigned int
+        {
+            CLSID = 0x80000000,
+            DISPLAYNAME = 0x80000001,
+            AUTHOR = 0x80000002,
+            CATEGORY = 0x80000003,
+            DESCRIPTION = 0x80000004,
+            INPUTS = 0x80000005,
+            CACHED = 0x80000006,
+            PRECISION = 0x80000007,
+            MIN_INPUTS = 0x80000008,
+            MAX_INPUTS = 0x80000009,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
+        /// This defines the indices of sub-properties that may be present on any parent
+        /// property.
+        /// </summary>
+        public enum class D2D1_SUBPROPERTY : unsigned int
+        {
+            DISPLAYNAME = 0x80000000,
+            ISREADONLY = 0x80000001,
+            MIN = 0x80000002,
+            MAX = 0x80000003,
+            DEFAULT = 0x80000004,
+            FIELDS = 0x80000005,
+            INDEX = 0x80000006,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
         /// This is used to specify the quality of image scaling with
         /// ID2D1DeviceContext::DrawImage and with the 2D Affine Transform Effect.
         /// </summary>
@@ -1867,6 +1987,256 @@ namespace D2DNet
                     Direct2DNet::D2D1_INTERPOLATION_MODE::LINEAR
                 );
             }
+        };
+
+        /// <summary>
+        /// This controls advanced settings of the Direct2D imaging pipeline.
+        /// </summary>
+        public value struct D2D1_RENDERING_CONTROLS
+        {
+            /// <summary>
+            /// The default buffer precision, used if the precision isn't otherwise specified.
+            /// </summary>
+            Direct2DNet::D2D1_BUFFER_PRECISION bufferPrecision;
+
+            /// <summary>
+            /// The size of allocated tiles used to render imaging effects.
+            /// </summary>
+            Direct2DNet::D2D1_SIZE_U tileSize;
+
+            D2D1_RENDERING_CONTROLS(
+                Direct2DNet::D2D1_BUFFER_PRECISION bufferPrecision,
+                Direct2DNet::D2D1_SIZE_U tileSize
+            ) : bufferPrecision(bufferPrecision), tileSize(tileSize) {}
+
+            static operator ::D2D1_RENDERING_CONTROLS(Direct2DNet::D2D1_RENDERING_CONTROLS %rhs)
+            {
+                ::D2D1_RENDERING_CONTROLS value;
+                value.bufferPrecision = (::D2D1_BUFFER_PRECISION)((int)rhs.bufferPrecision);
+                value.tileSize = static_cast<::D2D1_SIZE_U>(rhs.tileSize);
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_RENDERING_CONTROLS(::D2D1_RENDERING_CONTROLS %rhs)
+            {
+                Direct2DNet::D2D1_RENDERING_CONTROLS value;
+                value.bufferPrecision = (Direct2DNet::D2D1_BUFFER_PRECISION)((int)rhs.bufferPrecision);
+                value.tileSize = static_cast<Direct2DNet::D2D1_SIZE_U>(rhs.tileSize);
+
+                return value;
+            }
+        };
+
+        /// <summary>
+        /// Specifies the composite mode that will be applied.
+        /// </summary>
+        public enum class D2D1_COMPOSITE_MODE
+        {
+            /// <summary>
+            /// The standard source-over-destination blend mode.
+            /// </summary>
+            SOURCE_OVER = 0,
+
+            /// <summary>
+            /// The destination is rendered over the source.
+            /// </summary>
+            DESTINATION_OVER = 1,
+
+            /// <summary>
+            /// Performs a logical clip of the source pixels against the destination pixels.
+            /// </summary>
+            SOURCE_IN = 2,
+
+            /// <summary>
+            /// The inverse of the <see cref="Direct2DNet::D2D1_COMPOSITE_MODE::SOURCE_IN"/> operation.
+            /// </summary>
+            DESTINATION_IN = 3,
+
+            /// <summary>
+            /// This is the logical inverse to <see cref="Direct2DNet::D2D1_COMPOSITE_MODE::SOURCE_IN"/>.
+            /// </summary>
+            SOURCE_OUT = 4,
+
+            /// <summary>
+            /// The is the logical inverse to <see cref="Direct2DNet::D2D1_COMPOSITE_MODE::DESTINATION_IN"/>.
+            /// </summary>
+            DESTINATION_OUT = 5,
+
+            /// <summary>
+            /// Writes the source pixels over the destination where there are destination pixels.
+            /// </summary>
+            SOURCE_ATOP = 6,
+
+            /// <summary>
+            /// The logical inverse of <see cref="Direct2DNet::D2D1_COMPOSITE_MODE::SOURCE_ATOP"/>.
+            /// </summary>
+            DESTINATION_ATOP = 7,
+
+            /// <summary>
+            /// The source is inverted with the destination.
+            /// </summary>
+            XOR = 8,
+
+            /// <summary>
+            /// The channel components are summed.
+            /// </summary>
+            PLUS = 9,
+
+            /// <summary>
+            /// The source is copied to the destination; the destination pixels are ignored.
+            /// </summary>
+            SOURCE_COPY = 10,
+
+            /// <summary>
+            /// Equivalent to <see cref="Direct2DNet::D2D1_COMPOSITE_MODE::SOURCE_COPY"/>, but pixels
+            /// outside of the source bounds are unchanged.
+            /// </summary>
+            BOUNDED_SOURCE_COPY = 11,
+
+            /// <summary>
+            /// Destination colors are inverted according to a source mask.
+            /// </summary>
+            MASK_INVERT = 12,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
+        /// Specifies how the layer contents should be prepared.
+        /// </summary>
+        [System::FlagsAttribute]
+        public enum class D2D1_LAYER_OPTIONS1
+        {
+            /// <summary>
+            /// Default layer behavior. A premultiplied layer target is pushed and its contents are cleared
+            /// to transparent black.
+            /// </summary>
+            NONE = 0,
+
+            /// <summary>
+            /// The layer is not cleared to transparent black.
+            /// </summary>
+            INITIALIZE_FROM_BACKGROUND = 1,
+
+            /// <summary>
+            /// The layer is always created as ignore alpha. All content rendered into the layer will
+            /// be treated as opaque.
+            /// </summary>
+            IGNORE_ALPHA = 2,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
+        /// All parameters related to pushing a layer.
+        /// </summary>
+        public value struct D2D1_LAYER_PARAMETERS1
+        {
+            /// <summary>
+            /// The rectangular clip that will be applied to the layer. The clip is affected by
+            /// the world transform. Content outside of the content bounds will not render.
+            /// </summary>
+            Direct2DNet::D2D1_RECT_F contentBounds;
+
+            /// <summary>
+            /// A general mask that can be optionally applied to the content. Content not inside
+            /// the fill of the mask will not be rendered.
+            /// </summary>
+            Direct2DNet::ID2D1Geometry ^geometricMask;
+
+            /// <summary>
+            /// Specifies whether the mask should be aliased or antialiased.
+            /// </summary>
+            Direct2DNet::D2D1_ANTIALIAS_MODE maskAntialiasMode;
+
+            /// <summary>
+            /// An additional transform that may be applied to the mask in addition to the
+            /// current world transform.
+            /// </summary>
+            Direct2DNet::D2D1_MATRIX_3X2_F maskTransform;
+
+            /// <summary>
+            /// The opacity with which all of the content in the layer will be blended back to
+            /// the target when the layer is popped.
+            /// </summary>
+            float opacity;
+
+            /// <summary>
+            /// An additional brush that can be applied to the layer. Only the opacity channel
+            /// is sampled from this brush and multiplied both with the layer content and the
+            /// over-all layer opacity.
+            /// </summary>
+            Direct2DNet::ID2D1Brush ^opacityBrush;
+
+            /// <summary>
+            /// Specifies if ClearType will be rendered into the layer.
+            /// </summary>
+            Direct2DNet::D2D1_LAYER_OPTIONS1 layerOptions;
+
+            D2D1_LAYER_PARAMETERS1(
+                Direct2DNet::D2D1_RECT_F contentBounds,
+                Direct2DNet::ID2D1Geometry ^geometricMask,
+                Direct2DNet::D2D1_ANTIALIAS_MODE maskAntialiasMode,
+                Direct2DNet::D2D1_MATRIX_3X2_F maskTransform,
+                float opacity,
+                Direct2DNet::ID2D1Brush ^opacityBrush,
+                Direct2DNet::D2D1_LAYER_OPTIONS1 layerOptions
+            ) : contentBounds(contentBounds), geometricMask(geometricMask),
+                maskAntialiasMode(maskAntialiasMode), maskTransform(maskTransform), opacity(opacity),
+                opacityBrush(opacityBrush), layerOptions(layerOptions) {}
+
+            static operator ::D2D1_LAYER_PARAMETERS1(Direct2DNet::D2D1_LAYER_PARAMETERS1 %rhs);
+
+            static property Direct2DNet::D2D1_LAYER_PARAMETERS1 Default
+            {
+                static Direct2DNet::D2D1_LAYER_PARAMETERS1 get()
+                {
+                    return Direct2DNet::D2D1_LAYER_PARAMETERS1(
+                        Direct2DNet::D2D1_RECT_F::InfiniteRect,
+                        nullptr,
+                        Direct2DNet::D2D1_ANTIALIAS_MODE::PER_PRIMITIVE,
+                        Direct2DNet::D2D1_MATRIX_3X2_F::Identity,
+                        1.0f,
+                        nullptr,
+                        Direct2DNet::D2D1_LAYER_OPTIONS1::NONE
+                    );
+                }
+            }
+        };
+
+        ref class ID2D1Effect;
+
+        /// <summary>
+        /// This identifies a certain input connection of a certain effect.
+        /// </summary>
+        public value struct D2D1_EFFECT_INPUT_DESCRIPTION
+        {
+            /// <summary>
+            /// The effect whose input connection is being specified.
+            /// </summary>
+            Direct2DNet::ID2D1Effect ^effect;
+
+            /// <summary>
+            /// The index of the input connection into the specified effect.
+            /// </summary>
+            unsigned int inputIndex;
+
+            /// <summary>
+            /// The rectangle which would be available on the specified input connection during
+            /// render operations.
+            /// </summary>
+            Direct2DNet::D2D1_RECT_F inputRectangle;
+
+            D2D1_EFFECT_INPUT_DESCRIPTION(
+                Direct2DNet::ID2D1Effect ^effect,
+                unsigned int inputIndex,
+                Direct2DNet::D2D1_RECT_F inputRectangle
+            ) : effect(effect), inputIndex(inputIndex), inputRectangle(inputRectangle) {}
+
+            static operator ::D2D1_EFFECT_INPUT_DESCRIPTION(Direct2DNet::D2D1_EFFECT_INPUT_DESCRIPTION %rhs);
         };
     }
 }

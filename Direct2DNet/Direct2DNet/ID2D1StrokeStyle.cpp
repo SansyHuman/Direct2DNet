@@ -37,6 +37,40 @@ namespace D2DNet
             }
         }
 
+        ID2D1StrokeStyle::ID2D1StrokeStyle(Direct2DNet::ID2D1Factory ^factory, ::ID2D1StrokeStyle *pStrokeStyle) : Direct2DNet::ID2D1Resource(factory)
+        {
+            m_pResource = pStrokeStyle;
+            m_properties = Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES(
+                (Direct2DNet::D2D1_CAP_STYLE)((int)pStrokeStyle->GetStartCap()),
+                (Direct2DNet::D2D1_CAP_STYLE)((int)pStrokeStyle->GetEndCap()),
+                (Direct2DNet::D2D1_CAP_STYLE)((int)pStrokeStyle->GetDashCap()),
+                (Direct2DNet::D2D1_LINE_JOIN)((int)pStrokeStyle->GetLineJoin()),
+                pStrokeStyle->GetMiterLimit(),
+                (Direct2DNet::D2D1_DASH_STYLE)((int)pStrokeStyle->GetDashStyle()),
+                pStrokeStyle->GetDashOffset()
+            );
+
+            if(m_properties.dashStyle == Direct2DNet::D2D1_DASH_STYLE::CUSTOM)
+            {
+                UINT dashCnt = pStrokeStyle->GetDashesCount();
+
+                if(dashCnt == 0)
+                    m_dashes = nullptr;
+                else
+                {
+                    m_dashes = gcnew array<float>(dashCnt);
+
+                    pin_ptr<float> pDashes = &m_dashes[0];
+                    pStrokeStyle->GetDashes((float *)pDashes, dashCnt);
+                    pDashes = nullptr;
+                }
+            }
+            else
+            {
+                m_dashes = nullptr;
+            }
+        }
+
         ID2D1StrokeStyle::ID2D1StrokeStyle(
             Direct2DNet::ID2D1Factory ^factory,
             Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES1 %properties,

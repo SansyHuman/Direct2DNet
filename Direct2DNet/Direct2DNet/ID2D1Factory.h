@@ -28,6 +28,7 @@ namespace D2DNet
         ref class ID2D1HwndRenderTarget;
         ref class ID2D1DCRenderTarget;
         ref class ID2D1StrokeStyle;
+        ref class ID2D1Multithread;
 
         /// <summary>
         /// The root factory interface for all of D2D's objects.
@@ -50,6 +51,10 @@ namespace D2DNet
                 Direct2DNet::D2D1_FACTORY_OPTIONS %options,
                 System::Guid guid
             );
+
+        internal:
+            // Called by ID2D1CommandSink
+            ID2D1Factory(::ID2D1Factory *pFactory);
 
         public:
 
@@ -83,6 +88,8 @@ namespace D2DNet
             );
             ~ID2D1Factory();
             !ID2D1Factory();
+
+            virtual bool Equals(System::Object ^other) override;
 
             virtual property void *NativePointer
             {
@@ -258,6 +265,14 @@ namespace D2DNet
             Direct2DNet::ID2D1DCRenderTarget ^CreateDCRenderTarget(
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %renderTargetProperties
             );
+
+            /// <summary>
+            /// Queries the factory to ID2D1Multithread interface.
+            /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to query to ID2D1Multithread.
+            /// </exception>
+            Direct2DNet::ID2D1Multithread ^QueryToID2D1Multithread();
         };
     }
 }

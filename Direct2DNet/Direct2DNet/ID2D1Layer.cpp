@@ -26,5 +26,11 @@ namespace D2DNet
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Layer", (int)hr);
         }
 
+        ID2D1Layer::ID2D1Layer(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Layer *pLayer)
+            : Direct2DNet::ID2D1Resource(factory)
+        {
+            m_pResource = pLayer;
+        }
+
     }
 }

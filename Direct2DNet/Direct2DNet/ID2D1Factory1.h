@@ -14,9 +14,11 @@ namespace D2DNet
 
     namespace Direct2DNet
     {
+        ref class ID2D1Device;
         ref class ID2D1StrokeStyle1;
         ref class ID2D1PathGeometry1;
-        ref class ID2D1Device;
+        ref class ID2D1DrawingStateBlock1;
+        ref class ID2D1Properties;
 
         /// <summary>
         /// Creates Direct2D resources.
@@ -89,6 +91,40 @@ namespace D2DNet
             /// Thrown when it failed to create the geometry.
             /// </exception>
             Direct2DNet::ID2D1PathGeometry1 ^CreatePathGeometry();
+
+            /// <summary>
+            /// Creates a new drawing state block, this can be used in subsequent
+            /// SaveDrawingState and RestoreDrawingState operations on the render target.
+            /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the block.
+            /// </exception>
+            Direct2DNet::ID2D1DrawingStateBlock1 ^CreateDrawingStateBlock(
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1> description,
+                [OptionalAttribute] DWriteNet::IDWriteRenderingParams ^params
+            );
+
+            // CreateGdiMetafile
+
+            // RegisterEffectFromStream
+
+            // RegisterEffectFromString
+
+            // UnregisterEffect
+
+            // GetRegisteredEffects
+
+            /// <summary>
+            /// This retrieves the effect properties for the given effect, all of the effect
+            /// properties will be set to a default value since an effect is not instantiated to
+            /// implement the returned property interface.
+            /// </summary>
+             /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to get the properties.
+            /// </exception>
+            Direct2DNet::ID2D1Properties ^GetEffectProperties(
+                [InAttribute][IsReadOnlyAttribute] System::Guid %effectId
+            );
         };
     }
 }

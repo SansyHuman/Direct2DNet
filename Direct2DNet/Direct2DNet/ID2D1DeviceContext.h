@@ -19,10 +19,15 @@ namespace D2DNet
     {
         ref class ID2D1Device;
         ref class ID2D1Image;
+        ref class ID2D1Bitmap;
         ref class ID2D1Bitmap1;
         ref class ID2D1ColorContext;
         ref class ID2D1Effect;
         ref class ID2D1GradientStopCollection1;
+        ref class ID2D1ImageBrush;
+        ref class ID2D1BitmapBrush1;
+        ref class ID2D1CommandList;
+        ref class ID2D1Layer;
 
         /// <summary>
         /// The device context represents a set of state and a command buffer that is used
@@ -129,6 +134,96 @@ namespace D2DNet
             );
 
             /// <summary>
+            /// Creates an image brush, the input image can be any type of image, including a
+            /// bitmap, effect and a command list.
+            /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the brush.
+            /// </exception>
+            Direct2DNet::ID2D1ImageBrush ^CreateImageBrush(
+                Direct2DNet::ID2D1Image ^image,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_IMAGE_BRUSH_PROPERTIES %imageBrushProperties
+            );
+
+            /// <summary>
+            /// Creates a bitmap brush, the input image is a Direct2D bitmap object.
+            /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the bitmap brush.
+            /// </exception>
+            Direct2DNet::ID2D1BitmapBrush1 ^CreateBitmapBrush1(
+                Direct2DNet::ID2D1Bitmap ^bitmap
+            );
+
+            /// <summary>
+            /// Creates a new command list.
+            /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the command list.
+            /// </exception>
+            Direct2DNet::ID2D1CommandList ^CreateCommandList();
+
+            /// <summary>
+            /// Indicates whether the format is supported by D2D.
+            /// </summary>
+            bool IsDxgiFormatSupported(DXGINet::DXGI_FORMAT format);
+
+            /// <summary>
+            /// Indicates whether the buffer precision is supported by D2D.
+            /// </summary>
+            bool IsBufferPrecisionSupported(Direct2DNet::D2D1_BUFFER_PRECISION bufferPrecision);
+
+            /// <summary>
+            /// Gets the local-space bounds of an image without the world transform of the context applied.
+            /// </summary>
+            /// <returns>
+            /// (HRESULT, <see cref="Direct2DNet::D2D1_RECT_F"/>) tuple. If this method succeeds, HRESULT is
+            /// S_OK(0). Otherwise, it is an error code. <see cref="Direct2DNet::D2D1_RECT_F"/> is the bounds
+            /// of the image.
+            /// </returns>
+            System::ValueTuple<HRESULT, Direct2DNet::D2D1_RECT_F> GetImageLocalBounds(
+                Direct2DNet::ID2D1Image ^image
+            );
+
+            /// <summary>
+            /// Gets the local-space bounds of an image without the world transform of the context applied.
+            /// </summary>
+            /// <param name="localBounds">Bounds of the image(out parameter).</param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT GetImageLocalBounds(
+                Direct2DNet::ID2D1Image ^image,
+                [OutAttribute] Direct2DNet::D2D1_RECT_F %localBounds
+            );
+
+            /// <summary>
+            /// Gets the world-space bounds of an image with the world transform of the context applied.
+            /// </summary>
+            /// <returns>
+            /// (HRESULT, <see cref="Direct2DNet::D2D1_RECT_F"/>) tuple. If this method succeeds, HRESULT is
+            /// S_OK(0). Otherwise, it is an error code. <see cref="Direct2DNet::D2D1_RECT_F"/> is the bounds
+            /// of the image.
+            /// </returns>
+            System::ValueTuple<HRESULT, Direct2DNet::D2D1_RECT_F> GetImageWorldBounds(
+                Direct2DNet::ID2D1Image ^image
+            );
+
+            /// <summary>
+            /// Gets the world-space bounds of an image with the world transform of the context applied.
+            /// </summary>
+            /// <param name="localBounds">Bounds of the image(out parameter).</param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT GetImageWorldBounds(
+                Direct2DNet::ID2D1Image ^image,
+                [OutAttribute] Direct2DNet::D2D1_RECT_F %worldBounds
+            );
+
+            // GetGlyphRunWorldBounds
+
+            /// <summary>
             /// Gets the device associated with this device context.
             /// </summary>
             property Direct2DNet::ID2D1Device ^Device
@@ -149,6 +244,270 @@ namespace D2DNet
                 Direct2DNet::ID2D1Image ^get();
                 void set(Direct2DNet::ID2D1Image ^value);
             }
+
+            /// <summary>
+            /// Gets and sets the rendering controls for internal rendering inside the device context.
+            /// </summary>
+            property Direct2DNet::D2D1_RENDERING_CONTROLS RenderingControls
+            {
+                Direct2DNet::D2D1_RENDERING_CONTROLS get()
+                {
+                    ::D2D1_RENDERING_CONTROLS control;
+
+                    ((::ID2D1DeviceContext *)m_pResource)->GetRenderingControls(&control);
+                    return static_cast<Direct2DNet::D2D1_RENDERING_CONTROLS>(control);
+                }
+
+                void set(Direct2DNet::D2D1_RENDERING_CONTROLS value)
+                {
+                    ((::ID2D1DeviceContext *)m_pResource)->SetRenderingControls(
+                        &static_cast<::D2D1_RENDERING_CONTROLS>(value)
+                    );
+                }
+            }
+
+            /// <summary>
+            /// Gets and sets the primitive blend for all of the rendering operations.
+            /// </summary>
+            property Direct2DNet::D2D1_PRIMITIVE_BLEND PrimitiveBlend
+            {
+                Direct2DNet::D2D1_PRIMITIVE_BLEND get()
+                {
+                    return (Direct2DNet::D2D1_PRIMITIVE_BLEND)((int)
+                        ((::ID2D1DeviceContext *)m_pResource)->GetPrimitiveBlend()
+                        );
+                }
+
+                void set(Direct2DNet::D2D1_PRIMITIVE_BLEND value)
+                {
+                    ((::ID2D1DeviceContext *)m_pResource)->SetPrimitiveBlend(
+                        (::D2D1_PRIMITIVE_BLEND)((int)value)
+                    );
+                }
+            }
+
+            /// <summary>
+            /// Gets and sets the units used for all of the rendering operations.
+            /// </summary>
+            property Direct2DNet::D2D1_UNIT_MODE UnitMode
+            {
+                Direct2DNet::D2D1_UNIT_MODE get()
+                {
+                    return (Direct2DNet::D2D1_UNIT_MODE)((int)
+                        ((::ID2D1DeviceContext *)m_pResource)->GetUnitMode()
+                        );
+                }
+
+                void set(Direct2DNet::D2D1_UNIT_MODE value)
+                {
+                    ((::ID2D1DeviceContext *)m_pResource)->SetUnitMode(
+                        (::D2D1_UNIT_MODE)((int)value)
+                    );
+                }
+            }
+
+            // DrawGlyphRun
+
+            /// <summary>
+            /// Draw an image to the device context. The image represents either a concrete
+            /// bitmap or the output of an effect graph.
+            /// </summary>
+            /// <param name="targetOffset">The offset in the destination space that the image will be
+            /// rendered to. The entire logical extent of the image will be rendered to the corresponding
+            /// destination. If not specified, the destination origin will be (0, 0). The top-left corner
+            /// of the image will be mapped to the target offset. This will not necessarily be the origin.
+            /// The default value is null.</param>
+            /// <param name="imageRectangle">The corresponding rectangle in the image space will be mapped
+            /// to the given origins when processing the image. The default value is null.</param>
+            /// <param name="interpolationMode">The interpolation mode that will be used to scale the image
+            /// if necessary. The default value is <see cref="Direct2DNet::D2D1_INTERPOLATION_MODE::LINEAR"/>.
+            /// </param>
+            /// <param name="compositeMode">The composite mode that will be applied to the limits of
+            /// the currently selected clip. The default value is
+            /// <see cref="Direct2DNet::D2D1_COMPOSITE_MODE::SOURCE_OVER"/>.</param>
+            void DrawImage(
+                Direct2DNet::ID2D1Image ^image,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_POINT_2F> targetOffset,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_F> imageRectangle,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_INTERPOLATION_MODE> interpolationMode,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_COMPOSITE_MODE> compositeMode
+            );
+
+            /// <summary>
+            /// Draws the output of the effect as an image.
+            /// </summary>
+            /// <param name="targetOffset">The offset in the destination space that the image will be
+            /// rendered to. The entire logical extent of the image will be rendered to the corresponding
+            /// destination. If not specified, the destination origin will be (0, 0). The top-left corner
+            /// of the image will be mapped to the target offset. This will not necessarily be the origin.
+            /// The default value is null.</param>
+            /// <param name="imageRectangle">The corresponding rectangle in the image space will be mapped
+            /// to the given origins when processing the image. The default value is null.</param>
+            /// <param name="interpolationMode">The interpolation mode that will be used to scale the image
+            /// if necessary. The default value is <see cref="Direct2DNet::D2D1_INTERPOLATION_MODE::LINEAR"/>.
+            /// </param>
+            /// <param name="compositeMode">The composite mode that will be applied to the limits of
+            /// the currently selected clip. The default value is
+            /// <see cref="Direct2DNet::D2D1_COMPOSITE_MODE::SOURCE_OVER"/>.</param>
+            void DrawImage(
+                Direct2DNet::ID2D1Effect ^effect,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_POINT_2F> targetOffset,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_F> imageRectangle,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_INTERPOLATION_MODE> interpolationMode,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_COMPOSITE_MODE> compositeMode
+            );
+
+            // DrawGdiMetafile
+
+            /// <summary>
+            /// Draws a bitmap to the render target.
+            /// </summary>
+            /// <param name="opacity">The opacity of the bitmap.</param>
+            /// <param name="interpolationMode">The interpolation mode to use.</param>
+            /// <param name="destinationRectangle">The destination rectangle. The default is the size
+            /// of the bitmap and the location is the upper left corner of the render target.
+            /// </param>
+            /// <param name="sourceRectangle">An optional source rectangle. The default value is null.</param>
+            /// <param name="perspectiveTransform">An optional perspective transform.
+            /// The default value is null.</param>
+            void DrawBitmap(
+                Direct2DNet::ID2D1Bitmap ^bitmap,
+                float opacity,
+                Direct2DNet::D2D1_INTERPOLATION_MODE interpolationMode,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_F> destinationRectangle,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_F> sourceRectangle,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_MATRIX_4X4_F> perspectiveTransform
+            );
+
+            /// <summary>
+            /// Push a layer on the device context.
+            /// </summary>
+            void PushLayer(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_LAYER_PARAMETERS1 %layerParameters,
+                Direct2DNet::ID2D1Layer ^layer
+            );
+
+            /// <summary>
+            /// This indicates that a portion of an effect's input is invalid. This method can
+            /// be called many times.
+            /// </summary>
+            /// <param name="input">The input index.</param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT InvalidateEffectInputRectangle(
+                Direct2DNet::ID2D1Effect ^effect,
+                unsigned int input,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RECT_F %inputRectangle
+            );
+
+            /// <summary>
+            /// Gets the number of invalid ouptut rectangles that have accumulated at the
+            /// effect.
+            /// </summary>
+            /// <returns>
+            /// (HRESULT, uint) tuple. If this method succeeds, HRESULT is S_OK(0). Otherwise, it is an
+            /// error code. uint is the number of invalid rectangles.
+            /// </returns>
+            System::ValueTuple<HRESULT, unsigned int> GetEffectInvalidRectangleCount(
+                Direct2DNet::ID2D1Effect ^effect
+            );
+
+            /// <summary>
+            /// Gets the number of invalid ouptut rectangles that have accumulated at the
+            /// effect.
+            /// </summary>
+            /// <param name="rectangleCount">The number of invalid output rectangles(out parameter).</param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT GetEffectInvalidRectangleCount(
+                Direct2DNet::ID2D1Effect ^effect,
+                [OutAttribute] unsigned int %rectangleCount
+            );
+
+            /// <summary>
+            /// Gets the invalid rectangles that are at the output of the effect.
+            /// </summary>
+            /// <returns>
+            /// (HRESULT, <see cref="Direct2DNet::D2D1_RECT_F"/>[]) tuple. If this method succeeds, HRESULT
+            /// is S_OK(0). Otherwise, it is an error code. <see cref="Direct2DNet::D2D1_RECT_F"/>[] is the
+            /// array of rectangles.
+            /// </returns>
+            System::ValueTuple<HRESULT, array<Direct2DNet::D2D1_RECT_F> ^> GetEffectInvalidRectangles(
+                Direct2DNet::ID2D1Effect ^effect
+            );
+
+            /// <summary>
+            /// Gets the invalid rectangles that are at the output of the effect.
+            /// </summary>
+            /// <param name="rectangles">The array of rectangles(out parameter).</param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT GetEffectInvalidRectangles(
+                Direct2DNet::ID2D1Effect ^effect,
+                [OutAttribute] array<Direct2DNet::D2D1_RECT_F> ^%rectangles
+            );
+
+            /// <summary>
+            /// Gets the maximum region of each specified input which would be used during a
+            /// subsequent rendering operation
+            /// </summary>
+            /// <param name="renderEffect">The image whose output is being rendered.</param>
+            /// <param name="inputDescription">A list of the inputs whos rectangles are being queried.</param>
+            /// <param name="renderImageRectangle">The portion of the output image whose inputs are
+            /// being inspected. The default value is null.</param>
+            /// <returns>
+            /// (HRESULT, <see cref="Direct2DNet::D2D1_RECT_F"/>[]) tuple. If this method succeeds, HRESULT
+            /// is S_OK(0). Otherwise, it is an error code. <see cref="Direct2DNet::D2D1_RECT_F"/>[] is the
+            /// array of required input rectangles.
+            /// </returns>
+            System::ValueTuple<HRESULT, array<Direct2DNet::D2D1_RECT_F> ^> GetEffectRequiredInputRectangles(
+                Direct2DNet::ID2D1Effect ^renderEffect,
+                array<Direct2DNet::D2D1_EFFECT_INPUT_DESCRIPTION> ^inputDescription,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_F> renderImageRectangle
+            );
+
+            /// <summary>
+            /// Gets the maximum region of each specified input which would be used during a
+            /// subsequent rendering operation
+            /// </summary>
+            /// <param name="renderEffect">The image whose output is being rendered.</param>
+            /// <param name="inputDescription">A list of the inputs whos rectangles are being queried.</param>
+            /// <param name="requiredInputRects">The input rectangles returned to the caller
+            /// (out parameter).</param>
+            /// <param name="renderImageRectangle">The portion of the output image whose inputs are
+            /// being inspected. The default value is null.</param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT GetEffectRequiredInputRectangles(
+                Direct2DNet::ID2D1Effect ^renderEffect,
+                array<Direct2DNet::D2D1_EFFECT_INPUT_DESCRIPTION> ^inputDescription,
+                [OutAttribute] array<Direct2DNet::D2D1_RECT_F> ^%requiredInputRects,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_F> renderImageRectangle
+            );
+
+            /// <summary>
+            /// Fill using the alpha channel of the supplied opacity mask bitmap. The brush
+            /// opacity will be modulated by the mask. The render target antialiasing mode must
+            /// be set to aliased.
+            /// </summary>
+            /// <param name="destinationRectangle">The region of the render target to paint,
+            /// in device-independent pixels. If the value is null, the destination rectangle 
+            /// has the same size to the <paramref name="sourceRectangle"/> placed on the origin.
+            /// If <paramref name="sourceRectangle"/> is also null, the destination rectangle has
+            /// the same size with the size of the opacity mask bitmap. The default value is null.</param>
+            /// <param name="sourceRectangle">The region of the bitmap to use as the opacity mask, in
+            /// device-independent pixels. If this value is null, use the whole bitmap as the opacity
+            /// mask. The default value is null.</param>
+            void FillOpacityMask(
+                Direct2DNet::ID2D1Bitmap ^opacityMask,
+                Direct2DNet::ID2D1Brush ^brush,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_F> destinationRectangle,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_F> sourceRectangle
+            );
         };
     }
 }

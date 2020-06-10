@@ -10,6 +10,7 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ref class ID2D1RenderTarget;
+        ref class ID2D1Factory;
 
         // Done.
 
@@ -27,6 +28,9 @@ namespace D2DNet
 
         internal:
             ID2D1Mesh(Direct2DNet::ID2D1RenderTarget ^renderTarget);
+
+            // Called by ID2D1CommandSink
+            ID2D1Mesh(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Mesh *pMesh);
 
         public:
             ~ID2D1Mesh();

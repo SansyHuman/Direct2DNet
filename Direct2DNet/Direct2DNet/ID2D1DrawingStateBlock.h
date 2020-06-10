@@ -4,7 +4,6 @@
 #include "D2DNetHeaders.h"
 #include "D2DSettings.h"
 #include "ID2D1Resource.h"
-#include <complex.h>
 
 namespace D2DNet
 {
@@ -16,6 +15,7 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ref class ID2D1Factory;
+        ref class ID2D1Factory1;
 
         /// <summary>
         /// Represents the drawing state of a render target: the antialiasing mode,
@@ -32,6 +32,12 @@ namespace D2DNet
                 Direct2DNet::ID2D1Factory ^factory,
                 System::Nullable<Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION> %description,
                 DWriteNet::IDWriteRenderingParams ^params
+            );
+
+        protected:
+            // Used by ID2D1DrawingStateBlock1
+            ID2D1DrawingStateBlock(
+                Direct2DNet::ID2D1Factory1 ^factory
             );
 
         public:

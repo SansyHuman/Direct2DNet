@@ -29,6 +29,8 @@ namespace D2DNet
             ~ID2D1Resource();
             !ID2D1Resource();
 
+            virtual bool Equals(System::Object ^other) override;
+
             virtual property void *NativePointer
             {
                 virtual void *get()

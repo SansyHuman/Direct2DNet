@@ -1,9 +1,11 @@
 #pragma once
 
 #include "ID2D1BitmapBrush.h"
+#include "ID2D1BitmapBrush1.h"
 #include "ID2D1Brush.h"
 #include "ID2D1GradientStopCollection.h"
 #include "ID2D1GradientStopCollection1.h"
+#include "ID2D1ImageBrush.h"
 #include "ID2D1LinearGradientBrush.h"
 #include "ID2D1RadialGradientBrush.h"
 #include "ID2D1SolidColorBrush.h"

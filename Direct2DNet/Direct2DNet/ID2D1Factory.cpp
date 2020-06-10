@@ -10,6 +10,7 @@
 #include "ID2D1HwndRenderTarget.h"
 #include "ID2D1DCRenderTarget.h"
 #include "ID2D1StrokeStyle.h"
+#include "ID2D1Multithread.h"
 #include "../GUIDs.h"
 #include "D2DError.h"
 
@@ -76,6 +77,11 @@ namespace D2DNet
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Factory", (int)hr);
         }
 
+        ID2D1Factory::ID2D1Factory(::ID2D1Factory *pFactory)
+        {
+            m_pFactory = pFactory;
+        }
+
         ID2D1Factory::ID2D1Factory(D2D1_FACTORY_TYPE type)
         {
             m_type = type;
@@ -116,6 +122,18 @@ namespace D2DNet
             {
                 m_pFactory->Release();
                 m_pFactory = nullptr;
+            }
+        }
+
+        bool ID2D1Factory::Equals(System::Object ^other)
+        {
+            try
+            {
+                return this->m_pFactory == safe_cast<Direct2DNet::ID2D1Factory ^>(other)->m_pFactory;
+            }
+            catch(System::Exception ^)
+            {
+                return false;
             }
         }
 
@@ -213,6 +231,19 @@ namespace D2DNet
                 this,
                 renderTargetProperties
             );
+        }
+
+        Direct2DNet::ID2D1Multithread ^ID2D1Factory::QueryToID2D1Multithread()
+        {
+            ::ID2D1Multithread *pThread = __nullptr;
+            HRESULT hr = m_pFactory->QueryInterface(__uuidof(::ID2D1Multithread), (void **)&pThread);
+
+            if(FAILED(hr))
+                throw gcnew D2DNet::Direct2DNet::Exception::DxException(
+                    "Failed to query ID2D1Multithread.", hr
+                );
+
+            return gcnew Direct2DNet::ID2D1Multithread(pThread);
         }
 
     }

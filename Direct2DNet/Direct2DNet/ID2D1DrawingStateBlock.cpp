@@ -1,5 +1,6 @@
 #include "ID2D1DrawingStateBlock.h"
 #include "ID2D1Factory.h"
+#include "ID2D1Factory1.h"
 #include "../DWriteNet/IDWriteRenderingParams.h"
 
 namespace D2DNet
@@ -22,6 +23,12 @@ namespace D2DNet
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1DrawingStateBlock", (int)hr);
+        }
+
+        ID2D1DrawingStateBlock::ID2D1DrawingStateBlock(Direct2DNet::ID2D1Factory1 ^factory)
+            : Direct2DNet::ID2D1Resource(factory)
+        {
+            
         }
 
         void ID2D1DrawingStateBlock::TextRenderingParams::set(DWriteNet::IDWriteRenderingParams ^value)

@@ -25,10 +25,14 @@ namespace D2DNet
         /// ID2D1Geometry define specific shapes.
         /// </summary>
         [System::Runtime::InteropServices::GuidAttribute("E5DB6297-76DD-4CC3-B706-70A65BA064C0")]
-        public ref class ID2D1Geometry abstract : Direct2DNet::ID2D1Resource
+        public ref class ID2D1Geometry : Direct2DNet::ID2D1Resource
         {
         protected:
             ID2D1Geometry(Direct2DNet::ID2D1Factory ^factory) : Direct2DNet::ID2D1Resource(factory) {}
+
+        internal:
+            // Called by ID2D1CommandSink
+            ID2D1Geometry(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Geometry *pGeometry);
 
         public:
             /// <summary>

@@ -85,6 +85,68 @@ namespace D2DNet
         }
     };
 
+    /// <summary>
+    /// Represents a rectangle defined by the int-type coordinates of the upper-left corner
+    /// (left, top) and the coordinates of the lower-right corner (right, bottom).
+    /// </summary>
+    public value struct RECT
+    {
+        LONG left;
+        LONG top;
+        LONG right;
+        LONG bottom;
+
+        RECT(LONG left, LONG top, LONG right, LONG bottom) : left(left), top(top), right(right), bottom(bottom) {}
+
+        static operator ::RECT(D2DNet::RECT %rhs)
+        {
+            ::RECT value;
+            value.left = rhs.left;
+            value.top = rhs.top;
+            value.right = rhs.right;
+            value.bottom = rhs.bottom;
+
+            return value;
+        }
+
+        static operator D2DNet::RECT(::RECT %rhs)
+        {
+            D2DNet::RECT value;
+            value.left = rhs.left;
+            value.top = rhs.top;
+            value.right = rhs.right;
+            value.bottom = rhs.bottom;
+
+            return value;
+        }
+    };
+
+    public value struct POINT
+    {
+        LONG x;
+        LONG y;
+
+        POINT(LONG x, LONG y) : x(x), y(y) {}
+
+        static operator ::POINT(D2DNet::POINT %rhs)
+        {
+            ::POINT value;
+            value.x = rhs.x;
+            value.y = rhs.y;
+
+            return value;
+        }
+
+        static operator D2DNet::POINT(::POINT %rhs)
+        {
+            D2DNet::POINT value;
+            value.x = rhs.x;
+            value.y = rhs.y;
+
+            return value;
+        }
+    };
+
     public value struct DirectX abstract sealed
     {
     public:

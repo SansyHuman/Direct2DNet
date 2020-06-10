@@ -29,6 +29,11 @@ namespace D2DNet
                 array<float> ^dashes
             );
 
+            ID2D1StrokeStyle(
+                Direct2DNet::ID2D1Factory ^factory,
+                ::ID2D1StrokeStyle *pStrokeStyle
+            );
+
         protected:
             // For ID2D1StrokeStyle1
             ID2D1StrokeStyle(
@@ -122,6 +127,9 @@ namespace D2DNet
             {
                 unsigned int get()
                 {
+                    if(m_dashes == nullptr)
+                        return 0U;
+
                     return m_dashes->Length;
                 }
             }
@@ -134,6 +142,9 @@ namespace D2DNet
             {
                 array<float> ^get()
                 {
+                    if(m_dashes == nullptr)
+                        return nullptr;
+
                     unsigned int count = DashesCount;
                     array<float> ^value = gcnew array<float>(count);
 

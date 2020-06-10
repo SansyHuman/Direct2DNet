@@ -4,6 +4,7 @@
 #include "D2DNetHeaders.h"
 #include "D2DSettings.h"
 #include "ID2D1RenderTarget.h"
+#include "../DXCommonSettings.h"
 
 using namespace System::Runtime::InteropServices;
 using namespace System::Runtime::CompilerServices;
@@ -42,7 +43,7 @@ namespace D2DNet
             /// </returns>
             HRESULT BindDC(
                 [InAttribute][IsReadOnlyAttribute] System::IntPtr %hDC,
-                [InAttribute][IsReadOnlyAttribute] Direct2DNet::RECT %subRect
+                [InAttribute][IsReadOnlyAttribute] D2DNet::RECT %subRect
             );
         };
     }

@@ -8,6 +8,12 @@ namespace D2DNet
 {
     namespace Direct2DNet
     {
+        ID2D1Geometry::ID2D1Geometry(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Geometry *pGeometry)
+            : Direct2DNet::ID2D1Resource(factory)
+        {
+            m_pResource = pGeometry;
+        }
+
         System::ValueTuple<HRESULT, Direct2DNet::D2D1_RECT_F> ID2D1Geometry::GetBounds(System::Nullable<Direct2DNet::D2D1_MATRIX_3X2_F> worldTransform)
         {
             if(!worldTransform.HasValue)

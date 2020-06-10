@@ -1,9 +1,12 @@
 #include "ID2D1Factory1.h"
-#include "ID2D1StrokeStyle1.h"
-#include "ID2D1PathGeometry1.h"
 #include "../DXGINet/IDXGIDevice.h"
 #include "ID2D1Device.h"
+#include "ID2D1StrokeStyle1.h"
+#include "ID2D1PathGeometry1.h"
+#include "ID2D1DrawingStateBlock1.h"
+#include "ID2D1Properties.h"
 #include "../GUIDs.h"
+#include "../DXCommonSettings.h"
 
 namespace D2DNet
 {
@@ -44,6 +47,32 @@ namespace D2DNet
         Direct2DNet::ID2D1PathGeometry1 ^ID2D1Factory1::CreatePathGeometry()
         {
             return gcnew Direct2DNet::ID2D1PathGeometry1(this);
+        }
+
+        Direct2DNet::ID2D1DrawingStateBlock1 ^ID2D1Factory1::CreateDrawingStateBlock(
+            System::Nullable<Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1> description,
+            DWriteNet::IDWriteRenderingParams ^params)
+        {
+            return gcnew Direct2DNet::ID2D1DrawingStateBlock1(
+                this,
+                description,
+                params
+            );
+        }
+
+        Direct2DNet::ID2D1Properties ^ID2D1Factory1::GetEffectProperties(System::Guid %effectId)
+        {
+            ::ID2D1Properties *pProperties = __nullptr;
+
+            HRESULT hr = ((::ID2D1Factory1 *)m_pFactory)->GetEffectProperties(
+                DirectX::ToNativeGUID(effectId),
+                &pProperties
+            );
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to get effect properties.", hr);
+
+            return gcnew Direct2DNet::ID2D1Properties(pProperties);
         }
 
     }

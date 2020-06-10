@@ -29,13 +29,15 @@ namespace D2DNet
         protected:
             ID2D1Properties() : m_pProperties(nullptr) {}
 
-        private:
-            // Used in GetSubProperties
+        internal:
+            // Used in GetSubProperties and ID2D1Factory::GetEffectProperties
             ID2D1Properties(::ID2D1Properties *pProperties) : m_pProperties(pProperties) {}
 
         public:
             ~ID2D1Properties();
             !ID2D1Properties();
+
+            virtual bool Equals(System::Object ^other) override;
 
             virtual property void *NativePointer
             {
@@ -74,9 +76,9 @@ namespace D2DNet
                     return System::ValueTuple<HRESULT, System::String ^>(D2DERR_INVALID_PROPERTY, "");
                 }
 
-                std::vector<wchar_t> name(nameLength);
+                std::vector<wchar_t> name(nameLength + 1);
 
-                HRESULT hr = m_pProperties->GetPropertyName(intIndex, name.data(), nameLength);
+                HRESULT hr = m_pProperties->GetPropertyName(intIndex, name.data(), nameLength + 1);
 
                 return System::ValueTuple<HRESULT, System::String ^>(
                     hr, marshal_as<System::String ^>(name.data())
@@ -104,9 +106,9 @@ namespace D2DNet
                     return D2DERR_INVALID_PROPERTY;
                 }
 
-                std::vector<wchar_t> nativeName(nameLength);
+                std::vector<wchar_t> nativeName(nameLength + 1);
 
-                HRESULT hr = m_pProperties->GetPropertyName(intIndex, nativeName.data(), nameLength);
+                HRESULT hr = m_pProperties->GetPropertyName(intIndex, nativeName.data(), nameLength + 1);
 
                 name = marshal_as<System::String ^>(nativeName.data());
                 return hr;

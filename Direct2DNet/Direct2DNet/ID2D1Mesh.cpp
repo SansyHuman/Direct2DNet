@@ -19,6 +19,12 @@ namespace D2DNet
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Mesh", (int)hr);
         }
 
+        ID2D1Mesh::ID2D1Mesh(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Mesh *pMesh)
+            : Direct2DNet::ID2D1Resource(factory)
+        {
+            m_pResource = pMesh;
+        }
+
         ID2D1Mesh::~ID2D1Mesh()
         {
             this->!ID2D1Mesh();
