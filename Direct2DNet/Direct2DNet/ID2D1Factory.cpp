@@ -34,9 +34,13 @@ namespace D2DNet
             {
                 hr = ::D2D1CreateFactory((::D2D1_FACTORY_TYPE)((int)type), __uuidof(::ID2D1Factory1), (void **)ppFactory);
             }
+            else if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory2)
+            {
+                hr = ::D2D1CreateFactory((::D2D1_FACTORY_TYPE)((int)type), __uuidof(::ID2D1Factory2), (void **)ppFactory);
+            }
             else
             {
-                hr = Direct2DNet::D2DError::E_WIN32_ERROR;
+                hr = E_INVALIDARG;
             }
 
             if(FAILED(hr))
@@ -65,6 +69,14 @@ namespace D2DNet
                 hr = ::D2D1CreateFactory(
                     (::D2D1_FACTORY_TYPE)((int)type),
                     __uuidof(::ID2D1Factory1),
+                    &static_cast<::D2D1_FACTORY_OPTIONS>(options),
+                    (void **)ppFactory);
+            }
+            else if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory2)
+            {
+                hr = ::D2D1CreateFactory(
+                    (::D2D1_FACTORY_TYPE)((int)type),
+                    __uuidof(::ID2D1Factory2),
                     &static_cast<::D2D1_FACTORY_OPTIONS>(options),
                     (void **)ppFactory);
             }

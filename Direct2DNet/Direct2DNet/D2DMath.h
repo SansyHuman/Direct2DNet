@@ -243,7 +243,9 @@ namespace D2DNet
             {
                 static Direct2DNet::D2D1_RECT_F get()
                 {
-                    return static_cast<Direct2DNet::D2D1_RECT_F>(D2D1::InfiniteRect());
+                    return Direct2DNet::D2D1_RECT_F(
+                        -D2D1::FloatMax(), -D2D1::FloatMax(), D2D1::FloatMax(), D2D1::FloatMax()
+                    );
                 }
             }
         };
@@ -1326,17 +1328,21 @@ namespace D2DNet
                 }
             }
 
-            bool operator==(Direct2DNet::D2D1_MATRIX_4X4_F %r)
+            static bool operator==(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_4X4_F %lhs,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_4X4_F %rhs)
             {
-                return _11 == r._11 && _12 == r._12 && _13 == r._13 && _14 == r._14 &&
-                    _21 == r._21 && _22 == r._22 && _23 == r._23 && _24 == r._24 &&
-                    _31 == r._31 && _32 == r._32 && _33 == r._33 && _34 == r._34 &&
-                    _41 == r._41 && _42 == r._42 && _43 == r._43 && _44 == r._44;
+                return lhs._11 == rhs._11 && lhs._12 == rhs._12 && lhs._13 == rhs._13 && lhs._14 == rhs._14 &&
+                    lhs._21 == rhs._21 && lhs._22 == rhs._22 && lhs._23 == rhs._23 && lhs._24 == rhs._24 &&
+                    lhs._31 == rhs._31 && lhs._32 == rhs._32 && lhs._33 == rhs._33 && lhs._34 == rhs._34 &&
+                    lhs._41 == rhs._41 && lhs._42 == rhs._42 && lhs._43 == rhs._43 && lhs._44 == rhs._44;
             }
 
-            bool operator!=(Direct2DNet::D2D1_MATRIX_4X4_F %r)
+            static bool operator!=(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_4X4_F %lhs,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_4X4_F %rhs)
             {
-                return !(*this == r);
+                return !(lhs == rhs);
             }
 
             static Direct2DNet::D2D1_MATRIX_4X4_F Translation(float x, float y, float z)
@@ -1555,11 +1561,13 @@ namespace D2DNet
                 _44 = a._41 * b._14 + a._42 * b._24 + a._43 * b._34 + a._44 * b._44;
             }
 
-            Direct2DNet::D2D1_MATRIX_4X4_F operator*(Direct2DNet::D2D1_MATRIX_4X4_F %rhs)
+            static Direct2DNet::D2D1_MATRIX_4X4_F operator*(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_4X4_F %lhs,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_MATRIX_4X4_F %rhs)
             {
                 Direct2DNet::D2D1_MATRIX_4X4_F result;
 
-                result.SetProduct(*this, rhs);
+                result.SetProduct(lhs, rhs);
 
                 return result;
             }

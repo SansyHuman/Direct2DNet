@@ -18,6 +18,7 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ref class ID2D1Device;
+        ref class ID2D1Device1;
         ref class ID2D1Image;
         ref class ID2D1Bitmap;
         ref class ID2D1Bitmap1;
@@ -40,10 +41,21 @@ namespace D2DNet
             Direct2DNet::ID2D1Device ^m_device;
             Direct2DNet::ID2D1Image ^m_target;
 
+        protected:
+            ID2D1DeviceContext(
+                Direct2DNet::ID2D1Device1 ^device,
+                Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options
+            );
+
         internal:
             ID2D1DeviceContext(
                 Direct2DNet::ID2D1Device ^device,
                 Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options);
+
+            ID2D1DeviceContext(
+                DXGINet::IDXGISurface ^dxgiSurface,
+                System::Nullable<Direct2DNet::D2D1_CREATION_PROPERTIES> %creationProperties
+            );
 
         public:
             /// <summary>

@@ -103,6 +103,12 @@
     <Filter Include="소스 파일\DXGINet\core">
       <UniqueIdentifier>{cacbacf8-d224-4cc6-aa22-1087aa57f861}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\ComIO">
+      <UniqueIdentifier>{33d2fd33-b044-4720-bf3d-5ef43ac65eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ComIO">
+      <UniqueIdentifier>{9ecb7763-a26f-4108-b849-500010d9b33e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -203,9 +209,6 @@
     </ClInclude>
     <ClInclude Include="Direct2DNet\D2DNet_image.h">
       <Filter>헤더 파일\Direct2DNet\image</Filter>
-    </ClInclude>
-    <ClInclude Include="Namespace.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="DWriteNet\IDWriteFactory.h">
       <Filter>헤더 파일\DWriteNet\core</Filter>
@@ -362,6 +365,36 @@
     </ClInclude>
     <ClInclude Include="Direct2DNet\ID2D1Multithread.h">
       <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\DXGIError.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Factory2.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Device1.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1DeviceContext1.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1GeometryRealization.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="ComIO\Stream.h">
+      <Filter>헤더 파일\ComIO</Filter>
+    </ClInclude>
+    <ClInclude Include="ComIO\ComIOHeaders.h">
+      <Filter>헤더 파일\ComIO</Filter>
+    </ClInclude>
+    <ClInclude Include="ComIO\ComIOSettings.h">
+      <Filter>헤더 파일\ComIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1GdiMetafile.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1GdiMetafileSink.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -547,6 +580,33 @@
     </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1Brush.cpp">
       <Filter>소스 파일\Direct2DNet\brush</Filter>
+    </ClCompile>
+    <ClCompile Include="DXCommonSettings.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\DXGIError.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Factory2.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Device1.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1DeviceContext1.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1GeometryRealization.cpp">
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="ComIO\Stream.cpp">
+      <Filter>소스 파일\ComIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1GdiMetafile.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1GdiMetafileSink.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

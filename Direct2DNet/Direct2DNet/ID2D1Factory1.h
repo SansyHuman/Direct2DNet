@@ -12,12 +12,18 @@ namespace D2DNet
         ref class IDXGIDevice;
     }
 
+    namespace ComIO
+    {
+        ref class Stream;
+    }
+
     namespace Direct2DNet
     {
         ref class ID2D1Device;
         ref class ID2D1StrokeStyle1;
         ref class ID2D1PathGeometry1;
         ref class ID2D1DrawingStateBlock1;
+        ref class ID2D1GdiMetafile;
         ref class ID2D1Properties;
 
         /// <summary>
@@ -26,6 +32,22 @@ namespace D2DNet
         [System::Runtime::InteropServices::GuidAttribute("A70E1E3C-4E3F-4B28-8F94-D8E2463BD94A")]
         public ref class ID2D1Factory1 : Direct2DNet::ID2D1Factory
         {
+        internal:
+            // Called by CreateDevice.
+            ID2D1Factory1(::ID2D1Factory1 *pFactory);
+
+        protected:
+            ID2D1Factory1(
+                Direct2DNet::D2D1_FACTORY_TYPE type,
+                System::Guid guid
+            );
+
+            ID2D1Factory1(
+                Direct2DNet::D2D1_FACTORY_TYPE type,
+                Direct2DNet::D2D1_FACTORY_OPTIONS %options,
+                System::Guid guid
+            );
+
         public:
             /// <summary>
             /// Create <see cref="Direct2DNet::ID2D1Factory1"/> object.
@@ -90,7 +112,7 @@ namespace D2DNet
             /// <exception cref="Direct2DNet::Exception::DxException">
             /// Thrown when it failed to create the geometry.
             /// </exception>
-            Direct2DNet::ID2D1PathGeometry1 ^CreatePathGeometry();
+            Direct2DNet::ID2D1PathGeometry1 ^CreatePathGeometry1();
 
             /// <summary>
             /// Creates a new drawing state block, this can be used in subsequent
@@ -104,7 +126,13 @@ namespace D2DNet
                 [OptionalAttribute] DWriteNet::IDWriteRenderingParams ^params
             );
 
-            // CreateGdiMetafile
+            /// <summary>
+            /// Creates a new GDI metafile from the stream.
+            /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the metafile.
+            /// </exception>
+            Direct2DNet::ID2D1GdiMetafile ^CreateGdiMetafile(ComIO::Stream ^metafileStream);
 
             // RegisterEffectFromStream
 

@@ -53,6 +53,9 @@ namespace D2DNet
             {
                 array<unsigned char> ^get()
                 {
+                    if(m_profile == nullptr)
+                        return nullptr;
+
                     array<unsigned char> ^value = gcnew array<unsigned char>(m_profile->Length);
                     m_profile->CopyTo(value, 0);
 

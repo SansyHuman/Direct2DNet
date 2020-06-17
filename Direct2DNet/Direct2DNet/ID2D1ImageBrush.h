@@ -25,6 +25,7 @@ namespace D2DNet
                 Direct2DNet::D2D1_IMAGE_BRUSH_PROPERTIES %properties
             );
 
+        public:
             /// <summary>
             /// Gets and sets the image associated as the source of this brush.
             /// </summary>

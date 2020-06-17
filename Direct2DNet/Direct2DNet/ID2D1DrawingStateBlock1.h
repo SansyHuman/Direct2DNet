@@ -29,6 +29,7 @@ namespace D2DNet
                 DWriteNet::IDWriteRenderingParams ^params
             );
 
+        public:
             /// <summary>
             /// Gets and sets the state currently contained within this state block resource.
             /// </summary>

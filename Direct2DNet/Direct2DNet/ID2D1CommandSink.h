@@ -7,11 +7,25 @@
 using namespace System;
 using namespace System::Runtime;
 
+#ifndef GCHandle
 #define GCHandle InteropServices::GCHandle
+#endif
+
+#ifndef Marshal
 #define Marshal InteropServices::Marshal
+#endif
+
+#ifndef In
 #define In InteropServices::InAttribute
+#endif
+
+#ifndef IsReadOnly
 #define IsReadOnly CompilerServices::IsReadOnlyAttribute
+#endif
+
+#ifndef Optional
 #define Optional InteropServices::OptionalAttribute
+#endif
 
 namespace D2DNet
 {
@@ -572,7 +586,7 @@ namespace D2DNet
             ) abstract;
 
             virtual HRESULT SetTransform(
-                [In][IsReadOnly] Direct2DNet::D2D1_MATRIX_3X2_F %transform
+                Direct2DNet::D2D1_MATRIX_3X2_F transform
             ) abstract;
 
             virtual HRESULT SetPrimitiveBlend(
@@ -584,7 +598,7 @@ namespace D2DNet
             ) abstract;
 
             virtual HRESULT Clear(
-                [In][IsReadOnly] Direct2DNet::D2D1_COLOR_F %color
+                Direct2DNet::D2D1_COLOR_F color
             ) abstract;
 
             virtual HRESULT Clear() abstract;
@@ -592,8 +606,8 @@ namespace D2DNet
             // DrawGlyphRun
 
             virtual HRESULT DrawLine(
-                [In][IsReadOnly] Direct2DNet::D2D1_POINT_2F %point0,
-                [In][IsReadOnly] Direct2DNet::D2D1_POINT_2F %point1,
+                Direct2DNet::D2D1_POINT_2F point0,
+                Direct2DNet::D2D1_POINT_2F point1,
                 Direct2DNet::ID2D1Brush ^brush,
                 float strokeWidth,
                 [Optional] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
@@ -607,7 +621,7 @@ namespace D2DNet
             ) abstract;
 
             virtual HRESULT DrawRectangle(
-                [In][IsReadOnly] Direct2DNet::D2D1_RECT_F %rect,
+                Direct2DNet::D2D1_RECT_F rect,
                 Direct2DNet::ID2D1Brush ^brush,
                 float strokeWidth,
                 [Optional] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
@@ -651,17 +665,17 @@ namespace D2DNet
             ) abstract;
 
             virtual HRESULT FillRectangle(
-                [In][IsReadOnly] Direct2DNet::D2D1_RECT_F %rect,
+                Direct2DNet::D2D1_RECT_F rect,
                 Direct2DNet::ID2D1Brush ^brush
             ) abstract;
 
             virtual HRESULT PushAxisAlignedClip(
-                [In][IsReadOnly] Direct2DNet::D2D1_RECT_F %clipRect,
+                Direct2DNet::D2D1_RECT_F clipRect,
                 Direct2DNet::D2D1_ANTIALIAS_MODE antialiasMode
             ) abstract;
 
             virtual HRESULT PushLayer(
-                [In][IsReadOnly] Direct2DNet::D2D1_LAYER_PARAMETERS1 %layerParameters1,
+                Direct2DNet::D2D1_LAYER_PARAMETERS1 layerParameters1,
                 Direct2DNet::ID2D1Layer ^layer
             ) abstract;
 

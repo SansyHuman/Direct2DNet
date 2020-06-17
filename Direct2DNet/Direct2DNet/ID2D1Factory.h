@@ -99,15 +99,6 @@ namespace D2DNet
                 }
             }
 
-            /// <summary>Gets the type of the factory.</summary>
-            property Direct2DNet::D2D1_FACTORY_TYPE Type
-            {
-                Direct2DNet::D2D1_FACTORY_TYPE get()
-                {
-                    return m_type;
-                }
-            }
-
             /// <summary>
             /// Cause the factory to refresh any system metrics that it might have been snapped
             /// on factory creation.

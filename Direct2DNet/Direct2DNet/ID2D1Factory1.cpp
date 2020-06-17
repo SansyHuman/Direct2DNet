@@ -4,6 +4,8 @@
 #include "ID2D1StrokeStyle1.h"
 #include "ID2D1PathGeometry1.h"
 #include "ID2D1DrawingStateBlock1.h"
+#include "ID2D1GdiMetafile.h"
+#include "../ComIO/Stream.h"
 #include "ID2D1Properties.h"
 #include "../GUIDs.h"
 #include "../DXCommonSettings.h"
@@ -12,6 +14,26 @@ namespace D2DNet
 {
     namespace Direct2DNet
     {
+        ID2D1Factory1::ID2D1Factory1(::ID2D1Factory1 *pFactory) : Direct2DNet::ID2D1Factory(pFactory)
+        {
+            
+        }
+
+        ID2D1Factory1::ID2D1Factory1(Direct2DNet::D2D1_FACTORY_TYPE type, System::Guid guid)
+            : Direct2DNet::ID2D1Factory(type, guid)
+        {
+            
+        }
+
+        ID2D1Factory1::ID2D1Factory1(
+            Direct2DNet::D2D1_FACTORY_TYPE type,
+            Direct2DNet::D2D1_FACTORY_OPTIONS %options,
+            System::Guid guid)
+            : Direct2DNet::ID2D1Factory(type, options, guid)
+        {
+            
+        }
+
         ID2D1Factory1::ID2D1Factory1(Direct2DNet::D2D1_FACTORY_TYPE type)
             : Direct2DNet::ID2D1Factory(type, D2DNet::D2DNetGUID::UID_ID2D1Factory1)
         {
@@ -44,7 +66,7 @@ namespace D2DNet
             return gcnew Direct2DNet::ID2D1StrokeStyle1(this, properties, dashes);
         }
 
-        Direct2DNet::ID2D1PathGeometry1 ^ID2D1Factory1::CreatePathGeometry()
+        Direct2DNet::ID2D1PathGeometry1 ^ID2D1Factory1::CreatePathGeometry1()
         {
             return gcnew Direct2DNet::ID2D1PathGeometry1(this);
         }
@@ -58,6 +80,11 @@ namespace D2DNet
                 description,
                 params
             );
+        }
+
+        Direct2DNet::ID2D1GdiMetafile ^ID2D1Factory1::CreateGdiMetafile(ComIO::Stream ^metafileStream)
+        {
+            return gcnew Direct2DNet::ID2D1GdiMetafile(this, metafileStream);
         }
 
         Direct2DNet::ID2D1Properties ^ID2D1Factory1::GetEffectProperties(System::Guid %effectId)

@@ -199,7 +199,10 @@ namespace D2DNet
             {
                 static Direct2DNet::D2D1_PIXEL_FORMAT get()
                 {
-                    return (Direct2DNet::D2D1_PIXEL_FORMAT)D2D1::PixelFormat();
+                    return Direct2DNet::D2D1_PIXEL_FORMAT(
+                        DXGINet::DXGI_FORMAT::FORMAT_UNKNOWN,
+                        Direct2DNet::D2D1_ALPHA_MODE::UNKNOWN
+                    );
                 }
             }
         };
@@ -700,9 +703,15 @@ namespace D2DNet
             {
                 static Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES get()
                 {
-                    return static_cast<Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES>(
-                        D2D1::StrokeStyleProperties()
-                        );
+                    return Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES(
+                        Direct2DNet::D2D1_CAP_STYLE::FLAT,
+                        Direct2DNet::D2D1_CAP_STYLE::FLAT,
+                        Direct2DNet::D2D1_CAP_STYLE::FLAT,
+                        Direct2DNet::D2D1_LINE_JOIN::MITER,
+                        10.0f,
+                        Direct2DNet::D2D1_DASH_STYLE::SOLID,
+                        0.0f
+                    );
                 }
             }
         };
@@ -1447,7 +1456,16 @@ namespace D2DNet
             {
                 Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES1 get()
                 {
-                    return static_cast<Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES1>(D2D1::StrokeStyleProperties1());
+                    return Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES1(
+                        Direct2DNet::D2D1_CAP_STYLE::FLAT,
+                        Direct2DNet::D2D1_CAP_STYLE::FLAT,
+                        Direct2DNet::D2D1_CAP_STYLE::FLAT,
+                        Direct2DNet::D2D1_LINE_JOIN::MITER,
+                        10.0f,
+                        Direct2DNet::D2D1_DASH_STYLE::SOLID,
+                        0.0f,
+                        Direct2DNet::D2D1_STROKE_TRANSFORM_TYPE::NORMAL
+                    );
                 }
             }
         };
@@ -1567,6 +1585,21 @@ namespace D2DNet
                         Direct2DNet::D2D1_UNIT_MODE::DIPS
                     );
                 }
+            }
+
+            static Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1 GetDefault(
+                [InteropServices::InAttribute][CompilerServices::IsReadOnlyAttribute]
+                Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION %desc)
+            {
+                return Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1(
+                    desc.antialiasMode,
+                    desc.textAntialiasMode,
+                    desc.tag1,
+                    desc.tag2,
+                    desc.transform,
+                    Direct2DNet::D2D1_PRIMITIVE_BLEND::SOURCE_OVER,
+                    Direct2DNet::D2D1_UNIT_MODE::DIPS
+                );
             }
         };
 
@@ -2237,6 +2270,88 @@ namespace D2DNet
             ) : effect(effect), inputIndex(inputIndex), inputRectangle(inputRectangle) {}
 
             static operator ::D2D1_EFFECT_INPUT_DESCRIPTION(Direct2DNet::D2D1_EFFECT_INPUT_DESCRIPTION %rhs);
+        };
+
+        /// <summary>
+        /// This specifies the threading mode used while simultaneously creating the device,
+        /// factory, and device context.
+        /// </summary>
+        public enum class D2D1_THREADING_MODE
+        {
+            /// <summary>
+            /// Resources may only be invoked serially.  Reference counts on resources are
+            /// interlocked, however, resource and render target state is not protected from
+            /// multi-threaded access
+            /// </summary>
+            SINGLE_THREADED = ::D2D1_FACTORY_TYPE_SINGLE_THREADED,
+
+            /// <summary>
+            /// Resources may be invoked from multiple threads. Resources use interlocked
+            /// reference counting and their state is protected.
+            /// </summary>
+            MULTI_THREADED = ::D2D1_FACTORY_TYPE_MULTI_THREADED,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
+        /// This specifies the options while simultaneously creating the device, factory,
+        /// and device context.
+        /// </summary>
+        public value struct D2D1_CREATION_PROPERTIES
+        {
+            /// <summary>
+            /// Describes locking behavior of D2D resources
+            /// </summary>
+            Direct2DNet::D2D1_THREADING_MODE threadingMode;
+            Direct2DNet::D2D1_DEBUG_LEVEL debugLevel;
+            Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options;
+
+            D2D1_CREATION_PROPERTIES(
+                Direct2DNet::D2D1_THREADING_MODE threadingMode,
+                Direct2DNet::D2D1_DEBUG_LEVEL debugLevel,
+                Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options
+            ) : threadingMode(threadingMode), debugLevel(debugLevel), options(options) {}
+
+            static operator ::D2D1_CREATION_PROPERTIES(Direct2DNet::D2D1_CREATION_PROPERTIES %rhs)
+            {
+                ::D2D1_CREATION_PROPERTIES value;
+                value.threadingMode = (::D2D1_THREADING_MODE)((int)rhs.threadingMode);
+                value.debugLevel = (::D2D1_DEBUG_LEVEL)((int)rhs.debugLevel);
+                value.options = (::D2D1_DEVICE_CONTEXT_OPTIONS)((int)rhs.options);
+
+                return value;
+            }
+
+            static operator Direct2DNet::D2D1_CREATION_PROPERTIES(::D2D1_CREATION_PROPERTIES %rhs)
+            {
+                Direct2DNet::D2D1_CREATION_PROPERTIES value;
+                value.threadingMode = (Direct2DNet::D2D1_THREADING_MODE)((int)rhs.threadingMode);
+                value.debugLevel = (Direct2DNet::D2D1_DEBUG_LEVEL)((int)rhs.debugLevel);
+                value.options = (Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS)((int)rhs.options);
+
+                return value;
+            }
+        };
+
+        /// <summary>
+        /// Specifies the extent to which D2D will throttle work sent to the GPU.
+        /// </summary>
+        public enum class D2D1_RENDERING_PRIORITY
+        {
+            /// <summary>
+            /// No change in rendering workload priority.
+            /// </summary>
+            NORMAL = 0,
+
+            /// <summary>
+            /// The device and its associated device contexts are given a lower priority than others.
+            /// </summary>
+            LOW = 1,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
         };
     }
 }

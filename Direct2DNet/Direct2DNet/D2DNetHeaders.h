@@ -1,5 +1,7 @@
 #pragma once
 
+#pragma warning(disable:4369)
+
 #include <Windows.h>
 
 #include <vector>
@@ -19,5 +21,6 @@
 #include <d2d1effectauthor.h>
 #include <d2d1effectauthor_1.h>
 #include <d2d1effecthelpers.h>
+#include <d2d1svg.h>
 #include <dwrite.h>
 #include <wincodec.h>

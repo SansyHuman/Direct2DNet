@@ -2,7 +2,11 @@
 
 #include <d3dcommon.h>
 
+#include <comdef.h>
+#include <msclr/marshal.h>
+
 using namespace System::Runtime;
+using namespace msclr::interop;
 
 #ifdef NULL
 #undef NULL
@@ -68,6 +72,22 @@ namespace D2DNet
         [InteropServices::FieldOffsetAttribute(0)]
         LONGLONG quadPart;
 
+        LARGE_INTEGER(LONGLONG value) : quadPart(value) {}
+        LARGE_INTEGER(DWORD lowPart, LONG highPart) : lowPart(lowPart), highPart(highPart) {};
+
+        static operator D2DNet::LARGE_INTEGER(LONGLONG rhs)
+        {
+            D2DNet::LARGE_INTEGER value;
+            value.quadPart = rhs;
+
+            return value;
+        }
+
+        static operator LONGLONG(D2DNet::LARGE_INTEGER rhs)
+        {
+            return rhs.quadPart;
+        }
+
         static operator ::LARGE_INTEGER(D2DNet::LARGE_INTEGER %rhs)
         {
             ::LARGE_INTEGER value;
@@ -79,6 +99,49 @@ namespace D2DNet
         static operator D2DNet::LARGE_INTEGER(::LARGE_INTEGER %rhs)
         {
             D2DNet::LARGE_INTEGER value;
+            value.quadPart = rhs.QuadPart;
+
+            return value;
+        }
+    };
+
+    [InteropServices::StructLayoutAttribute(InteropServices::LayoutKind::Explicit)]
+    public value struct ULARGE_INTEGER
+    {
+        [InteropServices::FieldOffsetAttribute(0)]
+        DWORD lowPart;
+        [InteropServices::FieldOffsetAttribute(4)]
+        DWORD highPart;
+        [InteropServices::FieldOffsetAttribute(0)]
+        ULONGLONG quadPart;
+
+        ULARGE_INTEGER(ULONGLONG value) : quadPart(value) {}
+        ULARGE_INTEGER(DWORD lowPart, DWORD highPart) : lowPart(lowPart), highPart(highPart) {};
+
+        static operator D2DNet::ULARGE_INTEGER(ULONGLONG rhs)
+        {
+            D2DNet::ULARGE_INTEGER value;
+            value.quadPart = rhs;
+
+            return value;
+        }
+
+        static operator ULONGLONG(D2DNet::ULARGE_INTEGER rhs)
+        {
+            return rhs.quadPart;
+        }
+
+        static operator ::ULARGE_INTEGER(D2DNet::ULARGE_INTEGER %rhs)
+        {
+            ::ULARGE_INTEGER value;
+            value.QuadPart = rhs.quadPart;
+
+            return value;
+        }
+
+        static operator D2DNet::ULARGE_INTEGER(::ULARGE_INTEGER %rhs)
+        {
+            D2DNet::ULARGE_INTEGER value;
             value.quadPart = rhs.QuadPart;
 
             return value;
@@ -150,20 +213,10 @@ namespace D2DNet
     public value struct DirectX abstract sealed
     {
     public:
-        static System::Guid ToManagedGUID(const _GUID &guid) {
-            return System::Guid(guid.Data1, guid.Data2, guid.Data3,
-                guid.Data4[0], guid.Data4[1],
-                guid.Data4[2], guid.Data4[3],
-                guid.Data4[4], guid.Data4[5],
-                guid.Data4[6], guid.Data4[7]);
-        }
-
-        static _GUID ToNativeGUID(System::Guid %guid) {
-            array<System::Byte> ^guidData = guid.ToByteArray();
-            pin_ptr<System::Byte> data = &(guidData[0]);
-
-            return *(_GUID *)data;
-        }
+        static System::Guid ToManagedGUID(const _GUID &guid);
+        static _GUID ToNativeGUID(System::Guid %guid);
+        static void ThrowIfFailed(HRESULT hr);
+        static System::String ^GetErrorMessage(HRESULT hr);
     };
 }
 

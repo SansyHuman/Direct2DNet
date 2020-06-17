@@ -136,9 +136,9 @@ namespace D2DNet
             /// If this method succeeds, S_OK. Otherwise, an error code.
             /// </returns>
             HRESULT CopyFromBitmap(
-                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2U %destPoint,
                 Direct2DNet::ID2D1Bitmap ^bitmap,
-                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RECT_U %srcRect
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_POINT_2U> destPoint,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_U> srcRect
             );
 
             /// <summary>
@@ -151,27 +151,27 @@ namespace D2DNet
             /// If this method succeeds, S_OK. Otherwise, an error code.
             /// </returns>
             HRESULT CopyFromRenderTarget(
-                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2U %destPoint,
                 Direct2DNet::ID2D1RenderTarget ^renderTarget,
-                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RECT_U %srcRect
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_POINT_2U> destPoint,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_U> srcRect
             );
 
             /// <summary>
             /// Copies the specified region from memory into the current bitmap.
             /// </summary>
-            /// <param name="dstRect">In the current bitmap, the rectangle to which the region specified
-            /// by srcRect is copied.</param>
             /// <param name="pitch">The stride, or pitch, of the source bitmap stored in srcData.
             /// The stride is the byte count of a scanline (one row of pixels in memory).
             /// The stride can be computed from the following formula:
             /// pixel width * bytes per pixel + memory padding.</param>
+            /// <param name="dstRect">In the current bitmap, the rectangle to which the region specified
+            /// by srcRect is copied.</param>
             /// <returns>
             /// If this method succeeds, S_OK. Otherwise, an error code.
             /// </returns>
             HRESULT CopyFromMemory(
-                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RECT_U %dstRect,
                 void *srcData,
-                unsigned int pitch
+                unsigned int pitch,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_RECT_U> dstRect
             );
         };
     }

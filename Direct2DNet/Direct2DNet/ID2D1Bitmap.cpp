@@ -83,36 +83,36 @@ namespace D2DNet
         }
 
         HRESULT ID2D1Bitmap::CopyFromBitmap(
-            Direct2DNet::D2D1_POINT_2U %destPoint,
             Direct2DNet::ID2D1Bitmap ^bitmap,
-            Direct2DNet::D2D1_RECT_U %srcRect)
+            System::Nullable<Direct2DNet::D2D1_POINT_2U> destPoint,
+            System::Nullable<Direct2DNet::D2D1_RECT_U> srcRect)
         {
             return ((::ID2D1Bitmap *)m_pResource)->CopyFromBitmap(
-                &static_cast<::D2D1_POINT_2U>(destPoint),
+                destPoint.HasValue ? &static_cast<::D2D1_POINT_2U>(destPoint.Value) : __nullptr,
                 (::ID2D1Bitmap *)bitmap->m_pResource,
-                &static_cast<::D2D1_RECT_U>(srcRect)
+                srcRect.HasValue ? &static_cast<::D2D1_RECT_U>(srcRect.Value) : __nullptr
             );
         }
 
         HRESULT ID2D1Bitmap::CopyFromRenderTarget(
-            Direct2DNet::D2D1_POINT_2U %destPoint,
             Direct2DNet::ID2D1RenderTarget ^renderTarget,
-            Direct2DNet::D2D1_RECT_U %srcRect)
+            System::Nullable<Direct2DNet::D2D1_POINT_2U> destPoint,
+            System::Nullable<Direct2DNet::D2D1_RECT_U> srcRect)
         {
             return ((::ID2D1Bitmap *)m_pResource)->CopyFromRenderTarget(
-                &static_cast<::D2D1_POINT_2U>(destPoint),
+                destPoint.HasValue ? &static_cast<::D2D1_POINT_2U>(destPoint.Value) : __nullptr,
                 (::ID2D1RenderTarget *)renderTarget->m_pResource,
-                &static_cast<::D2D1_RECT_U>(srcRect)
+                srcRect.HasValue ? &static_cast<::D2D1_RECT_U>(srcRect.Value) : __nullptr
             );
         }
 
         HRESULT ID2D1Bitmap::CopyFromMemory(
-            Direct2DNet::D2D1_RECT_U %dstRect, 
             void *srcData, 
-            unsigned int pitch)
+            unsigned int pitch,
+            System::Nullable<Direct2DNet::D2D1_RECT_U> dstRect)
         {
             return ((::ID2D1Bitmap *)m_pResource)->CopyFromMemory(
-                &static_cast<::D2D1_RECT_U>(dstRect),
+                dstRect.HasValue ? &static_cast<::D2D1_RECT_U>(dstRect.Value) : __nullptr,
                 srcData,
                 pitch
             );

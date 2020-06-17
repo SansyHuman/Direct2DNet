@@ -1,5 +1,7 @@
 #include "ID2D1DeviceContext.h"
 #include "ID2D1Device.h"
+#include "ID2D1Device1.h"
+#include "ID2D1Factory1.h"
 #include "ID2D1Image.h"
 #include "ID2D1Bitmap1.h"
 #include "ID2D1ColorContext.h"
@@ -16,6 +18,14 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ID2D1DeviceContext::ID2D1DeviceContext(
+            Direct2DNet::ID2D1Device1 ^device,
+            Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options)
+            : Direct2DNet::ID2D1RenderTarget(device->m_factory), m_device(device), m_target(nullptr)
+        {
+            
+        }
+
+        ID2D1DeviceContext::ID2D1DeviceContext(
             Direct2DNet::ID2D1Device ^device,
             Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options)
             : Direct2DNet::ID2D1RenderTarget(device->m_factory), m_device(device), m_target(nullptr)
@@ -30,6 +40,36 @@ namespace D2DNet
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1DeviceContext", (int)hr);
+        }
+
+        ID2D1DeviceContext::ID2D1DeviceContext(
+            DXGINet::IDXGISurface ^dxgiSurface,
+            System::Nullable<Direct2DNet::D2D1_CREATION_PROPERTIES> %creationProperties)
+            : Direct2DNet::ID2D1RenderTarget(nullptr)
+        {
+            HRESULT hr = S_OK;
+            pin_ptr<::ID2D1Resource *> ppRenderTarget = &m_pResource;
+            hr = D2D1CreateDeviceContext(
+                (::IDXGISurface *)dxgiSurface->m_pSubObject,
+                creationProperties.HasValue ? &static_cast<::D2D1_CREATION_PROPERTIES>(creationProperties.Value) : __nullptr,
+                (::ID2D1DeviceContext **)ppRenderTarget
+            );
+            ppRenderTarget = nullptr;
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1DeviceContext", (int)hr);
+
+            ::ID2D1Device *pDevice = __nullptr;
+            ::ID2D1Factory1 *pFactory1 = __nullptr;
+            ::ID2D1Image *pTargetImage = __nullptr;
+
+            ((::ID2D1DeviceContext *)m_pResource)->GetDevice(&pDevice);
+            pDevice->GetFactory((::ID2D1Factory **)&pFactory1);
+            ((::ID2D1DeviceContext *)m_pResource)->GetTarget(&pTargetImage);
+
+            m_factory = gcnew Direct2DNet::ID2D1Factory1(pFactory1);
+            m_device = gcnew Direct2DNet::ID2D1Device((Direct2DNet::ID2D1Factory1 ^)m_factory, pDevice);
+            m_target = gcnew Direct2DNet::ID2D1Image(m_factory, pTargetImage);
         }
 
         Direct2DNet::ID2D1Bitmap1 ^ID2D1DeviceContext::CreateBitmap(
@@ -194,6 +234,13 @@ namespace D2DNet
 
         void ID2D1DeviceContext::Target::set(Direct2DNet::ID2D1Image ^value)
         {
+            if(value == nullptr)
+            {
+                ((::ID2D1DeviceContext *)m_pResource)->SetTarget(__nullptr);
+                m_target = nullptr;
+                return;
+            }
+
             ((::ID2D1DeviceContext *)m_pResource)->SetTarget((::ID2D1Image *)value->m_pResource);
             m_target = value;
         }

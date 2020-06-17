@@ -18,6 +18,7 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ref class ID2D1Factory1;
+        ref class ID2D1Factory2;
         ref class ID2D1DeviceContext;
 
         /// <summary>
@@ -29,6 +30,16 @@ namespace D2DNet
         {
         internal:
             ID2D1Device(Direct2DNet::ID2D1Factory1 ^factory, DXGINet::IDXGIDevice ^device);
+            ID2D1Device(
+                DXGINet::IDXGIDevice ^device,
+                System::Nullable<Direct2DNet::D2D1_CREATION_PROPERTIES> %creationProperties
+            );
+
+            // Called by ID2D1DeviceContext.
+            ID2D1Device(Direct2DNet::ID2D1Factory1 ^factory, ::ID2D1Device *pDevice);
+
+        protected:
+            ID2D1Device(Direct2DNet::ID2D1Factory2 ^factory);
 
         public:
             /// <summary>

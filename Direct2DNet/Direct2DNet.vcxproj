@@ -24,7 +24,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>Direct2DNet</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -97,7 +97,7 @@
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>dxgi.lib;dxguid.lib;d2d1.lib;d3d11.lib;dwrite.lib;WindowsCodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxgi.lib;dxguid.lib;d2d1.lib;d3d11.lib;dwrite.lib;WindowsCodecs.lib;shcore.lib;runtimeobject.lib;uuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -123,10 +123,13 @@
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>dxgi.lib;dxguid.lib;d2d1.lib;d3d11.lib;dwrite.lib;WindowsCodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxgi.lib;dxguid.lib;d2d1.lib;d3d11.lib;dwrite.lib;WindowsCodecs.lib;shcore.lib;runtimeobject.lib;uuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ComIO\ComIOHeaders.h" />
+    <ClInclude Include="ComIO\ComIOSettings.h" />
+    <ClInclude Include="ComIO\Stream.h" />
     <ClInclude Include="Direct2DNet\D2DBuiltinEffects.h" />
     <ClInclude Include="Direct2DNet\D2DError.h" />
     <ClInclude Include="Direct2DNet\D2DImageLoader.h" />
@@ -150,14 +153,20 @@
     <ClInclude Include="Direct2DNet\ID2D1CommandSink.h" />
     <ClInclude Include="Direct2DNet\ID2D1DCRenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1Device.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Device1.h" />
     <ClInclude Include="Direct2DNet\ID2D1DeviceContext.h" />
+    <ClInclude Include="Direct2DNet\ID2D1DeviceContext1.h" />
     <ClInclude Include="Direct2DNet\ID2D1DrawingStateBlock.h" />
     <ClInclude Include="Direct2DNet\ID2D1DrawingStateBlock1.h" />
     <ClInclude Include="Direct2DNet\ID2D1Effect.h" />
     <ClInclude Include="Direct2DNet\ID2D1EllipseGeometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory1.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Factory2.h" />
+    <ClInclude Include="Direct2DNet\ID2D1GdiMetafile.h" />
+    <ClInclude Include="Direct2DNet\ID2D1GdiMetafileSink.h" />
     <ClInclude Include="Direct2DNet\ID2D1Geometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1GeometryGroup.h" />
+    <ClInclude Include="Direct2DNet\ID2D1GeometryRealization.h" />
     <ClInclude Include="Direct2DNet\ID2D1GradientStopCollection.h" />
     <ClInclude Include="Direct2DNet\ID2D1GradientStopCollection1.h" />
     <ClInclude Include="Direct2DNet\ID2D1HwndRenderTarget.h" />
@@ -204,6 +213,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="DXCommonSettings.h" />
+    <ClInclude Include="DXGINet\DXGIError.h" />
     <ClInclude Include="DXGINet\DXGINetHeaders.h" />
     <ClInclude Include="DXGINet\DXGINet_core.h" />
     <ClInclude Include="DXGINet\DXGISettings.h" />
@@ -216,10 +226,10 @@
     <ClInclude Include="DXGINet\IDXGISwapChain.h" />
     <ClInclude Include="GUIDs.h" />
     <ClInclude Include="IUnknown.h" />
-    <ClInclude Include="Namespace.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ComIO\Stream.cpp" />
     <ClCompile Include="Direct2DNet\D2DError.cpp" />
     <ClCompile Include="Direct2DNet\D2DImageLoader.cpp" />
     <ClCompile Include="Direct2DNet\D2DSettings.cpp" />
@@ -235,12 +245,18 @@
     <ClCompile Include="Direct2DNet\ID2D1CommandSink.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DCRenderTarget.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Device.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Device1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DeviceContext.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1DeviceContext1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DrawingStateBlock.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DrawingStateBlock1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Effect.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Factory1.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Factory2.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1GdiMetafile.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1GdiMetafileSink.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GeometryGroup.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1GeometryRealization.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Image.cpp" />
@@ -261,6 +277,8 @@
     <ClCompile Include="DWriteNet\IDWriteFactory.cpp" />
     <ClCompile Include="DWriteNet\IDWriteRenderingParams.cpp" />
     <ClCompile Include="DWriteNet\IDWriteTextFormat.cpp" />
+    <ClCompile Include="DXCommonSettings.cpp" />
+    <ClCompile Include="DXGINet\DXGIError.cpp" />
     <ClCompile Include="DXGINet\IDXGIAdapter.cpp" />
     <ClCompile Include="DXGINet\IDXGIDevice.cpp" />
     <ClCompile Include="DXGINet\IDXGIDeviceSubObject.cpp" />

@@ -96,20 +96,13 @@ namespace D2DNet
             if(!invalidate.HasValue)
                 invalidate = true;
 
-            ::ID2D1Image *output = __nullptr;
-            if(inputEffect)
-            {
-                ((::ID2D1Effect *)inputEffect->m_pProperties)->GetOutput(&output);
-            }
-            ((::ID2D1Effect *)m_pProperties)->SetInput(
+            Direct2DNet::ID2D1Image ^output = inputEffect->Output;
+
+            this->SetInput(
                 index,
                 output,
-                System::Convert::ToInt32(invalidate.Value)
+                invalidate
             );
-            if(output)
-            {
-                output->Release();
-            }
         }
 
     }

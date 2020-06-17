@@ -17,7 +17,7 @@ namespace D2DNet
             hr = ((::ID2D1DeviceContext *)context->m_pResource)->CreateColorContext(
                 (::D2D1_COLOR_SPACE)((int)space),
                 (BYTE *)pProfile,
-                profile->Length,
+                profile == nullptr ? 0 : profile->Length,
                 (::ID2D1ColorContext **)ppResource
             );
             pProfile = nullptr;
