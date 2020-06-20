@@ -20,7 +20,7 @@ namespace D2DNet
         /// <summary>
         /// Issues drawing commands to a GDI device context.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("F0B401E5-BA9D-4320-A0FA-6AAF9E9AA24D")]
+        [System::Runtime::InteropServices::GuidAttribute("1c51bc64-de61-46fd-9899-63a5d8f03950")]
         public ref class ID2D1DCRenderTarget : Direct2DNet::ID2D1RenderTarget
         {
         internal:

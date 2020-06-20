@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../DXCommonSettings.h"
+
 namespace D2DNet
 {
     namespace Direct2DNet

@@ -12,7 +12,7 @@ namespace D2DNet
 {
     namespace DXGINet
     {
-        [System::Runtime::InteropServices::GuidAttribute("B9A14584-BCBB-4F29-A109-94A02A80EF3B")]
+        [System::Runtime::InteropServices::GuidAttribute("cafcb56c-6ac3-4889-bf47-9e23bbd260ec")]
         public ref class IDXGISurface : DXGINet::IDXGIDeviceSubObject
         {
         public:

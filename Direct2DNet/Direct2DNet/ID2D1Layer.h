@@ -17,7 +17,7 @@ namespace D2DNet
         /// <summary>
         /// Represents the backing store required to render a layer.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("926446E6-AC46-40B2-8753-B8DA0570A5EA")]
+        [System::Runtime::InteropServices::GuidAttribute("2cd9069b-12e2-11dc-9fed-001143a055f9")]
         public ref class ID2D1Layer : Direct2DNet::ID2D1Resource
         {
         internal:

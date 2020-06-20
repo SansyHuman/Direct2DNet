@@ -15,7 +15,7 @@ namespace D2DNet
         /// <summary>
         /// Represents a color context that can be used with an ID2D1Bitmap1 object.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("24A02A55-B0D8-4ED1-A96C-E060A49601F9")]
+        [System::Runtime::InteropServices::GuidAttribute("1c4820bb-5771-4518-a581-2fe4dd0ec657")]
         public ref class ID2D1ColorContext : Direct2DNet::ID2D1Resource
         {
         private:

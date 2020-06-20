@@ -25,7 +25,7 @@ namespace D2DNet
         /// The device defines a resource domain whose objects and device contexts can be
         /// used together.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("A784D909-6312-4CBD-8A5D-993079D52CF2")]
+        [System::Runtime::InteropServices::GuidAttribute("47dd575d-ac05-4cdd-8049-9b02cd16f44c")]
         public ref class ID2D1Device : Direct2DNet::ID2D1Resource
         {
         internal:

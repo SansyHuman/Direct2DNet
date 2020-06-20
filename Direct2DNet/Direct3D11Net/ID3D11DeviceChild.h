@@ -10,7 +10,7 @@ namespace D2DNet
     {
         ref class ID3D11Device;
         
-        [System::Runtime::InteropServices::GuidAttribute("DF297475-F447-4923-81E2-C12645B7590D")]
+        [System::Runtime::InteropServices::GuidAttribute("1841e5c8-16b0-489b-bcc8-44cfb0d5deae")]
         public ref class ID3D11DeviceChild abstract : Direct3D11Net::IDirect3D11Object
         {
         internal:

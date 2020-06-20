@@ -16,7 +16,7 @@ namespace D2DNet
         /// <summary>
         /// Paints an area with a linear gradient.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("1C8279B3-DE5C-4E89-97C3-6D49B5B182B7")]
+        [System::Runtime::InteropServices::GuidAttribute("2cd906ab-12e2-11dc-9fed-001143a055f9")]
         public ref class ID2D1LinearGradientBrush : Direct2DNet::ID2D1Brush
         {
         private:

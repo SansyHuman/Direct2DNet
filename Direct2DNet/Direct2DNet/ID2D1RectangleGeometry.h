@@ -14,7 +14,7 @@ namespace D2DNet
         /// <summary>
         /// Describes a two-dimensional rectangle.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("BF328DCA-243C-4DE4-97FB-E2D75FF0916E")]
+        [System::Runtime::InteropServices::GuidAttribute("2cd906a2-12e2-11dc-9fed-001143a055f9")]
         public ref class ID2D1RectangleGeometry : Direct2DNet::ID2D1Geometry
         {
         private:

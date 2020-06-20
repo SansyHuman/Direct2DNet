@@ -16,7 +16,7 @@ namespace D2DNet
         ref class IDXGIFactory;
         ref class IDXGISurface;
        
-        [System::Runtime::InteropServices::GuidAttribute("98F92370-2ECE-4F6B-AB33-79AD23F505D7")]
+        [System::Runtime::InteropServices::GuidAttribute("310d36a0-d2e7-4c0a-aa04-6a9d23b8886a")]
         public ref class IDXGISwapChain : DXGINet::IDXGIDeviceSubObject
         {
         internal:

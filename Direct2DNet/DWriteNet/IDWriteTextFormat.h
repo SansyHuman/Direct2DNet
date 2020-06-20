@@ -25,7 +25,7 @@ namespace D2DNet
         /// <remarks>
         /// This object may not be thread-safe and it may carry the state of text format change.
         /// </remarks>
-        [System::Runtime::InteropServices::GuidAttribute("4A66B759-F56E-4F60-8AA4-C03625F2DB81")]
+        [System::Runtime::InteropServices::GuidAttribute("9c906818-31d7-4fd3-a151-7c5e225db55a")]
         public ref class IDWriteTextFormat : DWriteNet::IDirectWriteObject
         {
         private:

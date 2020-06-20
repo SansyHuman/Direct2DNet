@@ -2,6 +2,7 @@
 #include "ID2D1Factory.h"
 #include "ID2D1RenderTarget.h"
 #include "ID2D1DeviceContext.h"
+#include "../DXCommonSettings.h"
 
 namespace D2DNet
 {
@@ -51,6 +52,29 @@ namespace D2DNet
                 srcData,
                 pitch,
                 static_cast<::D2D1_BITMAP_PROPERTIES>(bitmapProperties),
+                (::ID2D1Bitmap **)ppResource
+            );
+            ppResource = nullptr;
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Bitmap", (int)hr);
+
+            UpdateBitmapInfo();
+        }
+
+        ID2D1Bitmap::ID2D1Bitmap(
+            Direct2DNet::ID2D1RenderTarget ^renderTarget,
+            System::Guid %guid,
+            D2DNet::IUnknown ^data,
+            Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties)
+            : Direct2DNet::ID2D1Image(renderTarget->m_factory)
+        {
+            HRESULT hr = S_OK;
+            pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
+            hr = ((::ID2D1RenderTarget *)renderTarget->m_pResource)->CreateSharedBitmap(
+                D2DNet::DirectX::ToNativeGUID(guid),
+                data->NativePointer,
+                &static_cast<::D2D1_BITMAP_PROPERTIES>(bitmapProperties),
                 (::ID2D1Bitmap **)ppResource
             );
             ppResource = nullptr;

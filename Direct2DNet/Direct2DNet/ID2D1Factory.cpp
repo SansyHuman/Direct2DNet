@@ -8,11 +8,14 @@
 #include "ID2D1DrawingStateBlock.h"
 #include "../DWriteNet/IDWriteRenderingParams.h"
 #include "ID2D1HwndRenderTarget.h"
+#include "ID2D1RenderTarget.h"
+#include "../DXGINet/IDXGISurface.h"
 #include "ID2D1DCRenderTarget.h"
 #include "ID2D1StrokeStyle.h"
 #include "ID2D1Multithread.h"
 #include "../GUIDs.h"
 #include "D2DError.h"
+#include "../DXCommonSettings.h"
 
 namespace D2DNet
 {
@@ -26,22 +29,10 @@ namespace D2DNet
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Factory *> ppFactory = &m_pFactory;
 
-            if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory)
-            {
-                hr = ::D2D1CreateFactory((::D2D1_FACTORY_TYPE)((int)type), __uuidof(::ID2D1Factory), (void **)ppFactory);
-            }
-            else if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory1)
-            {
-                hr = ::D2D1CreateFactory((::D2D1_FACTORY_TYPE)((int)type), __uuidof(::ID2D1Factory1), (void **)ppFactory);
-            }
-            else if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory2)
-            {
-                hr = ::D2D1CreateFactory((::D2D1_FACTORY_TYPE)((int)type), __uuidof(::ID2D1Factory2), (void **)ppFactory);
-            }
-            else
-            {
-                hr = E_INVALIDARG;
-            }
+            hr = ::D2D1CreateFactory(
+                (::D2D1_FACTORY_TYPE)((int)type),
+                D2DNet::DirectX::ToNativeGUID(guid),
+                (void **)ppFactory);
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Factory", (int)hr);
@@ -56,34 +47,11 @@ namespace D2DNet
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Factory *> ppFactory = &m_pFactory;
 
-            if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory)
-            {
-                hr = ::D2D1CreateFactory(
-                    (::D2D1_FACTORY_TYPE)((int)type),
-                    __uuidof(::ID2D1Factory),
-                    &static_cast<::D2D1_FACTORY_OPTIONS>(options),
-                    (void **)ppFactory);
-            }
-            else if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory1)
-            {
-                hr = ::D2D1CreateFactory(
-                    (::D2D1_FACTORY_TYPE)((int)type),
-                    __uuidof(::ID2D1Factory1),
-                    &static_cast<::D2D1_FACTORY_OPTIONS>(options),
-                    (void **)ppFactory);
-            }
-            else if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory2)
-            {
-                hr = ::D2D1CreateFactory(
-                    (::D2D1_FACTORY_TYPE)((int)type),
-                    __uuidof(::ID2D1Factory2),
-                    &static_cast<::D2D1_FACTORY_OPTIONS>(options),
-                    (void **)ppFactory);
-            }
-            else
-            {
-                hr = Direct2DNet::D2DError::E_WIN32_ERROR;
-            }
+            hr = ::D2D1CreateFactory(
+                (::D2D1_FACTORY_TYPE)((int)type),
+                D2DNet::DirectX::ToNativeGUID(guid),
+                &static_cast<::D2D1_FACTORY_OPTIONS>(options),
+                (void **)ppFactory);
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Factory", (int)hr);
@@ -235,6 +203,13 @@ namespace D2DNet
                 this,
                 renderTargetProperties,
                 hwndRenderTargetProperties);
+        }
+
+        Direct2DNet::ID2D1RenderTarget ^ID2D1Factory::CreateDxgiSurfaceRenderTarget(
+            DXGINet::IDXGISurface ^dxgiSurface,
+            Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %renderTargetProperties)
+        {
+            return gcnew Direct2DNet::ID2D1RenderTarget(this, dxgiSurface, renderTargetProperties);
         }
 
         Direct2DNet::ID2D1DCRenderTarget ^ID2D1Factory::CreateDCRenderTarget(Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %renderTargetProperties)

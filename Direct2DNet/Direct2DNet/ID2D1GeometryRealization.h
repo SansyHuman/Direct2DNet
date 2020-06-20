@@ -20,7 +20,7 @@ namespace D2DNet
         /// Encapsulates a device- and transform-dependent representation of a filled or
         /// stroked geometry.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("86CF1AD0-AC89-4B7A-A84D-AE72D2B0D0D3")]
+        [System::Runtime::InteropServices::GuidAttribute("a16907d7-bc02-4801-99e8-8cf7f485f774")]
         public ref class ID2D1GeometryRealization : Direct2DNet::ID2D1Resource
         {
         internal:

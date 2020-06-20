@@ -13,7 +13,7 @@ namespace D2DNet
     {
         ref class IDXGIDevice;
 
-        [System::Runtime::InteropServices::GuidAttribute("62A0F8C4-F96D-4F3A-83EC-294A198CAA59")]
+        [System::Runtime::InteropServices::GuidAttribute("3d3e0379-f9de-4d58-bb6c-18d62992f1a6")]
         public ref class IDXGIDeviceSubObject abstract : DXGINet::IDXGIObject
         {
         internal:

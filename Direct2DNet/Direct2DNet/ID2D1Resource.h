@@ -15,7 +15,7 @@ namespace D2DNet
         /// <summary>
         /// The root class for all resources in Direct2DNet.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("FB9AA369-68D2-4706-B010-035487B6952A")]
+        [System::Runtime::InteropServices::GuidAttribute("2cd90691-12e2-11dc-9fed-001143a055f9")]
         public ref class ID2D1Resource abstract : IDirect2DObject
         {
         internal:

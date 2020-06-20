@@ -21,7 +21,7 @@ namespace D2DNet
         /// Renders to an intermediate texture created by the CreateCompatibleRenderTarget
         /// method.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("6DCB190A-D3EA-40CD-A21B-B5D31A84C8D7")]
+        [System::Runtime::InteropServices::GuidAttribute("2cd90695-12e2-11dc-9fed-001143a055f9")]
         public ref class ID2D1BitmapRenderTarget : Direct2DNet::ID2D1RenderTarget
         {
         internal:

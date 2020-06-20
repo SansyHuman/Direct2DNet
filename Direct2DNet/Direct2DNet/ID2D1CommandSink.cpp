@@ -6,14 +6,22 @@
 #include "ID2D1Geometry.h"
 #include "ID2D1Bitmap.h"
 #include "ID2D1Image.h"
+#include "ID2D1GdiMetafile.h"
 #include "ID2D1Mesh.h"
 #include "ID2D1Layer.h"
+#include "ID2D1CommandSink1.h"
+#include "../GUIDs.h"
 
 namespace D2DNet
 {
     namespace Direct2DNet
     {
-        ID2D1CommandSink::ID2D1CommandSink()
+        ID2D1CommandSink::ID2D1CommandSink() : Direct2DNet::ID2D1CommandSink(D2DNetGUID::UID_ID2D1CommandSink)
+        {
+
+        }
+
+        ID2D1CommandSink::ID2D1CommandSink(System::Guid riid)
         {
             FnHrVoid ^beginDraw =
                 gcnew FnHrVoid(this, &Direct2DNet::ID2D1CommandSink::BeginDrawInternal);
@@ -92,60 +100,124 @@ namespace D2DNet
             m_popAxisAlignedClip = GCHandle::Alloc(popAxisAlignedClip);
             m_popLayer = GCHandle::Alloc(popLayer);
 
-            m_pSink = new Direct2DNet::ID2D1NativeCommandSink();
+            if(riid == D2DNetGUID::UID_ID2D1CommandSink)
+            {
+                m_pSink = new Direct2DNet::ID2D1NativeCommandSink();
 
-            Direct2DNet::ID2D1NativeCommandSink *sink = (Direct2DNet::ID2D1NativeCommandSink *)m_pSink;
+                Direct2DNet::ID2D1NativeCommandSink *sink = (Direct2DNet::ID2D1NativeCommandSink *)m_pSink;
 
-            sink->m_beginDraw =
-                static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(beginDraw).ToPointer());
-            sink->m_endDraw =
-                static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(endDraw).ToPointer());
-            sink->m_setAntialiasMode =
-                static_cast<fnHrAntmode>(Marshal::GetFunctionPointerForDelegate(setAntialiasMode).ToPointer());
-            sink->m_setTags =
-                static_cast<fnHr2Tag>(Marshal::GetFunctionPointerForDelegate(setTags).ToPointer());
-            sink->m_setTextAntialiasMode =
-                static_cast<fnHrTxtAntmode>(Marshal::GetFunctionPointerForDelegate(setTextAntialiasMode).ToPointer());
-            sink->m_setTextRenderingParams =
-                static_cast<fnHrDWRP>(Marshal::GetFunctionPointerForDelegate(setTextRenderingParams).ToPointer());
-            sink->m_setTransform =
-                static_cast<fnHrMat32>(Marshal::GetFunctionPointerForDelegate(setTransform).ToPointer());
-            sink->m_setPrimitiveBlend =
-                static_cast<fnHrPB>(Marshal::GetFunctionPointerForDelegate(setPrimitiveBlend).ToPointer());
-            sink->m_setUnitMode =
-                static_cast<fnHrUnit>(Marshal::GetFunctionPointerForDelegate(setUnitMode).ToPointer());
-            sink->m_clear =
-                static_cast<fnHrClr>(Marshal::GetFunctionPointerForDelegate(clear).ToPointer());
-            sink->m_drawGlyphRun =
-                static_cast<fnGlyph>(Marshal::GetFunctionPointerForDelegate(drawGlyphRun).ToPointer());
-            sink->m_drawLine =
-                static_cast<fnDrLine>(Marshal::GetFunctionPointerForDelegate(drawLine).ToPointer());
-            sink->m_drawGeometry =
-                static_cast<fnDrGeo>(Marshal::GetFunctionPointerForDelegate(drawGeometry).ToPointer());
-            sink->m_drawRectangle =
-                static_cast<fnDrRect>(Marshal::GetFunctionPointerForDelegate(drawRectangle).ToPointer());
-            sink->m_drawBitmap =
-                static_cast<fnDrBit>(Marshal::GetFunctionPointerForDelegate(drawBitmap).ToPointer());
-            sink->m_drawImage =
-                static_cast<fnDrIm>(Marshal::GetFunctionPointerForDelegate(drawImage).ToPointer());
-            sink->m_drawGdiMetafile =
-                static_cast<fnDrGdi>(Marshal::GetFunctionPointerForDelegate(drawGdiMetafile).ToPointer());
-            sink->m_fillMesh =
-                static_cast<fnFllMesh>(Marshal::GetFunctionPointerForDelegate(fillMesh).ToPointer());
-            sink->m_fillOpacityMask =
-                static_cast<fnFllOpMsk>(Marshal::GetFunctionPointerForDelegate(fillOpacityMask).ToPointer());
-            sink->m_fillGeometry =
-                static_cast<fnFllGeo>(Marshal::GetFunctionPointerForDelegate(fillGeometry).ToPointer());
-            sink->m_fillRectangle =
-                static_cast<fnFllRect>(Marshal::GetFunctionPointerForDelegate(fillRectangle).ToPointer());
-            sink->m_pushAxisAlignedClip =
-                static_cast<fnPshAxis>(Marshal::GetFunctionPointerForDelegate(pushAxisAlignedClip).ToPointer());
-            sink->m_pushLayer =
-                static_cast<fnPshLyr>(Marshal::GetFunctionPointerForDelegate(pushLayer).ToPointer());
-            sink->m_popAxisAlignedClip =
-                static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(popAxisAlignedClip).ToPointer());
-            sink->m_popLayer =
-                static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(popLayer).ToPointer());
+                sink->m_beginDraw =
+                    static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(beginDraw).ToPointer());
+                sink->m_endDraw =
+                    static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(endDraw).ToPointer());
+                sink->m_setAntialiasMode =
+                    static_cast<fnHrAntmode>(Marshal::GetFunctionPointerForDelegate(setAntialiasMode).ToPointer());
+                sink->m_setTags =
+                    static_cast<fnHr2Tag>(Marshal::GetFunctionPointerForDelegate(setTags).ToPointer());
+                sink->m_setTextAntialiasMode =
+                    static_cast<fnHrTxtAntmode>(Marshal::GetFunctionPointerForDelegate(setTextAntialiasMode).ToPointer());
+                sink->m_setTextRenderingParams =
+                    static_cast<fnHrDWRP>(Marshal::GetFunctionPointerForDelegate(setTextRenderingParams).ToPointer());
+                sink->m_setTransform =
+                    static_cast<fnHrMat32>(Marshal::GetFunctionPointerForDelegate(setTransform).ToPointer());
+                sink->m_setPrimitiveBlend =
+                    static_cast<fnHrPB>(Marshal::GetFunctionPointerForDelegate(setPrimitiveBlend).ToPointer());
+                sink->m_setUnitMode =
+                    static_cast<fnHrUnit>(Marshal::GetFunctionPointerForDelegate(setUnitMode).ToPointer());
+                sink->m_clear =
+                    static_cast<fnHrClr>(Marshal::GetFunctionPointerForDelegate(clear).ToPointer());
+                sink->m_drawGlyphRun =
+                    static_cast<fnGlyph>(Marshal::GetFunctionPointerForDelegate(drawGlyphRun).ToPointer());
+                sink->m_drawLine =
+                    static_cast<fnDrLine>(Marshal::GetFunctionPointerForDelegate(drawLine).ToPointer());
+                sink->m_drawGeometry =
+                    static_cast<fnDrGeo>(Marshal::GetFunctionPointerForDelegate(drawGeometry).ToPointer());
+                sink->m_drawRectangle =
+                    static_cast<fnDrRect>(Marshal::GetFunctionPointerForDelegate(drawRectangle).ToPointer());
+                sink->m_drawBitmap =
+                    static_cast<fnDrBit>(Marshal::GetFunctionPointerForDelegate(drawBitmap).ToPointer());
+                sink->m_drawImage =
+                    static_cast<fnDrIm>(Marshal::GetFunctionPointerForDelegate(drawImage).ToPointer());
+                sink->m_drawGdiMetafile =
+                    static_cast<fnDrGdi>(Marshal::GetFunctionPointerForDelegate(drawGdiMetafile).ToPointer());
+                sink->m_fillMesh =
+                    static_cast<fnFllMesh>(Marshal::GetFunctionPointerForDelegate(fillMesh).ToPointer());
+                sink->m_fillOpacityMask =
+                    static_cast<fnFllOpMsk>(Marshal::GetFunctionPointerForDelegate(fillOpacityMask).ToPointer());
+                sink->m_fillGeometry =
+                    static_cast<fnFllGeo>(Marshal::GetFunctionPointerForDelegate(fillGeometry).ToPointer());
+                sink->m_fillRectangle =
+                    static_cast<fnFllRect>(Marshal::GetFunctionPointerForDelegate(fillRectangle).ToPointer());
+                sink->m_pushAxisAlignedClip =
+                    static_cast<fnPshAxis>(Marshal::GetFunctionPointerForDelegate(pushAxisAlignedClip).ToPointer());
+                sink->m_pushLayer =
+                    static_cast<fnPshLyr>(Marshal::GetFunctionPointerForDelegate(pushLayer).ToPointer());
+                sink->m_popAxisAlignedClip =
+                    static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(popAxisAlignedClip).ToPointer());
+                sink->m_popLayer =
+                    static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(popLayer).ToPointer());
+            }
+            else if(riid == D2DNetGUID::UID_ID2D1CommandSink1)
+            {
+                m_pSink = new Direct2DNet::ID2D1NativeCommandSink1();
+
+                Direct2DNet::ID2D1NativeCommandSink1 *sink = (Direct2DNet::ID2D1NativeCommandSink1 *)m_pSink;
+
+                sink->m_beginDraw =
+                    static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(beginDraw).ToPointer());
+                sink->m_endDraw =
+                    static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(endDraw).ToPointer());
+                sink->m_setAntialiasMode =
+                    static_cast<fnHrAntmode>(Marshal::GetFunctionPointerForDelegate(setAntialiasMode).ToPointer());
+                sink->m_setTags =
+                    static_cast<fnHr2Tag>(Marshal::GetFunctionPointerForDelegate(setTags).ToPointer());
+                sink->m_setTextAntialiasMode =
+                    static_cast<fnHrTxtAntmode>(Marshal::GetFunctionPointerForDelegate(setTextAntialiasMode).ToPointer());
+                sink->m_setTextRenderingParams =
+                    static_cast<fnHrDWRP>(Marshal::GetFunctionPointerForDelegate(setTextRenderingParams).ToPointer());
+                sink->m_setTransform =
+                    static_cast<fnHrMat32>(Marshal::GetFunctionPointerForDelegate(setTransform).ToPointer());
+                sink->m_setPrimitiveBlend =
+                    static_cast<fnHrPB>(Marshal::GetFunctionPointerForDelegate(setPrimitiveBlend).ToPointer());
+                sink->m_setUnitMode =
+                    static_cast<fnHrUnit>(Marshal::GetFunctionPointerForDelegate(setUnitMode).ToPointer());
+                sink->m_clear =
+                    static_cast<fnHrClr>(Marshal::GetFunctionPointerForDelegate(clear).ToPointer());
+                sink->m_drawGlyphRun =
+                    static_cast<fnGlyph>(Marshal::GetFunctionPointerForDelegate(drawGlyphRun).ToPointer());
+                sink->m_drawLine =
+                    static_cast<fnDrLine>(Marshal::GetFunctionPointerForDelegate(drawLine).ToPointer());
+                sink->m_drawGeometry =
+                    static_cast<fnDrGeo>(Marshal::GetFunctionPointerForDelegate(drawGeometry).ToPointer());
+                sink->m_drawRectangle =
+                    static_cast<fnDrRect>(Marshal::GetFunctionPointerForDelegate(drawRectangle).ToPointer());
+                sink->m_drawBitmap =
+                    static_cast<fnDrBit>(Marshal::GetFunctionPointerForDelegate(drawBitmap).ToPointer());
+                sink->m_drawImage =
+                    static_cast<fnDrIm>(Marshal::GetFunctionPointerForDelegate(drawImage).ToPointer());
+                sink->m_drawGdiMetafile =
+                    static_cast<fnDrGdi>(Marshal::GetFunctionPointerForDelegate(drawGdiMetafile).ToPointer());
+                sink->m_fillMesh =
+                    static_cast<fnFllMesh>(Marshal::GetFunctionPointerForDelegate(fillMesh).ToPointer());
+                sink->m_fillOpacityMask =
+                    static_cast<fnFllOpMsk>(Marshal::GetFunctionPointerForDelegate(fillOpacityMask).ToPointer());
+                sink->m_fillGeometry =
+                    static_cast<fnFllGeo>(Marshal::GetFunctionPointerForDelegate(fillGeometry).ToPointer());
+                sink->m_fillRectangle =
+                    static_cast<fnFllRect>(Marshal::GetFunctionPointerForDelegate(fillRectangle).ToPointer());
+                sink->m_pushAxisAlignedClip =
+                    static_cast<fnPshAxis>(Marshal::GetFunctionPointerForDelegate(pushAxisAlignedClip).ToPointer());
+                sink->m_pushLayer =
+                    static_cast<fnPshLyr>(Marshal::GetFunctionPointerForDelegate(pushLayer).ToPointer());
+                sink->m_popAxisAlignedClip =
+                    static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(popAxisAlignedClip).ToPointer());
+                sink->m_popLayer =
+                    static_cast<fnHrVoid>(Marshal::GetFunctionPointerForDelegate(popLayer).ToPointer());
+            }
+            else
+            {
+                System::Diagnostics::Debug::Assert(false, "ID2D1CommandSink accepted unknown guid.");
+            }
         }
 
         ID2D1CommandSink::~ID2D1CommandSink()
@@ -485,7 +557,18 @@ namespace D2DNet
 
         HRESULT ID2D1CommandSink::DrawGdiMetafileInternal(::ID2D1GdiMetafile *gdiMetafile, ::D2D1_POINT_2F *targetOffset)
         {
-            return S_OK;
+            ::ID2D1Factory *pFactory = __nullptr;
+            gdiMetafile->GetFactory(&pFactory);
+
+            Direct2DNet::ID2D1Factory ^factory = gcnew Direct2DNet::ID2D1Factory(pFactory);
+
+            Direct2DNet::ID2D1GdiMetafile ^metafile = gcnew Direct2DNet::ID2D1GdiMetafile(factory, gdiMetafile);
+            gdiMetafile->AddRef();
+
+            return DrawGdiMetafile(
+                metafile,
+                targetOffset ? static_cast<Direct2DNet::D2D1_POINT_2F>(*targetOffset) : Nullable<Direct2DNet::D2D1_POINT_2F>()
+            );
         }
 
         HRESULT ID2D1CommandSink::FillMeshInternal(::ID2D1Mesh *mesh, ::ID2D1Brush *brush)

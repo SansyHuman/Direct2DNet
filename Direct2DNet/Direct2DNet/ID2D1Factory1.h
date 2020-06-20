@@ -29,7 +29,7 @@ namespace D2DNet
         /// <summary>
         /// Creates Direct2D resources.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("A70E1E3C-4E3F-4B28-8F94-D8E2463BD94A")]
+        [System::Runtime::InteropServices::GuidAttribute("bb12d362-daee-4b9a-aa1d-14ba401cfa1f")]
         public ref class ID2D1Factory1 : Direct2DNet::ID2D1Factory
         {
         internal:

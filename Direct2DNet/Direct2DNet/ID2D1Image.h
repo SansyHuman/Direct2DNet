@@ -14,7 +14,7 @@ namespace D2DNet
         /// <summary>
         /// Represents a producer of pixels that can fill an arbitrary 2D plane.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("460EA549-0201-40BE-98BF-8659A0D6B568")]
+        [System::Runtime::InteropServices::GuidAttribute("65019f75-8da2-497c-b32c-dfa34e48ede6")]
         public ref class ID2D1Image : Direct2DNet::ID2D1Resource
         {
         protected:

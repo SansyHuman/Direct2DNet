@@ -10,6 +10,11 @@ using namespace System::Runtime::CompilerServices;
 
 namespace D2DNet
 {
+    namespace DXGINet
+    {
+        ref class IDXGISurface;
+    }
+
     namespace DWriteNet
     {
         ref class IDWriteRenderingParams;
@@ -26,6 +31,7 @@ namespace D2DNet
         ref class ID2D1PathGeometry;
         ref class ID2D1DrawingStateBlock;
         ref class ID2D1HwndRenderTarget;
+        ref class ID2D1RenderTarget;
         ref class ID2D1DCRenderTarget;
         ref class ID2D1StrokeStyle;
         ref class ID2D1Multithread;
@@ -33,7 +39,7 @@ namespace D2DNet
         /// <summary>
         /// The root factory interface for all of D2D's objects.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("A804A679-80D3-43FE-93D5-75171B3427E2")]
+        [System::Runtime::InteropServices::GuidAttribute("06152247-6f50-465a-9245-118bfd3b6007")]
         public ref class ID2D1Factory : public IDirect2DObject
         {
         internal:
@@ -244,6 +250,19 @@ namespace D2DNet
             Direct2DNet::ID2D1HwndRenderTarget ^CreateHwndRenderTarget(
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %renderTargetProperties,
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_HWND_RENDER_TARGET_PROPERTIES %hwndRenderTargetProperties
+            );
+
+            /// <summary>
+            /// Creates a render target that draws to a DXGI Surface. The device that owns the
+            /// surface is used for rendering.
+            /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the render target.
+            /// </exception>
+            /// <seealso cref="Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES"/>
+            Direct2DNet::ID2D1RenderTarget ^CreateDxgiSurfaceRenderTarget(
+                DXGINet::IDXGISurface ^dxgiSurface,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %renderTargetProperties
             );
 
             /// <summary>

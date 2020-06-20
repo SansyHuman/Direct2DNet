@@ -12,6 +12,8 @@
 #include "DWriteNet/DWNet_core.h"
 #include "DWriteNet/DWNet_text.h"
 
+#include "DXCommonSettings.h"
+
 namespace D2DNet
 {
     using namespace System::Runtime::InteropServices;
@@ -23,7 +25,11 @@ namespace D2DNet
 #ifndef D2DNET_GET_GUID
 #define D2DNET_GET_GUID(namespace, type, attributeHolder) \
 attributeHolder = (GuidAttribute ^)System::Attribute::GetCustomAttribute(namespace ## :: ## type ## ::typeid, GuidAttribute::typeid); \
-UID_ ## type = System::Guid(attributeHolder->Value);
+UID_ ## type = System::Guid(attributeHolder->Value); \
+if(UID_ ## type != D2DNet::DirectX::ToManagedGUID(__uuidof(:: ## type))) \
+{ \
+    throw gcnew System::Exception("Different Guid"); \
+}
 #endif
 
     /// <summary>
@@ -34,6 +40,7 @@ UID_ ## type = System::Guid(attributeHolder->Value);
         D2DNET_GUID(ID2D1BitmapRenderTarget);
         D2DNET_GUID(ID2D1CommandList);
         D2DNET_GUID(ID2D1CommandSink);
+        D2DNET_GUID(ID2D1CommandSink1);
         D2DNET_GUID(ID2D1DCRenderTarget);
         D2DNET_GUID(ID2D1Device);
         D2DNET_GUID(ID2D1Device1);
@@ -44,12 +51,12 @@ UID_ ## type = System::Guid(attributeHolder->Value);
         D2DNET_GUID(ID2D1Factory);
         D2DNET_GUID(ID2D1Factory1);
         D2DNET_GUID(ID2D1Factory2);
+        D2DNET_GUID(ID2D1GdiInteropRenderTarget);
         D2DNET_GUID(ID2D1HwndRenderTarget);
         D2DNET_GUID(ID2D1Layer);
         D2DNET_GUID(ID2D1Multithread);
         D2DNET_GUID(ID2D1RenderTarget);
         D2DNET_GUID(ID2D1Resource);
-        D2DNET_GUID(IDirect2DObject);
 
         D2DNET_GUID(ID2D1BitmapBrush);
         D2DNET_GUID(ID2D1BitmapBrush1);
@@ -87,7 +94,6 @@ UID_ ## type = System::Guid(attributeHolder->Value);
         D2DNET_GUID(ID3D11Device);
         D2DNET_GUID(ID3D11DeviceChild);
         D2DNET_GUID(ID3D11DeviceContext);
-        D2DNET_GUID(IDirect3D11Object);
 
 
         D2DNET_GUID(IDXGIAdapter);
@@ -99,7 +105,6 @@ UID_ ## type = System::Guid(attributeHolder->Value);
         D2DNET_GUID(IDXGISwapChain);
 
         
-        D2DNET_GUID(IDirectWriteObject);
         D2DNET_GUID(IDWriteFactory);
         D2DNET_GUID(IDWriteRenderingParams);
 
@@ -112,6 +117,7 @@ UID_ ## type = System::Guid(attributeHolder->Value);
             D2DNET_GET_GUID(Direct2DNet, ID2D1BitmapRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1CommandList, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1CommandSink, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1CommandSink1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DCRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Device, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Device1, guid);
@@ -122,12 +128,12 @@ UID_ ## type = System::Guid(attributeHolder->Value);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory2, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1GdiInteropRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1HwndRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Layer, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Multithread, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1RenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Resource, guid);
-            D2DNET_GET_GUID(Direct2DNet, IDirect2DObject, guid);
 
             D2DNET_GET_GUID(Direct2DNet, ID2D1BitmapBrush, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1BitmapBrush1, guid);
@@ -165,7 +171,6 @@ UID_ ## type = System::Guid(attributeHolder->Value);
             D2DNET_GET_GUID(Direct3D11Net, ID3D11Device, guid);
             D2DNET_GET_GUID(Direct3D11Net, ID3D11DeviceChild, guid);
             D2DNET_GET_GUID(Direct3D11Net, ID3D11DeviceContext, guid);
-            D2DNET_GET_GUID(Direct3D11Net, IDirect3D11Object, guid);
 
 
             D2DNET_GET_GUID(DXGINet, IDXGIAdapter, guid);
@@ -176,8 +181,6 @@ UID_ ## type = System::Guid(attributeHolder->Value);
             D2DNET_GET_GUID(DXGINet, IDXGISurface, guid);
             D2DNET_GET_GUID(DXGINet, IDXGISwapChain, guid);
 
-
-            D2DNET_GET_GUID(DWriteNet, IDirectWriteObject, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFactory, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteRenderingParams, guid);
 

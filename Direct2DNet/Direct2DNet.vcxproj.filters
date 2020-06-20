@@ -396,6 +396,12 @@
     <ClInclude Include="Direct2DNet\ID2D1GdiMetafileSink.h">
       <Filter>헤더 파일\Direct2DNet\image</Filter>
     </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1GdiInteropRenderTarget.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1CommandSink1.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -607,6 +613,12 @@
     </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1GdiMetafileSink.cpp">
       <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1GdiInteropRenderTarget.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1CommandSink1.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

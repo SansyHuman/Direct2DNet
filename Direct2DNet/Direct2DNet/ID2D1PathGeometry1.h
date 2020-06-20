@@ -21,7 +21,7 @@ namespace D2DNet
         /// particular, it provides the path geometry-specific
         /// ComputePointAndSegmentAtLength method.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("70368CF7-4350-4ACC-A0F4-55250AE743C2")]
+        [System::Runtime::InteropServices::GuidAttribute("62baa2d2-ab54-41b7-b872-787e0106a421")]
         public ref class ID2D1PathGeometry1 : Direct2DNet::ID2D1PathGeometry
         {
         internal:

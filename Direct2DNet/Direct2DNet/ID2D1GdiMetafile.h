@@ -16,19 +16,26 @@ namespace D2DNet
 
     namespace Direct2DNet
     {
+        ref class ID2D1Factory;
         ref class ID2D1Factory1;
         ref class ID2D1GdiMetafileSink;
 
         /// <summary>
         /// Interface encapsulating a GDI/GDI+ metafile.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("84FCA72C-D841-4AB6-A83D-31D00A61B0B8")]
+        [System::Runtime::InteropServices::GuidAttribute("2f543dc3-cfc1-4211-864f-cfd91c6f3395")]
         public ref class ID2D1GdiMetafile : Direct2DNet::ID2D1Resource
         {
         internal:
             ID2D1GdiMetafile(
                 Direct2DNet::ID2D1Factory1 ^factory,
                 D2DNet::ComIO::Stream ^stream
+            );
+
+            // Used in ID2D1CommandSink
+            ID2D1GdiMetafile(
+                Direct2DNet::ID2D1Factory ^factory,
+                ::ID2D1GdiMetafile *pMetafile
             );
 
         public:

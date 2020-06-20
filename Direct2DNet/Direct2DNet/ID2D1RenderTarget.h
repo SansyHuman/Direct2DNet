@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../IUnknown.h"
 #include "IDirect2DObject.h"
 #include "D2DNetHeaders.h"
 #include "D2DSettings.h"
@@ -19,6 +20,11 @@ namespace D2DNet
         ref class IDWriteRenderingParams;
     }
 
+    namespace DXGINet
+    {
+        ref class IDXGISurface;
+    }
+
     namespace Direct2DNet
     {
         ref class ID2D1Bitmap;
@@ -34,20 +40,28 @@ namespace D2DNet
         ref class ID2D1StrokeStyle;
         ref class ID2D1Geometry;
         ref class ID2D1DrawingStateBlock;
+        ref class ID2D1GdiInteropRenderTarget;
 
         /// <summary>
         /// Represents an object that can receive drawing commands. Classes that inherit
         /// from <see cref="Direct2DNet::ID2D1RenderTarget"/> render the drawing commands
         /// they receive in different ways.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("BDD55256-ED4C-4B9D-B340-1E5F8D811682")]
-        public ref class ID2D1RenderTarget abstract : Direct2DNet::ID2D1Resource
+        [System::Runtime::InteropServices::GuidAttribute("2cd90694-12e2-11dc-9fed-001143a055f9")]
+        public ref class ID2D1RenderTarget : Direct2DNet::ID2D1Resource
         {
         private:
             DWriteNet::IDWriteRenderingParams ^m_params = nullptr;
 
         protected:
             ID2D1RenderTarget(Direct2DNet::ID2D1Factory ^factory) : ID2D1Resource(factory) {}
+
+        internal:
+            ID2D1RenderTarget(
+                Direct2DNet::ID2D1Factory ^factory,
+                DXGINet::IDXGISurface ^surface,
+                Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %properties
+            );
 
         public:
             /// <summary>
@@ -87,7 +101,24 @@ namespace D2DNet
 
             // CreateBitmapFromWicBitmap
 
-            // CreateSharedBitmap
+            /// <summary>
+            /// Create a D2D bitmap by sharing bits from another resource. The bitmap must be
+            /// compatible with the render target for the call to succeed. For example, an
+            /// IWICBitmap can be shared with a software target, or a DXGI surface can be shared
+            /// with a DXGI render target.
+            /// </summary>
+            /// <typeparam name="T">A type that inherits from the IUnknown interface.</typeparam>
+            /// <param name="data">An ID2D1Bitmap, IDXGISurface, or an IWICBitmapLock that contains the
+            /// data to share with the new ID2D1Bitmap.</param>
+            /// <param name="bitmapProperties">The pixel format and dots per inch (DPI) of the bitmap
+            /// to create.</param>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the bitmap.
+            /// </exception>
+            generic<typename T> where T : D2DNet::IUnknown Direct2DNet::ID2D1Bitmap ^CreateSharedBitmap(
+                T data,
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties
+            );
 
             /// <summary>
             /// Creates a bitmap brush. The bitmap is scaled, rotated, skewed or tiled to fill
@@ -416,6 +447,10 @@ namespace D2DNet
                 [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_DRAW_TEXT_OPTIONS> options,
                 [OptionalAttribute] System::Nullable<D2DNet::DWriteNet::DWRITE_MEASURING_MODE> measuringMode
             );
+
+            // DrawTextLayout
+
+            // DrawGlyphRun
 
             /// <summary>
             /// Gets and sets the transformation matrix of the render target.
@@ -795,6 +830,14 @@ namespace D2DNet
             /// to be supported.
             /// </summary>
             bool IsSupported([InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %properties);
+
+            /// <summary>
+            /// Queries ID2D1GdiInteropRenderTarget from the render target.
+            /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the layer.
+            /// </exception>
+            Direct2DNet::ID2D1GdiInteropRenderTarget ^QueryToGdiInteropRenderTarget();
         };
     }
 }

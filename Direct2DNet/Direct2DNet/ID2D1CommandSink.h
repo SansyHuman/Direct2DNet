@@ -365,6 +365,7 @@ namespace D2DNet
         ref class ID2D1StrokeStyle;
         ref class ID2D1Geometry;
         ref class ID2D1Image;
+        ref class ID2D1GdiMetafile;
         ref class ID2D1Mesh;
         ref class ID2D1Layer;
 
@@ -372,7 +373,7 @@ namespace D2DNet
         /// Caller-supplied implementation of an interface to receive the recorded command
         /// list.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("3BCD55A5-F17C-43F4-8695-D0FE3CE4029F")]
+        [System::Runtime::InteropServices::GuidAttribute("54d7898a-a061-40a7-bec7-e465bcba2c4f")]
         public ref class ID2D1CommandSink abstract : Direct2DNet::IDirect2DObject
         {
         protected:
@@ -431,6 +432,9 @@ namespace D2DNet
 
         protected:
             ID2D1CommandSink();
+
+        internal:
+            ID2D1CommandSink(System::Guid riid);
 
         public:
             ~ID2D1CommandSink();
@@ -642,6 +646,11 @@ namespace D2DNet
                 Direct2DNet::D2D1_COMPOSITE_MODE compositeMode,
                 [Optional] System::Nullable<Direct2DNet::D2D1_POINT_2F> targetOffset,
                 [Optional] System::Nullable<Direct2DNet::D2D1_RECT_F> imageRectangle
+            ) abstract;
+
+            virtual HRESULT DrawGdiMetafile(
+                Direct2DNet::ID2D1GdiMetafile ^gdiMetafile,
+                [Optional] System::Nullable<Direct2DNet::D2D1_POINT_2F> targetOffset
             ) abstract;
 
             // DrawGdiMetafile

@@ -16,7 +16,7 @@ namespace D2DNet
         /// <summary>
         /// Renders drawing instructions to a window.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("A804A679-80D3-43FE-93D5-75171B3427E2")]
+        [System::Runtime::InteropServices::GuidAttribute("2cd90698-12e2-11dc-9fed-001143a055f9")]
         public ref class ID2D1HwndRenderTarget : ID2D1RenderTarget
         {
         internal:

@@ -15,7 +15,7 @@ namespace D2DNet
         /// <summary>
         /// Represents a sequence of commands that can be recorded and played back.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("16E6ED08-F319-45FA-9B13-DA9E1E47CE6F")]
+        [System::Runtime::InteropServices::GuidAttribute("b4f34a19-2383-4d76-94f6-ec343657c3dc")]
         public ref class ID2D1CommandList : Direct2DNet::ID2D1Image
         {
         internal:

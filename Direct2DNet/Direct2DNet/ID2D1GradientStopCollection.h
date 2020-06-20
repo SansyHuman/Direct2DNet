@@ -18,7 +18,7 @@ namespace D2DNet
         /// Represents an collection of gradient stops that can then be the source resource
         /// for either a linear or radial gradient brush.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("18DBA6DA-A09F-4BD2-A5B4-287EA3BDC71C")]
+        [System::Runtime::InteropServices::GuidAttribute("2cd906a7-12e2-11dc-9fed-001143a055f9")]
         public ref class ID2D1GradientStopCollection : Direct2DNet::ID2D1Resource
         {
         protected:

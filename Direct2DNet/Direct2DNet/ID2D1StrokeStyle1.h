@@ -17,7 +17,7 @@ namespace D2DNet
         /// <summary>
         /// Extends a stroke style to allow nominal width strokes.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("2C73EFD9-7A74-4FAC-A9BD-3149E7EDEDFC")]
+        [System::Runtime::InteropServices::GuidAttribute("10a72a66-e91c-43f4-993f-ddf4b82b0b4a")]
         public ref class ID2D1StrokeStyle1 : Direct2DNet::ID2D1StrokeStyle
         {
         private:

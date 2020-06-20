@@ -15,7 +15,7 @@ namespace D2DNet
     {
         ref class IDXGIFactory;
 
-        [System::Runtime::InteropServices::GuidAttribute("8A1A53AF-AC5E-4A95-B01F-A077ED4E6018")]
+        [System::Runtime::InteropServices::GuidAttribute("2411e7e1-12ac-4ccf-bd14-9798e8534dc0")]
         public ref class IDXGIAdapter : DXGINet::IDXGIObject
         {
         internal:

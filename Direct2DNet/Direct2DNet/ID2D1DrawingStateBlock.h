@@ -21,7 +21,7 @@ namespace D2DNet
         /// Represents the drawing state of a render target: the antialiasing mode,
         /// transform, tags, and text-rendering options.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("6E7E9BC9-2DB8-4C3F-B2AC-5177A0B91953")]
+        [System::Runtime::InteropServices::GuidAttribute("28506e39-ebf6-46a1-bb47-fd85565ab957")]
         public ref class ID2D1DrawingStateBlock : Direct2DNet::ID2D1Resource
         {
         private:

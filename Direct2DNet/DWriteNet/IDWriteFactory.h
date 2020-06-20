@@ -20,7 +20,7 @@ namespace D2DNet
         /// <summary>
         /// The root factory interface for all DWrite objects.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("6C56A1CC-811D-43E7-8117-B99A6B687480")]
+        [System::Runtime::InteropServices::GuidAttribute("b859ee5a-d838-4b5b-a2e8-1adc7d93db48")]
         public ref class IDWriteFactory : DWriteNet::IDirectWriteObject
         {
         internal:

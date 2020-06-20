@@ -15,7 +15,7 @@ namespace D2DNet
         /// <summary>
         /// Resource class that holds pen style properties.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("0B571E07-A5DB-48E2-B1DC-F1F180C67CDE")]
+        [System::Runtime::InteropServices::GuidAttribute("2cd9069d-12e2-11dc-9fed-001143a055f9")]
         public ref class ID2D1StrokeStyle : Direct2DNet::ID2D1Resource
         {
         private:

@@ -85,7 +85,7 @@ namespace D2DNet
         /// <summary>
         /// User-implementable interface for introspecting on a metafile.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("5CDDCC8E-81A2-4851-B603-2052AFF99A2C")]
+        [System::Runtime::InteropServices::GuidAttribute("82237326-8111-4f7c-bcf4-b5c1175564fe")]
         public ref class ID2D1GdiMetafileSink abstract : Direct2DNet::IDirect2DObject
         {
         protected:

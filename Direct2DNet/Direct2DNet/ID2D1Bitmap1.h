@@ -20,7 +20,7 @@ namespace D2DNet
         /// Represents a bitmap that can be used as a surface for an ID2D1DeviceContext or
         /// mapped into system memory, and can contain additional color context information.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("5B40DE1D-5911-4498-A37D-4782F3E7F409")]
+        [System::Runtime::InteropServices::GuidAttribute("a898a84c-3873-4588-b08b-ebbf978df041")]
         public ref class ID2D1Bitmap1 : Direct2DNet::ID2D1Bitmap
         {
         private:

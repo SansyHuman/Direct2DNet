@@ -2,7 +2,7 @@
 
 namespace D2DNet
 {
-    [System::Runtime::InteropServices::GuidAttribute("9C2AC6F8-A880-460F-993E-435128D4598F")]
+    [System::Runtime::InteropServices::GuidAttribute("00000000-0000-0000-C000-000000000046")]
     public interface class IUnknown
     {
         /// <summary>

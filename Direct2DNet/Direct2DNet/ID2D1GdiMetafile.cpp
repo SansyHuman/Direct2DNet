@@ -22,6 +22,12 @@ namespace D2DNet
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1GdiMetafile", (int)hr);
         }
 
+        ID2D1GdiMetafile::ID2D1GdiMetafile(Direct2DNet::ID2D1Factory ^factory, ::ID2D1GdiMetafile *pMetafile)
+            : Direct2DNet::ID2D1Resource(factory)
+        {
+            m_pResource = pMetafile;
+        }
+
         HRESULT ID2D1GdiMetafile::Stream(Direct2DNet::ID2D1GdiMetafileSink ^sink)
         {
             return ((::ID2D1GdiMetafile *)m_pResource)->Stream(sink->m_pSink);

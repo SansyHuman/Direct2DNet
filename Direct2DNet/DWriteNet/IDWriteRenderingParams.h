@@ -14,7 +14,7 @@ namespace D2DNet
         /// <summary>
         /// The interface that represents text rendering settings for glyph rasterization and filtering.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("675985C8-A562-4B1C-B592-A78BA893C0C1")]
+        [System::Runtime::InteropServices::GuidAttribute("2f0da53a-2add-47cd-82ee-d9ec34688e75")]
         public ref class IDWriteRenderingParams : DWriteNet::IDirectWriteObject
         {
         internal:

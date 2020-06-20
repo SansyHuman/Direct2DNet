@@ -21,7 +21,7 @@ namespace D2DNet
         /// The effect interface. Properties control how the effect is rendered. The effect
         /// is Drawn with the DrawImage call.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("7E4A5645-77F2-47AA-923E-3558E9B24D12")]
+        [System::Runtime::InteropServices::GuidAttribute("28211a43-7d89-476f-8181-2d6159b220ad")]
         public ref class ID2D1Effect : Direct2DNet::ID2D1Properties
         {
         private:

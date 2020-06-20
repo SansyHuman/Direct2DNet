@@ -28,13 +28,14 @@ namespace D2DNet
         ref class ID2D1ImageBrush;
         ref class ID2D1BitmapBrush1;
         ref class ID2D1CommandList;
+        ref class ID2D1GdiMetafile;
         ref class ID2D1Layer;
 
         /// <summary>
         /// The device context represents a set of state and a command buffer that is used
         /// to render to a target bitmap.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("16E6ED08-F319-45FA-9B13-DA9E1E47CE6F")]
+        [System::Runtime::InteropServices::GuidAttribute("e8f7fe7a-191c-466d-ad95-975678bda998")]
         public ref class ID2D1DeviceContext : Direct2DNet::ID2D1RenderTarget
         {
         private:
@@ -369,7 +370,10 @@ namespace D2DNet
                 [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_COMPOSITE_MODE> compositeMode
             );
 
-            // DrawGdiMetafile
+            void DrawGdiMetafile(
+                Direct2DNet::ID2D1GdiMetafile ^gdiMetafile,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_POINT_2F> targetOffset
+                );
 
             /// <summary>
             /// Draws a bitmap to the render target.

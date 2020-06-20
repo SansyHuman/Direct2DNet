@@ -1363,6 +1363,27 @@ namespace D2DNet
         };
 
         /// <summary>
+        /// Specifies how a device context is initialized for GDI rendering when it is
+        /// retrieved from the render target.
+        /// </summary>
+        public enum class D2D1_DC_INITIALIZE_MODE
+        {
+
+            /// <summary>
+            /// The contents of the D2D render target will be copied to the DC.
+            /// </summary>
+            COPY = 0,
+
+            /// <summary>
+            /// The contents of the DC will be cleared.
+            /// </summary>
+            CLEAR = 1,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
         /// Defines how the world transform, dots per inch (dpi), and stroke width affect
         /// the shape of the pen used to stroke a primitive.
         /// </summary>

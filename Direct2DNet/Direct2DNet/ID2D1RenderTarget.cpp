@@ -1,4 +1,6 @@
 #include "ID2D1RenderTarget.h"
+#include "ID2D1Factory.h"
+#include "../DXGINet/IDXGISurface.h"
 #include "ID2D1Bitmap.h"
 #include "ID2D1BitmapBrush.h"
 #include "ID2D1SolidColorBrush.h"
@@ -11,13 +13,33 @@
 #include "ID2D1StrokeStyle.h"
 #include "ID2D1Geometry.h"
 #include "ID2D1DrawingStateBlock.h"
+#include "ID2D1GdiInteropRenderTarget.h"
 #include "../DWriteNet/IDWriteTextFormat.h"
 #include "../DWriteNet/IDWriteRenderingParams.h"
+#include "../GUIDs.h"
 
 namespace D2DNet
 {
     namespace Direct2DNet
     {
+        ID2D1RenderTarget::ID2D1RenderTarget(
+            Direct2DNet::ID2D1Factory ^factory,
+            DXGINet::IDXGISurface ^surface,
+            Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %properties) : Direct2DNet::ID2D1Resource(factory)
+        {
+            HRESULT hr = S_OK;
+            pin_ptr<::ID2D1Resource *> ppRenderTarget = &m_pResource;
+            hr = factory->m_pFactory->CreateDxgiSurfaceRenderTarget(
+                (::IDXGISurface *)surface->m_pSubObject,
+                &static_cast<::D2D1_RENDER_TARGET_PROPERTIES>(properties),
+                (::ID2D1RenderTarget **)ppRenderTarget
+            );
+            ppRenderTarget = nullptr;
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1RenderTarget", (int)hr);
+        }
+
         Direct2DNet::ID2D1Bitmap ^ID2D1RenderTarget::CreateBitmap(
             Direct2DNet::D2D1_SIZE_U %size,
             Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties)
@@ -32,6 +54,21 @@ namespace D2DNet
             Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties)
         {
             return gcnew Direct2DNet::ID2D1Bitmap(this, size, srcData, pitch, bitmapProperties);
+        }
+
+        generic<typename T> where T : D2DNet::IUnknown
+            Direct2DNet::ID2D1Bitmap ^ID2D1RenderTarget::CreateSharedBitmap(
+            T data,
+            Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties)
+        {
+            GuidAttribute ^guidAtt = (GuidAttribute ^)System::Attribute::GetCustomAttribute(
+                T::typeid,
+                GuidAttribute::typeid
+            );
+
+            System::Guid guid(guidAtt->Value);
+
+            return gcnew Direct2DNet::ID2D1Bitmap(this, guid, data, bitmapProperties);
         }
 
         Direct2DNet::ID2D1BitmapBrush ^ID2D1RenderTarget::CreateBitmapBrush(Direct2DNet::ID2D1Bitmap ^bitmap)
@@ -453,6 +490,17 @@ namespace D2DNet
             );
 
             return System::Convert::ToBoolean(result);
+        }
+
+        Direct2DNet::ID2D1GdiInteropRenderTarget ^ID2D1RenderTarget::QueryToGdiInteropRenderTarget()
+        {
+            ::ID2D1GdiInteropRenderTarget *pGDIRT = __nullptr;
+            HRESULT hr = m_pResource->QueryInterface(__uuidof(::ID2D1GdiInteropRenderTarget), (void **)&pGDIRT);
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to query ID2D1GdiInteropRenderTarget", hr);
+
+            return gcnew Direct2DNet::ID2D1GdiInteropRenderTarget(pGDIRT);
         }
 
     }

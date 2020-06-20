@@ -21,7 +21,7 @@ namespace D2DNet
         /// <summary>
         /// Enables creation and drawing of geometry realization objects.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("AA1E476E-8CC7-4C00-BB59-4697A519523D")]
+        [System::Runtime::InteropServices::GuidAttribute("d37f57e4-6908-459f-a199-e72f24f79987")]
         public ref class ID2D1DeviceContext1 : Direct2DNet::ID2D1DeviceContext
         {
         internal:

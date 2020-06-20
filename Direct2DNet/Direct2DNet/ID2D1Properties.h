@@ -20,7 +20,7 @@ namespace D2DNet
         /// Represents a set of run-time bindable and discoverable properties that allow a
         /// data-driven application to modify the state of a Direct2D effect.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("41A37519-9325-476A-B30E-5B83050843EF")]
+        [System::Runtime::InteropServices::GuidAttribute("483473d7-cd46-4f9d-9d3a-3112aa80159d")]
         public ref class ID2D1Properties : Direct2DNet::IDirect2DObject
         {
         internal:

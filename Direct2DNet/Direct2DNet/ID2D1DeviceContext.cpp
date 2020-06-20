@@ -10,6 +10,7 @@
 #include "ID2D1ImageBrush.h"
 #include "ID2D1BitmapBrush1.h"
 #include "ID2D1CommandList.h"
+#include "ID2D1GdiMetafile.h"
 #include "ID2D1Layer.h"
 #include "../DXGINet/IDXGISurface.h"
 
@@ -276,6 +277,16 @@ namespace D2DNet
             Direct2DNet::ID2D1Image ^output = effect->Output;
             DrawImage(output, targetOffset, imageRectangle, interpolationMode, compositeMode);
             delete output;
+        }
+
+        void ID2D1DeviceContext::DrawGdiMetafile(
+            Direct2DNet::ID2D1GdiMetafile ^gdiMetafile,
+            System::Nullable<Direct2DNet::D2D1_POINT_2F> targetOffset)
+        {
+            ((::ID2D1DeviceContext *)m_pResource)->DrawGdiMetafile(
+                (::ID2D1GdiMetafile *)gdiMetafile->m_pResource,
+                targetOffset.HasValue ? &static_cast<::D2D1_POINT_2F>(targetOffset.Value) : __nullptr
+            );
         }
 
         void ID2D1DeviceContext::DrawBitmap(

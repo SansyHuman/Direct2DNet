@@ -19,7 +19,7 @@ namespace D2DNet
         /// <summary>
         /// Represents drawing state.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("A4191218-BC7D-4349-8B44-33528E507F9E")]
+        [System::Runtime::InteropServices::GuidAttribute("689f1f85-c72e-4e33-8f19-85754efd5ace")]
         public ref class ID2D1DrawingStateBlock1 : Direct2DNet::ID2D1DrawingStateBlock
         {
         internal:

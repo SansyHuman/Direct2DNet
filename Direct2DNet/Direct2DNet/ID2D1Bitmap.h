@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../IUnknown.h"
 #include "IDirect2DObject.h"
 #include "D2DNetHeaders.h"
 #include "D2DSettings.h"
@@ -24,7 +25,7 @@ namespace D2DNet
         /// <summary>
         /// Root bitmap resource, linearly scaled on a draw call.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("642C965A-0A09-4280-88EC-5C6F999DE7E0")]
+        [System::Runtime::InteropServices::GuidAttribute("a2296057-ea42-4099-983b-539fb6505426")]
         public ref class ID2D1Bitmap : Direct2DNet::ID2D1Image
         {
         private:
@@ -48,6 +49,13 @@ namespace D2DNet
                 Direct2DNet::D2D1_SIZE_U %size,
                 void *srcData,
                 unsigned int pitch,
+                Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties
+            );
+
+            ID2D1Bitmap(
+                Direct2DNet::ID2D1RenderTarget ^renderTarget,
+                System::Guid %guid,
+                D2DNet::IUnknown ^data,
                 Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties
             );
 

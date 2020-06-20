@@ -13,7 +13,7 @@ namespace D2DNet
         /// A locking mechanism from a Direct2D factory that Direct2D uses to control
         /// exclusive resource access in an app that is uses multiple threads.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("217A109E-F1E1-4E21-87C5-6297B5C969E8")]
+        [System::Runtime::InteropServices::GuidAttribute("31e6e7bc-e0ff-4d46-8c64-a0a8c41c15d3")]
         public ref class ID2D1Multithread : Direct2DNet::IDirect2DObject
         {
         private:

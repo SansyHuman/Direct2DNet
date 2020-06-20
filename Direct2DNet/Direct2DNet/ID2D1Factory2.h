@@ -20,7 +20,7 @@ namespace D2DNet
         /// Creates Direct2D resources. This interface also enables the creation of
         /// ID2D1Device1 objects.
         /// </summary>
-        [System::Runtime::InteropServices::GuidAttribute("618AB4F1-5AC4-4B0B-A714-B27C5F0E2FE1")]
+        [System::Runtime::InteropServices::GuidAttribute("94f81a73-9212-4376-9c58-b16a3a0d3992")]
         public ref class ID2D1Factory2 : Direct2DNet::ID2D1Factory1
         {
         public:
