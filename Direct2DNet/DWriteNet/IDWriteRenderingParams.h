@@ -3,7 +3,7 @@
 #include "DWNetHeaders.h"
 #include "DWriteSettings.h"
 #include "IDirectWriteObject.h"
-#include "Exception/DWriteException.h"
+#include "../Direct2DNet/Exception/DXException.h"
 
 namespace D2DNet
 {

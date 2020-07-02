@@ -5,7 +5,7 @@
 #include "DWNetHeaders.h"
 #include "DWriteSettings.h"
 #include "IDirectWriteObject.h"
-#include "Exception/DWriteException.h"
+#include "../Direct2DNet/Exception/DXException.h"
 
 using namespace System::Runtime::InteropServices;
 using namespace System::Runtime::CompilerServices;
@@ -16,6 +16,7 @@ namespace D2DNet
     namespace DWriteNet
     {
         ref class IDWriteFactory;
+        ref class IDWriteFontCollection;
 
         // TODO: IDWriteInlineObject implementation.
 
@@ -30,6 +31,7 @@ namespace D2DNet
         {
         private:
             System::String ^m_fontFamilyName;
+            DWriteNet::IDWriteFontCollection ^m_fontCollection;
             DWriteNet::DWRITE_FONT_WEIGHT m_fontWeight;
             DWriteNet::DWRITE_FONT_STYLE m_fontStyle;
             DWriteNet::DWRITE_FONT_STRETCH m_fontStretch;
@@ -130,7 +132,6 @@ namespace D2DNet
             /// or for any far text exceeding the layout height.
             /// </summary>
             /// <param name="trimmingOptions">Text trimming options.</param>
-            /// <param name="trimmingSign">Application-defined omission sign. This parameter may be NULL if no trimming sign is desired.</param>
             /// <returns>
             /// Standard HRESULT error code.
             /// </returns>
@@ -262,7 +263,19 @@ namespace D2DNet
                 [OutAttribute] float %baseline
             );
 
-            // GetFontCollection
+            /// <summary>
+            /// Gets the font collection.
+            /// </summary>
+            /// <returns>
+            /// The current font collection. null if the error occurs when loading the collection.
+            /// </returns>
+            property DWriteNet::IDWriteFontCollection ^FontCollection
+            {
+                DWriteNet::IDWriteFontCollection ^get()
+                {
+                    return m_fontCollection;
+                }
+            }
 
             /// <summary>
             /// Gets the font family name.

@@ -10,6 +10,7 @@
 #include "DXGINet/DXGINet_core.h"
 
 #include "DWriteNet/DWNet_core.h"
+#include "DWriteNet/DWNet_font.h"
 #include "DWriteNet/DWNet_text.h"
 
 #include "DXCommonSettings.h"
@@ -23,6 +24,7 @@ namespace D2DNet
 #endif
 
 #ifndef D2DNET_GET_GUID
+#if defined(DEBUG) || defined(_DEBUG)
 #define D2DNET_GET_GUID(namespace, type, attributeHolder) \
 attributeHolder = (GuidAttribute ^)System::Attribute::GetCustomAttribute(namespace ## :: ## type ## ::typeid, GuidAttribute::typeid); \
 UID_ ## type = System::Guid(attributeHolder->Value); \
@@ -30,6 +32,11 @@ if(UID_ ## type != D2DNet::DirectX::ToManagedGUID(__uuidof(:: ## type))) \
 { \
     throw gcnew System::Exception("Different Guid"); \
 }
+#else
+#define D2DNET_GET_GUID(namespace, type, attributeHolder) \
+attributeHolder = (GuidAttribute ^)System::Attribute::GetCustomAttribute(namespace ## :: ## type ## ::typeid, GuidAttribute::typeid); \
+UID_ ## type = System::Guid(attributeHolder->Value);
+#endif
 #endif
 
     /// <summary>
@@ -106,7 +113,15 @@ if(UID_ ## type != D2DNet::DirectX::ToManagedGUID(__uuidof(:: ## type))) \
 
         
         D2DNET_GUID(IDWriteFactory);
+        D2DNET_GUID(IDWriteLocalizedStrings);
         D2DNET_GUID(IDWriteRenderingParams);
+
+        D2DNET_GUID(IDWriteFont);
+        D2DNET_GUID(IDWriteFontCollection);
+        //D2DNET_GUID(IDWriteFontFace);
+        D2DNET_GUID(IDWriteFontFamily);
+        D2DNET_GUID(IDWriteFontFile);
+        D2DNET_GUID(IDWriteFontList);
 
         D2DNET_GUID(IDWriteTextFormat);
 
@@ -182,7 +197,15 @@ if(UID_ ## type != D2DNet::DirectX::ToManagedGUID(__uuidof(:: ## type))) \
             D2DNET_GET_GUID(DXGINet, IDXGISwapChain, guid);
 
             D2DNET_GET_GUID(DWriteNet, IDWriteFactory, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteLocalizedStrings, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteRenderingParams, guid);
+
+            D2DNET_GET_GUID(DWriteNet, IDWriteFont, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteFontCollection, guid);
+            //D2DNET_GET_GUID(DWriteNet, IDWriteFontFace, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteFontFamily, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteFontFile, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteFontList, guid);
 
             D2DNET_GET_GUID(DWriteNet, IDWriteTextFormat, guid);
         }

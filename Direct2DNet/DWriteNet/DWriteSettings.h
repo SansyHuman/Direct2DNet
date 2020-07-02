@@ -548,6 +548,477 @@ namespace D2DNet
             [System::ObsoleteAttribute("The following names are obsolete, but are kept as aliases to avoid breaking existing code. Each of these rendering modes may result in either ClearType or grayscale antialiasing depending on the DWRITE_TEXT_ANTIALIASING_MODE.", false)]
             CLEARTYPE_NATURAL_SYMMETRIC = ::DWRITE_RENDERING_MODE_NATURAL_SYMMETRIC
         };
+
+        /// <summary>
+        /// Specifies algorithmic style simulations to be applied to the font face.
+        /// Bold and oblique simulations can be combined via bitwise OR operation.
+        /// </summary>
+        [System::FlagsAttribute]
+        public enum class DWRITE_FONT_SIMULATIONS
+        {
+            /// <summary>
+            /// No simulations are performed.
+            /// </summary>
+            NONE = 0x0000,
+
+            /// <summary>
+            /// Algorithmic emboldening is performed.
+            /// </summary>
+            BOLD = 0x0001,
+
+            /// <summary>
+            /// Algorithmic italicization is performed.
+            /// </summary>
+            OBLIQUE = 0x0002
+        };
+
+        /// <summary>
+        /// The informational string enumeration identifies a string in a font.
+        /// </summary>
+        public enum class DWRITE_INFORMATIONAL_STRING_ID
+        {
+            /// <summary>
+            /// Unspecified name ID.
+            /// </summary>
+            NONE = ::DWRITE_INFORMATIONAL_STRING_NONE,
+
+            /// <summary>
+            /// Copyright notice provided by the font.
+            /// </summary>
+            COPYRIGHT_NOTICE = ::DWRITE_INFORMATIONAL_STRING_COPYRIGHT_NOTICE,
+
+            /// <summary>
+            /// String containing a version number.
+            /// </summary>
+            VERSION_STRINGS = ::DWRITE_INFORMATIONAL_STRING_VERSION_STRINGS,
+
+            /// <summary>
+            /// Trademark information provided by the font.
+            /// </summary>
+            TRADEMARK = ::DWRITE_INFORMATIONAL_STRING_TRADEMARK,
+
+            /// <summary>
+            /// Name of the font manufacturer.
+            /// </summary>
+            MANUFACTURER = ::DWRITE_INFORMATIONAL_STRING_MANUFACTURER,
+
+            /// <summary>
+            /// Name of the font designer.
+            /// </summary>
+            DESIGNER = ::DWRITE_INFORMATIONAL_STRING_DESIGNER,
+
+            /// <summary>
+            /// URL of font designer (with protocol, e.g., http://, ftp://).
+            /// </summary>
+            DESIGNER_URL = ::DWRITE_INFORMATIONAL_STRING_DESIGNER_URL,
+
+            /// <summary>
+            /// Description of the font. Can contain revision information, usage recommendations, history, features, etc.
+            /// </summary>
+            DESCRIPTION = ::DWRITE_INFORMATIONAL_STRING_DESCRIPTION,
+
+            /// <summary>
+            /// URL of font vendor (with protocol, e.g., http://, ftp://). If a unique serial number is embedded in the URL, it can be used to register the font.
+            /// </summary>
+            FONT_VENDOR_URL = ::DWRITE_INFORMATIONAL_STRING_FONT_VENDOR_URL,
+
+            /// <summary>
+            /// Description of how the font may be legally used, or different example scenarios for licensed use. This field should be written in plain language, not legalese.
+            /// </summary>
+            LICENSE_DESCRIPTION = ::DWRITE_INFORMATIONAL_STRING_LICENSE_DESCRIPTION,
+
+            /// <summary>
+            /// URL where additional licensing information can be found.
+            /// </summary>
+            LICENSE_INFO_URL = ::DWRITE_INFORMATIONAL_STRING_LICENSE_INFO_URL,
+
+            /// <summary>
+            /// GDI-compatible family name. Because GDI allows a maximum of four fonts per family, fonts in the same family may have different GDI-compatible family names
+            /// (e.g., "Arial", "Arial Narrow", "Arial Black").
+            /// </summary>
+            WIN32_FAMILY_NAMES = ::DWRITE_INFORMATIONAL_STRING_WIN32_FAMILY_NAMES,
+
+            /// <summary>
+            /// GDI-compatible subfamily name.
+            /// </summary>
+            WIN32_SUBFAMILY_NAMES = ::DWRITE_INFORMATIONAL_STRING_WIN32_SUBFAMILY_NAMES,
+
+            /// <summary>
+            /// Typographic family name preferred by the designer. This enables font designers to group more than four fonts in a single family without losing compatibility with
+            /// GDI. This name is typically only present if it differs from the GDI-compatible family name.
+            /// </summary>
+            TYPOGRAPHIC_FAMILY_NAMES = ::DWRITE_INFORMATIONAL_STRING_TYPOGRAPHIC_FAMILY_NAMES,
+
+            /// <summary>
+            /// Typographic subfamily name preferred by the designer. This name is typically only present if it differs from the GDI-compatible subfamily name. 
+            /// </summary>
+            TYPOGRAPHIC_SUBFAMILY_NAMES = ::DWRITE_INFORMATIONAL_STRING_TYPOGRAPHIC_SUBFAMILY_NAMES,
+
+            /// <summary>
+            /// Sample text. This can be the font name or any other text that the designer thinks is the best example to display the font in.
+            /// </summary>
+            SAMPLE_TEXT = ::DWRITE_INFORMATIONAL_STRING_SAMPLE_TEXT,
+
+            /// <summary>
+            /// The full name of the font, e.g. "Arial Bold", from name id 4 in the name table.
+            /// </summary>
+            FULL_NAME = ::DWRITE_INFORMATIONAL_STRING_FULL_NAME,
+
+            /// <summary>
+            /// The postscript name of the font, e.g. "GillSans-Bold" from name id 6 in the name table.
+            /// </summary>
+            POSTSCRIPT_NAME = ::DWRITE_INFORMATIONAL_STRING_POSTSCRIPT_NAME,
+
+            /// <summary>
+            /// The postscript CID findfont name, from name id 20 in the name table.
+            /// </summary>
+            POSTSCRIPT_CID_NAME = ::DWRITE_INFORMATIONAL_STRING_POSTSCRIPT_CID_NAME,
+
+            /// <summary>
+            /// Family name for the weight-stretch-style model.
+            /// </summary>
+            WEIGHT_STRETCH_STYLE_FAMILY_NAME = ::DWRITE_INFORMATIONAL_STRING_WEIGHT_STRETCH_STYLE_FAMILY_NAME,
+
+            /// <summary>
+            /// Script/language tag to identify the scripts or languages that the font was
+            /// primarily designed to support. See DWRITE_FONT_PROPERTY_ID_DESIGN_SCRIPT_LANGUAGE_TAG
+            /// for a longer description.
+            /// </summary>
+            DESIGN_SCRIPT_LANGUAGE_TAG = ::DWRITE_INFORMATIONAL_STRING_DESIGN_SCRIPT_LANGUAGE_TAG,
+
+            /// <summary>
+            /// Script/language tag to identify the scripts or languages that the font declares
+            /// it is able to support.
+            /// </summary>
+            SUPPORTED_SCRIPT_LANGUAGE_TAG = ::DWRITE_INFORMATIONAL_STRING_SUPPORTED_SCRIPT_LANGUAGE_TAG,
+
+            [System::ObsoleteAttribute("Obsolete aliases kept to avoid breaking existing code.", false)]
+            PREFERRED_FAMILY_NAMES = ::DWRITE_INFORMATIONAL_STRING_TYPOGRAPHIC_FAMILY_NAMES,
+
+            [System::ObsoleteAttribute("Obsolete aliases kept to avoid breaking existing code.", false)]
+            PREFERRED_SUBFAMILY_NAMES = ::DWRITE_INFORMATIONAL_STRING_TYPOGRAPHIC_SUBFAMILY_NAMES,
+
+            [System::ObsoleteAttribute("Obsolete aliases kept to avoid breaking existing code.", false)]
+            WWS_FAMILY_NAME = ::DWRITE_INFORMATIONAL_STRING_WEIGHT_STRETCH_STYLE_FAMILY_NAME
+        };
+
+        /// <summary>
+        /// The DWRITE_FONT_METRICS structure specifies the metrics of a font face that
+        /// are applicable to all glyphs within the font face.
+        /// </summary>
+        public value struct DWRITE_FONT_METRICS
+        {
+            /// <summary>
+            /// The number of font design units per em unit.
+            /// Font files use their own coordinate system of font design units.
+            /// A font design unit is the smallest measurable unit in the em square,
+            /// an imaginary square that is used to size and align glyphs.
+            /// The concept of em square is used as a reference scale factor when defining font size and device transformation semantics.
+            /// The size of one em square is also commonly used to compute the paragraph indentation value.
+            /// </summary>
+            UINT16 designUnitsPerEm;
+
+            /// <summary>
+            /// Ascent value of the font face in font design units.
+            /// Ascent is the distance from the top of font character alignment box to English baseline.
+            /// </summary>
+            UINT16 ascent;
+
+            /// <summary>
+            /// Descent value of the font face in font design units.
+            /// Descent is the distance from the bottom of font character alignment box to English baseline.
+            /// </summary>
+            UINT16 descent;
+
+            /// <summary>
+            /// Line gap in font design units.
+            /// Recommended additional white space to add between lines to improve legibility. The recommended line spacing 
+            /// (baseline-to-baseline distance) is thus the sum of ascent, descent, and lineGap. The line gap is usually 
+            /// positive or zero but can be negative, in which case the recommended line spacing is less than the height
+            /// of the character alignment box.
+            /// </summary>
+            INT16 lineGap;
+
+            /// <summary>
+            /// Cap height value of the font face in font design units.
+            /// Cap height is the distance from English baseline to the top of a typical English capital.
+            /// Capital "H" is often used as a reference character for the purpose of calculating the cap height value.
+            /// </summary>
+            UINT16 capHeight;
+
+            /// <summary>
+            /// x-height value of the font face in font design units.
+            /// x-height is the distance from English baseline to the top of lowercase letter "x", or a similar lowercase character.
+            /// </summary>
+            UINT16 xHeight;
+
+            /// <summary>
+            /// The underline position value of the font face in font design units.
+            /// Underline position is the position of underline relative to the English baseline.
+            /// The value is usually made negative in order to place the underline below the baseline.
+            /// </summary>
+            INT16 underlinePosition;
+
+            /// <summary>
+            /// The suggested underline thickness value of the font face in font design units.
+            /// </summary>
+            UINT16 underlineThickness;
+
+            /// <summary>
+            /// The strikethrough position value of the font face in font design units.
+            /// Strikethrough position is the position of strikethrough relative to the English baseline.
+            /// The value is usually made positive in order to place the strikethrough above the baseline.
+            /// </summary>
+            INT16 strikethroughPosition;
+
+            /// <summary>
+            /// The suggested strikethrough thickness value of the font face in font design units.
+            /// </summary>
+            UINT16 strikethroughThickness;
+        };
+
+        /// <summary>
+        /// The type of a font represented by a single font file.
+        /// Font formats that consist of multiple files, e.g. Type 1 .PFM and .PFB, have
+        /// separate enum values for each of the file type.
+        /// </summary>
+        public enum class DWRITE_FONT_FILE_TYPE
+        {
+            /// <summary>
+            /// Font type is not recognized by the DirectWrite font system.
+            /// </summary>
+            UNKNOWN = ::DWRITE_FONT_FILE_TYPE_UNKNOWN,
+
+            /// <summary>
+            /// OpenType font with CFF outlines.
+            /// </summary>
+            CFF = ::DWRITE_FONT_FILE_TYPE_CFF,
+
+            /// <summary>
+            /// OpenType font with TrueType outlines.
+            /// </summary>
+            TRUETYPE = ::DWRITE_FONT_FILE_TYPE_TRUETYPE,
+
+            /// <summary>
+            /// OpenType font that contains a TrueType collection.
+            /// </summary>
+            OPENTYPE_COLLECTION = ::DWRITE_FONT_FILE_TYPE_OPENTYPE_COLLECTION,
+
+            /// <summary>
+            /// Type 1 PFM font.
+            /// </summary>
+            TYPE1_PFM = ::DWRITE_FONT_FILE_TYPE_TYPE1_PFM,
+
+            /// <summary>
+            /// Type 1 PFB font.
+            /// </summary>
+            TYPE1_PFB = ::DWRITE_FONT_FILE_TYPE_TYPE1_PFB,
+
+            /// <summary>
+            /// Vector .FON font.
+            /// </summary>
+            VECTOR = ::DWRITE_FONT_FILE_TYPE_VECTOR,
+
+            /// <summary>
+            /// Bitmap .FON font.
+            /// </summary>
+            BITMAP = ::DWRITE_FONT_FILE_TYPE_BITMAP,
+
+            [System::ObsoleteAttribute("The following name is obsolete, but kept as an alias to avoid breaking existing code.", false)]
+            TRUETYPE_COLLECTION = ::DWRITE_FONT_FILE_TYPE_OPENTYPE_COLLECTION
+        };
+
+        /// <summary>
+        /// The file format of a complete font face.
+        /// Font formats that consist of multiple files, e.g. Type 1 .PFM and .PFB, have
+        /// a single enum entry.
+        /// </summary>
+        public enum class DWRITE_FONT_FACE_TYPE
+        {
+            /// <summary>
+            /// OpenType font face with CFF outlines.
+            /// </summary>
+            CFF = ::DWRITE_FONT_FACE_TYPE_CFF,
+
+            /// <summary>
+            /// OpenType font face with TrueType outlines.
+            /// </summary>
+            TRUETYPE = ::DWRITE_FONT_FACE_TYPE_TRUETYPE,
+
+            /// <summary>
+            /// OpenType font face that is a part of a TrueType or CFF collection.
+            /// </summary>
+            OPENTYPE_COLLECTION = ::DWRITE_FONT_FACE_TYPE_OPENTYPE_COLLECTION,
+
+            /// <summary>
+            /// A Type 1 font face.
+            /// </summary>
+            TYPE1 = ::DWRITE_FONT_FACE_TYPE_TYPE1,
+
+            /// <summary>
+            /// A vector .FON format font face.
+            /// </summary>
+            VECTOR = ::DWRITE_FONT_FACE_TYPE_VECTOR,
+
+            /// <summary>
+            /// A bitmap .FON format font face.
+            /// </summary>
+            BITMAP = ::DWRITE_FONT_FACE_TYPE_BITMAP,
+
+            /// <summary>
+            /// Font face type is not recognized by the DirectWrite font system.
+            /// </summary>
+            UNKNOWN = ::DWRITE_FONT_FACE_TYPE_UNKNOWN,
+
+            /// <summary>
+            /// The font data includes only the CFF table from an OpenType CFF font.
+            /// This font face type can be used only for embedded fonts (i.e., custom
+            /// font file loaders) and the resulting font face object supports only the
+            /// minimum functionality necessary to render glyphs.
+            /// </summary>
+            RAW_CFF = ::DWRITE_FONT_FACE_TYPE_RAW_CFF,
+
+            [System::ObsoleteAttribute("The following name is obsolete, but kept as an alias to avoid breaking existing code.", false)]
+            TRUETYPE_COLLECTION = ::DWRITE_FONT_FACE_TYPE_OPENTYPE_COLLECTION
+        };
+
+        /// <summary>
+        /// The DWRITE_GLYPH_METRICS structure specifies the metrics of an individual glyph.
+        /// The units depend on how the metrics are obtained.
+        /// </summary>
+        public value struct DWRITE_GLYPH_METRICS
+        {
+            /// <summary>
+            /// Specifies the X offset from the glyph origin to the left edge of the black box.
+            /// The glyph origin is the current horizontal writing position.
+            /// A negative value means the black box extends to the left of the origin (often true for lowercase italic 'f').
+            /// </summary>
+            INT32 leftSideBearing;
+
+            /// <summary>
+            /// Specifies the X offset from the origin of the current glyph to the origin of the next glyph when writing horizontally.
+            /// </summary>
+            UINT32 advanceWidth;
+
+            /// <summary>
+            /// Specifies the X offset from the right edge of the black box to the origin of the next glyph when writing horizontally.
+            /// The value is negative when the right edge of the black box overhangs the layout box.
+            /// </summary>
+            INT32 rightSideBearing;
+
+            /// <summary>
+            /// Specifies the vertical offset from the vertical origin to the top of the black box.
+            /// Thus, a positive value adds whitespace whereas a negative value means the glyph overhangs the top of the layout box.
+            /// </summary>
+            INT32 topSideBearing;
+
+            /// <summary>
+            /// Specifies the Y offset from the vertical origin of the current glyph to the vertical origin of the next glyph when writing vertically.
+            /// (Note that the term "origin" by itself denotes the horizontal origin. The vertical origin is different.
+            /// Its Y coordinate is specified by verticalOriginY value,
+            /// and its X coordinate is half the advanceWidth to the right of the horizontal origin).
+            /// </summary>
+            UINT32 advanceHeight;
+
+            /// <summary>
+            /// Specifies the vertical distance from the black box's bottom edge to the advance height.
+            /// Positive when the bottom edge of the black box is within the layout box.
+            /// Negative when the bottom edge of black box overhangs the layout box.
+            /// </summary>
+            INT32 bottomSideBearing;
+
+            /// <summary>
+            /// Specifies the Y coordinate of a glyph's vertical origin, in the font's design coordinate system.
+            /// The y coordinate of a glyph's vertical origin is the sum of the glyph's top side bearing
+            /// and the top (i.e. yMax) of the glyph's bounding box.
+            /// </summary>
+            INT32 verticalOriginY;
+        };
+
+        /// <summary>
+        /// Optional adjustment to a glyph's position. A glyph offset changes the position of a glyph
+        /// without affecting the pen position. Offsets are in logical, pre-transform units.
+        /// </summary>
+        public value struct DWRITE_GLYPH_OFFSET
+        {
+            /// <summary>
+            /// Offset in the advance direction of the run. A positive advance offset moves the glyph to the right
+            /// (in pre-transform coordinates) if the run is left-to-right or to the left if the run is right-to-left.
+            /// </summary>
+            float advanceOffset;
+
+            /// <summary>
+            /// Offset in the ascent direction, i.e., the direction ascenders point. A positive ascender offset moves
+            /// the glyph up (in pre-transform coordinates).
+            /// </summary>
+            float ascenderOffset;
+        };
+
+        /// <summary>
+        /// The DWRITE_MATRIX structure specifies the graphics transform to be applied
+        /// to rendered glyphs.
+        /// </summary>
+        public value struct DWRITE_MATRIX
+        {
+            /// <summary>
+            /// Horizontal scaling / cosine of rotation
+            /// </summary>
+            float m11;
+
+            /// <summary>
+            /// Vertical shear / sine of rotation
+            /// </summary>
+            float m12;
+
+            /// <summary>
+            /// Horizontal shear / negative sine of rotation
+            /// </summary>
+            float m21;
+
+            /// <summary>
+            /// Vertical scaling / cosine of rotation
+            /// </summary>
+            float m22;
+
+            /// <summary>
+            /// Horizontal shift (always orthogonal regardless of rotation)
+            /// </summary>
+            float dx;
+
+            /// <summary>
+            /// Vertical shift (always orthogonal regardless of rotation)
+            /// </summary>
+            float dy;
+
+            DWRITE_MATRIX(float m11, float m12, float m21, float m22, float dx, float dy)
+                : m11(m11), m12(m12), m21(m21), m22(m22), dx(dx), dy(dy) {}
+
+            static operator ::DWRITE_MATRIX(DWriteNet::DWRITE_MATRIX %rhs)
+            {
+                ::DWRITE_MATRIX value;
+                value.m11 = rhs.m11;
+                value.m12 = rhs.m12;
+                value.m21 = rhs.m21;
+                value.m22 = rhs.m22;
+                value.dx = rhs.dx;
+                value.dy = rhs.dy;
+
+                return value;
+            }
+
+            static operator DWriteNet::DWRITE_MATRIX(::DWRITE_MATRIX %rhs)
+            {
+                DWriteNet::DWRITE_MATRIX value;
+                value.m11 = rhs.m11;
+                value.m12 = rhs.m12;
+                value.m21 = rhs.m21;
+                value.m22 = rhs.m22;
+                value.dx = rhs.dx;
+                value.dy = rhs.dy;
+
+                return value;
+            }
+        };
     }
 }
 

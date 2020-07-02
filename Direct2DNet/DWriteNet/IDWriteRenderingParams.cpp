@@ -14,7 +14,7 @@ namespace D2DNet
             ppParams = nullptr;
 
             if(FAILED(hr))
-                throw gcnew DWriteNet::Exception::DWriteException("Failed to create IDWriteRenderingParams.", (int)hr);
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create IDWriteRenderingParams.", (int)hr);
         }
 
         IDWriteRenderingParams::IDWriteRenderingParams(
@@ -31,7 +31,7 @@ namespace D2DNet
             ppParams = nullptr;
 
             if(FAILED(hr))
-                throw gcnew DWriteNet::Exception::DWriteException("Failed to create IDWriteRenderingParams.", (int)hr);
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create IDWriteRenderingParams.", (int)hr);
         }
 
         IDWriteRenderingParams::IDWriteRenderingParams(
@@ -56,7 +56,7 @@ namespace D2DNet
             ppParams = nullptr;
 
             if(FAILED(hr))
-                throw gcnew DWriteNet::Exception::DWriteException("Failed to create IDWriteRenderingParams.", (int)hr);
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create IDWriteRenderingParams.", (int)hr);
         }
 
         IDWriteRenderingParams::~IDWriteRenderingParams()

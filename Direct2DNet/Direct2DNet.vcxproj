@@ -200,13 +200,20 @@
     <ClInclude Include="Direct3D11Net\ID3D11DeviceChild.h" />
     <ClInclude Include="Direct3D11Net\ID3D11DeviceContext.h" />
     <ClInclude Include="Direct3D11Net\IDirect3D11Object.h" />
+    <ClInclude Include="DWriteNet\DirectWrite.h" />
     <ClInclude Include="DWriteNet\DWNetHeaders.h" />
     <ClInclude Include="DWriteNet\DWNet_core.h" />
+    <ClInclude Include="DWriteNet\DWNet_font.h" />
     <ClInclude Include="DWriteNet\DWNet_text.h" />
     <ClInclude Include="DWriteNet\DWriteSettings.h" />
-    <ClInclude Include="DWriteNet\Exception\DWriteException.h" />
     <ClInclude Include="DWriteNet\IDirectWriteObject.h" />
     <ClInclude Include="DWriteNet\IDWriteFactory.h" />
+    <ClInclude Include="DWriteNet\IDWriteFont.h" />
+    <ClInclude Include="DWriteNet\IDWriteFontCollection.h" />
+    <ClInclude Include="DWriteNet\IDWriteFontFamily.h" />
+    <ClInclude Include="DWriteNet\IDWriteFontFile.h" />
+    <ClInclude Include="DWriteNet\IDWriteFontList.h" />
+    <ClInclude Include="DWriteNet\IDWriteLocalizedStrings.h" />
     <ClInclude Include="DWriteNet\IDWriteRenderingParams.h" />
     <ClInclude Include="DWriteNet\IDWriteTextFormat.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -277,8 +284,14 @@
     <ClCompile Include="Direct3D11Net\ID3D11Device.cpp" />
     <ClCompile Include="Direct3D11Net\ID3D11DeviceChild.cpp" />
     <ClCompile Include="Direct3D11Net\ID3D11DeviceContext.cpp" />
-    <ClCompile Include="DWriteNet\Exception\DWriteException.cpp" />
+    <ClCompile Include="DWriteNet\DirectWrite.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFactory.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteFont.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteFontCollection.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteFontFamily.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteFontFile.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteFontList.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteLocalizedStrings.cpp" />
     <ClCompile Include="DWriteNet\IDWriteRenderingParams.cpp" />
     <ClCompile Include="DWriteNet\IDWriteTextFormat.cpp" />
     <ClCompile Include="DXCommonSettings.cpp" />

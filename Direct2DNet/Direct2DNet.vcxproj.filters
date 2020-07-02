@@ -58,14 +58,8 @@
     <Filter Include="헤더 파일\DWriteNet\core">
       <UniqueIdentifier>{2a857298-0fac-4fbd-a07c-840001cd490e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\DWriteNet\Exception">
-      <UniqueIdentifier>{e51d3673-5230-44d2-913a-9a6512eecd71}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\DWriteNet\core">
       <UniqueIdentifier>{9c4fdde8-dca4-495d-a4af-9fb741246bf4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\DWriteNet\Exception">
-      <UniqueIdentifier>{e1cab216-d2c5-42ba-a929-1dfd1a9a78a0}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\DWriteNet\text">
       <UniqueIdentifier>{c399ba8c-6e4c-4bd4-849b-b1548d6c11e3}</UniqueIdentifier>
@@ -218,9 +212,6 @@
     </ClInclude>
     <ClInclude Include="DWriteNet\IDirectWriteObject.h">
       <Filter>헤더 파일\DWriteNet\core</Filter>
-    </ClInclude>
-    <ClInclude Include="DWriteNet\Exception\DWriteException.h">
-      <Filter>헤더 파일\DWriteNet\Exception</Filter>
     </ClInclude>
     <ClInclude Include="DWriteNet\DWriteSettings.h">
       <Filter>헤더 파일\DWriteNet\core</Filter>
@@ -402,6 +393,30 @@
     <ClInclude Include="Direct2DNet\ID2D1CommandSink1.h">
       <Filter>헤더 파일\Direct2DNet\core</Filter>
     </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteFontCollection.h">
+      <Filter>헤더 파일\DWriteNet\font</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\DWNet_font.h">
+      <Filter>헤더 파일\DWriteNet\font</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteFontFamily.h">
+      <Filter>헤더 파일\DWriteNet\font</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteFontList.h">
+      <Filter>헤더 파일\DWriteNet\font</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteLocalizedStrings.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteFont.h">
+      <Filter>헤더 파일\DWriteNet\font</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteFontFile.h">
+      <Filter>헤더 파일\DWriteNet\font</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\DirectWrite.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -472,9 +487,6 @@
     </ClCompile>
     <ClCompile Include="GUIDs.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DWriteNet\Exception\DWriteException.cpp">
-      <Filter>소스 파일\DWriteNet\Exception</Filter>
     </ClCompile>
     <ClCompile Include="DWriteNet\IDWriteFactory.cpp">
       <Filter>소스 파일\DWriteNet\core</Filter>
@@ -619,6 +631,27 @@
     </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1CommandSink1.cpp">
       <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteFontCollection.cpp">
+      <Filter>소스 파일\DWriteNet\font</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteFontList.cpp">
+      <Filter>소스 파일\DWriteNet\font</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteFontFamily.cpp">
+      <Filter>소스 파일\DWriteNet\font</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteLocalizedStrings.cpp">
+      <Filter>소스 파일\DWriteNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteFont.cpp">
+      <Filter>소스 파일\DWriteNet\font</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteFontFile.cpp">
+      <Filter>소스 파일\DWriteNet\font</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\DirectWrite.cpp">
+      <Filter>소스 파일\DWriteNet\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

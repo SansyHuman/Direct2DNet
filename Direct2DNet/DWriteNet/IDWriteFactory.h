@@ -3,7 +3,7 @@
 #include "DWNetHeaders.h"
 #include "DWriteSettings.h"
 #include "IDirectWriteObject.h"
-#include "Exception/DWriteException.h"
+#include "../Direct2DNet/Exception/DXException.h"
 
 using namespace System::Runtime::InteropServices;
 using namespace System::Runtime::CompilerServices;
@@ -12,10 +12,10 @@ namespace D2DNet
 {
     namespace DWriteNet
     {
-        ref class IDWriteTextFormat;
+        ref class IDWriteFontCollection;
+        ref class IDWriteFontFile;
         ref class IDWriteRenderingParams;
-
-        // TODO: Implement IDWriteFontCollection.
+        ref class IDWriteTextFormat;
 
         /// <summary>
         /// The root factory interface for all DWrite objects.
@@ -40,6 +40,47 @@ namespace D2DNet
                     return m_pFactory;
                 }
             }
+
+            /// <summary>
+            /// Gets a font collection representing the set of installed fonts.
+            /// </summary>
+            /// <param name="checkForUpdates">If this parameter is true, the function performs an immediate
+            /// check for changes to the set of installed fonts. If this parameter is false, the function
+            /// will still detect changes if the font cache service is running, but there may be some latency.
+            /// For example, an application might specify true if it has itself just installed a font and
+            /// wants to be sure the font collection contains that font. The default value is false.</param>
+            /// <exception cref="DWriteNet::Exception::DWriteException">
+            /// Thrown when it failed to get the collection.
+            /// </exception>
+            DWriteNet::IDWriteFontCollection ^GetSystemFontCollection(
+                [OptionalAttribute] System::Nullable<bool> checkForUpdates
+            );
+
+            // CreateCustomFontCollection
+
+            // RegisterFontCollectionLoader
+
+            // UnregisterFontCollectionLoader
+
+            /// <summary>
+            /// CreateFontFileReference creates a font file reference object from a local font file.
+            /// </summary>
+            /// <param name="filePath">Absolute file path. Subsequent operations on the constructed object
+            /// may fail if the user provided filePath doesn't correspond to a valid file on the disk.</param>
+            /// <param name="lastWriteTime">Last modified time of the input file path. If the parameter
+            /// is omitted, the function will access the font file to obtain its last write time, so the
+            /// clients are encouraged to specify this value to avoid extra disk access. Subsequent operations
+            /// on the constructed object may fail if the user provided lastWriteTime doesn't match the file
+            /// on the disk. The default value is null.</param>
+            /// <exception cref="DWriteNet::Exception::DWriteException">
+            /// Thrown when it failed to get the file.
+            /// </exception>
+            DWriteNet::IDWriteFontFile ^CreateFontFileReference(
+                System::String ^filePath,
+                [OptionalAttribute] System::Nullable<InteropServices::ComTypes::FILETIME> lastWriteTime
+            );
+
+            // CreateCustomFontFileReference
 
             /// <summary>
             /// Creates a rendering parameters object with default settings for the primary monitor.

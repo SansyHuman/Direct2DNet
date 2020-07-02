@@ -409,6 +409,10 @@ namespace D2DNet
                 {
                     factory = gcnew Direct2DNet::ID2D1Factory(pFactory2);
                 }
+                else
+                {
+                    pFactory2->Release();
+                }
 
                 strokeStyle2 = gcnew Direct2DNet::ID2D1StrokeStyle(factory, strokeStyle);
                 strokeStyle->AddRef();
@@ -440,6 +444,7 @@ namespace D2DNet
             if(pFactory1 == pFactory2)
             {
                 factory2 = factory1;
+                pFactory2->Release();
             }
             else
             {
@@ -463,10 +468,12 @@ namespace D2DNet
                 if(pFactory1 == pFactory3)
                 {
                     factory3 = factory1;
+                    pFactory3->Release();
                 }
                 else if(pFactory2 == pFactory3)
                 {
                     factory3 = factory2;
+                    pFactory3->Release();
                 }
                 else
                 {
@@ -502,6 +509,10 @@ namespace D2DNet
                 if(pFactory != pFactory2)
                 {
                     factory = gcnew Direct2DNet::ID2D1Factory(pFactory2);
+                }
+                else
+                {
+                    pFactory2->Release();
                 }
 
                 strokeStyle2 = gcnew Direct2DNet::ID2D1StrokeStyle(factory, strokeStyle);
@@ -587,6 +598,10 @@ namespace D2DNet
             {
                 factory = gcnew Direct2DNet::ID2D1Factory(pFactory2);
             }
+            else
+            {
+                pFactory2->Release();
+            }
 
             Direct2DNet::ID2D1Brush ^brush2 = gcnew Direct2DNet::ID2D1Brush(factory, brush);
             brush->AddRef();
@@ -609,6 +624,10 @@ namespace D2DNet
             if(pFactory != pFactory2)
             {
                 factory = gcnew Direct2DNet::ID2D1Factory(pFactory2);
+            }
+            else
+            {
+                pFactory2->Release();
             }
 
             Direct2DNet::ID2D1Brush ^brush2 = gcnew Direct2DNet::ID2D1Brush(factory, brush);
@@ -639,6 +658,7 @@ namespace D2DNet
             if(pFactory1 == pFactory2)
             {
                 factory2 = factory1;
+                pFactory2->Release();
             }
             else
             {
@@ -662,10 +682,12 @@ namespace D2DNet
                 if(pFactory1 == pFactory3)
                 {
                     factory3 = factory1;
+                    pFactory3->Release();
                 }
                 else if(pFactory2 == pFactory3)
                 {
                     factory3 = factory2;
+                    pFactory3->Release();
                 }
                 else
                 {
@@ -737,6 +759,7 @@ namespace D2DNet
                 if(pFactory == pFactory2)
                 {
                     factory2 = factory;
+                    pFactory2->Release();
                 }
                 else
                 {
@@ -756,10 +779,12 @@ namespace D2DNet
             if(pFactory == pFactory3)
             {
                 factory3 = factory;
+                pFactory3->Release();
             }
-            else if(pFactory2 == pFactory)
+            else if(pFactory2 == pFactory3)
             {
                 factory3 = factory2;
+                pFactory3->Release();
             }
             else
             {

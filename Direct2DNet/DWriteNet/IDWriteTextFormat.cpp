@@ -1,5 +1,6 @@
 #include "IDWriteTextFormat.h"
 #include "IDWriteFactory.h"
+#include "IDWriteFontCollection.h"
 
 namespace D2DNet
 {
@@ -33,16 +34,22 @@ namespace D2DNet
             ppFormat = nullptr;
 
             if(FAILED(hr))
-                throw gcnew DWriteNet::Exception::DWriteException("Failed to create IDWriteTextFormat.", (int)hr);
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create IDWriteTextFormat.", (int)hr);
+
+            ::IDWriteFontCollection *pCollection = __nullptr;
+            hr = m_pFormat->GetFontCollection(&pCollection);
+            if(FAILED(hr) || !pCollection)
+                m_fontCollection = nullptr;
+            else
+                m_fontCollection = gcnew DWriteNet::IDWriteFontCollection(pCollection);
 
             UINT32 localeNameLength = m_pFormat->GetLocaleNameLength();
-            array<WCHAR> ^nLocaleName = gcnew array<WCHAR>(localeNameLength + 1);
-            pin_ptr<WCHAR> pLocaleName = &nLocaleName[0];
-            hr = m_pFormat->GetLocaleName((WCHAR *)pLocaleName, localeNameLength + 1);
+            std::vector<WCHAR> nLocaleName(localeNameLength + 1);
+            hr = m_pFormat->GetLocaleName(nLocaleName.data(), localeNameLength + 1);
             if(FAILED(hr))
-                m_localeName = "";
+                m_localeName = System::String::Empty;
             else
-                m_localeName = gcnew System::String(nLocaleName);
+                m_localeName = marshal_as<System::String ^>(nLocaleName.data());
         }
 
         IDWriteTextFormat::~IDWriteTextFormat()

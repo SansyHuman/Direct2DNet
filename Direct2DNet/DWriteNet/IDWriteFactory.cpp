@@ -1,4 +1,6 @@
 #include "IDWriteFactory.h"
+#include "IDWriteFontCollection.h"
+#include "IDWriteFontFile.h"
 #include "IDWriteRenderingParams.h"
 #include "IDWriteTextFormat.h"
 
@@ -17,7 +19,7 @@ namespace D2DNet
             ppFactory = nullptr;
 
             if(FAILED(hr))
-                throw gcnew DWriteNet::Exception::DWriteException("Failed to create IDWriteFactory.", (int)hr);
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create IDWriteFactory.", (int)hr);
         }
 
         IDWriteFactory::~IDWriteFactory()
@@ -37,6 +39,32 @@ namespace D2DNet
         DWriteNet::IDWriteFactory ^IDWriteFactory::CreateFactory(DWriteNet::DWRITE_FACTORY_TYPE factoryType)
         {
             return gcnew DWriteNet::IDWriteFactory(factoryType);
+        }
+
+        DWriteNet::IDWriteFontCollection ^IDWriteFactory::GetSystemFontCollection(
+            System::Nullable<bool> checkForUpdates)
+        {
+            if(!checkForUpdates.HasValue)
+                checkForUpdates = false;
+
+            ::IDWriteFontCollection *pCollection = __nullptr;
+
+            HRESULT hr = m_pFactory->GetSystemFontCollection(
+                &pCollection,
+                System::Convert::ToInt32(checkForUpdates.Value)
+            );
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to get IDWriteFontCollection.", (int)hr);
+
+            return gcnew DWriteNet::IDWriteFontCollection(pCollection);
+        }
+
+        DWriteNet::IDWriteFontFile ^IDWriteFactory::CreateFontFileReference(
+            System::String ^filePath,
+            System::Nullable<InteropServices::ComTypes::FILETIME> lastWriteTime)
+        {
+            return gcnew DWriteNet::IDWriteFontFile(this, filePath, lastWriteTime);
         }
 
         DWriteNet::IDWriteRenderingParams ^IDWriteFactory::CreateRenderingParams()

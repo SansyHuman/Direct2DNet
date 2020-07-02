@@ -38,4 +38,9 @@ namespace D2DNet
         return marshal_as<System::String ^>(error.ErrorMessage());
     }
 
+    void DirectX::PrintDebugMessage(System::String ^message)
+    {
+        DirectX::OnDebugMessage(message);
+    }
+
 }

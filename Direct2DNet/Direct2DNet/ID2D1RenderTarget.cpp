@@ -17,6 +17,7 @@
 #include "../DWriteNet/IDWriteTextFormat.h"
 #include "../DWriteNet/IDWriteRenderingParams.h"
 #include "../GUIDs.h"
+#include "../DXCommonSettings.h"
 
 namespace D2DNet
 {
@@ -278,7 +279,7 @@ namespace D2DNet
             if(AntialiasMode != Direct2DNet::D2D1_ANTIALIAS_MODE::ALIASED)
             {
                 AntialiasMode = Direct2DNet::D2D1_ANTIALIAS_MODE::ALIASED;
-                System::Console::Error->WriteLine("Direct2DNet Warning: You tried to draw mesh when the antialias mode of the render target is not D2D1_ANTIALIAS_MODE::ALIASED. Forced to change to aliased mode.");
+                D2DNet::DirectX::PrintDebugMessage("Direct2DNet Warning: You tried to draw mesh when the antialias mode of the render target is not D2D1_ANTIALIAS_MODE::ALIASED. Forced to change to aliased mode.");
             }
             ((::ID2D1RenderTarget *)m_pResource)->FillMesh(
                 (::ID2D1Mesh *)mesh->m_pResource,
@@ -296,7 +297,7 @@ namespace D2DNet
             if(AntialiasMode != Direct2DNet::D2D1_ANTIALIAS_MODE::ALIASED)
             {
                 AntialiasMode = Direct2DNet::D2D1_ANTIALIAS_MODE::ALIASED;
-                System::Console::Error->WriteLine("Direct2DNet Warning: You tried to fill opacity mask when the antialias mode of the render target is not D2D1_ANTIALIAS_MODE::ALIASED. Forced to change to aliased mode.");
+                D2DNet::DirectX::PrintDebugMessage("Direct2DNet Warning: You tried to fill opacity mask when the antialias mode of the render target is not D2D1_ANTIALIAS_MODE::ALIASED. Forced to change to aliased mode.");
             }
             ::D2D1_RECT_F destRect;
             ::D2D1_RECT_F srcRect;

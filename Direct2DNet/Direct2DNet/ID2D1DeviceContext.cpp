@@ -13,6 +13,7 @@
 #include "ID2D1GdiMetafile.h"
 #include "ID2D1Layer.h"
 #include "../DXGINet/IDXGISurface.h"
+#include "../DXCommonSettings.h"
 
 namespace D2DNet
 {
@@ -505,7 +506,7 @@ namespace D2DNet
             if(AntialiasMode != Direct2DNet::D2D1_ANTIALIAS_MODE::ALIASED)
             {
                 AntialiasMode = Direct2DNet::D2D1_ANTIALIAS_MODE::ALIASED;
-                System::Console::Error->WriteLine("Direct2DNet Warning: You tried to fill opacity mask when the antialias mode of the render target is not D2D1_ANTIALIAS_MODE::ALIASED. Forced to change to aliased mode.");
+                D2DNet::DirectX::PrintDebugMessage("Direct2DNet Warning: You tried to fill opacity mask when the antialias mode of the render target is not D2D1_ANTIALIAS_MODE::ALIASED. Forced to change to aliased mode.");
             }
 
             ((::ID2D1DeviceContext *)m_pResource)->FillOpacityMask(

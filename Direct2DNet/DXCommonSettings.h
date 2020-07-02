@@ -210,13 +210,26 @@ namespace D2DNet
         }
     };
 
+    public delegate void DebugMessageHandler(System::String ^);
+
     public value struct DirectX abstract sealed
     {
     public:
+        static event DebugMessageHandler ^OnDebugMessage;
+
+        static DirectX()
+        {
+            OnDebugMessage += gcnew D2DNet::DebugMessageHandler(
+                System::Console::Error,
+                &System::IO::TextWriter::WriteLine
+            );
+        }
+
         static System::Guid ToManagedGUID(const _GUID &guid);
         static _GUID ToNativeGUID(System::Guid %guid);
         static void ThrowIfFailed(HRESULT hr);
         static System::String ^GetErrorMessage(HRESULT hr);
+        static void PrintDebugMessage(System::String ^message);
     };
 }
 
