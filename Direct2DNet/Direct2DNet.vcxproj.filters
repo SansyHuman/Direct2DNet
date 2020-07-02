@@ -417,6 +417,9 @@
     <ClInclude Include="DWriteNet\DirectWrite.h">
       <Filter>헤더 파일\DWriteNet\core</Filter>
     </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteFontFace.h">
+      <Filter>헤더 파일\DWriteNet\font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -652,6 +655,9 @@
     </ClCompile>
     <ClCompile Include="DWriteNet\DirectWrite.cpp">
       <Filter>소스 파일\DWriteNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteFontFace.cpp">
+      <Filter>소스 파일\DWriteNet\font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

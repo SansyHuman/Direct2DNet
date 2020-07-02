@@ -210,6 +210,7 @@
     <ClInclude Include="DWriteNet\IDWriteFactory.h" />
     <ClInclude Include="DWriteNet\IDWriteFont.h" />
     <ClInclude Include="DWriteNet\IDWriteFontCollection.h" />
+    <ClInclude Include="DWriteNet\IDWriteFontFace.h" />
     <ClInclude Include="DWriteNet\IDWriteFontFamily.h" />
     <ClInclude Include="DWriteNet\IDWriteFontFile.h" />
     <ClInclude Include="DWriteNet\IDWriteFontList.h" />
@@ -288,6 +289,7 @@
     <ClCompile Include="DWriteNet\IDWriteFactory.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFont.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFontCollection.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteFontFace.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFontFamily.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFontFile.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFontList.cpp" />

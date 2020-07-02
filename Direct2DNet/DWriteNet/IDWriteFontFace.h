@@ -1,25 +1,14 @@
 #pragma once
 
-#include "DWNetHeaders.h"
 #include "DWriteSettings.h"
 #include "IDirectWriteObject.h"
 #include "../Direct2DNet/Exception/DXException.h"
 
 using namespace System::Runtime::InteropServices;
 using namespace System::Runtime::CompilerServices;
-using namespace msclr::interop;
-
-#ifdef GetGlyphIndices
-#undef GetGlyphIndices
-#endif
 
 namespace D2DNet
 {
-    namespace Direct2DNet
-    {
-        ref class ID2D1PathGeometry;
-    }
-
     namespace DWriteNet
     {
         ref class IDWriteFactory;
@@ -31,8 +20,8 @@ namespace D2DNet
         /// It contains font face type, appropriate file references and face identification data.
         /// </summary>
         [System::Runtime::InteropServices::GuidAttribute("5f49804d-7024-4d43-bfa9-d25984f53849")]
-        public ref class IDWriteFontFace : DWriteNet::IDirectWriteObject
-        {
+        public ref class IDWriteFontFace
+        {            
         private:
             array<DWriteNet::IDWriteFontFile ^> ^m_fontFiles;
 
@@ -45,7 +34,7 @@ namespace D2DNet
                 array<DWriteNet::IDWriteFontFile ^> ^fontFiles,
                 UINT32 faceIndex,
                 DWriteNet::DWRITE_FONT_SIMULATIONS fontFaceSimulationFlags
-            );          
+            );
 
         public:
             ~IDWriteFontFace();
@@ -250,8 +239,10 @@ namespace D2DNet
             /// true and rotating the resulting geometry 90 degrees to the right using a transform.</param>
             /// <param name="isRightToLeft">If true, specifies that the advance direction is right to left.
             /// By default, the advance direction is left to right.</param>
-            /// <param name="geometry">Class the function calls back to draw each element of the
-            /// geometry.</param>
+            /// <param name="geometrySink">Pointer to the geometry sink the function calls back to draw
+            /// each element of the geometry. Retrive the internal geometry sink of
+            /// <see cref="Direct2DNet::ID2D1PathGeometry"/> using the property
+            /// <see cref="Direct2DNet::ID2D1PathGeometry::InternalSink"/></param>
             /// <param name="glyphAdvances">Optional array of glyph advances in DIPs.</param>
             /// <param name="glyphOffsets">Optional array of glyph offsets.</param>
             /// <returns>
@@ -262,7 +253,7 @@ namespace D2DNet
                 array<UINT16> ^glyphIndices,
                 bool isSideways,
                 bool isRightToLeft,
-                Direct2DNet::ID2D1PathGeometry ^geometry,
+                [InAttribute][IsReadOnlyAttribute] System::IntPtr %geometrySink,
                 [OptionalAttribute] array<float> ^glyphAdvances,
                 [OptionalAttribute] array<DWriteNet::DWRITE_GLYPH_OFFSET> ^glyphOffsets
             );
@@ -419,10 +410,7 @@ namespace D2DNet
                 [OptionalAttribute] System::Nullable<DWriteNet::DWRITE_MATRIX> transform,
                 [OptionalAttribute] System::Nullable<bool> isSideways
             );
+            
         };
     }
 }
-
-#ifndef GetGlyphIndices
-#define GetGlyphIndices GetGlyphIndicesW
-#endif

@@ -222,6 +222,19 @@ namespace D2DNet
                 }
             }
 
+            /// <summary>Gets the pointer to the internal sink. Use this property when you need
+            /// to pass the sink to the other function(ex. IDWriteFontFace::GetGlyphRunOutline).</summary>
+            property System::IntPtr InternalSink
+            {
+                System::IntPtr get()
+                {
+                    if(!sinkOpened || !m_pSink)
+                        return System::IntPtr::Zero;
+
+                    return System::IntPtr(m_pSink);
+                }
+            }
+
             /// <summary>
             /// Opens a geometry sink that will be used to create this path geometry.
             /// </summary>

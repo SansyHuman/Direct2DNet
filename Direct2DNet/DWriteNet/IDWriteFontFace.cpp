@@ -1,17 +1,13 @@
 #include "IDWriteFontFace.h"
 #include "IDWriteFactory.h"
 #include "IDWriteFontFile.h"
-#include "../Direct2DNet/ID2D1PathGeometry.h"
 #include "IDWriteRenderingParams.h"
-
-#ifdef GetGlyphIndices
-#undef GetGlyphIndices
-#endif
 
 namespace D2DNet
 {
     namespace DWriteNet
     {
+        
         IDWriteFontFace::IDWriteFontFace(
             DWriteNet::IDWriteFactory ^factory,
             DWriteNet::DWRITE_FONT_FACE_TYPE fontFaceType,
@@ -57,6 +53,7 @@ namespace D2DNet
             }
         }
 
+        
         HRESULT IDWriteFontFace::GetDesignGlyphMetrics(
             array<UINT16> ^glyphIndices,
             array<DWriteNet::DWRITE_GLYPH_METRICS> ^%glyphMetrics,
@@ -151,20 +148,13 @@ namespace D2DNet
             array<UINT16> ^glyphIndices,
             bool isSideways,
             bool isRightToLeft,
-            Direct2DNet::ID2D1PathGeometry ^geometry,
+            System::IntPtr %geometrySink,
             array<float> ^glyphAdvances,
             array<DWriteNet::DWRITE_GLYPH_OFFSET> ^glyphOffsets)
         {
             HRESULT hr = S_OK;
 
-            if(!geometry->SinkOpened)
-            {
-                hr = geometry->OpenSink();
-                if(FAILED(hr))
-                    return hr;
-            }
-
-            if(!geometry->m_pSink)
+            if(geometrySink == System::IntPtr::Zero)
                 return E_INVALIDARG;
 
             pin_ptr<UINT16> pIndices = &glyphIndices[0];
@@ -192,7 +182,7 @@ namespace D2DNet
                 (UINT32)glyphIndices->Length,
                 System::Convert::ToInt32(isSideways),
                 System::Convert::ToInt32(isRightToLeft),
-                geometry->m_pSink
+                reinterpret_cast<::IDWriteGeometrySink *>(geometrySink.ToPointer())
             );
 
             return hr;
@@ -317,11 +307,6 @@ namespace D2DNet
             }
 
             return hr;
-        }
-
+        }      
     }
 }
-
-#ifndef GetGlyphIndices
-#define GetGlyphIndices GetGlyphIndicesW
-#endif

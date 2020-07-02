@@ -118,7 +118,7 @@ UID_ ## type = System::Guid(attributeHolder->Value);
 
         D2DNET_GUID(IDWriteFont);
         D2DNET_GUID(IDWriteFontCollection);
-        //D2DNET_GUID(IDWriteFontFace);
+        D2DNET_GUID(IDWriteFontFace);
         D2DNET_GUID(IDWriteFontFamily);
         D2DNET_GUID(IDWriteFontFile);
         D2DNET_GUID(IDWriteFontList);
@@ -202,7 +202,7 @@ UID_ ## type = System::Guid(attributeHolder->Value);
 
             D2DNET_GET_GUID(DWriteNet, IDWriteFont, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFontCollection, guid);
-            //D2DNET_GET_GUID(DWriteNet, IDWriteFontFace, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteFontFace, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFontFamily, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFontFile, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFontList, guid);
