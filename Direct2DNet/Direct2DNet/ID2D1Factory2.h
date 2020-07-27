@@ -23,6 +23,21 @@ namespace D2DNet
         [System::Runtime::InteropServices::GuidAttribute("94f81a73-9212-4376-9c58-b16a3a0d3992")]
         public ref class ID2D1Factory2 : Direct2DNet::ID2D1Factory1
         {
+        internal:
+            ID2D1Factory2() : Direct2DNet::ID2D1Factory1() {}
+
+        protected:
+            ID2D1Factory2(
+                Direct2DNet::D2D1_FACTORY_TYPE type,
+                System::Guid guid
+            );
+
+            ID2D1Factory2(
+                Direct2DNet::D2D1_FACTORY_TYPE type,
+                Direct2DNet::D2D1_FACTORY_OPTIONS %options,
+                System::Guid guid
+            );
+
         public:
             /// <summary>
             /// Create <see cref="Direct2DNet::ID2D1Factory1"/> object.

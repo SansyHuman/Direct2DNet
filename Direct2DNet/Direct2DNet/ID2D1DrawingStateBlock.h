@@ -28,6 +28,8 @@ namespace D2DNet
             DWriteNet::IDWriteRenderingParams ^m_params = nullptr;
 
         internal:
+            ID2D1DrawingStateBlock() : Direct2DNet::ID2D1Resource() {}
+
             ID2D1DrawingStateBlock(
                 Direct2DNet::ID2D1Factory ^factory,
                 System::Nullable<Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION> %description,
@@ -41,6 +43,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets and sets the state description of this state block resource.
             /// </summary>

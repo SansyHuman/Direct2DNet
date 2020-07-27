@@ -26,8 +26,9 @@ namespace D2DNet
         internal:
             ::IDWriteFontFile *m_pFile;
 
-            // IDWriteFontFace::ctor
-            IDWriteFontFile(::IDWriteFontFile *pFile);
+            IDWriteFontFile() : m_pFile(nullptr) {}
+
+            IDWriteFontFile(::IDWriteFontFile *pFile) : m_pFile(pFile) {}
 
             // IDWriteFactory::CreateFontFileReference
             IDWriteFontFile(
@@ -47,6 +48,8 @@ namespace D2DNet
                     return m_pFile;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             /// <summary>
             /// This method obtains the pointer to the reference key of a font file. The pointer is only

@@ -15,6 +15,8 @@ namespace D2DNet
 {
     namespace DWriteNet
     {
+        // Done.
+
         ref class IDWriteFontCollection;
         ref class IDWriteFontFamily;
         ref class IDWriteFont;
@@ -27,16 +29,18 @@ namespace D2DNet
         {
         protected:
             DWriteNet::IDWriteFontCollection ^m_fontCollection;
-            DWriteNet::IDWriteFontFamily ^m_fontFamily;
 
         internal:
             ::IDWriteFontList *m_pList;
 
+            IDWriteFontList() : m_pList(nullptr) {}
+
             IDWriteFontList(
                 ::IDWriteFontList *pList,
-                DWriteNet::IDWriteFontCollection ^fontCollection,
-                DWriteNet::IDWriteFontFamily ^fontFamily
+                DWriteNet::IDWriteFontCollection ^fontCollection
             );
+
+            IDWriteFontList(::IDWriteFontList *pList);
 
         public:
             ~IDWriteFontList();
@@ -49,6 +53,8 @@ namespace D2DNet
                     return m_pList;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             /// <summary>
             /// Gets the font collection that contains the fonts.

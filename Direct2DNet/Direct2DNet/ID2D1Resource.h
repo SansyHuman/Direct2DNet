@@ -22,6 +22,8 @@ namespace D2DNet
             ::ID2D1Resource *m_pResource;
             Direct2DNet::ID2D1Factory ^m_factory;
 
+            ID2D1Resource() : m_pResource(nullptr), m_factory(nullptr) {}
+
         protected:
             ID2D1Resource(Direct2DNet::ID2D1Factory ^factory);
 
@@ -40,6 +42,8 @@ namespace D2DNet
             }
 
         public:
+            virtual void HandleCOMInterface(void *obj);
+
             /// <summary>
             /// Gets the factory associated with this resource.
             /// </summary>
@@ -49,7 +53,7 @@ namespace D2DNet
                 {
                     return m_factory;
                 }
-            }
+            }            
         };
     }
 }

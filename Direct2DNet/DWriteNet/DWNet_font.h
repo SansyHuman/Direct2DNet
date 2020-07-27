@@ -6,3 +6,4 @@
 #include "IDWriteFontFamily.h"
 #include "IDWriteFontFile.h"
 #include "IDWriteFontList.h"
+#include "IDWriteTypography.h"

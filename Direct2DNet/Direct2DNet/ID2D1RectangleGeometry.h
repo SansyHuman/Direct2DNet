@@ -21,9 +21,13 @@ namespace D2DNet
             Direct2DNet::D2D1_RECT_F m_rect;
 
         internal:
+            ID2D1RectangleGeometry() : Direct2DNet::ID2D1Geometry() {}
+
             ID2D1RectangleGeometry(Direct2DNet::ID2D1Factory ^factory, Direct2DNet::D2D1_RECT_F %rectangle);
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             property Direct2DNet::D2D1_RECT_F Rect
             {
                 Direct2DNet::D2D1_RECT_F get()

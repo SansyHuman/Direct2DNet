@@ -16,6 +16,7 @@ namespace D2DNet
     {
         ref class ID2D1DeviceContext;
         ref class ID2D1Image;
+        ref class ID2D1Factory;
 
         /// <summary>
         /// The effect interface. Properties control how the effect is rendered. The effect
@@ -26,15 +27,19 @@ namespace D2DNet
         {
         private:
             array<Direct2DNet::ID2D1Image ^> ^m_inputs;
-            Direct2DNet::ID2D1DeviceContext ^m_deviceContext;
+            Direct2DNet::ID2D1Factory ^m_factory;
 
         internal:
+            ID2D1Effect() : Direct2DNet::ID2D1Properties() {}
+
             ID2D1Effect(
                 Direct2DNet::ID2D1DeviceContext ^deviceContext,
                 System::Guid %effectId
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Sets the input to the given effect. The input can be a concrete bitmap or the
             /// output of another effect.

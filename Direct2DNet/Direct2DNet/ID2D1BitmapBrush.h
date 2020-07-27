@@ -25,6 +25,8 @@ namespace D2DNet
             Direct2DNet::ID2D1Bitmap ^m_bitmap;
 
         internal:
+            ID2D1BitmapBrush() : Direct2DNet::ID2D1Brush() {}
+
             ID2D1BitmapBrush(
                 Direct2DNet::ID2D1RenderTarget ^renderTarget,
                 Direct2DNet::ID2D1Bitmap ^bitmap

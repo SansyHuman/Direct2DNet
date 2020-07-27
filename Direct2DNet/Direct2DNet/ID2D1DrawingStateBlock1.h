@@ -23,6 +23,8 @@ namespace D2DNet
         public ref class ID2D1DrawingStateBlock1 : Direct2DNet::ID2D1DrawingStateBlock
         {
         internal:
+            ID2D1DrawingStateBlock1() : Direct2DNet::ID2D1DrawingStateBlock() {}
+
             ID2D1DrawingStateBlock1(
                 Direct2DNet::ID2D1Factory1 ^factory,
                 System::Nullable<Direct2DNet::D2D1_DRAWING_STATE_DESCRIPTION1> %description,

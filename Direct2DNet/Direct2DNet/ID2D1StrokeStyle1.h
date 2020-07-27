@@ -24,6 +24,8 @@ namespace D2DNet
             Direct2DNet::D2D1_STROKE_TRANSFORM_TYPE m_transformType;
 
         internal:
+            ID2D1StrokeStyle1() : Direct2DNet::ID2D1StrokeStyle() {}
+
             ID2D1StrokeStyle1(
                 Direct2DNet::ID2D1Factory1 ^factory,
                 Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES1 %properties,
@@ -31,6 +33,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             property Direct2DNet::D2D1_STROKE_TRANSFORM_TYPE StrokeTransformType
             {
                 Direct2DNet::D2D1_STROKE_TRANSFORM_TYPE get()

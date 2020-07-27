@@ -7,6 +7,11 @@ namespace D2DNet
 {
     namespace Direct3D11Net
     {
+        ID3D11Device::ID3D11Device(::ID3D11Device *pDevice) : m_pDevice(pDevice)
+        {
+            
+        }
+
         ID3D11Device::ID3D11Device(
             D2DNet::D3D_DRIVER_TYPE driverType,
             Direct3D11Net::D3D11_CREATE_DEVICE_FLAG flags,
@@ -59,6 +64,17 @@ namespace D2DNet
                 m_pDevice->Release();
                 m_pDevice = nullptr;
             }
+        }
+
+        void ID3D11Device::HandleCOMInterface(void *obj)
+        {
+            if(m_pDevice)
+            {
+                m_pDevice->Release();
+            }
+
+            m_pDevice = (::ID3D11Device *)obj;
+            m_pDevice->AddRef();
         }
 
         DXGINet::IDXGIDevice ^ID3D11Device::QueryToIDXGIDevice()

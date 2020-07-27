@@ -24,6 +24,8 @@ namespace D2DNet
             Direct2DNet::ID2D1GradientStopCollection ^m_collection;
 
         internal:
+            ID2D1RadialGradientBrush() : Direct2DNet::ID2D1Brush() {}
+
             ID2D1RadialGradientBrush(
                 Direct2DNet::ID2D1RenderTarget ^renderTarget,
                 Direct2DNet::D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES %properties,
@@ -31,6 +33,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets and sets the center of the radial gradient in local coordinate space.
             /// </summary>

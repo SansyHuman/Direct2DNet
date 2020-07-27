@@ -19,5 +19,15 @@ namespace D2DNet
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1EllipseGeometry", (int)hr);
         }
+
+        void ID2D1EllipseGeometry::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Geometry::HandleCOMInterface(obj);
+
+            pin_ptr<Direct2DNet::D2D1_ELLIPSE> pEllipse = &m_ellipse;
+            ((::ID2D1EllipseGeometry *)m_pResource)->GetEllipse(reinterpret_cast<::D2D1_ELLIPSE *>(pEllipse));
+            pEllipse = nullptr;
+        }
+
     }
 }

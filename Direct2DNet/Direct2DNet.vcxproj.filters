@@ -103,6 +103,12 @@
     <Filter Include="소스 파일\ComIO">
       <UniqueIdentifier>{9ecb7763-a26f-4108-b849-500010d9b33e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\DWriteNet\glyph">
+      <UniqueIdentifier>{d1cae28e-832d-4e45-8124-f86a1369e5c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DWriteNet\glyph">
+      <UniqueIdentifier>{a193d4bb-a367-4253-b4e6-1441a2bfdceb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -420,6 +426,42 @@
     <ClInclude Include="DWriteNet\IDWriteFontFace.h">
       <Filter>헤더 파일\DWriteNet\font</Filter>
     </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteGdiInterop.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteBitmapRenderTarget.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteTextLayout.h">
+      <Filter>헤더 파일\DWriteNet\text</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteTypography.h">
+      <Filter>헤더 파일\DWriteNet\font</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteInlineObject.h">
+      <Filter>헤더 파일\DWriteNet\text</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteTextAnalysisSource.h">
+      <Filter>헤더 파일\DWriteNet\text</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteNumberSubstitution.h">
+      <Filter>헤더 파일\DWriteNet\text</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteTextAnalysisSink.h">
+      <Filter>헤더 파일\DWriteNet\text</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteTextAnalyzer.h">
+      <Filter>헤더 파일\DWriteNet\text</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteGlyphRunAnalysis.h">
+      <Filter>헤더 파일\DWriteNet\glyph</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\DWNet_glyph.h">
+      <Filter>헤더 파일\DWriteNet\glyph</Filter>
+    </ClInclude>
+    <ClInclude Include="DWriteNet\DWriteError.h">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -658,6 +700,45 @@
     </ClCompile>
     <ClCompile Include="DWriteNet\IDWriteFontFace.cpp">
       <Filter>소스 파일\DWriteNet\font</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\DWriteSettings.cpp">
+      <Filter>소스 파일\DWriteNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteGdiInterop.cpp">
+      <Filter>소스 파일\DWriteNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteBitmapRenderTarget.cpp">
+      <Filter>소스 파일\DWriteNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteTextLayout.cpp">
+      <Filter>소스 파일\DWriteNet\text</Filter>
+    </ClCompile>
+    <ClCompile Include="IUnknown.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteTypography.cpp">
+      <Filter>소스 파일\DWriteNet\font</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteInlineObject.cpp">
+      <Filter>소스 파일\DWriteNet\text</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteNumberSubstitution.cpp">
+      <Filter>소스 파일\DWriteNet\text</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteTextAnalysisSource.cpp">
+      <Filter>소스 파일\DWriteNet\text</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteTextAnalysisSink.cpp">
+      <Filter>소스 파일\DWriteNet\text</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteTextAnalyzer.cpp">
+      <Filter>소스 파일\DWriteNet\text</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\IDWriteGlyphRunAnalysis.cpp">
+      <Filter>소스 파일\DWriteNet\glyph</Filter>
+    </ClCompile>
+    <ClCompile Include="DWriteNet\DWriteError.cpp">
+      <Filter>헤더 파일\DWriteNet\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

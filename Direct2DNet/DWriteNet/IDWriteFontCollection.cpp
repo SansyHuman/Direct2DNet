@@ -1,5 +1,7 @@
 #include "IDWriteFontCollection.h"
 #include "IDWriteFontFamily.h"
+#include "IDWriteFont.h"
+#include "IDWriteFontFace.h"
 
 namespace D2DNet
 {
@@ -17,6 +19,17 @@ namespace D2DNet
                 m_pCollection->Release();
                 m_pCollection = nullptr;
             }
+        }
+
+        void IDWriteFontCollection::HandleCOMInterface(void *obj)
+        {
+            if(m_pCollection)
+            {
+                m_pCollection->Release();
+            }
+
+            m_pCollection = (::IDWriteFontCollection *)obj;
+            m_pCollection->AddRef();
         }
 
         HRESULT IDWriteFontCollection::GetFontFamily(UINT32 index, DWriteNet::IDWriteFontFamily ^%fontFamily)
@@ -81,6 +94,66 @@ namespace D2DNet
             return System::ValueTuple<HRESULT, UINT32, bool>(
                 hr, index, System::Convert::ToBoolean(exists)
                 );
+        }
+
+        HRESULT IDWriteFontCollection::GetFontFromFontFace(
+            DWriteNet::IDWriteFontFace ^fontFace,
+            DWriteNet::IDWriteFont ^%font)
+        {
+            ::IDWriteFont *pFont = __nullptr;
+
+            HRESULT hr = m_pCollection->GetFontFromFontFace(fontFace->m_pFace, &pFont);
+            if(FAILED(hr))
+            {
+                font = nullptr;
+                return hr;
+            }
+
+            ::IDWriteFontFamily *pFamily = __nullptr;
+            hr = pFont->GetFontFamily(&pFamily);
+            if(FAILED(hr))
+            {
+                if(pFont)
+                    pFont->Release();
+
+                font = nullptr;
+                return hr;
+            }
+
+            font = gcnew DWriteNet::IDWriteFont(
+                pFont,
+                gcnew DWriteNet::IDWriteFontFamily(pFamily, this)
+            );
+            return hr;
+        }
+
+        System::ValueTuple<HRESULT, DWriteNet::IDWriteFont ^> IDWriteFontCollection::GetFontFromFontFace(
+            DWriteNet::IDWriteFontFace ^fontFace)
+        {
+            ::IDWriteFont *pFont = __nullptr;
+
+            HRESULT hr = m_pCollection->GetFontFromFontFace(fontFace->m_pFace, &pFont);
+            if(FAILED(hr))
+            {
+                return System::ValueTuple<HRESULT, DWriteNet::IDWriteFont ^>(hr, nullptr);
+            }
+
+            ::IDWriteFontFamily *pFamily = __nullptr;
+            hr = pFont->GetFontFamily(&pFamily);
+            if(FAILED(hr))
+            {
+                if(pFont)
+                    pFont->Release();
+
+                return System::ValueTuple<HRESULT, DWriteNet::IDWriteFont ^>(hr, nullptr);
+            }
+
+            return System::ValueTuple<HRESULT, DWriteNet::IDWriteFont ^>(
+                hr, 
+                gcnew DWriteNet::IDWriteFont(
+                pFont,
+                gcnew DWriteNet::IDWriteFontFamily(pFamily, this))
+            );
         }
 
     }

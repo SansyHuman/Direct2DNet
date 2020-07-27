@@ -26,6 +26,10 @@ namespace D2DNet
         internal:
             ::ID3D11Device *m_pDevice;
 
+            ID3D11Device() : m_pDevice(nullptr) {}
+
+            ID3D11Device(::ID3D11Device *pDevice);
+
         public:
             ID3D11Device(
                 D2DNet::D3D_DRIVER_TYPE driverType,
@@ -35,7 +39,6 @@ namespace D2DNet
                 [OutAttribute] Direct3D11Net::ID3D11DeviceContext ^%immediateContext
             );
 
-        public:
             ~ID3D11Device();
             !ID3D11Device();
 
@@ -46,6 +49,8 @@ namespace D2DNet
                     return m_pDevice;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             DXGINet::IDXGIDevice ^QueryToIDXGIDevice();
         };

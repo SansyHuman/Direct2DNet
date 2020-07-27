@@ -19,6 +19,8 @@ namespace D2DNet
         public ref class ID2D1SolidColorBrush : Direct2DNet::ID2D1Brush
         {
         internal:
+            ID2D1SolidColorBrush() : Direct2DNet::ID2D1Brush() {}
+
             ID2D1SolidColorBrush(Direct2DNet::ID2D1RenderTarget ^renderTarget, Direct2DNet::D2D1_COLOR_F %color);
 
         public:

@@ -4,6 +4,7 @@
 
 #include <comdef.h>
 #include <msclr/marshal.h>
+#include <wchar.h>
 
 using namespace System::Runtime;
 using namespace msclr::interop;
@@ -205,6 +206,94 @@ namespace D2DNet
             D2DNet::POINT value;
             value.x = rhs.x;
             value.y = rhs.y;
+
+            return value;
+        }
+    };
+
+    public value struct SIZE
+    {
+        LONG        cx;
+        LONG        cy;
+
+        SIZE(LONG cx, LONG cy) : cx(cx), cy(cy) {}
+
+        static operator ::SIZE(D2DNet::SIZE %rhs)
+        {
+            ::SIZE value;
+            value.cx = rhs.cx;
+            value.cy = rhs.cy;
+
+            return value;
+        }
+
+        static operator D2DNet::SIZE(::SIZE %rhs)
+        {
+            D2DNet::SIZE value;
+            value.cx = rhs.cx;
+            value.cy = rhs.cy;
+
+            return value;
+        }
+    };
+
+    public value struct LOGFONTW
+    {
+        LONG            lfHeight;
+        LONG            lfWidth;
+        LONG            lfEscapement;
+        LONG            lfOrientation;
+        LONG            lfWeight;
+        BYTE            lfItalic;
+        BYTE            lfUnderline;
+        BYTE            lfStrikeOut;
+        BYTE            lfCharSet;
+        BYTE            lfOutPrecision;
+        BYTE            lfClipPrecision;
+        BYTE            lfQuality;
+        BYTE            lfPitchAndFamily;
+        System::String ^lfFaceName;
+
+        static operator ::LOGFONTW(D2DNet::LOGFONTW %rhs)
+        {
+            marshal_context context;
+
+            ::LOGFONTW value;
+            value.lfHeight = rhs.lfHeight;
+            value.lfWidth = rhs.lfWidth;
+            value.lfEscapement = rhs.lfEscapement;
+            value.lfOrientation = rhs.lfOrientation;
+            value.lfWeight = rhs.lfWeight;
+            value.lfItalic = rhs.lfItalic;
+            value.lfUnderline = rhs.lfUnderline;
+            value.lfStrikeOut = rhs.lfStrikeOut;
+            value.lfCharSet = rhs.lfCharSet;
+            value.lfOutPrecision = rhs.lfOutPrecision;
+            value.lfClipPrecision = rhs.lfClipPrecision;
+            value.lfQuality = rhs.lfQuality;
+            value.lfPitchAndFamily = rhs.lfPitchAndFamily;
+            ::wcscpy_s(value.lfFaceName, LF_FACESIZE, context.marshal_as<const WCHAR *>(rhs.lfFaceName));
+
+            return value;
+        }
+
+        static operator D2DNet::LOGFONTW(::LOGFONTW %rhs)
+        {
+            D2DNet::LOGFONTW value;
+            value.lfHeight = rhs.lfHeight;
+            value.lfWidth = rhs.lfWidth;
+            value.lfEscapement = rhs.lfEscapement;
+            value.lfOrientation = rhs.lfOrientation;
+            value.lfWeight = rhs.lfWeight;
+            value.lfItalic = rhs.lfItalic;
+            value.lfUnderline = rhs.lfUnderline;
+            value.lfStrikeOut = rhs.lfStrikeOut;
+            value.lfCharSet = rhs.lfCharSet;
+            value.lfOutPrecision = rhs.lfOutPrecision;
+            value.lfClipPrecision = rhs.lfClipPrecision;
+            value.lfQuality = rhs.lfQuality;
+            value.lfPitchAndFamily = rhs.lfPitchAndFamily;
+            value.lfFaceName = marshal_as<System::String ^>(rhs.lfFaceName);
 
             return value;
         }

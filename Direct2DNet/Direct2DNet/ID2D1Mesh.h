@@ -27,6 +27,8 @@ namespace D2DNet
             ::ID2D1TessellationSink *m_pSink;
 
         internal:
+            ID2D1Mesh() : Direct2DNet::ID2D1Resource(), m_pSink(nullptr), sinkOpened(false) {}
+
             ID2D1Mesh(Direct2DNet::ID2D1RenderTarget ^renderTarget);
 
             // Called by ID2D1CommandSink
@@ -35,6 +37,8 @@ namespace D2DNet
         public:
             ~ID2D1Mesh();
             !ID2D1Mesh();
+
+            virtual void HandleCOMInterface(void *obj) override;
 
             /// <summary>Gets whether the tessellation sink of the mesh is opened.</summary>
             property bool SinkOpened

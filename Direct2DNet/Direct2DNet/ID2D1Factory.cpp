@@ -62,6 +62,17 @@ namespace D2DNet
             m_pFactory = pFactory;
         }
 
+        void ID2D1Factory::HandleCOMInterface(void *obj)
+        {
+            if(m_pFactory)
+            {
+                m_pFactory->Release();
+            }
+
+            m_pFactory = (::ID2D1Factory *)obj;
+            m_pFactory->AddRef();
+        }
+
         ID2D1Factory::ID2D1Factory(D2D1_FACTORY_TYPE type)
         {
             m_type = type;
@@ -129,12 +140,10 @@ namespace D2DNet
             pX = nullptr, pY = nullptr;
         }
 
-        System::ValueTuple<float, float> ^ID2D1Factory::GetDesktopDpi()
+        System::ValueTuple<float, float> ID2D1Factory::GetDesktopDpi()
         {
             float x, y;
-            pin_ptr<float> pX = &x, pY = &y;
             m_pFactory->GetDesktopDpi(&x, &y);
-            pX = nullptr; pY = nullptr;
             return System::ValueTuple<float, float>(x, y);
         }
 

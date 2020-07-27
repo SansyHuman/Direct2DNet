@@ -98,6 +98,10 @@ namespace D2DNet
             GCHandle m_processRecord;
 
         protected:
+            /// <summary>
+            /// The basic constructor of ID2D1GdiMetafileSink. You should call this ctor when you
+            /// implement the metafile sink
+            /// </summary>
             ID2D1GdiMetafileSink();
 
         public:
@@ -111,6 +115,8 @@ namespace D2DNet
                     return reinterpret_cast<void *>(m_pSink);
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj) sealed;
 
         protected:
             virtual HRESULT ProcessRecord(DWORD recordType, void *recordData, DWORD recordDataSize) abstract;

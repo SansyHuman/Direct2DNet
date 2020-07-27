@@ -28,10 +28,11 @@ namespace D2DNet
         public ref class ID2D1Device1 : Direct2DNet::ID2D1Device
         {
         internal:
+            ID2D1Device1() : Direct2DNet::ID2D1Device() {}
+
             ID2D1Device1(Direct2DNet::ID2D1Factory2 ^factory, DXGINet::IDXGIDevice ^device);
 
         public:
-
             /// <summary>
             /// Gets and sets the rendering priority currently set on the device.
             /// </summary>

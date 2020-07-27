@@ -1,5 +1,7 @@
 #include "IDWriteFont.h"
 #include "IDWriteLocalizedStrings.h"
+#include "IDWriteFontFace.h"
+#include "IDWriteFontFamily.h"
 
 namespace D2DNet
 {
@@ -9,6 +11,17 @@ namespace D2DNet
             : m_pFont(pFont), m_fontFamily(fontFamily)
         {
 
+        }
+
+        IDWriteFont::IDWriteFont(::IDWriteFont *pFont)
+            : m_pFont(pFont)
+        {
+            ::IDWriteFontFamily *fontFamily;
+            HRESULT hr = m_pFont->GetFontFamily(&fontFamily);
+            if(FAILED(hr) || !fontFamily)
+                m_fontFamily = nullptr;
+            else
+                m_fontFamily = gcnew DWriteNet::IDWriteFontFamily(fontFamily);
         }
 
         IDWriteFont::~IDWriteFont()
@@ -23,6 +36,24 @@ namespace D2DNet
                 m_pFont->Release();
                 m_pFont = nullptr;
             }
+        }
+
+        void IDWriteFont::HandleCOMInterface(void *obj)
+        {
+            if(m_pFont)
+            {
+                m_pFont->Release();
+            }
+
+            m_pFont = (::IDWriteFont *)obj;
+            m_pFont->AddRef();
+
+            ::IDWriteFontFamily *fontFamily;
+            HRESULT hr = m_pFont->GetFontFamily(&fontFamily);
+            if(FAILED(hr) || !fontFamily)
+                m_fontFamily = nullptr;
+            else
+                m_fontFamily = gcnew DWriteNet::IDWriteFontFamily(fontFamily);
         }
 
         HRESULT IDWriteFont::GetFaceNames(DWriteNet::IDWriteLocalizedStrings ^%names)
@@ -131,6 +162,17 @@ namespace D2DNet
             HRESULT hr = m_pFont->HasCharacter(unicodeValue, &nativeExists);
 
             return System::ValueTuple<HRESULT, bool>(hr, System::Convert::ToBoolean(nativeExists));
+        }
+
+        DWriteNet::IDWriteFontFace ^IDWriteFont::CreateFontFace()
+        {
+            ::IDWriteFontFace *pFace = __nullptr;
+            HRESULT hr = m_pFont->CreateFontFace(&pFace);
+
+            if(FAILED(hr) || !pFace)
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create IDWriteFontFace.", (int)hr);
+
+            return gcnew DWriteNet::IDWriteFontFace(pFace);
         }
 
     }

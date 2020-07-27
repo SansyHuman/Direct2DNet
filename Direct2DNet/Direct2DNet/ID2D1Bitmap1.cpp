@@ -1,6 +1,8 @@
 #include "ID2D1Bitmap1.h"
 #include "ID2D1DeviceContext.h"
 #include "../DXGINet/IDXGISurface.h"
+#include "ID2D1ColorContext.h"
+#include "ID2D1Factory1.h"
 
 namespace D2DNet
 {
@@ -63,6 +65,35 @@ namespace D2DNet
             m_colorContext = bitmapProperties.colorContext;
             m_dxgiSurface = surface;
             m_options = bitmapProperties.bitmapOptions;
+        }
+
+        void ID2D1Bitmap1::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Bitmap::HandleCOMInterface(obj);
+
+            ::ID2D1ColorContext *context = __nullptr;
+            ((::ID2D1Bitmap1 *)m_pResource)->GetColorContext(&context);
+            if(!context)
+            {
+                m_colorContext = nullptr;
+            }
+            else
+            {
+                ::ID2D1Factory1 *factory = __nullptr;
+                ((::ID2D1Bitmap1 *)m_pResource)->GetFactory((::ID2D1Factory **)&factory);
+                m_colorContext = gcnew Direct2DNet::ID2D1ColorContext(
+                    gcnew Direct2DNet::ID2D1Factory1(factory), context
+                );
+            }
+
+            ::IDXGISurface *surface = __nullptr;
+            HRESULT hr = ((::ID2D1Bitmap1 *)m_pResource)->GetSurface(&surface);
+            if(FAILED(hr) || !surface)
+                m_dxgiSurface = nullptr;
+            else
+                m_dxgiSurface = gcnew DXGINet::IDXGISurface(surface);
+
+            m_options = (Direct2DNet::D2D1_BITMAP_OPTIONS)((int)((::ID2D1Bitmap1 *)m_pResource)->GetOptions());
         }
 
         System::ValueTuple<HRESULT, Direct2DNet::D2D1_MAPPED_RECT> ID2D1Bitmap1::Map(

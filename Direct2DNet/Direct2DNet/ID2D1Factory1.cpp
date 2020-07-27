@@ -87,7 +87,9 @@ namespace D2DNet
             return gcnew Direct2DNet::ID2D1GdiMetafile(this, metafileStream);
         }
 
-        Direct2DNet::ID2D1Properties ^ID2D1Factory1::GetEffectProperties(System::Guid %effectId)
+        HRESULT ID2D1Factory1::GetEffectProperties(
+            System::Guid %effectId,
+            Direct2DNet::ID2D1Properties ^%properties)
         {
             ::ID2D1Properties *pProperties = __nullptr;
 
@@ -97,9 +99,34 @@ namespace D2DNet
             );
 
             if(FAILED(hr))
-                throw gcnew Direct2DNet::Exception::DxException("Failed to get effect properties.", hr);
+            {
+                properties = nullptr;
+                return hr;
+            }
 
-            return gcnew Direct2DNet::ID2D1Properties(pProperties);
+            properties = gcnew Direct2DNet::ID2D1Properties(pProperties);
+            return hr;
+        }
+
+        System::ValueTuple<HRESULT, Direct2DNet::ID2D1Properties ^> ID2D1Factory1::GetEffectProperties(
+            System::Guid %effectId)
+        {
+            ::ID2D1Properties *pProperties = __nullptr;
+
+            HRESULT hr = ((::ID2D1Factory1 *)m_pFactory)->GetEffectProperties(
+                DirectX::ToNativeGUID(effectId),
+                &pProperties
+            );
+
+            if(FAILED(hr))
+            {
+                return System::ValueTuple<HRESULT, Direct2DNet::ID2D1Properties ^>(hr, nullptr);
+            }
+
+            return System::ValueTuple<HRESULT, Direct2DNet::ID2D1Properties ^>(
+                hr,
+                gcnew Direct2DNet::ID2D1Properties(pProperties)
+                );
         }
 
     }

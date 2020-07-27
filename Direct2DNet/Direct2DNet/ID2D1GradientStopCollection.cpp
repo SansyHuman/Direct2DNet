@@ -13,21 +13,17 @@ namespace D2DNet
             Direct2DNet::D2D1_EXTEND_MODE extendMode
         ) : Direct2DNet::ID2D1Resource(renderTarget->m_factory), m_gamma(gamma), m_extendMode(extendMode)
         {
-            std::vector<::D2D1_GRADIENT_STOP> nativeStops(gradientStops->Length);
-            for(int i = 0; i < nativeStops.size(); i++)
-            {
-                nativeStops[i] = static_cast<::D2D1_GRADIENT_STOP>(gradientStops[i]);
-            }
-
             HRESULT hr = S_OK;
+            pin_ptr<Direct2DNet::D2D1_GRADIENT_STOP> pStops = &gradientStops[0];
             pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
             hr = ((::ID2D1RenderTarget *)renderTarget->m_pResource)->CreateGradientStopCollection(
-                nativeStops.data(),
-                nativeStops.size(),
+                reinterpret_cast<::D2D1_GRADIENT_STOP *>(pStops),
+                gradientStops->Length,
                 (::D2D1_GAMMA)((int)gamma),
                 (::D2D1_EXTEND_MODE)((int)extendMode),
                 (::ID2D1GradientStopCollection **)ppResource
             );
+            pStops = nullptr;
             ppResource = nullptr;
 
             if(FAILED(hr))
@@ -42,6 +38,22 @@ namespace D2DNet
         ) : Direct2DNet::ID2D1Resource(deviceContext->m_factory)
         {
             
+        }
+
+        void ID2D1GradientStopCollection::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Resource::HandleCOMInterface(obj);
+
+            UINT32 stopsCount = ((::ID2D1GradientStopCollection *)m_pResource)->GetGradientStopCount();
+            m_gradientStops = gcnew array<Direct2DNet::D2D1_GRADIENT_STOP>(stopsCount);
+            pin_ptr<Direct2DNet::D2D1_GRADIENT_STOP> pStops = &m_gradientStops[0];
+            ((::ID2D1GradientStopCollection *)m_pResource)->GetGradientStops(
+                reinterpret_cast<::D2D1_GRADIENT_STOP *>(pStops), stopsCount
+            );
+            pStops = nullptr;
+
+            m_gamma = (Direct2DNet::D2D1_GAMMA)((int)((::ID2D1GradientStopCollection *)m_pResource)->GetColorInterpolationGamma());
+            m_extendMode = (Direct2DNet::D2D1_EXTEND_MODE)((int)((::ID2D1GradientStopCollection *)m_pResource)->GetExtendMode());
         }
 
     }

@@ -24,6 +24,8 @@ namespace D2DNet
         public ref class ID2D1GeometryRealization : Direct2DNet::ID2D1Resource
         {
         internal:
+            ID2D1GeometryRealization() : Direct2DNet::ID2D1Resource() {}
+
             ID2D1GeometryRealization(
                 Direct2DNet::ID2D1DeviceContext1 ^context,
                 Direct2DNet::ID2D1Geometry ^geometry,

@@ -13,7 +13,7 @@ namespace D2DNet
         /// <summary>
         /// Contains DXGI error codes.
         /// </summary>
-        public value struct D2DError abstract sealed
+        public value struct DXGIError abstract sealed
         {
             /// <summary>
             /// You tried to use a resource to which you did not have the required access privileges.

@@ -32,10 +32,12 @@ namespace D2DNet
         System::ValueTuple<HRESULT, Direct2DNet::ID2D1Bitmap ^> ID2D1BitmapRenderTarget::GetBitmap()
         {
             HRESULT hr = S_OK;
-            ::ID2D1Bitmap *nativeBitmap = nullptr;
+            ::ID2D1Bitmap *nativeBitmap = __nullptr;
 
-            pin_ptr<::ID2D1Bitmap *> pBitmap = &nativeBitmap;
-            hr = ((::ID2D1BitmapRenderTarget *)m_pResource)->GetBitmap((::ID2D1Bitmap **)pBitmap);
+            hr = ((::ID2D1BitmapRenderTarget *)m_pResource)->GetBitmap(&nativeBitmap);
+
+            if(FAILED(hr) || !nativeBitmap)
+                return System::ValueTuple<HRESULT, Direct2DNet::ID2D1Bitmap ^>(hr, nullptr);
 
             return System::ValueTuple<HRESULT, Direct2DNet::ID2D1Bitmap ^>(
                 hr,
@@ -46,10 +48,15 @@ namespace D2DNet
         HRESULT ID2D1BitmapRenderTarget::GetBitmap(ID2D1Bitmap ^%bitmap)
         {
             HRESULT hr = S_OK;
-            ::ID2D1Bitmap *nativeBitmap = nullptr;
+            ::ID2D1Bitmap *nativeBitmap = __nullptr;
 
-            pin_ptr<::ID2D1Bitmap *> pBitmap = &nativeBitmap;
-            hr = ((::ID2D1BitmapRenderTarget *)m_pResource)->GetBitmap((::ID2D1Bitmap **)pBitmap);
+            hr = ((::ID2D1BitmapRenderTarget *)m_pResource)->GetBitmap(&nativeBitmap);
+
+            if(FAILED(hr) || !nativeBitmap)
+            {
+                bitmap = nullptr;
+                return hr;
+            }
 
             bitmap = gcnew Direct2DNet::ID2D1Bitmap(m_factory, nativeBitmap);
 

@@ -20,6 +20,8 @@ namespace D2DNet
         internal:
             ::IDWriteRenderingParams *m_pParams;
 
+            IDWriteRenderingParams() : m_pParams(nullptr) {}
+
             IDWriteRenderingParams(DWriteNet::IDWriteFactory ^factory); // CreateRenderingParams
 
             IDWriteRenderingParams(
@@ -39,10 +41,10 @@ namespace D2DNet
             // Used in ID2D1CommandSink
             IDWriteRenderingParams(::IDWriteRenderingParams *pParams) : m_pParams(pParams) {}
 
+        public:
             ~IDWriteRenderingParams();
             !IDWriteRenderingParams();
 
-        public:
             virtual property void *NativePointer
             {
                 virtual void *get()
@@ -50,6 +52,8 @@ namespace D2DNet
                     return m_pParams;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             /// <summary>
             /// Gets the gamma value used for gamma correction. Valid values must be

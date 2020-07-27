@@ -10,7 +10,7 @@ namespace D2DNet
             
         }
 
-        IDXGIFactory::IDXGIFactory()
+        IDXGIFactory::IDXGIFactory(int)
         {
             HRESULT hr = S_OK;
             pin_ptr<::IDXGIFactory *> ppFactory = &m_pFactory;
@@ -34,6 +34,22 @@ namespace D2DNet
                 m_pFactory->Release();
                 m_pFactory = nullptr;
             }
+        }
+
+        DXGINet::IDXGIFactory ^IDXGIFactory::CreateFactory()
+        {
+            return gcnew DXGINet::IDXGIFactory(1);
+        }
+
+        void IDXGIFactory::HandleCOMInterface(void *obj)
+        {
+            if(m_pFactory)
+            {
+                m_pFactory->Release();
+            }
+
+            m_pFactory = (::IDXGIFactory *)obj;
+            m_pFactory->AddRef();
         }
 
         DXGINet::IDXGISwapChain ^IDXGIFactory::CreateSwapChain(

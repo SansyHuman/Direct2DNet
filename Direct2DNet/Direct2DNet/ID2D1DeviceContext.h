@@ -4,6 +4,7 @@
 #include "D2DNetHeaders.h"
 #include "D2DSettings.h"
 #include "ID2D1RenderTarget.h"
+#include "../DWriteNet/DWriteSettings.h"
 
 using namespace System::Runtime::InteropServices;
 using namespace System::Runtime::CompilerServices;
@@ -49,6 +50,8 @@ namespace D2DNet
             );
 
         internal:
+            ID2D1DeviceContext() : Direct2DNet::ID2D1RenderTarget() {}
+
             ID2D1DeviceContext(
                 Direct2DNet::ID2D1Device ^device,
                 Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options);
@@ -59,6 +62,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Creates a bitmap with extended bitmap properties, potentially from a block of
             /// memory.
@@ -104,6 +109,8 @@ namespace D2DNet
             Direct2DNet::ID2D1ColorContext ^CreateColorContextFromFilename(
                 System::String ^filename
             );
+
+            // CreateColorContextFromWicColorContext
 
             /// <summary>
             /// Creates a bitmap from a DXGI surface with a set of extended properties.
@@ -234,7 +241,34 @@ namespace D2DNet
                 [OutAttribute] Direct2DNet::D2D1_RECT_F %worldBounds
             );
 
-            // GetGlyphRunWorldBounds
+            /// <summary>
+            /// Retrieves the world-space bounds in DIPs of the glyph run using the device
+            /// context DPI.
+            /// </summary>
+            /// <returns>
+            /// (HRESULT, <see cref="Direct2DNet::D2D1_RECT_F"/>) tuple. If this method succeeds, HRESULT is
+            /// S_OK(0). Otherwise, it is an error code. <see cref="Direct2DNet::D2D1_RECT_F"/> is the bounds
+            /// of the glyph run.
+            /// </returns>
+            System::ValueTuple<HRESULT, Direct2DNet::D2D1_RECT_F> GetGlyphRunWorldBounds(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %baselineOrigin,
+                [InAttribute][IsReadOnlyAttribute] DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+                DWriteNet::DWRITE_MEASURING_MODE measuringMode
+            );
+
+            /// <summary>
+            /// Retrieves the world-space bounds in DIPs of the glyph run using the device
+            /// context DPI.
+            /// </summary>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT GetGlyphRunWorldBounds(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %baselineOrigin,
+                [InAttribute][IsReadOnlyAttribute] DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+                DWriteNet::DWRITE_MEASURING_MODE measuringMode,
+                [OutAttribute] Direct2DNet::D2D1_RECT_F %bounds
+            );
 
             /// <summary>
             /// Gets the device associated with this device context.
@@ -319,7 +353,24 @@ namespace D2DNet
                 }
             }
 
-            // DrawGlyphRun
+            /// <summary>
+            /// Draws the glyph run with an extended description to describe the glyphs.
+            /// </summary>
+            /// <param name="baselineOrigin">Origin of first glyph in the series.</param>
+            /// <param name="glyphRun">The glyphs to render.</param>
+            /// <param name="foregroundBrush">The brush that defines the text color.</param>
+            /// <param name="glyphRunDescription">Supplementary glyph series information.
+            /// The default value is null.</param>
+            /// <param name="measuringMode">The measuring mode of the glyph series, used to determine the
+            /// advances and offsets. The default value is
+            /// <see cref="D2DNet::DWriteNet::DWRITE_MEASURING_MODE::NATURAL"/>.</param>
+            void DrawGlyphRun(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %baselineOrigin,
+                [InAttribute][IsReadOnlyAttribute] DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+                Direct2DNet::ID2D1Brush ^foregroundBrush,
+                [OptionalAttribute] System::Nullable<DWriteNet::DWRITE_GLYPH_RUN_DESCRIPTION> glyphRunDescription,
+                [OptionalAttribute] System::Nullable<DWriteNet::DWRITE_MEASURING_MODE> measuringMode
+            );
 
             /// <summary>
             /// Draw an image to the device context. The image represents either a concrete

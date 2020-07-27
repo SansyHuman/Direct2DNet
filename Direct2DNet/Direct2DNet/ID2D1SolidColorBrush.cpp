@@ -11,9 +11,11 @@ namespace D2DNet
             : Direct2DNet::ID2D1Brush(renderTarget->Factory)
         {
             HRESULT hr = S_OK;
+            pin_ptr<Direct2DNet::D2D1_COLOR_F> pColor = &color;
             pin_ptr<::ID2D1Resource *> ppBrush = &m_pResource;
             hr = ((::ID2D1RenderTarget *)renderTarget->m_pResource)->CreateSolidColorBrush(
-                static_cast<::D2D1_COLOR_F>(color),
+                reinterpret_cast<::D2D1_COLOR_F *>(pColor),
+                __nullptr,
                 (::ID2D1SolidColorBrush **)ppBrush
             );
             ppBrush = nullptr;

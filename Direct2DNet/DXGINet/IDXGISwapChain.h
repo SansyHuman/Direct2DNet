@@ -20,6 +20,8 @@ namespace D2DNet
         public ref class IDXGISwapChain : DXGINet::IDXGIDeviceSubObject
         {
         internal:
+            IDXGISwapChain() : DXGINet::IDXGIDeviceSubObject() {}
+
             IDXGISwapChain(
                 DXGINet::IDXGIFactory ^factory,
                 D2DNet::IUnknown ^device,

@@ -7,6 +7,10 @@
 #include <vector>
 #include <math.h>
 
+#ifdef GetGlyphIndices
+#undef GetGlyphIndices
+#endif
+
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <d2d1_1.h>
@@ -27,3 +31,7 @@
 #include <dwrite_2.h>
 #include <dwrite_3.h>
 #include <wincodec.h>
+
+#ifndef GetGlyphIndices
+#define GetGlyphIndices GetGlyphIndicesW
+#endif

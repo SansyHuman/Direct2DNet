@@ -1,5 +1,6 @@
 #include "ID2D1ColorContext.h"
 #include "ID2D1DeviceContext.h"
+#include "ID2D1Factory1.h"
 
 namespace D2DNet
 {
@@ -65,7 +66,69 @@ namespace D2DNet
                 m_profile = gcnew array<unsigned char>(profileSize);
                 pin_ptr<unsigned char> pProfile = &m_profile[0];
 
-                ((::ID2D1ColorContext *)m_pResource)->GetProfile((BYTE *)pProfile, profileSize);
+                hr = ((::ID2D1ColorContext *)m_pResource)->GetProfile((BYTE *)pProfile, profileSize);
+                pProfile = nullptr;
+
+                if(FAILED(hr))
+                {
+                    delete m_profile;
+                    m_profile = nullptr;
+                }
+            }
+        }
+
+        ID2D1ColorContext::ID2D1ColorContext(
+            Direct2DNet::ID2D1Factory1 ^factory,
+            ::ID2D1ColorContext *pContext)
+            : Direct2DNet::ID2D1Resource(factory)
+        {
+            m_pResource = pContext;
+
+            m_space = (Direct2DNet::D2D1_COLOR_SPACE)((int)pContext->GetColorSpace());
+            unsigned int profileSize = ((::ID2D1ColorContext *)m_pResource)->GetProfileSize();
+            if(profileSize <= 0)
+            {
+                m_profile = nullptr;
+            }
+            else
+            {
+                m_profile = gcnew array<unsigned char>(profileSize);
+                pin_ptr<unsigned char> pProfile = &m_profile[0];
+
+                HRESULT hr = ((::ID2D1ColorContext *)m_pResource)->GetProfile((BYTE *)pProfile, profileSize);
+                pProfile = nullptr;
+
+                if(FAILED(hr))
+                {
+                    delete m_profile;
+                    m_profile = nullptr;
+                }
+            }
+        }
+
+        void ID2D1ColorContext::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Resource::HandleCOMInterface(obj);
+
+            m_space = (Direct2DNet::D2D1_COLOR_SPACE)((int)((::ID2D1ColorContext *)m_pResource)->GetColorSpace());
+            unsigned int profileSize = ((::ID2D1ColorContext *)m_pResource)->GetProfileSize();
+            if(profileSize <= 0)
+            {
+                m_profile = nullptr;
+            }
+            else
+            {
+                m_profile = gcnew array<unsigned char>(profileSize);
+                pin_ptr<unsigned char> pProfile = &m_profile[0];
+
+                HRESULT hr = ((::ID2D1ColorContext *)m_pResource)->GetProfile((BYTE *)pProfile, profileSize);
+                pProfile = nullptr;
+
+                if(FAILED(hr))
+                {
+                    delete m_profile;
+                    m_profile = nullptr;
+                }
             }
         }
 

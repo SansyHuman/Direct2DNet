@@ -59,10 +59,13 @@ namespace D2DNet
             );
 
         internal:
+            ID2D1Factory() : m_pFactory(nullptr) {}
+
             // Called by ID2D1CommandSink
             ID2D1Factory(::ID2D1Factory *pFactory);
 
         public:
+            virtual void HandleCOMInterface(void *obj);
 
             /// <summary>
             /// Create <see cref="Direct2DNet::ID2D1Factory"/> object.
@@ -124,7 +127,7 @@ namespace D2DNet
             /// Retrieves the current desktop DPI. To refresh this, call ReloadSystemMetrics.
             /// </summary>
             [System::ObsoleteAttribute("Deprecated.")]
-            System::ValueTuple<float, float> ^GetDesktopDpi();
+            System::ValueTuple<float, float> GetDesktopDpi();
 
             /// <summary>
             /// Creates a rectangle geometry.

@@ -2,11 +2,39 @@
 #include "IDWriteFactory.h"
 #include "IDWriteFontFile.h"
 #include "IDWriteRenderingParams.h"
+#include "../Direct2DNet/ID2D1PathGeometry.h"
+
+#ifdef GetGlyphIndices
+#undef GetGlyphIndices
+#endif
 
 namespace D2DNet
 {
     namespace DWriteNet
     {
+        IDWriteFontFace::IDWriteFontFace(::IDWriteFontFace *pFace) : m_pFace(pFace)
+        {
+            UINT32 cnt = 0;
+            HRESULT hr = m_pFace->GetFiles(&cnt, __nullptr);
+            if(FAILED(hr))
+            {
+                m_fontFiles = nullptr;
+                return;
+            }
+
+            std::vector<::IDWriteFontFile *> files(cnt);
+
+            hr = m_pFace->GetFiles(&cnt, files.data());
+            if(FAILED(hr))
+            {
+                m_fontFiles = nullptr;
+                return;
+            }
+
+            m_fontFiles = gcnew array<DWriteNet::IDWriteFontFile ^>(cnt);
+            for(UINT32 i = 0; i < cnt; i++)
+                m_fontFiles[i] = gcnew DWriteNet::IDWriteFontFile(files[i]);
+        }
         
         IDWriteFontFace::IDWriteFontFace(
             DWriteNet::IDWriteFactory ^factory,
@@ -51,6 +79,38 @@ namespace D2DNet
                 m_pFace->Release();
                 m_pFace = nullptr;
             }
+        }
+
+        void IDWriteFontFace::HandleCOMInterface(void *obj)
+        {
+            if(m_pFace)
+            {
+                m_pFace->Release();
+            }
+
+            m_pFace = (::IDWriteFontFace *)obj;
+            m_pFace->AddRef();
+
+            UINT32 cnt = 0;
+            HRESULT hr = m_pFace->GetFiles(&cnt, __nullptr);
+            if(FAILED(hr))
+            {
+                m_fontFiles = nullptr;
+                return;
+            }
+
+            std::vector<::IDWriteFontFile *> files(cnt);
+
+            hr = m_pFace->GetFiles(&cnt, files.data());
+            if(FAILED(hr))
+            {
+                m_fontFiles = nullptr;
+                return;
+            }
+
+            m_fontFiles = gcnew array<DWriteNet::IDWriteFontFile ^>(cnt);
+            for(UINT32 i = 0; i < cnt; i++)
+                m_fontFiles[i] = gcnew DWriteNet::IDWriteFontFile(files[i]);
         }
 
         
@@ -148,14 +208,18 @@ namespace D2DNet
             array<UINT16> ^glyphIndices,
             bool isSideways,
             bool isRightToLeft,
-            System::IntPtr %geometrySink,
+            Direct2DNet::ID2D1PathGeometry ^geometry,
             array<float> ^glyphAdvances,
             array<DWriteNet::DWRITE_GLYPH_OFFSET> ^glyphOffsets)
         {
             HRESULT hr = S_OK;
 
-            if(geometrySink == System::IntPtr::Zero)
-                return E_INVALIDARG;
+            if(!geometry->SinkOpened)
+            {
+                hr = geometry->OpenSink();
+                if(FAILED(hr) || !geometry->m_pSink)
+                    return E_INVALIDARG;
+            }
 
             pin_ptr<UINT16> pIndices = &glyphIndices[0];
             pin_ptr<float> pAdvances = nullptr;
@@ -182,7 +246,7 @@ namespace D2DNet
                 (UINT32)glyphIndices->Length,
                 System::Convert::ToInt32(isSideways),
                 System::Convert::ToInt32(isRightToLeft),
-                reinterpret_cast<::IDWriteGeometrySink *>(geometrySink.ToPointer())
+                geometry->m_pSink
             );
 
             return hr;
@@ -239,14 +303,18 @@ namespace D2DNet
             System::Nullable<DWriteNet::DWRITE_MATRIX> transform)
         {
             pin_ptr<DWriteNet::DWRITE_FONT_METRICS> pMetrics = &fontFaceMetrics;
+            pin_ptr<DWriteNet::DWRITE_MATRIX> pTransform = nullptr;
+            if(transform.HasValue)
+                pTransform = &transform.Value;
 
             HRESULT hr = m_pFace->GetGdiCompatibleMetrics(
                 emSize,
                 pixelsPerDip,
-                transform.HasValue ? &static_cast<::DWRITE_MATRIX>(transform.Value) : __nullptr,
+                reinterpret_cast<::DWRITE_MATRIX *>(pTransform),
                 reinterpret_cast<::DWRITE_FONT_METRICS *>(pMetrics)
             );
 
+            pTransform = nullptr;
             pMetrics = nullptr;
             
             return hr;
@@ -259,14 +327,18 @@ namespace D2DNet
         {
             DWriteNet::DWRITE_FONT_METRICS metrics;
             pin_ptr<DWriteNet::DWRITE_FONT_METRICS> pMetrics = &metrics;
+            pin_ptr<DWriteNet::DWRITE_MATRIX> pTransform = nullptr;
+            if(transform.HasValue)
+                pTransform = &transform.Value;
 
             HRESULT hr = m_pFace->GetGdiCompatibleMetrics(
                 emSize,
                 pixelsPerDip,
-                transform.HasValue ? &static_cast<::DWRITE_MATRIX>(transform.Value) : __nullptr,
+                reinterpret_cast<::DWRITE_MATRIX *>(pTransform),
                 reinterpret_cast<::DWRITE_FONT_METRICS *>(pMetrics)
             );
 
+            pTransform = nullptr;
             pMetrics = nullptr;
 
             return System::ValueTuple<HRESULT, DWriteNet::DWRITE_FONT_METRICS>(hr, metrics);
@@ -288,17 +360,24 @@ namespace D2DNet
 
             pin_ptr<UINT16> pIndices = &glyphIndices[0];
             pin_ptr<DWriteNet::DWRITE_GLYPH_METRICS> pMetrics = &glyphMetrics[0];
+            pin_ptr<DWriteNet::DWRITE_MATRIX> pTransform = nullptr;
+            if(transform.HasValue)
+                pTransform = &transform.Value;
 
             HRESULT hr = m_pFace->GetGdiCompatibleGlyphMetrics(
                 emSize,
                 pixelsPerDip,
-                transform.HasValue ? &static_cast<::DWRITE_MATRIX>(transform.Value) : __nullptr,
+                reinterpret_cast<::DWRITE_MATRIX *>(pTransform),
                 System::Convert::ToInt32(useGdiNatural),
                 (UINT16 *)pIndices,
                 (UINT32)glyphIndices->Length,
                 reinterpret_cast<::DWRITE_GLYPH_METRICS *>(pMetrics),
                 System::Convert::ToInt32(isSideways.Value)
             );
+
+            pIndices = nullptr;
+            pMetrics = nullptr;
+            pTransform = nullptr;
 
             if(FAILED(hr))
             {
@@ -310,3 +389,7 @@ namespace D2DNet
         }      
     }
 }
+
+#ifndef GetGlyphIndices
+#define GetGlyphIndices GetGlyphIndicesW
+#endif

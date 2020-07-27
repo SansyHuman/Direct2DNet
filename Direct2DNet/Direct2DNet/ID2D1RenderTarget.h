@@ -18,6 +18,7 @@ namespace D2DNet
     {
         ref class IDWriteTextFormat;
         ref class IDWriteRenderingParams;
+        ref class IDWriteTextLayout;
     }
 
     namespace DXGINet
@@ -42,6 +43,8 @@ namespace D2DNet
         ref class ID2D1DrawingStateBlock;
         ref class ID2D1GdiInteropRenderTarget;
 
+        // Done.
+
         /// <summary>
         /// Represents an object that can receive drawing commands. Classes that inherit
         /// from <see cref="Direct2DNet::ID2D1RenderTarget"/> render the drawing commands
@@ -57,6 +60,8 @@ namespace D2DNet
             ID2D1RenderTarget(Direct2DNet::ID2D1Factory ^factory) : ID2D1Resource(factory) {}
 
         internal:
+            ID2D1RenderTarget() : Direct2DNet::ID2D1Resource() {}
+
             ID2D1RenderTarget(
                 Direct2DNet::ID2D1Factory ^factory,
                 DXGINet::IDXGISurface ^surface,
@@ -64,6 +69,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Creates an uninitialized Direct2D bitmap.
             /// </summary>
@@ -448,9 +455,38 @@ namespace D2DNet
                 [OptionalAttribute] System::Nullable<D2DNet::DWriteNet::DWRITE_MEASURING_MODE> measuringMode
             );
 
-            // DrawTextLayout
+            /// <summary>
+            /// Draws a text layout object. If the layout is not subsequently changed, this can
+            /// be more efficient than DrawText when drawing the same layout repeatedly.
+            /// </summary>
+            /// <param name="options">The specified text options. If
+            /// <see cref="Direct2DNet::D2D1_DRAW_TEXT_OPTIONS::CLIP"/>
+            /// is used, the text is clipped to the layout bounds. These bounds are derived from
+            /// the origin and the layout bounds of the corresponding IDWriteTextLayout object.
+            /// </param>
+            void DrawTextLayout(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %origin,
+                DWriteNet::IDWriteTextLayout ^textLayout,
+                Direct2DNet::ID2D1Brush ^defaultFillBrush,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_DRAW_TEXT_OPTIONS> options
+            );
 
-            // DrawGlyphRun
+            /// <summary>
+            /// Draws the specified glyphs.
+            /// </summary>
+            /// <param name="baselineOrigin">The origin, in device-independent pixels, of the glyphs' baseline.
+            /// </param>
+            /// <param name="glyphRun">The glyphs to render.</param>
+            /// <param name="foregroundBrush">The brush used to paint the specified glyphs.</param>
+            /// <param name="measuringMode">A value that indicates how glyph metrics are used to measure
+            /// text when it is formatted. The default value is
+            /// <see cref="D2DNet::DWriteNet::DWRITE_MEASURING_MODE::NATURAL"/>.</param>
+            void DrawGlyphRun(
+                [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_POINT_2F %baselineOrigin,
+                [InAttribute][IsReadOnlyAttribute] DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+                Direct2DNet::ID2D1Brush ^foregroundBrush,
+                [OptionalAttribute] System::Nullable<D2DNet::DWriteNet::DWRITE_MEASURING_MODE> measuringMode
+            );
 
             /// <summary>
             /// Gets and sets the transformation matrix of the render target.

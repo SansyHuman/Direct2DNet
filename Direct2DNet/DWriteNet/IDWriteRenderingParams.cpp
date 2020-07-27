@@ -73,5 +73,16 @@ namespace D2DNet
             }
         }
 
+        void IDWriteRenderingParams::HandleCOMInterface(void *obj)
+        {
+            if(m_pParams)
+            {
+                m_pParams->Release();
+            }
+
+            m_pParams = (::IDWriteRenderingParams *)obj;
+            m_pParams->AddRef();
+        }
+
     }
 }

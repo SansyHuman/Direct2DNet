@@ -19,5 +19,15 @@ namespace D2DNet
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1RectangleGeometry", (int)hr);
         }
+
+        void ID2D1RectangleGeometry::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Geometry::HandleCOMInterface(obj);
+
+            pin_ptr<Direct2DNet::D2D1_RECT_F> pRect = &m_rect;
+            ((::ID2D1RectangleGeometry *)m_pResource)->GetRect(reinterpret_cast<::D2D1_RECT_F *>(pRect));
+            pRect = nullptr;
+        }
+
     }
 }

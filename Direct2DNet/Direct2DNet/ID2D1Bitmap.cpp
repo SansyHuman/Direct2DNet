@@ -106,6 +106,18 @@ namespace D2DNet
             pDpiX = nullptr; pDpiY = nullptr;
         }
 
+        void ID2D1Bitmap::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Image::HandleCOMInterface(obj);
+
+            m_size = static_cast<Direct2DNet::D2D1_SIZE_F>(((::ID2D1Bitmap *)m_pResource)->GetSize());
+            m_pixelSize = static_cast<Direct2DNet::D2D1_SIZE_U>(((::ID2D1Bitmap *)m_pResource)->GetPixelSize());
+            m_pixelFormat = static_cast<Direct2DNet::D2D1_PIXEL_FORMAT>(((::ID2D1Bitmap *)m_pResource)->GetPixelFormat());
+            pin_ptr<float> pDpiX = &m_dpiX, pDpiY = &m_dpiY;
+            ((::ID2D1Bitmap *)m_pResource)->GetDpi((FLOAT *)pDpiX, (FLOAT *)pDpiY);
+            pDpiX = nullptr; pDpiY = nullptr;
+        }
+
         HRESULT ID2D1Bitmap::CopyFromBitmap(
             Direct2DNet::ID2D1Bitmap ^bitmap,
             System::Nullable<Direct2DNet::D2D1_POINT_2U> destPoint,

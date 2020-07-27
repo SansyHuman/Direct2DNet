@@ -11,10 +11,12 @@ namespace D2DNet
         ) : Direct2DNet::ID2D1RenderTarget(factory)
         {
             HRESULT hr = S_OK;
+            pin_ptr<Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES> pProperties = &properties;
             pin_ptr<::ID2D1Resource *> ppRenderTarget = &m_pResource;
             hr = factory->m_pFactory->CreateDCRenderTarget(
-                &static_cast<::D2D1_RENDER_TARGET_PROPERTIES>(properties),
+                reinterpret_cast<::D2D1_RENDER_TARGET_PROPERTIES *>(pProperties),
                 (::ID2D1DCRenderTarget **)ppRenderTarget);
+            pProperties = nullptr;
             ppRenderTarget = nullptr;
 
             if(FAILED(hr))
@@ -23,9 +25,10 @@ namespace D2DNet
 
         HRESULT ID2D1DCRenderTarget::BindDC(System::IntPtr %hDC, D2DNet::RECT %subRect)
         {
+            pin_ptr<D2DNet::RECT> pRect = &subRect;
             return ((::ID2D1DCRenderTarget *)m_pResource)->BindDC(
                 (HDC)hDC.ToPointer(),
-                &static_cast<::RECT>(subRect)
+                reinterpret_cast<::RECT *>(pRect)
             );
         }
 

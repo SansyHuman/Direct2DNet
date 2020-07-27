@@ -9,9 +9,15 @@ namespace D2DNet
         IDWriteFontFamily::IDWriteFontFamily(
             ::IDWriteFontFamily *pFamily,
             DWriteNet::IDWriteFontCollection ^fontCollection)
-            : DWriteNet::IDWriteFontList(pFamily, fontCollection, this)
+            : DWriteNet::IDWriteFontList(pFamily, fontCollection)
         {
             
+        }
+
+        IDWriteFontFamily::IDWriteFontFamily(::IDWriteFontFamily *pFamily)
+            : DWriteNet::IDWriteFontList(pFamily)
+        {
+
         }
 
         HRESULT IDWriteFontFamily::GetFamilyNames(DWriteNet::IDWriteLocalizedStrings ^%names)
@@ -114,7 +120,7 @@ namespace D2DNet
                 return hr;
             }
 
-            matchingFonts = gcnew DWriteNet::IDWriteFontList(pList, m_fontCollection, this);
+            matchingFonts = gcnew DWriteNet::IDWriteFontList(pList, m_fontCollection);
             return hr;
         }
 
@@ -139,7 +145,7 @@ namespace D2DNet
 
             return System::ValueTuple<HRESULT, DWriteNet::IDWriteFontList ^>(
                 hr,
-                gcnew DWriteNet::IDWriteFontList(pList, m_fontCollection, this));
+                gcnew DWriteNet::IDWriteFontList(pList, m_fontCollection));
         }
 
     }

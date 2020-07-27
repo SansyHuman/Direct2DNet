@@ -17,16 +17,11 @@ namespace D2DNet
             m_preInterpolationSpace(preInterpolationSpace), m_postInterpolationSpace(postInterpolationSpace),
             m_bufferPrecision(bufferPrecision), m_colorInterpolationMode(colorInterpolationMode)
         {
-            std::vector<::D2D1_GRADIENT_STOP> nativeStops(straightAlphaGradientStops->Length);
-            for(int i = 0; i < nativeStops.size(); i++)
-            {
-                nativeStops[i] = static_cast<::D2D1_GRADIENT_STOP>(straightAlphaGradientStops[i]);
-            }
-
             HRESULT hr = S_OK;
+            pin_ptr<Direct2DNet::D2D1_GRADIENT_STOP> pStops = &straightAlphaGradientStops[0];
             pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
             hr = ((::ID2D1DeviceContext *)deviceContext->m_pResource)->CreateGradientStopCollection(
-                nativeStops.data(),
+                reinterpret_cast<::D2D1_GRADIENT_STOP *>(pStops),
                 straightAlphaGradientStops->Length,
                 (::D2D1_COLOR_SPACE)((int)preInterpolationSpace),
                 (::D2D1_COLOR_SPACE)((int)postInterpolationSpace),
@@ -46,6 +41,16 @@ namespace D2DNet
             m_gamma = (Direct2DNet::D2D1_GAMMA)((int)((::ID2D1GradientStopCollection1 *)m_pResource)->GetColorInterpolationGamma());
 
             m_extendMode = extendMode;
+        }
+
+        void ID2D1GradientStopCollection1::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1GradientStopCollection::HandleCOMInterface(obj);
+
+            m_preInterpolationSpace = (Direct2DNet::D2D1_COLOR_SPACE)((int)((::ID2D1GradientStopCollection1 *)m_pResource)->GetPreInterpolationSpace());
+            m_postInterpolationSpace = (Direct2DNet::D2D1_COLOR_SPACE)((int)((::ID2D1GradientStopCollection1 *)m_pResource)->GetPostInterpolationSpace());
+            m_bufferPrecision = (Direct2DNet::D2D1_BUFFER_PRECISION)((int)((::ID2D1GradientStopCollection1 *)m_pResource)->GetBufferPrecision());
+            m_colorInterpolationMode = (Direct2DNet::D2D1_COLOR_INTERPOLATION_MODE)((int)((::ID2D1GradientStopCollection1 *)m_pResource)->GetColorInterpolationMode());
         }
 
     }

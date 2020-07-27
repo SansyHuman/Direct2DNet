@@ -341,6 +341,10 @@ namespace D2DNet
             GCHandle m_setPrimitiveBlend1;
 
         protected:
+            /// <summary>
+            /// The basic constructor of ID2D1CommandSink1. You should call this ctor when you
+            /// implement the command sink
+            /// </summary>
             ID2D1CommandSink1();
 
         internal:

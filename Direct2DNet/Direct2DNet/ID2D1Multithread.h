@@ -20,6 +20,8 @@ namespace D2DNet
             ::ID2D1Multithread *m_pThread;
 
         internal:
+            ID2D1Multithread() : m_pThread(nullptr) {}
+
             ID2D1Multithread(::ID2D1Multithread *pThread);
 
         public:
@@ -35,6 +37,8 @@ namespace D2DNet
                     return m_pThread;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             /// <summary>
             /// Gets whether the D2D factory was created with

@@ -36,6 +36,8 @@ namespace D2DNet
             float m_dpiY;
 
         internal:
+            ID2D1Bitmap() : Direct2DNet::ID2D1Image() {}
+
             ID2D1Bitmap(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Bitmap *pBitmap);
 
             ID2D1Bitmap(
@@ -68,6 +70,8 @@ namespace D2DNet
             void UpdateBitmapInfo();
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets the size of the bitmap in resolution independent units.
             /// </summary>

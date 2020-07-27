@@ -15,7 +15,11 @@ namespace D2DNet
 {
     namespace DWriteNet
     {
+        // Done.
+
         ref class IDWriteFontFamily;
+        ref class IDWriteFontFace;
+        ref class IDWriteFont;
 
         /// <summary>
         /// The IDWriteFontCollection encapsulates a collection of font families.
@@ -25,6 +29,8 @@ namespace D2DNet
         {
         internal:
             ::IDWriteFontCollection *m_pCollection;
+
+            IDWriteFontCollection() : m_pCollection(nullptr) {}
 
             IDWriteFontCollection(::IDWriteFontCollection *pCollection) : m_pCollection(pCollection) {}
 
@@ -39,6 +45,8 @@ namespace D2DNet
                     return m_pCollection;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             property UINT32 FontFamilyCount
             {
@@ -100,7 +108,36 @@ namespace D2DNet
                 System::String ^familyName
             );
 
-            // GetFontFromFontFace
+            /// <summary>
+            /// Gets the font object that corresponds to the same physical font as the specified font
+            /// face object. The specified physical font must belong to the font collection.
+            /// </summary>
+            /// <param name="fontFace">Font face object that specifies the physical font.</param>
+            /// <param name="font">Receives the newly created font object if successful or null otherwise
+            /// (out parameter).</param>
+            /// <returns>
+            /// Standard HRESULT error code. If the specified physical font is not part of the font
+            /// collection the return value is DWRITE_E_NOFONT.
+            /// </returns>
+            HRESULT GetFontFromFontFace(
+                DWriteNet::IDWriteFontFace ^fontFace,
+                [OutAttribute] DWriteNet::IDWriteFont ^%font
+            );
+
+            /// <summary>
+            /// Gets the font object that corresponds to the same physical font as the specified font
+            /// face object. The specified physical font must belong to the font collection.
+            /// </summary>
+            /// <param name="fontFace">Font face object that specifies the physical font.</param>
+            /// <returns>
+            /// (HRESULT, <see cref="DWriteNet::IDWriteFontFace"/>) tuple. HRESULT is an error code. If
+            /// the specified physical font is not part of the font collection HRESULT is DWRITE_E_NOFONT.
+            /// <see cref="DWriteNet::IDWriteFontFace"/> is the newly created font object if successful or null
+            /// otherwise.
+            /// </returns>
+            System::ValueTuple<HRESULT, DWriteNet::IDWriteFont ^>GetFontFromFontFace(
+                DWriteNet::IDWriteFontFace ^fontFace
+            );
         };
     }
 }

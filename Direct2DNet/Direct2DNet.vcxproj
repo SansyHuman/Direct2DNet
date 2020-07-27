@@ -204,9 +204,12 @@
     <ClInclude Include="DWriteNet\DWNetHeaders.h" />
     <ClInclude Include="DWriteNet\DWNet_core.h" />
     <ClInclude Include="DWriteNet\DWNet_font.h" />
+    <ClInclude Include="DWriteNet\DWNet_glyph.h" />
     <ClInclude Include="DWriteNet\DWNet_text.h" />
+    <ClInclude Include="DWriteNet\DWriteError.h" />
     <ClInclude Include="DWriteNet\DWriteSettings.h" />
     <ClInclude Include="DWriteNet\IDirectWriteObject.h" />
+    <ClInclude Include="DWriteNet\IDWriteBitmapRenderTarget.h" />
     <ClInclude Include="DWriteNet\IDWriteFactory.h" />
     <ClInclude Include="DWriteNet\IDWriteFont.h" />
     <ClInclude Include="DWriteNet\IDWriteFontCollection.h" />
@@ -214,14 +217,23 @@
     <ClInclude Include="DWriteNet\IDWriteFontFamily.h" />
     <ClInclude Include="DWriteNet\IDWriteFontFile.h" />
     <ClInclude Include="DWriteNet\IDWriteFontList.h" />
+    <ClInclude Include="DWriteNet\IDWriteGdiInterop.h" />
+    <ClInclude Include="DWriteNet\IDWriteGlyphRunAnalysis.h" />
+    <ClInclude Include="DWriteNet\IDWriteInlineObject.h" />
     <ClInclude Include="DWriteNet\IDWriteLocalizedStrings.h" />
+    <ClInclude Include="DWriteNet\IDWriteNumberSubstitution.h" />
     <ClInclude Include="DWriteNet\IDWriteRenderingParams.h" />
+    <ClInclude Include="DWriteNet\IDWriteTextAnalysisSink.h" />
+    <ClInclude Include="DWriteNet\IDWriteTextAnalysisSource.h" />
+    <ClInclude Include="DWriteNet\IDWriteTextAnalyzer.h" />
     <ClInclude Include="DWriteNet\IDWriteTextFormat.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="DWriteNet\IDWriteTextLayout.h" />
+    <ClInclude Include="DWriteNet\IDWriteTypography.h" />
     <ClInclude Include="DXCommonSettings.h" />
     <ClInclude Include="DXGINet\DXGIError.h" />
     <ClInclude Include="DXGINet\DXGINetHeaders.h" />
@@ -286,6 +298,9 @@
     <ClCompile Include="Direct3D11Net\ID3D11DeviceChild.cpp" />
     <ClCompile Include="Direct3D11Net\ID3D11DeviceContext.cpp" />
     <ClCompile Include="DWriteNet\DirectWrite.cpp" />
+    <ClCompile Include="DWriteNet\DWriteError.cpp" />
+    <ClCompile Include="DWriteNet\DWriteSettings.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteBitmapRenderTarget.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFactory.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFont.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFontCollection.cpp" />
@@ -293,9 +308,18 @@
     <ClCompile Include="DWriteNet\IDWriteFontFamily.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFontFile.cpp" />
     <ClCompile Include="DWriteNet\IDWriteFontList.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteGdiInterop.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteGlyphRunAnalysis.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteInlineObject.cpp" />
     <ClCompile Include="DWriteNet\IDWriteLocalizedStrings.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteNumberSubstitution.cpp" />
     <ClCompile Include="DWriteNet\IDWriteRenderingParams.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteTextAnalysisSink.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteTextAnalysisSource.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteTextAnalyzer.cpp" />
     <ClCompile Include="DWriteNet\IDWriteTextFormat.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteTextLayout.cpp" />
+    <ClCompile Include="DWriteNet\IDWriteTypography.cpp" />
     <ClCompile Include="DXCommonSettings.cpp" />
     <ClCompile Include="DXGINet\DXGIError.cpp" />
     <ClCompile Include="DXGINet\IDXGIAdapter.cpp" />
@@ -305,6 +329,7 @@
     <ClCompile Include="DXGINet\IDXGISurface.cpp" />
     <ClCompile Include="DXGINet\IDXGISwapChain.cpp" />
     <ClCompile Include="GUIDs.cpp" />
+    <ClCompile Include="IUnknown.cpp" />
     <Text Include="..\LICENSE">
       <FileType>Text</FileType>
     </Text>

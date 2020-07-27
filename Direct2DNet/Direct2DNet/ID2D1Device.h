@@ -29,6 +29,8 @@ namespace D2DNet
         public ref class ID2D1Device : Direct2DNet::ID2D1Resource
         {
         internal:
+            ID2D1Device() : Direct2DNet::ID2D1Resource() {}
+
             ID2D1Device(Direct2DNet::ID2D1Factory1 ^factory, DXGINet::IDXGIDevice ^device);
             ID2D1Device(
                 DXGINet::IDXGIDevice ^device,

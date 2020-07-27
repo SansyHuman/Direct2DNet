@@ -23,6 +23,8 @@ namespace D2DNet
             array<Direct2DNet::ID2D1Geometry ^> ^m_geometries;
 
         internal:
+            ID2D1GeometryGroup() : Direct2DNet::ID2D1Geometry() {}
+
             ID2D1GeometryGroup(
                 Direct2DNet::ID2D1Factory ^factory,
                 Direct2DNet::D2D1_FILL_MODE fillMode,
@@ -30,6 +32,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets the fill mode of the geometry group.
             /// </summary>

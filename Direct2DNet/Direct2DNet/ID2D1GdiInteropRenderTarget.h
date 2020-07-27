@@ -21,6 +21,7 @@ namespace D2DNet
         internal:
             ::ID2D1GdiInteropRenderTarget *m_pRenderTarget;
 
+            ID2D1GdiInteropRenderTarget() : m_pRenderTarget(nullptr) {}
             ID2D1GdiInteropRenderTarget(::ID2D1GdiInteropRenderTarget *pRenderTarget) : m_pRenderTarget(pRenderTarget) {}
 
         public:
@@ -34,6 +35,8 @@ namespace D2DNet
                     return m_pRenderTarget;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             /// <summary>
             /// Retrieves the device context associated with this render target.

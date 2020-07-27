@@ -13,8 +13,11 @@ namespace D2DNet
 {
     namespace DWriteNet
     {
+        // Done.
+
         ref class IDWriteFontFamily;
         ref class IDWriteLocalizedStrings;
+        ref class IDWriteFontFace;
 
         /// <summary>
         /// The IDWriteFont interface represents a physical font in a font collection.
@@ -28,10 +31,14 @@ namespace D2DNet
         internal:
             ::IDWriteFont *m_pFont;
 
+            IDWriteFont() : m_pFont(nullptr) {}
+
             IDWriteFont(
                 ::IDWriteFont *pFont,
                 DWriteNet::IDWriteFontFamily ^fontFamily
             );
+
+            IDWriteFont(::IDWriteFont *pFont);
 
         public:
             ~IDWriteFont();
@@ -44,6 +51,8 @@ namespace D2DNet
                     return m_pFont;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             /// <summary>
             /// Gets the font family to which the specified font belongs.
@@ -213,7 +222,13 @@ namespace D2DNet
                 UINT32 unicodeValue
             );
 
-            // CreateFontFace
+            /// <summary>
+            /// Creates a font face object for the font.
+            /// </summary>
+            /// <exception cref="DWriteNet::Exception::DWriteException">
+            /// Thrown when it failed to create the face.
+            /// </exception>
+            DWriteNet::IDWriteFontFace ^CreateFontFace();
         };
     }
 }

@@ -23,6 +23,8 @@ namespace D2DNet
             array<float> ^m_dashes;
 
         internal:
+            ID2D1StrokeStyle() : Direct2DNet::ID2D1Resource() {}
+
             ID2D1StrokeStyle(
                 Direct2DNet::ID2D1Factory ^factory,
                 Direct2DNet::D2D1_STROKE_STYLE_PROPERTIES %properties,
@@ -43,6 +45,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets the start cap style.
             /// </summary>

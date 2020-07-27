@@ -33,6 +33,8 @@ namespace D2DNet
         public ref class ID2D1Factory1 : Direct2DNet::ID2D1Factory
         {
         internal:
+            ID2D1Factory1() : Direct2DNet::ID2D1Factory() {}
+
             // Called by CreateDevice.
             ID2D1Factory1(::ID2D1Factory1 *pFactory);
 
@@ -147,10 +149,21 @@ namespace D2DNet
             /// properties will be set to a default value since an effect is not instantiated to
             /// implement the returned property interface.
             /// </summary>
-             /// <exception cref="Direct2DNet::Exception::DxException">
-            /// Thrown when it failed to get the properties.
-            /// </exception>
-            Direct2DNet::ID2D1Properties ^GetEffectProperties(
+            HRESULT GetEffectProperties(
+                [InAttribute][IsReadOnlyAttribute] System::Guid %effectId,
+                [OutAttribute] Direct2DNet::ID2D1Properties ^%properties
+            );
+
+            /// <summary>
+            /// This retrieves the effect properties for the given effect, all of the effect
+            /// properties will be set to a default value since an effect is not instantiated to
+            /// implement the returned property interface.
+            /// </summary>
+            /// (HRESULT, <see cref="Direct2DNet::ID2D1Properties"/>) tuple. HRESULT is an error code.
+            /// <see cref="Direct2DNet::ID2D1Properties"/> is the newly created properties if successful
+            /// or null otherwise.
+            /// </returns>
+            System::ValueTuple<HRESULT, Direct2DNet::ID2D1Properties ^> GetEffectProperties(
                 [InAttribute][IsReadOnlyAttribute] System::Guid %effectId
             );
         };

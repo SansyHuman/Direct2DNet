@@ -11,6 +11,7 @@
 
 #include "DWriteNet/DWNet_core.h"
 #include "DWriteNet/DWNet_font.h"
+#include "DWriteNet/DWNet_glyph.h"
 #include "DWriteNet/DWNet_text.h"
 
 #include "DXCommonSettings.h"
@@ -31,11 +32,13 @@ UID_ ## type = System::Guid(attributeHolder->Value); \
 if(UID_ ## type != D2DNet::DirectX::ToManagedGUID(__uuidof(:: ## type))) \
 { \
     throw gcnew System::Exception("Different Guid"); \
-}
+} \
+uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type ## ::typeid);
 #else
 #define D2DNET_GET_GUID(namespace, type, attributeHolder) \
 attributeHolder = (GuidAttribute ^)System::Attribute::GetCustomAttribute(namespace ## :: ## type ## ::typeid, GuidAttribute::typeid); \
-UID_ ## type = System::Guid(attributeHolder->Value);
+UID_ ## type = System::Guid(attributeHolder->Value); \
+uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type ## ::typeid);
 #endif
 #endif
 
@@ -44,6 +47,7 @@ UID_ ## type = System::Guid(attributeHolder->Value);
     /// </summary>
     public value struct D2DNetGUID abstract sealed
     {
+    public:
         D2DNET_GUID(ID2D1BitmapRenderTarget);
         D2DNET_GUID(ID2D1CommandList);
         D2DNET_GUID(ID2D1CommandSink);
@@ -58,6 +62,7 @@ UID_ ## type = System::Guid(attributeHolder->Value);
         D2DNET_GUID(ID2D1Factory);
         D2DNET_GUID(ID2D1Factory1);
         D2DNET_GUID(ID2D1Factory2);
+        D2DNET_GUID(ID2D1Factory3);
         D2DNET_GUID(ID2D1GdiInteropRenderTarget);
         D2DNET_GUID(ID2D1HwndRenderTarget);
         D2DNET_GUID(ID2D1Layer);
@@ -111,10 +116,12 @@ UID_ ## type = System::Guid(attributeHolder->Value);
         D2DNET_GUID(IDXGISurface);
         D2DNET_GUID(IDXGISwapChain);
 
-        
+
+        D2DNET_GUID(IDWriteBitmapRenderTarget);
         D2DNET_GUID(IDWriteFactory);
+        D2DNET_GUID(IDWriteGdiInterop);
         D2DNET_GUID(IDWriteLocalizedStrings);
-        D2DNET_GUID(IDWriteRenderingParams);
+        D2DNET_GUID(IDWriteRenderingParams);        
 
         D2DNET_GUID(IDWriteFont);
         D2DNET_GUID(IDWriteFontCollection);
@@ -122,11 +129,26 @@ UID_ ## type = System::Guid(attributeHolder->Value);
         D2DNET_GUID(IDWriteFontFamily);
         D2DNET_GUID(IDWriteFontFile);
         D2DNET_GUID(IDWriteFontList);
+        D2DNET_GUID(IDWriteTypography);
 
+        D2DNET_GUID(IDWriteGlyphRunAnalysis);
+
+        D2DNET_GUID(IDWriteInlineObject);
+        D2DNET_GUID(IDWriteNumberSubstitution);
+        D2DNET_GUID(IDWriteTextAnalysisSink);
+        D2DNET_GUID(IDWriteTextAnalysisSource);
+        D2DNET_GUID(IDWriteTextAnalyzer);
         D2DNET_GUID(IDWriteTextFormat);
+        D2DNET_GUID(IDWriteTextLayout);
 
+    internal:
+        static System::Collections::Generic::Dictionary<System::Guid, System::Type ^> ^uidTypePairs;
+
+    public:
         static D2DNetGUID()
         {
+            uidTypePairs = gcnew System::Collections::Generic::Dictionary<System::Guid, System::Type ^>();
+
             GuidAttribute ^guid;
 
             D2DNET_GET_GUID(Direct2DNet, ID2D1BitmapRenderTarget, guid);
@@ -143,6 +165,7 @@ UID_ ## type = System::Guid(attributeHolder->Value);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory2, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1Factory3, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1GdiInteropRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1HwndRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Layer, guid);
@@ -196,9 +219,12 @@ UID_ ## type = System::Guid(attributeHolder->Value);
             D2DNET_GET_GUID(DXGINet, IDXGISurface, guid);
             D2DNET_GET_GUID(DXGINet, IDXGISwapChain, guid);
 
+
+            D2DNET_GET_GUID(DWriteNet, IDWriteBitmapRenderTarget, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFactory, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteGdiInterop, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteLocalizedStrings, guid);
-            D2DNET_GET_GUID(DWriteNet, IDWriteRenderingParams, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteRenderingParams, guid);          
 
             D2DNET_GET_GUID(DWriteNet, IDWriteFont, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFontCollection, guid);
@@ -206,8 +232,17 @@ UID_ ## type = System::Guid(attributeHolder->Value);
             D2DNET_GET_GUID(DWriteNet, IDWriteFontFamily, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFontFile, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFontList, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteTypography, guid);
 
+            D2DNET_GET_GUID(DWriteNet, IDWriteGlyphRunAnalysis, guid);
+
+            D2DNET_GET_GUID(DWriteNet, IDWriteInlineObject, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteNumberSubstitution, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteTextAnalysisSink, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteTextAnalysisSource, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteTextAnalyzer, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteTextFormat, guid);
+            D2DNET_GET_GUID(DWriteNet, IDWriteTextLayout, guid);
         }
     };
 }

@@ -3,6 +3,7 @@
 #include "IDirect2DObject.h"
 #include "D2DNetHeaders.h"
 #include "D2DSettings.h"
+#include "../DWriteNet/DWriteSettings.h"
 
 using namespace System;
 using namespace System::Runtime;
@@ -92,6 +93,9 @@ namespace D2DNet
             fnHrVoid m_popLayer;
 
             ID2D1NativeCommandSink() : m_cRef(1) {}
+            ID2D1NativeCommandSink(const ID2D1NativeCommandSink &) = delete;
+            ID2D1NativeCommandSink(ID2D1NativeCommandSink &&) = delete;
+            ID2D1NativeCommandSink &operator=(const ID2D1NativeCommandSink &) = delete;
 
             STDMETHOD_(ULONG, AddRef)(void) override
             {
@@ -431,6 +435,10 @@ namespace D2DNet
             GCHandle m_popLayer;
 
         protected:
+            /// <summary>
+            /// The basic constructor of ID2D1CommandSink. You should call this ctor when you
+            /// implement the command sink
+            /// </summary>
             ID2D1CommandSink();
 
         internal:
@@ -447,6 +455,8 @@ namespace D2DNet
                     return reinterpret_cast<void *>(m_pSink);
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj) sealed;
 
             virtual bool Equals(System::Object ^other) override;
 
@@ -590,7 +600,7 @@ namespace D2DNet
             ) abstract;
 
             virtual HRESULT SetTransform(
-                Direct2DNet::D2D1_MATRIX_3X2_F transform
+                Direct2DNet::D2D1_MATRIX_3X2_F %transform
             ) abstract;
 
             virtual HRESULT SetPrimitiveBlend(
@@ -602,16 +612,22 @@ namespace D2DNet
             ) abstract;
 
             virtual HRESULT Clear(
-                Direct2DNet::D2D1_COLOR_F color
+                Direct2DNet::D2D1_COLOR_F %color
             ) abstract;
 
             virtual HRESULT Clear() abstract;
 
-            // DrawGlyphRun
+            virtual HRESULT DrawGlyphRun(
+                Direct2DNet::D2D1_POINT_2F %baselineOrigin,
+                DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+                Direct2DNet::ID2D1Brush ^foregroundBrush,
+                DWriteNet::DWRITE_MEASURING_MODE measuringMode,
+                [Optional] System::Nullable<DWriteNet::DWRITE_GLYPH_RUN_DESCRIPTION> glyphRunDescription
+            ) abstract;
 
             virtual HRESULT DrawLine(
-                Direct2DNet::D2D1_POINT_2F point0,
-                Direct2DNet::D2D1_POINT_2F point1,
+                Direct2DNet::D2D1_POINT_2F %point0,
+                Direct2DNet::D2D1_POINT_2F %point1,
                 Direct2DNet::ID2D1Brush ^brush,
                 float strokeWidth,
                 [Optional] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
@@ -625,7 +641,7 @@ namespace D2DNet
             ) abstract;
 
             virtual HRESULT DrawRectangle(
-                Direct2DNet::D2D1_RECT_F rect,
+                Direct2DNet::D2D1_RECT_F %rect,
                 Direct2DNet::ID2D1Brush ^brush,
                 float strokeWidth,
                 [Optional] Direct2DNet::ID2D1StrokeStyle ^strokeStyle
@@ -653,8 +669,6 @@ namespace D2DNet
                 [Optional] System::Nullable<Direct2DNet::D2D1_POINT_2F> targetOffset
             ) abstract;
 
-            // DrawGdiMetafile
-
             virtual HRESULT FillMesh(
                 Direct2DNet::ID2D1Mesh ^mesh,
                 Direct2DNet::ID2D1Brush ^brush
@@ -674,17 +688,17 @@ namespace D2DNet
             ) abstract;
 
             virtual HRESULT FillRectangle(
-                Direct2DNet::D2D1_RECT_F rect,
+                Direct2DNet::D2D1_RECT_F %rect,
                 Direct2DNet::ID2D1Brush ^brush
             ) abstract;
 
             virtual HRESULT PushAxisAlignedClip(
-                Direct2DNet::D2D1_RECT_F clipRect,
+                Direct2DNet::D2D1_RECT_F %clipRect,
                 Direct2DNet::D2D1_ANTIALIAS_MODE antialiasMode
             ) abstract;
 
             virtual HRESULT PushLayer(
-                Direct2DNet::D2D1_LAYER_PARAMETERS1 layerParameters1,
+                Direct2DNet::D2D1_LAYER_PARAMETERS1 %layerParameters1,
                 Direct2DNet::ID2D1Layer ^layer
             ) abstract;
 

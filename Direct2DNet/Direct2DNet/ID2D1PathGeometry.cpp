@@ -106,6 +106,19 @@ namespace D2DNet
             }
         }
 
+        void ID2D1PathGeometry::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Geometry::HandleCOMInterface(obj);
+
+            if(m_pSink)
+            {
+                m_pSink->Release();
+                m_pSink = nullptr;
+            }
+
+            sinkOpened = false;
+        }
+
         HRESULT ID2D1PathGeometry::OpenSink()
         {
             if(sinkOpened)

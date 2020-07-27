@@ -5,11 +5,6 @@ namespace D2DNet
 {
     namespace DWriteNet
     {
-        IDWriteFontFile::IDWriteFontFile(::IDWriteFontFile *pFile) : m_pFile(pFile)
-        {
-            
-        }
-
         IDWriteFontFile::IDWriteFontFile(
             DWriteNet::IDWriteFactory ^factory,
             System::String ^filePath,
@@ -52,6 +47,17 @@ namespace D2DNet
                 m_pFile->Release();
                 m_pFile = nullptr;
             }
+        }
+
+        void IDWriteFontFile::HandleCOMInterface(void *obj)
+        {
+            if(m_pFile)
+            {
+                m_pFile->Release();
+            }
+
+            m_pFile = (::IDWriteFontFile *)obj;
+            m_pFile->AddRef();
         }
 
         HRESULT IDWriteFontFile::GetReferenceKey(

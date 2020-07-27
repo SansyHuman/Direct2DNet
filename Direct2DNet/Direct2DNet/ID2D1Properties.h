@@ -47,6 +47,8 @@ namespace D2DNet
                 }
             }
 
+            virtual void HandleCOMInterface(void *obj);
+
             /// <summary>
             /// Gets the total number of custom properties in this interface.
             /// </summary>

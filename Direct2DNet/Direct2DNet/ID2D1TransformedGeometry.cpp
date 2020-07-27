@@ -23,5 +23,25 @@ namespace D2DNet
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1TransformedGeometry", (int)hr);
         }
+
+        void ID2D1TransformedGeometry::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Geometry::HandleCOMInterface(obj);
+
+            ::ID2D1Geometry *source = __nullptr;
+            ((::ID2D1TransformedGeometry *)m_pResource)->GetSourceGeometry(&source);
+
+            ::ID2D1Factory *factory = __nullptr;
+            source->GetFactory(&factory);
+
+            m_source = gcnew Direct2DNet::ID2D1Geometry(
+                gcnew Direct2DNet::ID2D1Factory(factory), source
+            );
+
+            pin_ptr<Direct2DNet::D2D1_MATRIX_3X2_F> pTransform = &m_transform;
+            ((::ID2D1TransformedGeometry *)m_pResource)->GetTransform(reinterpret_cast<::D2D1_MATRIX_3X2_F *>(pTransform));
+            pTransform = nullptr;
+        }
+
     }
 }

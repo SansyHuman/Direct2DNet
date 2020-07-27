@@ -25,6 +25,8 @@ namespace D2DNet
         public ref class ID2D1DeviceContext1 : Direct2DNet::ID2D1DeviceContext
         {
         internal:
+            ID2D1DeviceContext1() : Direct2DNet::ID2D1DeviceContext() {}
+
             ID2D1DeviceContext1(
                 Direct2DNet::ID2D1Device1 ^device,
                 Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options

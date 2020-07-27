@@ -18,13 +18,14 @@ namespace D2DNet
             Direct3D11Net::ID3D11Device ^m_device;
 
         protected:
+            ID3D11DeviceChild() : m_pChild(nullptr) {}
+
             ID3D11DeviceChild(Direct3D11Net::ID3D11Device ^device);
 
         public:
             ~ID3D11DeviceChild();
             !ID3D11DeviceChild();
 
-        public:
             property void *NativePointer
             {
                 virtual void *get()
@@ -32,6 +33,8 @@ namespace D2DNet
                     return m_pChild;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             property Direct3D11Net::ID3D11Device ^Device
             {

@@ -35,5 +35,10 @@ namespace D2DNet
             }
         }
 
+        void ID2D1GdiMetafileSink::HandleCOMInterface(void *obj)
+        {
+            throw gcnew System::NotSupportedException("It is not supported to change the internal sink since it causes unexpected action.");
+        }
+
     }
 }

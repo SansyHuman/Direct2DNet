@@ -7,10 +7,21 @@
 using namespace System::Runtime::InteropServices;
 using namespace System::Runtime::CompilerServices;
 
+#ifdef GetGlyphIndices
+#undef GetGlyphIndices
+#endif
+
 namespace D2DNet
 {
+    namespace Direct2DNet
+    {
+        ref class ID2D1PathGeometry;
+    }
+
     namespace DWriteNet
     {
+        // Done.
+
         ref class IDWriteFactory;
         ref class IDWriteFontFile;
         ref class IDWriteRenderingParams;
@@ -20,13 +31,17 @@ namespace D2DNet
         /// It contains font face type, appropriate file references and face identification data.
         /// </summary>
         [System::Runtime::InteropServices::GuidAttribute("5f49804d-7024-4d43-bfa9-d25984f53849")]
-        public ref class IDWriteFontFace
+        public ref class IDWriteFontFace : DWriteNet::IDirectWriteObject
         {            
         private:
             array<DWriteNet::IDWriteFontFile ^> ^m_fontFiles;
 
         internal:
             ::IDWriteFontFace *m_pFace;
+
+            IDWriteFontFace() : m_pFace(nullptr) {}
+
+            IDWriteFontFace(::IDWriteFontFace *pFace);
 
             IDWriteFontFace(
                 DWriteNet::IDWriteFactory ^factory,
@@ -48,6 +63,8 @@ namespace D2DNet
                 }
             }
 
+            virtual void HandleCOMInterface(void *obj);
+
             /// <summary>
             /// Obtains the file format type of a font face.
             /// </summary>
@@ -60,12 +77,16 @@ namespace D2DNet
             }
 
             /// <summary>
-            /// Obtains the font files representing a font face.
+            /// Obtains the font files representing a font face. If failed to obtain the font files, then
+            /// this property returns null.
             /// </summary>
             property array<DWriteNet::IDWriteFontFile ^> ^Files
             {
                 array<DWriteNet::IDWriteFontFile ^> ^get()
                 {
+                    if(!m_fontFiles)
+                        return nullptr;
+
                     array<DWriteNet::IDWriteFontFile ^> ^value = gcnew array<DWriteNet::IDWriteFontFile ^> (m_fontFiles->Length);
                     m_fontFiles->CopyTo(value, 0);
                     return value;
@@ -239,10 +260,8 @@ namespace D2DNet
             /// true and rotating the resulting geometry 90 degrees to the right using a transform.</param>
             /// <param name="isRightToLeft">If true, specifies that the advance direction is right to left.
             /// By default, the advance direction is left to right.</param>
-            /// <param name="geometrySink">Pointer to the geometry sink the function calls back to draw
-            /// each element of the geometry. Retrive the internal geometry sink of
-            /// <see cref="Direct2DNet::ID2D1PathGeometry"/> using the property
-            /// <see cref="Direct2DNet::ID2D1PathGeometry::InternalSink"/></param>
+            /// <param name="geometry">Geometry the function calls back to draw each element of the geometry.
+            /// </param>
             /// <param name="glyphAdvances">Optional array of glyph advances in DIPs.</param>
             /// <param name="glyphOffsets">Optional array of glyph offsets.</param>
             /// <returns>
@@ -253,7 +272,7 @@ namespace D2DNet
                 array<UINT16> ^glyphIndices,
                 bool isSideways,
                 bool isRightToLeft,
-                [InAttribute][IsReadOnlyAttribute] System::IntPtr %geometrySink,
+                Direct2DNet::ID2D1PathGeometry ^geometry,
                 [OptionalAttribute] array<float> ^glyphAdvances,
                 [OptionalAttribute] array<DWriteNet::DWRITE_GLYPH_OFFSET> ^glyphOffsets
             );
@@ -414,3 +433,7 @@ namespace D2DNet
         };
     }
 }
+
+#ifndef GetGlyphIndices
+#define GetGlyphIndices GetGlyphIndicesW
+#endif

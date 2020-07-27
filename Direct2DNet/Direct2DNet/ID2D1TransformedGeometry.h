@@ -22,6 +22,8 @@ namespace D2DNet
             Direct2DNet::D2D1_MATRIX_3X2_F m_transform;
 
         internal:
+            ID2D1TransformedGeometry() : Direct2DNet::ID2D1Geometry() {}
+
             ID2D1TransformedGeometry(
                 Direct2DNet::ID2D1Factory ^factory,
                 Direct2DNet::ID2D1Geometry ^source,
@@ -29,6 +31,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets the source geometry used to make the transformed matrix.
             /// </summary>

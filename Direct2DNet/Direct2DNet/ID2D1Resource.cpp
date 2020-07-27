@@ -36,5 +36,22 @@ namespace D2DNet
                 return false;
             }
         }
+
+        void ID2D1Resource::HandleCOMInterface(void *obj)
+        {
+            if(m_pResource)
+            {
+                m_pResource->Release();
+            }
+
+            m_pResource = (::ID2D1Resource *)obj;
+            m_pResource->AddRef();
+
+            ::ID2D1Factory *factory = __nullptr;
+            m_pResource->GetFactory(&factory);
+
+            m_factory = gcnew Direct2DNet::ID2D1Factory(factory);
+        }
+
     }
 }

@@ -11,6 +11,7 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ref class ID2D1DeviceContext;
+        ref class ID2D1Factory1;
 
         /// <summary>
         /// Represents a color context that can be used with an ID2D1Bitmap1 object.
@@ -23,6 +24,8 @@ namespace D2DNet
             array<unsigned char> ^m_profile;
 
         internal:
+            ID2D1ColorContext() : Direct2DNet::ID2D1Resource() {}
+
             ID2D1ColorContext(
                 Direct2DNet::ID2D1DeviceContext ^context,
                 Direct2DNet::D2D1_COLOR_SPACE space,
@@ -34,7 +37,11 @@ namespace D2DNet
                 System::String ^filename
             );
 
+            ID2D1ColorContext(Direct2DNet::ID2D1Factory1 ^factory, ::ID2D1ColorContext *pContext);
+
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets the color space of the color context.
             /// </summary>

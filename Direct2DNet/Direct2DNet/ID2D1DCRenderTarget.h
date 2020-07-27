@@ -24,6 +24,8 @@ namespace D2DNet
         public ref class ID2D1DCRenderTarget : Direct2DNet::ID2D1RenderTarget
         {
         internal:
+            ID2D1DCRenderTarget() : Direct2DNet::ID2D1RenderTarget() {}
+
             ID2D1DCRenderTarget(
                 Direct2DNet::ID2D1Factory ^factory,
                 Direct2DNet::D2D1_RENDER_TARGET_PROPERTIES %properties

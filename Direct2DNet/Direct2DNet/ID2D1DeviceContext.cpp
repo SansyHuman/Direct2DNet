@@ -12,6 +12,7 @@
 #include "ID2D1CommandList.h"
 #include "ID2D1GdiMetafile.h"
 #include "ID2D1Layer.h"
+#include "ID2D1Brush.h"
 #include "../DXGINet/IDXGISurface.h"
 #include "../DXCommonSettings.h"
 
@@ -72,6 +73,34 @@ namespace D2DNet
             m_factory = gcnew Direct2DNet::ID2D1Factory1(pFactory1);
             m_device = gcnew Direct2DNet::ID2D1Device((Direct2DNet::ID2D1Factory1 ^)m_factory, pDevice);
             m_target = gcnew Direct2DNet::ID2D1Image(m_factory, pTargetImage);
+        }
+
+        void ID2D1DeviceContext::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1RenderTarget::HandleCOMInterface(obj);
+
+            ::ID2D1Device *device = __nullptr;
+            ::ID2D1Image *target = __nullptr;
+
+            ((::ID2D1DeviceContext *)m_pResource)->GetDevice(&device);
+            if(!device)
+                m_device = nullptr;
+            else
+            {
+                ::ID2D1Factory1 *factory = __nullptr;
+                device->GetFactory((::ID2D1Factory **)&factory);
+                m_device = gcnew Direct2DNet::ID2D1Device(gcnew Direct2DNet::ID2D1Factory1(factory), device);
+            }
+
+            ((::ID2D1DeviceContext *)m_pResource)->GetTarget(&target);
+            if(!target)
+                m_target = nullptr;
+            else
+            {
+                ::ID2D1Factory *factory = __nullptr;
+                target->GetFactory(&factory);
+                m_target = gcnew Direct2DNet::ID2D1Image(gcnew Direct2DNet::ID2D1Factory(factory), target);
+            }
         }
 
         Direct2DNet::ID2D1Bitmap1 ^ID2D1DeviceContext::CreateBitmap(
@@ -229,6 +258,42 @@ namespace D2DNet
             return hr;
         }
 
+        System::ValueTuple<HRESULT, Direct2DNet::D2D1_RECT_F> ID2D1DeviceContext::GetGlyphRunWorldBounds(
+            Direct2DNet::D2D1_POINT_2F %baselineOrigin,
+            DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+            DWriteNet::DWRITE_MEASURING_MODE measuringMode)
+        {
+            ::D2D1_RECT_F bounds = { 0 };
+
+            HRESULT hr = ((::ID2D1DeviceContext *)m_pResource)->GetGlyphRunWorldBounds(
+                static_cast<::D2D1_POINT_2F>(baselineOrigin),
+                &static_cast<::DWRITE_GLYPH_RUN>(glyphRun),
+                (::DWRITE_MEASURING_MODE)((int)measuringMode),
+                &bounds
+            );
+
+            return System::ValueTuple<HRESULT, Direct2DNet::D2D1_RECT_F>(
+                hr,
+                static_cast<Direct2DNet::D2D1_RECT_F>(bounds)
+                );
+        }
+
+        HRESULT ID2D1DeviceContext::GetGlyphRunWorldBounds(
+            Direct2DNet::D2D1_POINT_2F %baselineOrigin,
+            DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+            DWriteNet::DWRITE_MEASURING_MODE measuringMode,
+            Direct2DNet::D2D1_RECT_F %bounds)
+        {
+            pin_ptr<Direct2DNet::D2D1_RECT_F> pBounds = &bounds;
+
+            return ((::ID2D1DeviceContext *)m_pResource)->GetGlyphRunWorldBounds(
+                static_cast<::D2D1_POINT_2F>(baselineOrigin),
+                &static_cast<::DWRITE_GLYPH_RUN>(glyphRun),
+                (::DWRITE_MEASURING_MODE)((int)measuringMode),
+                reinterpret_cast<::D2D1_RECT_F *>(pBounds)
+            );
+        }
+
         Direct2DNet::ID2D1Image ^ID2D1DeviceContext::Target::get()
         {
             return m_target;
@@ -245,6 +310,31 @@ namespace D2DNet
 
             ((::ID2D1DeviceContext *)m_pResource)->SetTarget((::ID2D1Image *)value->m_pResource);
             m_target = value;
+        }
+
+        void ID2D1DeviceContext::DrawGlyphRun(
+            Direct2DNet::D2D1_POINT_2F %baselineOrigin,
+            DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+            Direct2DNet::ID2D1Brush ^foregroundBrush, 
+            System::Nullable<DWriteNet::DWRITE_GLYPH_RUN_DESCRIPTION> glyphRunDescription, 
+            System::Nullable<DWriteNet::DWRITE_MEASURING_MODE> measuringMode)
+        {
+            if(!measuringMode.HasValue)
+                measuringMode = DWriteNet::DWRITE_MEASURING_MODE::NATURAL;
+
+            pin_ptr<DWriteNet::DWRITE_GLYPH_RUN_DESCRIPTION> pDesc = nullptr;
+            if(glyphRunDescription.HasValue)
+                pDesc = &glyphRunDescription.Value;
+
+            ((::ID2D1DeviceContext *)m_pResource)->DrawGlyphRun(
+                static_cast<::D2D1_POINT_2F>(baselineOrigin),
+                &static_cast<::DWRITE_GLYPH_RUN>(glyphRun),
+                reinterpret_cast<::DWRITE_GLYPH_RUN_DESCRIPTION *>(pDesc),
+                (::ID2D1Brush *)foregroundBrush->m_pResource,
+                (::DWRITE_MEASURING_MODE)((int)measuringMode.Value)
+            );
+
+            pDesc = nullptr;
         }
 
         void ID2D1DeviceContext::DrawImage(

@@ -15,6 +15,7 @@
 #include "ID2D1DrawingStateBlock.h"
 #include "ID2D1GdiInteropRenderTarget.h"
 #include "../DWriteNet/IDWriteTextFormat.h"
+#include "../DWriteNet/IDWriteTextLayout.h"
 #include "../DWriteNet/IDWriteRenderingParams.h"
 #include "../GUIDs.h"
 #include "../DXCommonSettings.h"
@@ -39,6 +40,19 @@ namespace D2DNet
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1RenderTarget", (int)hr);
+        }
+
+        void ID2D1RenderTarget::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Resource::HandleCOMInterface(obj);
+            
+            ::IDWriteRenderingParams *params = __nullptr;
+            ((::ID2D1RenderTarget *)m_pResource)->GetTextRenderingParams(&params);
+
+            if(!params)
+                m_params = nullptr;
+            else
+                m_params = gcnew DWriteNet::IDWriteRenderingParams(params);
         }
 
         Direct2DNet::ID2D1Bitmap ^ID2D1RenderTarget::CreateBitmap(
@@ -355,13 +369,48 @@ namespace D2DNet
 
             marshal_context context;
 
+            const WCHAR *wtext = context.marshal_as<const WCHAR *>(text);
             ((::ID2D1RenderTarget *)m_pResource)->DrawText(
-                context.marshal_as<const wchar_t *>(text),
-                text->Length,
+                wtext,
+                wcslen(wtext),
                 textFormat->m_pFormat,
                 static_cast<::D2D1_RECT_F>(layoutRect),
                 (::ID2D1Brush *)defaultFillBrush->m_pResource,
                 (::D2D1_DRAW_TEXT_OPTIONS)((int)options.Value),
+                (::DWRITE_MEASURING_MODE)((int)measuringMode.Value)
+            );
+        }
+
+        void ID2D1RenderTarget::DrawTextLayout(
+            Direct2DNet::D2D1_POINT_2F %origin,
+            DWriteNet::IDWriteTextLayout ^textLayout,
+            Direct2DNet::ID2D1Brush ^defaultFillBrush,
+            System::Nullable<Direct2DNet::D2D1_DRAW_TEXT_OPTIONS> options)
+        {
+            if(!options.HasValue)
+                options = Direct2DNet::D2D1_DRAW_TEXT_OPTIONS::NONE;
+
+            ((::ID2D1RenderTarget *)m_pResource)->DrawTextLayout(
+                static_cast<::D2D1_POINT_2F>(origin),
+                (::IDWriteTextLayout *)textLayout->m_pFormat,
+                (::ID2D1Brush *)defaultFillBrush->m_pResource,
+                (::D2D1_DRAW_TEXT_OPTIONS)((int)options.Value)
+            );
+        }
+
+        void ID2D1RenderTarget::DrawGlyphRun(
+            Direct2DNet::D2D1_POINT_2F %baselineOrigin,
+            DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+            Direct2DNet::ID2D1Brush ^foregroundBrush,
+            System::Nullable<D2DNet::DWriteNet::DWRITE_MEASURING_MODE> measuringMode)
+        {
+            if(!measuringMode.HasValue)
+                measuringMode = D2DNet::DWriteNet::DWRITE_MEASURING_MODE::NATURAL;
+
+            ((::ID2D1RenderTarget *)m_pResource)->DrawGlyphRun(
+                static_cast<::D2D1_POINT_2F>(baselineOrigin),
+                &static_cast<::DWRITE_GLYPH_RUN>(glyphRun),
+                (::ID2D1Brush *)foregroundBrush->m_pResource,
                 (::DWRITE_MEASURING_MODE)((int)measuringMode.Value)
             );
         }

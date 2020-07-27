@@ -1,8 +1,16 @@
 #include "IDWriteFactory.h"
 #include "IDWriteFontCollection.h"
 #include "IDWriteFontFile.h"
+#include "IDWriteFontFace.h"
 #include "IDWriteRenderingParams.h"
 #include "IDWriteTextFormat.h"
+#include "IDWriteTypography.h"
+#include "IDWriteGdiInterop.h"
+#include "IDWriteTextLayout.h"
+#include "IDWriteInlineObject.h"
+#include "IDWriteTextAnalyzer.h"
+#include "IDWriteNumberSubstitution.h"
+#include "IDWriteGlyphRunAnalysis.h"
 
 namespace D2DNet
 {
@@ -41,7 +49,19 @@ namespace D2DNet
             return gcnew DWriteNet::IDWriteFactory(factoryType);
         }
 
-        DWriteNet::IDWriteFontCollection ^IDWriteFactory::GetSystemFontCollection(
+        void IDWriteFactory::HandleCOMInterface(void *obj)
+        {
+            if(m_pFactory)
+            {
+                m_pFactory->Release();
+            }
+
+            m_pFactory = (::IDWriteFactory *)obj;
+            m_pFactory->AddRef();
+        }
+
+        HRESULT IDWriteFactory::GetSystemFontCollection(
+            DWriteNet::IDWriteFontCollection ^%fontCollection,
             System::Nullable<bool> checkForUpdates)
         {
             if(!checkForUpdates.HasValue)
@@ -55,9 +75,36 @@ namespace D2DNet
             );
 
             if(FAILED(hr))
-                throw gcnew Direct2DNet::Exception::DxException("Failed to get IDWriteFontCollection.", (int)hr);
+            {
+                fontCollection = nullptr;
+                return hr;
+            }
 
-            return gcnew DWriteNet::IDWriteFontCollection(pCollection);
+            fontCollection = gcnew DWriteNet::IDWriteFontCollection(pCollection);
+            return hr;
+        }
+
+        System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^> IDWriteFactory::GetSystemFontCollection(System::Nullable<bool> checkForUpdates)
+        {
+            if(!checkForUpdates.HasValue)
+                checkForUpdates = false;
+
+            ::IDWriteFontCollection *pCollection = __nullptr;
+
+            HRESULT hr = m_pFactory->GetSystemFontCollection(
+                &pCollection,
+                System::Convert::ToInt32(checkForUpdates.Value)
+            );
+
+            if(FAILED(hr))
+            {
+                return System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^>(hr, nullptr);
+            }
+
+            return System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^>(
+                hr,
+                gcnew DWriteNet::IDWriteFontCollection(pCollection)
+                );
         }
 
         DWriteNet::IDWriteFontFile ^IDWriteFactory::CreateFontFileReference(
@@ -65,6 +112,15 @@ namespace D2DNet
             System::Nullable<InteropServices::ComTypes::FILETIME> lastWriteTime)
         {
             return gcnew DWriteNet::IDWriteFontFile(this, filePath, lastWriteTime);
+        }
+
+        DWriteNet::IDWriteFontFace ^IDWriteFactory::CreateFontFace(
+            DWriteNet::DWRITE_FONT_FACE_TYPE fontFaceType,
+            array<DWriteNet::IDWriteFontFile ^> ^fontFiles,
+            UINT32 faceIndex,
+            DWriteNet::DWRITE_FONT_SIMULATIONS fontFaceSimulationFlags)
+        {
+            return gcnew DWriteNet::IDWriteFontFace(this, fontFaceType, fontFiles, faceIndex, fontFaceSimulationFlags);
         }
 
         DWriteNet::IDWriteRenderingParams ^IDWriteFactory::CreateRenderingParams()
@@ -110,6 +166,85 @@ namespace D2DNet
                 fontStretch,
                 fontSize,
                 localeName
+            );
+        }
+
+        DWriteNet::IDWriteTypography ^IDWriteFactory::CreateTypography()
+        {
+            return gcnew DWriteNet::IDWriteTypography(this);
+        }
+
+        DWriteNet::IDWriteGdiInterop ^IDWriteFactory::GetGdiInterop()
+        {
+            return gcnew DWriteNet::IDWriteGdiInterop(this);
+        }
+
+        DWriteNet::IDWriteTextLayout ^IDWriteFactory::CreateTextLayout(
+            System::String ^string,
+            DWriteNet::IDWriteTextFormat ^textFormat,
+            float maxWidth,
+            float maxHeight)
+        {
+            return gcnew DWriteNet::IDWriteTextLayout(this, string, textFormat, maxWidth, maxHeight);
+        }
+
+        DWriteNet::IDWriteTextLayout ^IDWriteFactory::CreateGdiCompatibleTextLayout(
+            System::String ^string,
+            DWriteNet::IDWriteTextFormat ^textFormat,
+            float layoutWidth,
+            float layoutHeight,
+            float pixelsPerDip,
+            bool useGdiNatural,
+            System::Nullable<DWriteNet::DWRITE_MATRIX> transform)
+        {
+            return gcnew DWriteNet::IDWriteTextLayout(
+                this,
+                string,
+                textFormat,
+                layoutWidth,
+                layoutHeight,
+                pixelsPerDip,
+                useGdiNatural,
+                transform
+            );
+        }
+
+        DWriteNet::IDWriteInlineObject ^IDWriteFactory::CreateEllipsisTrimmingSign(
+            DWriteNet::IDWriteTextFormat ^textFormat)
+        {
+            return gcnew DWriteNet::EllipsisInlineObject(this, textFormat);
+        }
+
+        DWriteNet::IDWriteTextAnalyzer ^IDWriteFactory::CreateTextAnalyzer()
+        {
+            return gcnew DWriteNet::IDWriteTextAnalyzer(this);
+        }
+
+        DWriteNet::IDWriteNumberSubstitution ^IDWriteFactory::CreateNumberSubstitution(
+            DWriteNet::DWRITE_NUMBER_SUBSTITUTION_METHOD substitutionMethod,
+            System::String ^localeName,
+            bool ignoreUserOverride)
+        {
+            return gcnew DWriteNet::IDWriteNumberSubstitution(this, substitutionMethod, localeName, ignoreUserOverride);
+        }
+
+        DWriteNet::IDWriteGlyphRunAnalysis ^IDWriteFactory::CreateGlyphRunAnalysis(
+            DWriteNet::DWRITE_GLYPH_RUN %glyphRun,
+            float pixelsPerDip,
+            DWriteNet::DWRITE_RENDERING_MODE renderingMode,
+            DWriteNet::DWRITE_MEASURING_MODE measuringMode,
+            float baselineOriginX, float baselineOriginY,
+            System::Nullable<DWriteNet::DWRITE_MATRIX> transform)
+        {
+            return gcnew DWriteNet::IDWriteGlyphRunAnalysis(
+                this,
+                glyphRun,
+                pixelsPerDip,
+                renderingMode,
+                measuringMode,
+                baselineOriginX,
+                baselineOriginY,
+                transform
             );
         }
 

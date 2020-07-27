@@ -1,13 +1,14 @@
 #include "ID2D1Effect.h"
 #include "ID2D1DeviceContext.h"
 #include "ID2D1Image.h"
+#include "ID2D1Factory.h"
 
 namespace D2DNet
 {
     namespace Direct2DNet
     {
         ID2D1Effect::ID2D1Effect(Direct2DNet::ID2D1DeviceContext ^deviceContext, System::Guid %effectId)
-            : Direct2DNet::ID2D1Properties(), m_deviceContext(deviceContext)
+            : Direct2DNet::ID2D1Properties(), m_factory(deviceContext->Factory)
         {
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Properties *> ppProperties = &m_pProperties;
@@ -24,6 +25,37 @@ namespace D2DNet
             m_inputs = gcnew array<Direct2DNet::ID2D1Image ^>(inputCount);
         }
 
+        void ID2D1Effect::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Properties::HandleCOMInterface(obj);
+
+            UINT32 inputCount = ((::ID2D1Effect *)m_pProperties)->GetInputCount();
+            m_inputs = gcnew array<Direct2DNet::ID2D1Image ^>(inputCount);
+
+            for(UINT32 i = 0; i < inputCount; i++)
+            {
+                ::ID2D1Image *input = __nullptr;
+                ((::ID2D1Effect *)m_pProperties)->GetInput(i, &input);
+                if(!input)
+                    m_inputs[i] = nullptr;
+                else
+                {
+                    ::ID2D1Factory *factory = __nullptr;
+                    input->GetFactory(&factory);
+                    m_inputs[i] = gcnew Direct2DNet::ID2D1Image(
+                        gcnew Direct2DNet::ID2D1Factory(factory), input
+                    );
+                }
+            }
+
+            ::ID2D1Image *output = __nullptr;
+            ((::ID2D1Effect *)m_pProperties)->GetOutput(&output);
+            ::ID2D1Factory *factory = __nullptr;
+            output->GetFactory(&factory);
+
+            m_factory = gcnew Direct2DNet::ID2D1Factory(factory);
+        }
+
         void ID2D1Effect::SetInput(
             unsigned int index,
             Direct2DNet::ID2D1Image ^input,
@@ -37,7 +69,7 @@ namespace D2DNet
 
             ((::ID2D1Effect *)m_pProperties)->SetInput(
                 index,
-                (::ID2D1Image *)input->m_pResource,
+                input == nullptr ? __nullptr : (::ID2D1Image *)input->m_pResource,
                 System::Convert::ToInt32(invalidate.Value)
             );
             m_inputs[index] = input;
@@ -79,10 +111,7 @@ namespace D2DNet
 
             ((::ID2D1Effect *)m_pProperties)->GetOutput(&pImage);
 
-            if(!pImage)
-                return nullptr;
-
-            return gcnew Direct2DNet::ID2D1Image(m_deviceContext->m_factory, pImage);
+            return gcnew Direct2DNet::ID2D1Image(m_factory, pImage);
         }
 
         void ID2D1Effect::SetInputEffect(

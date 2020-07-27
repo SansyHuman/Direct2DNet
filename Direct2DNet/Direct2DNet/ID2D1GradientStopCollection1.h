@@ -25,6 +25,8 @@ namespace D2DNet
             Direct2DNet::D2D1_COLOR_INTERPOLATION_MODE m_colorInterpolationMode;
 
         internal:
+            ID2D1GradientStopCollection1() : Direct2DNet::ID2D1GradientStopCollection() {}
+
             ID2D1GradientStopCollection1(
                 Direct2DNet::ID2D1DeviceContext ^deviceContext,
                 array<Direct2DNet::D2D1_GRADIENT_STOP> ^straightAlphaGradientStops,
@@ -36,6 +38,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets the color space in which interpolation occurs.
             /// </summary>

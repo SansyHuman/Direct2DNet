@@ -27,6 +27,8 @@ namespace D2DNet
             Direct2DNet::D2D1_EXTEND_MODE m_extendMode;
 
         internal:
+            ID2D1GradientStopCollection() : Direct2DNet::ID2D1Resource() {}
+
             ID2D1GradientStopCollection(
                 Direct2DNet::ID2D1RenderTarget ^renderTarget,
                 array<Direct2DNet::D2D1_GRADIENT_STOP> ^gradientStops,
@@ -40,6 +42,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets the copy of gradient stops.
             /// </summary>

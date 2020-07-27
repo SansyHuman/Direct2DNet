@@ -39,6 +39,19 @@ namespace D2DNet
             }
         }
 
+        void ID2D1Mesh::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Resource::HandleCOMInterface(obj);
+
+            if(m_pSink)
+            {
+                m_pSink->Release();
+                m_pSink = nullptr;
+            }
+
+            sinkOpened = false;
+        }
+
         HRESULT ID2D1Mesh::OpenSink()
         {
             if(sinkOpened)

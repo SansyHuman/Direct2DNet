@@ -24,6 +24,17 @@ namespace D2DNet
             }
         }
 
+        void IDXGIDevice::HandleCOMInterface(void *obj)
+        {
+            if(m_pDevice)
+            {
+                m_pDevice->Release();
+            }
+
+            m_pDevice = (::IDXGIDevice *)obj;
+            m_pDevice->AddRef();
+        }
+
         DXGINet::IDXGIAdapter ^IDXGIDevice::GetAdapter()
         {
             ::IDXGIAdapter *pAdapter = __nullptr;

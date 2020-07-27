@@ -59,35 +59,41 @@ namespace D2DNet
             HRESULT hr = S_OK;
 
             ::IWICBitmapDecoder *pDecoder = __nullptr;
-            pin_ptr<::IWICBitmapDecoder *> ppDecoder = &pDecoder;
-            hr = m_pFactory->CreateDecoderFromFilename(uri, __nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, (::IWICBitmapDecoder **)ppDecoder);
-            ppDecoder = nullptr;
-
-            if(FAILED(hr))
-                return hr;
-
             ::IWICBitmapFrameDecode *pSource = __nullptr;
-            pin_ptr<::IWICBitmapFrameDecode *> ppSource = &pSource;
-            hr = pDecoder->GetFrame(0, (::IWICBitmapFrameDecode **)ppSource);
-            ppSource = nullptr;
+            ::IWICFormatConverter *pConverter = __nullptr;
+
+            hr = m_pFactory->CreateDecoderFromFilename(uri, __nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &pDecoder);
 
             if(FAILED(hr))
-                return hr;
+                goto RES_REL;
 
-            ::IWICFormatConverter *pConverter = __nullptr;
+            hr = pDecoder->GetFrame(0, &pSource);
+
+            if(FAILED(hr))
+                goto RES_REL;
+
             pin_ptr<::IWICFormatConverter *> ppConverter = &pConverter;
             m_pFactory->CreateFormatConverter((::IWICFormatConverter **)ppConverter);
             ppConverter = nullptr;
 
             if(FAILED(hr))
-                return hr;
+                goto RES_REL;
 
             hr = pConverter->Initialize(pSource, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, __nullptr, 0.0f, WICBitmapPaletteTypeMedianCut);
 
             if(FAILED(hr))
-                return hr;
+                goto RES_REL;
 
             hr = pRenderTarget->CreateBitmapFromWicBitmap(pConverter, __nullptr, ppBitmap);
+
+        RES_REL:
+            if(pDecoder)
+                pDecoder->Release();
+            if(pSource)
+                pSource->Release();
+            if(pConverter)
+                pConverter->Release();
+
             return hr;
         }
 

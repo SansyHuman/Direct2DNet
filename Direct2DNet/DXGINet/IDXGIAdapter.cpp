@@ -1,5 +1,6 @@
 #include "IDXGIAdapter.h"
 #include "IDXGIFactory.h"
+#include "../GUIDs.h"
 
 namespace D2DNet
 {
@@ -24,9 +25,20 @@ namespace D2DNet
             }
         }
 
+        void IDXGIAdapter::HandleCOMInterface(void *obj)
+        {
+            if(m_pAdapter)
+            {
+                m_pAdapter->Release();
+            }
+
+            m_pAdapter = (::IDXGIAdapter *)obj;
+            m_pAdapter->AddRef();
+        }
+
         DXGINet::IDXGIFactory ^IDXGIAdapter::GetParentFactory(System::Guid %guid)
         {
-            if(guid == D2DNet::D2DNetGUID::UID_IDXGIFactory)
+            if(guid == D2DNetGUID::UID_IDXGIFactory)
             {
                 ::IDXGIFactory *pFactory = __nullptr;
                 HRESULT hr = m_pAdapter->GetParent(__uuidof(::IDXGIFactory), (void **)&pFactory);
@@ -40,7 +52,7 @@ namespace D2DNet
             else
             {
                 throw gcnew D2DNet::Direct2DNet::Exception::DxException(
-                    "Failed to get parent IDXGIFactory", (int)DXGI_ERROR_INVALID_CALL);
+                    "Failed to get parent IDXGIFactory", DXGI_ERROR_INVALID_CALL);
             }
         }
 

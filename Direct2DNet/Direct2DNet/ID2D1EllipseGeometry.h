@@ -21,9 +21,13 @@ namespace D2DNet
             Direct2DNet::D2D1_ELLIPSE m_ellipse;
 
         internal:
+            ID2D1EllipseGeometry() : Direct2DNet::ID2D1Geometry() {}
+
             ID2D1EllipseGeometry(Direct2DNet::ID2D1Factory ^factory, Direct2DNet::D2D1_ELLIPSE %ellipse);
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             property Direct2DNet::D2D1_ELLIPSE Ellipse
             {
                 Direct2DNet::D2D1_ELLIPSE get()

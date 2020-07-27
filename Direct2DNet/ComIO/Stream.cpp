@@ -26,7 +26,15 @@ namespace D2DNet
             ppStream = nullptr;
 
             if(FAILED(hr))
+            {
+                if(m_pRandomStream)
+                {
+                    m_pRandomStream->Release();
+                    m_pRandomStream = nullptr;
+                }
+
                 InteropServices::Marshal::ThrowExceptionForHR(hr);
+            }
         }
 
         Stream::~Stream()

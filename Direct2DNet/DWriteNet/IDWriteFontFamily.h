@@ -14,19 +14,25 @@ namespace D2DNet
 {
     namespace DWriteNet
     {
+        // Done.
+
         ref class IDWriteFontCollection;
         ref class IDWriteLocalizedStrings;
         ref class IDWriteFont;
 
         /// <summary>
-        /// The IDWriteFontFamily interface represents a set of fonts that share the same design but are differentiated
-        /// by weight, stretch, and style.
+        /// The IDWriteFontFamily interface represents a set of fonts that share the same design but
+        /// are differentiated by weight, stretch, and style.
         /// </summary>
         [System::Runtime::InteropServices::GuidAttribute("da20d8ef-812a-4c43-9802-62ec4abd7add")]
         public ref class IDWriteFontFamily : DWriteNet::IDWriteFontList
         {
         internal:
+            IDWriteFontFamily() : DWriteNet::IDWriteFontList() {}
+
             IDWriteFontFamily(::IDWriteFontFamily *pFamily, DWriteNet::IDWriteFontCollection ^fontCollection);
+
+            IDWriteFontFamily(::IDWriteFontFamily *pFamily);
 
         public:
 

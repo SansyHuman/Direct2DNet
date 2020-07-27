@@ -29,6 +29,8 @@ namespace D2DNet
             Direct2DNet::D2D1_BITMAP_OPTIONS m_options;
 
         internal:
+            ID2D1Bitmap1() : Direct2DNet::ID2D1Bitmap() {}
+
             ID2D1Bitmap1(
                 Direct2DNet::ID2D1DeviceContext ^deviceContext,
                 Direct2DNet::D2D1_SIZE_U %size,
@@ -44,6 +46,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets the color context information associated with the bitmap.
             /// </summary>

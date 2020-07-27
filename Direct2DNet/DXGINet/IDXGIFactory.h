@@ -21,14 +21,16 @@ namespace D2DNet
         internal:
             ::IDXGIFactory *m_pFactory;
 
-        public:
             // Called by IDXGIAdapter::GetParentFactory
             IDXGIFactory(::IDXGIFactory *pFactory);
+            IDXGIFactory(int);
+            IDXGIFactory() : m_pFactory(nullptr) {}
 
-        public:
-            IDXGIFactory();
+        public:          
             ~IDXGIFactory();
             !IDXGIFactory();
+
+            DXGINet::IDXGIFactory ^CreateFactory();
 
             property void *NativePointer
             {
@@ -37,6 +39,8 @@ namespace D2DNet
                     return m_pFactory;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             // EnumAdapters
 

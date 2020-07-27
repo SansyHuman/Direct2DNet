@@ -38,6 +38,22 @@ namespace D2DNet
                 }
             }
 
+            virtual void HandleCOMInterface(void *obj)
+            {
+                if(m_pRandomStream)
+                {
+                    m_pRandomStream->Release();
+                    m_pRandomStream = nullptr;
+                }
+                if(m_pStream)
+                {
+                    m_pStream->Release();
+                }
+
+                m_pStream = (::IStream *)obj;
+                m_pStream->AddRef();
+            }
+
             HRESULT Read(
                 array<BYTE> ^pv,
                 ULONG cb,

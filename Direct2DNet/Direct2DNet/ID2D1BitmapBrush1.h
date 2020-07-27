@@ -15,12 +15,15 @@ namespace D2DNet
         [System::Runtime::InteropServices::GuidAttribute("41343a53-e41a-49a2-91cd-21793bbb62e5")]
         public ref class ID2D1BitmapBrush1 : Direct2DNet::ID2D1BitmapBrush
         {
-        public:
+        internal:
+            ID2D1BitmapBrush1() : Direct2DNet::ID2D1BitmapBrush() {}
+
             ID2D1BitmapBrush1(
                 Direct2DNet::ID2D1DeviceContext ^deviceContext,
                 Direct2DNet::ID2D1Bitmap ^bitmap
             );
 
+        public:
             /// <summary>
             /// Gets and sets the interpolation mode used when this brush is used.
             /// </summary>

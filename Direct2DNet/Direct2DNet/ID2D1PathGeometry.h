@@ -203,6 +203,8 @@ namespace D2DNet
             ::ID2D1GeometrySink *m_pSink;
 
         internal:
+            ID2D1PathGeometry() : Direct2DNet::ID2D1Geometry(), m_pSink(nullptr), sinkOpened(false) {}
+
             ID2D1PathGeometry(Direct2DNet::ID2D1Factory ^factory);
 
         protected:
@@ -212,6 +214,8 @@ namespace D2DNet
         public:
             ~ID2D1PathGeometry();
             !ID2D1PathGeometry();
+
+            virtual void HandleCOMInterface(void *obj) override;
 
             /// <summary>Gets whether the geometry sink of the path is opened.</summary>
             property bool SinkOpened
@@ -223,7 +227,7 @@ namespace D2DNet
             }
 
             /// <summary>Gets the pointer to the internal sink. Use this property when you need
-            /// to pass the sink to the other function(ex. IDWriteFontFace::GetGlyphRunOutline).</summary>
+            /// to pass the sink to the other native d2d functions.</summary>
             property System::IntPtr InternalSink
             {
                 System::IntPtr get()

@@ -30,6 +30,17 @@ namespace D2DNet
             }
         }
 
+        void ID2D1Properties::HandleCOMInterface(void *obj)
+        {
+            if(m_pProperties)
+            {
+                m_pProperties->Release();
+            }
+
+            m_pProperties = (::ID2D1Properties *)obj;
+            m_pProperties->AddRef();
+        }
+
         unsigned int ID2D1Properties::GetPropertyIndex(System::String ^name)
         {
             marshal_context context;

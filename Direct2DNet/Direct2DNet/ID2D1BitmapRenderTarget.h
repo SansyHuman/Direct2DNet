@@ -25,6 +25,8 @@ namespace D2DNet
         public ref class ID2D1BitmapRenderTarget : Direct2DNet::ID2D1RenderTarget
         {
         internal:
+            ID2D1BitmapRenderTarget() : Direct2DNet::ID2D1RenderTarget() {}
+
             ID2D1BitmapRenderTarget(
                 Direct2DNet::ID2D1RenderTarget ^renderTarget,
                 System::Nullable<Direct2DNet::D2D1_SIZE_F> %desiredSize,

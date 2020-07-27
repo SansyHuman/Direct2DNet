@@ -20,13 +20,12 @@ namespace D2DNet
             ::IDXGIDeviceSubObject *m_pSubObject;
 
         protected:
-            IDXGIDeviceSubObject() {}
+            IDXGIDeviceSubObject() : m_pSubObject(nullptr) {}
 
         public:
             ~IDXGIDeviceSubObject();
             !IDXGIDeviceSubObject();
 
-        public:
             property void *NativePointer
             {
                 virtual void *get()
@@ -34,6 +33,8 @@ namespace D2DNet
                     return m_pSubObject;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             DXGINet::IDXGIDevice ^GetDevice(
                 [InteropServices::InAttribute][CompilerServices::IsReadOnlyAttribute] System::Guid %guid

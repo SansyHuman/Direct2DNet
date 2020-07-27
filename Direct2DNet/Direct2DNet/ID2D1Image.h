@@ -21,6 +21,8 @@ namespace D2DNet
             ID2D1Image(Direct2DNet::ID2D1Factory ^factory) : Direct2DNet::ID2D1Resource(factory) {}
 
         internal:
+            ID2D1Image() : Direct2DNet::ID2D1Resource() {}
+
             // Used by ID2D1Effect::GetOutput
             ID2D1Image(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Image *pImage);
         };

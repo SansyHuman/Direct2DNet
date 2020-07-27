@@ -14,6 +14,8 @@ namespace D2DNet
         public ref class ID3D11DeviceContext : Direct3D11Net::ID3D11DeviceChild
         {
         internal:
+            ID3D11DeviceContext() : Direct3D11Net::ID3D11DeviceChild() {}
+
             //Called by ID3D11Device constructor.
             ID3D11DeviceContext(Direct3D11Net::ID3D11Device ^device, ::ID3D11DeviceContext *context);
         };

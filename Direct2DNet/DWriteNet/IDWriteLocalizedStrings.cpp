@@ -18,6 +18,17 @@ namespace D2DNet
             }
         }
 
+        void IDWriteLocalizedStrings::HandleCOMInterface(void *obj)
+        {
+            if(m_pStrings)
+            {
+                m_pStrings->Release();
+            }
+
+            m_pStrings = (::IDWriteLocalizedStrings *)obj;
+            m_pStrings->AddRef();
+        }
+
         HRESULT IDWriteLocalizedStrings::FindLocaleName(
             System::String ^localeName,
             UINT32 %index,

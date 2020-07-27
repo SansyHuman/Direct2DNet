@@ -1,11 +1,18 @@
 #include "IDWriteTextFormat.h"
 #include "IDWriteFactory.h"
 #include "IDWriteFontCollection.h"
+#include "IDWriteInlineObject.h"
 
 namespace D2DNet
 {
     namespace DWriteNet
     {
+        IDWriteTextFormat::IDWriteTextFormat(
+            DWriteNet::IDWriteFactory ^factory)
+        {
+            
+        }
+
         IDWriteTextFormat::IDWriteTextFormat(
             DWriteNet::IDWriteFactory ^factory,
             System::String ^fontFamilyName,
@@ -14,8 +21,7 @@ namespace D2DNet
             DWriteNet::DWRITE_FONT_STRETCH fontStretch,
             float fontSize,
             System::String ^localeName
-        ) : m_fontFamilyName(fontFamilyName), m_fontWeight(fontWeight), m_fontStyle(fontStyle),
-            m_fontStretch(fontStretch), m_fontSize(fontSize)
+        )
         {
             marshal_context context;
 
@@ -35,21 +41,6 @@ namespace D2DNet
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create IDWriteTextFormat.", (int)hr);
-
-            ::IDWriteFontCollection *pCollection = __nullptr;
-            hr = m_pFormat->GetFontCollection(&pCollection);
-            if(FAILED(hr) || !pCollection)
-                m_fontCollection = nullptr;
-            else
-                m_fontCollection = gcnew DWriteNet::IDWriteFontCollection(pCollection);
-
-            UINT32 localeNameLength = m_pFormat->GetLocaleNameLength();
-            std::vector<WCHAR> nLocaleName(localeNameLength + 1);
-            hr = m_pFormat->GetLocaleName(nLocaleName.data(), localeNameLength + 1);
-            if(FAILED(hr))
-                m_localeName = System::String::Empty;
-            else
-                m_localeName = marshal_as<System::String ^>(nLocaleName.data());
         }
 
         IDWriteTextFormat::~IDWriteTextFormat()
@@ -64,6 +55,17 @@ namespace D2DNet
                 m_pFormat->Release();
                 m_pFormat = nullptr;
             }
+        }
+
+        void IDWriteTextFormat::HandleCOMInterface(void *obj)
+        {
+            if(m_pFormat)
+            {
+                m_pFormat->Release();
+            }
+
+            m_pFormat = (::IDWriteTextFormat *)obj;
+            m_pFormat->AddRef();
         }
 
         HRESULT IDWriteTextFormat::SetTextAlignment(DWriteNet::DWRITE_TEXT_ALIGNMENT textAlignment)
@@ -96,9 +98,14 @@ namespace D2DNet
             return m_pFormat->SetIncrementalTabStop(incrementalTabStop);
         }
 
-        HRESULT IDWriteTextFormat::SetTrimming(DWriteNet::DWRITE_TRIMMING %trimmingOptions)
+        HRESULT IDWriteTextFormat::SetTrimming(
+            DWriteNet::DWRITE_TRIMMING %trimmingOptions,
+            DWriteNet::IDWriteInlineObject ^trimmingSign)
         {
-            return m_pFormat->SetTrimming(&static_cast<::DWRITE_TRIMMING>(trimmingOptions), __nullptr);
+            pin_ptr<DWriteNet::DWRITE_TRIMMING> pOptions = &trimmingOptions;
+            return m_pFormat->SetTrimming(
+                reinterpret_cast<::DWRITE_TRIMMING *>(pOptions),
+                trimmingSign == nullptr ? __nullptr : trimmingSign->m_pObject);
         }
 
         HRESULT IDWriteTextFormat::SetLineSpacing(DWriteNet::DWRITE_LINE_SPACING_METHOD lineSpacingMethod, float lineSpacing, float baseline)
@@ -109,9 +116,12 @@ namespace D2DNet
         System::ValueTuple<HRESULT, DWriteNet::DWRITE_TRIMMING> IDWriteTextFormat::GetTrimming()
         {
             ::DWRITE_TRIMMING trimming;
-            ::IDWriteInlineObject *object;
+            ::IDWriteInlineObject *object = __nullptr;
 
             HRESULT hr = m_pFormat->GetTrimming(&trimming, &object);
+
+            if(object)
+                object->Release();
 
             return System::ValueTuple<HRESULT, DWriteNet::DWRITE_TRIMMING>(
                 hr,
@@ -119,14 +129,32 @@ namespace D2DNet
                 );
         }
 
-        HRESULT IDWriteTextFormat::GetTrimming(DWriteNet::DWRITE_TRIMMING %trimming)
+        HRESULT IDWriteTextFormat::GetTrimming(
+            DWriteNet::DWRITE_TRIMMING %trimmingOptions,
+            DWriteNet::IDWriteInlineObject ^%trimmingSign
+        )
         {
-            ::DWRITE_TRIMMING nativeTrimming;
-            ::IDWriteInlineObject *object;
+            pin_ptr<DWriteNet::DWRITE_TRIMMING> pOptions = &trimmingOptions;
+            ::IDWriteInlineObject *object = __nullptr;
 
-            HRESULT hr = m_pFormat->GetTrimming(&nativeTrimming, &object);
+            HRESULT hr = m_pFormat->GetTrimming(
+                reinterpret_cast<::DWRITE_TRIMMING *>(pOptions),
+                &object);
+            pOptions = nullptr;
 
-            trimming = static_cast<DWriteNet::DWRITE_TRIMMING>(nativeTrimming);
+            if(FAILED(hr) || !object)
+                trimmingSign = nullptr;
+            else
+            {
+                System::IntPtr intptr(object);
+                if(!DWriteNet::IDWriteInlineObject::objList->ContainsKey(intptr))
+                {
+                    trimmingSign = nullptr;
+                    return E_FAIL;
+                }
+
+                trimmingSign = DWriteNet::IDWriteInlineObject::objList[intptr];
+            }
 
             return hr;
         }
@@ -159,6 +187,30 @@ namespace D2DNet
             lineSpacingMethod = (DWriteNet::DWRITE_LINE_SPACING_METHOD)((int)method);
 
             return hr;
+        }
+
+        HRESULT IDWriteTextFormat::GetFontCollection(DWriteNet::IDWriteFontCollection ^%fontCollection)
+        {
+            ::IDWriteFontCollection *pCollection = __nullptr;
+            HRESULT hr = m_pFormat->GetFontCollection(&pCollection);
+            if(FAILED(hr) || !pCollection)
+                fontCollection = nullptr;
+            else
+                fontCollection = gcnew DWriteNet::IDWriteFontCollection(pCollection);
+
+            return hr;
+        }
+
+        System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^> IDWriteTextFormat::GetFontCollection()
+        {
+            ::IDWriteFontCollection *pCollection = __nullptr;
+            HRESULT hr = m_pFormat->GetFontCollection(&pCollection);
+            if(FAILED(hr) || !pCollection)
+                return System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^>(hr, nullptr);
+
+            return System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^>(
+                    hr,
+                    gcnew DWriteNet::IDWriteFontCollection(pCollection));
         }
 
     }

@@ -19,6 +19,8 @@ namespace D2DNet
             Direct2DNet::ID2D1Image ^m_image;
 
         internal:
+            ID2D1ImageBrush() : Direct2DNet::ID2D1Brush() {}
+
             ID2D1ImageBrush(
                 Direct2DNet::ID2D1DeviceContext ^deviceContext,
                 Direct2DNet::ID2D1Image ^image,
@@ -26,6 +28,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets and sets the image associated as the source of this brush.
             /// </summary>
@@ -117,15 +121,19 @@ namespace D2DNet
             {
                 Direct2DNet::D2D1_RECT_F get()
                 {
-                    ::D2D1_RECT_F rect;
-                    ((::ID2D1ImageBrush *)m_pResource)->GetSourceRectangle(&rect);
+                    Direct2DNet::D2D1_RECT_F rect;
+                    ((::ID2D1ImageBrush *)m_pResource)->GetSourceRectangle((::D2D1_RECT_F *)&rect);
 
-                    return static_cast<Direct2DNet::D2D1_RECT_F>(rect);
+                    return rect;
                 }
 
                 void set(Direct2DNet::D2D1_RECT_F value)
                 {
-                    ((::ID2D1ImageBrush *)m_pResource)->SetSourceRectangle(&static_cast<::D2D1_RECT_F>(value));
+                    pin_ptr<Direct2DNet::D2D1_RECT_F> pValue = &value;
+                    ((::ID2D1ImageBrush *)m_pResource)->SetSourceRectangle(
+                        reinterpret_cast<::D2D1_RECT_F *>(pValue)
+                    );
+                    pValue = nullptr;
                 }
             }
         };

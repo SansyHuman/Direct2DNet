@@ -19,6 +19,8 @@ namespace D2DNet
         public ref class ID2D1CommandList : Direct2DNet::ID2D1Image
         {
         internal:
+            ID2D1CommandList() : Direct2DNet::ID2D1Image() {}
+
             ID2D1CommandList(Direct2DNet::ID2D1DeviceContext ^deviceContext);
 
         public:

@@ -14,6 +14,7 @@
 #include "ID2D1Factory.h"
 #include "ID2D1Factory1.h"
 #include "ID2D1Factory2.h"
+#include "ID2D1Factory3.h"
 #include "ID2D1GdiInteropRenderTarget.h"
 #include "ID2D1HwndRenderTarget.h"
 #include "ID2D1Layer.h"

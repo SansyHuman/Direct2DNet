@@ -21,6 +21,8 @@ namespace D2DNet
         internal:
             ::IDXGIAdapter *m_pAdapter;
 
+            IDXGIAdapter() : m_pAdapter(nullptr) {}
+
             // Called by IDXGIDevice::GetAdapter
             IDXGIAdapter(::IDXGIAdapter *pAdapter);
 
@@ -36,6 +38,8 @@ namespace D2DNet
                     return m_pAdapter;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             property DXGINet::DXGI_ADAPTER_DESC AdapterDesc
             {

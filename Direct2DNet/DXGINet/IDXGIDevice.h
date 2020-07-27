@@ -17,6 +17,8 @@ namespace D2DNet
         internal:
             ::IDXGIDevice *m_pDevice;
 
+            IDXGIDevice() : m_pDevice(nullptr) {}
+
             // Called By D3D11Device::QueryToIDXGIDevice
             IDXGIDevice(::IDXGIDevice *pDevice);
 
@@ -32,6 +34,8 @@ namespace D2DNet
                     return m_pDevice;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             DXGINet::IDXGIAdapter ^GetAdapter();
         };

@@ -25,6 +25,8 @@ namespace D2DNet
         public ref class ID2D1PathGeometry1 : Direct2DNet::ID2D1PathGeometry
         {
         internal:
+            ID2D1PathGeometry1() : Direct2DNet::ID2D1PathGeometry() {}
+
             ID2D1PathGeometry1(Direct2DNet::ID2D1Factory1 ^factory);
 
         public:

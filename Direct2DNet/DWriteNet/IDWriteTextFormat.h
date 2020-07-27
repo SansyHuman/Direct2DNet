@@ -17,8 +17,9 @@ namespace D2DNet
     {
         ref class IDWriteFactory;
         ref class IDWriteFontCollection;
+        ref class IDWriteInlineObject;
 
-        // TODO: IDWriteInlineObject implementation.
+        // Done.
 
         /// <summary>
         /// The format of text used for text layout.
@@ -29,17 +30,10 @@ namespace D2DNet
         [System::Runtime::InteropServices::GuidAttribute("9c906818-31d7-4fd3-a151-7c5e225db55a")]
         public ref class IDWriteTextFormat : DWriteNet::IDirectWriteObject
         {
-        private:
-            System::String ^m_fontFamilyName;
-            DWriteNet::IDWriteFontCollection ^m_fontCollection;
-            DWriteNet::DWRITE_FONT_WEIGHT m_fontWeight;
-            DWriteNet::DWRITE_FONT_STYLE m_fontStyle;
-            DWriteNet::DWRITE_FONT_STRETCH m_fontStretch;
-            float m_fontSize;
-            System::String ^m_localeName;
-
         internal:
             ::IDWriteTextFormat *m_pFormat;
+
+            IDWriteTextFormat() : m_pFormat(nullptr) {}
 
             IDWriteTextFormat(
                 DWriteNet::IDWriteFactory ^factory,
@@ -49,6 +43,11 @@ namespace D2DNet
                 DWriteNet::DWRITE_FONT_STRETCH fontStretch,
                 float fontSize,
                 System::String ^localeName
+            );
+
+        protected:
+            IDWriteTextFormat(
+                DWriteNet::IDWriteFactory ^factory
             );
 
         public:
@@ -62,6 +61,8 @@ namespace D2DNet
                     return m_pFormat;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             /// <summary>
             /// Set alignment option of text relative to layout box's leading and trailing edge.
@@ -132,11 +133,15 @@ namespace D2DNet
             /// or for any far text exceeding the layout height.
             /// </summary>
             /// <param name="trimmingOptions">Text trimming options.</param>
+            /// <param name="trimmingSign">Application-defined omission sign. This parameter may be null if 
+            /// no trimming sign is desired.</param>
             /// <returns>
             /// Standard HRESULT error code.
             /// </returns>
             HRESULT SetTrimming(
-                [InAttribute][IsReadOnlyAttribute] DWriteNet::DWRITE_TRIMMING %trimmingOptions);
+                [InAttribute][IsReadOnlyAttribute] DWriteNet::DWRITE_TRIMMING %trimmingOptions,
+                [OptionalAttribute] DWriteNet::IDWriteInlineObject ^trimmingSign
+            );
 
             /// <summary>
             /// Set line spacing.
@@ -233,11 +238,16 @@ namespace D2DNet
             /// <summary>
             /// Gets trimming options for text overflowing the layout width.
             /// </summary>
-            /// <param name="trimming">The trimming options(out parameter).</param>
+            /// <param name="trimmingOptions">The trimming options(out parameter).</param>
+            /// <param name="trimmingSign">Trimming omission sign(out parameter). This parameter may be null.
+            /// </param>
             /// <returns>
             /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
             /// </returns>
-            HRESULT GetTrimming([OutAttribute] DWriteNet::DWRITE_TRIMMING %trimming);
+            HRESULT GetTrimming(
+                [OutAttribute] DWriteNet::DWRITE_TRIMMING %trimmingOptions,
+                [OutAttribute] DWriteNet::IDWriteInlineObject ^%trimmingSign
+            );
 
             /// <summary>
             /// Gets line spacing.
@@ -264,18 +274,24 @@ namespace D2DNet
             );
 
             /// <summary>
-            /// Gets the font collection.
+            /// Get the font collection.
+            /// </summary>
+            /// <param name="fontCollection">The current font collection(out parameter).</param>
+            /// <returns>
+            /// Standard HRESULT error code.
+            /// </returns>
+            HRESULT GetFontCollection(
+                [OutAttribute] DWriteNet::IDWriteFontCollection ^%fontCollection
+            );
+
+            /// <summary>
+            /// Get the font collection.
             /// </summary>
             /// <returns>
-            /// The current font collection. null if the error occurs when loading the collection.
+            /// (HRESULT, <see cref="DWriteNet::IDWriteFontCollection"/>) tuple. HRESULT is an error code.
+            /// <see cref="DWriteNet::IDWriteFontCollection"/> is the font collection
             /// </returns>
-            property DWriteNet::IDWriteFontCollection ^FontCollection
-            {
-                DWriteNet::IDWriteFontCollection ^get()
-                {
-                    return m_fontCollection;
-                }
-            }
+            System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^> GetFontCollection();
 
             /// <summary>
             /// Gets the font family name.
@@ -284,7 +300,11 @@ namespace D2DNet
             {
                 System::String ^get()
                 {
-                    return m_fontFamilyName;
+                    UINT32 length = m_pFormat->GetFontFamilyNameLength() + 1;
+                    std::vector<WCHAR> name(length);
+                    m_pFormat->GetFontFamilyName(name.data(), length);
+
+                    return marshal_as<System::String ^>(name.data());
                 }
             }
 
@@ -295,7 +315,7 @@ namespace D2DNet
             {
                 DWriteNet::DWRITE_FONT_WEIGHT get()
                 {
-                    return m_fontWeight;
+                    return (DWriteNet::DWRITE_FONT_WEIGHT)((int)m_pFormat->GetFontWeight());
                 }
             }
 
@@ -306,7 +326,7 @@ namespace D2DNet
             {
                 DWriteNet::DWRITE_FONT_STYLE get()
                 {
-                    return m_fontStyle;
+                    return (DWriteNet::DWRITE_FONT_STYLE)((int)m_pFormat->GetFontStyle());
                 }
             }
 
@@ -317,7 +337,7 @@ namespace D2DNet
             {
                 DWriteNet::DWRITE_FONT_STRETCH get()
                 {
-                    return m_fontStretch;
+                    return (DWriteNet::DWRITE_FONT_STRETCH)((int)m_pFormat->GetFontStretch());
                 }
             }
 
@@ -328,7 +348,7 @@ namespace D2DNet
             {
                 float get()
                 {
-                    return m_fontSize;
+                    return m_pFormat->GetFontSize();
                 }
             }
 
@@ -339,7 +359,11 @@ namespace D2DNet
             {
                 System::String ^get()
                 {
-                    return m_localeName;
+                    UINT32 length = m_pFormat->GetLocaleNameLength() + 1;
+                    std::vector<WCHAR> name(length);
+                    m_pFormat->GetLocaleName(name.data(), length);
+
+                    return marshal_as<System::String ^>(name.data());
                 }
             }
         };

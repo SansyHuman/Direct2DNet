@@ -35,6 +35,17 @@ namespace D2DNet
             }
         }
 
+        void ID2D1Multithread::HandleCOMInterface(void *obj)
+        {
+            if(m_pThread)
+            {
+                m_pThread->Release();
+            }
+
+            m_pThread = (::ID2D1Multithread *)obj;
+            m_pThread->AddRef();
+        }
+
         void ID2D1Multithread::Enter()
         {
             m_pThread->Enter();

@@ -19,9 +19,13 @@ namespace D2DNet
             Direct2DNet::D2D1_ROUNDED_RECT m_rect;
 
         internal:
+            ID2D1RoundedRectangleGeometry() : Direct2DNet::ID2D1Geometry() {}
+
             ID2D1RoundedRectangleGeometry(Direct2DNet::ID2D1Factory ^factory, Direct2DNet::D2D1_ROUNDED_RECT %roundedRectangle);
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             property Direct2DNet::D2D1_ROUNDED_RECT RoundedRect
             {
                 Direct2DNet::D2D1_ROUNDED_RECT get()

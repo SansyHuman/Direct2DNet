@@ -1,5 +1,6 @@
 #include "ID2D1CommandSink.h"
 #include "../DWriteNet/IDWriteRenderingParams.h"
+#include "../DWriteNet/IDWriteFontFace.h"
 #include "ID2D1Brush.h"
 #include "ID2D1Factory.h"
 #include "ID2D1StrokeStyle.h"
@@ -309,6 +310,11 @@ namespace D2DNet
             }
         }
 
+        void ID2D1CommandSink::HandleCOMInterface(void *obj)
+        {
+            throw gcnew System::NotSupportedException("It is not supported to change the internal sink since it causes unexpected action.");
+        }
+
         bool ID2D1CommandSink::Equals(System::Object ^other)
         {
             try
@@ -383,7 +389,36 @@ namespace D2DNet
 
         HRESULT ID2D1CommandSink::DrawGlyphRunInternal(::D2D1_POINT_2F baselineOrigin, ::DWRITE_GLYPH_RUN *glyphRun, ::DWRITE_GLYPH_RUN_DESCRIPTION *glyphRunDescription, ::ID2D1Brush *foregroundBrush, ::DWRITE_MEASURING_MODE measuringMode)
         {
-            return S_OK;
+            DWriteNet::IDWriteFontFace ^fontFace = gcnew DWriteNet::IDWriteFontFace();
+            fontFace->HandleCOMInterface(glyphRun->fontFace);
+
+            DWriteNet::DWRITE_GLYPH_RUN mGlyphRun;
+            mGlyphRun.fontFace = fontFace;
+            mGlyphRun.fontEmSize = glyphRun->fontEmSize;
+            mGlyphRun.glyphCount = glyphRun->glyphCount;
+            mGlyphRun.glyphIndices = const_cast<UINT16 *>(glyphRun->glyphIndices);
+            mGlyphRun.glyphAdvances = const_cast<FLOAT *>(glyphRun->glyphAdvances);
+            mGlyphRun.glyphOffsets = reinterpret_cast<DWriteNet::DWRITE_GLYPH_OFFSET *>(const_cast<::DWRITE_GLYPH_OFFSET *>(glyphRun->glyphOffsets));
+            mGlyphRun.isSideways = System::Convert::ToBoolean(glyphRun->isSideways);
+            mGlyphRun.bidiLevel = glyphRun->bidiLevel;
+
+            ::ID2D1Factory *pFactory = __nullptr;
+            foregroundBrush->GetFactory(&pFactory);
+
+            Direct2DNet::ID2D1Factory ^factory = gcnew Direct2DNet::ID2D1Factory(pFactory);
+
+            Direct2DNet::ID2D1Brush ^mForegreoundBrush = gcnew Direct2DNet::ID2D1Brush(factory, foregroundBrush);
+            foregroundBrush->AddRef();
+
+            return DrawGlyphRun(
+                static_cast<Direct2DNet::D2D1_POINT_2F>(baselineOrigin),
+                mGlyphRun,
+                mForegreoundBrush,
+                (DWriteNet::DWRITE_MEASURING_MODE)((int)measuringMode),
+                glyphRunDescription ?
+                *(DWriteNet::DWRITE_GLYPH_RUN_DESCRIPTION *)glyphRunDescription
+                : System::Nullable<DWriteNet::DWRITE_GLYPH_RUN_DESCRIPTION>()
+            );
         }
 
         HRESULT ID2D1CommandSink::DrawLineInternal(::D2D1_POINT_2F point0, ::D2D1_POINT_2F point1, ::ID2D1Brush *brush, FLOAT strokeWidth, ::ID2D1StrokeStyle *strokeStyle)

@@ -20,9 +20,20 @@ namespace D2DNet
             }
         }
 
+        void IDXGIDeviceSubObject::HandleCOMInterface(void *obj)
+        {
+            if(m_pSubObject)
+            {
+                m_pSubObject->Release();
+            }
+
+            m_pSubObject = (::IDXGIDeviceSubObject *)obj;
+            m_pSubObject->AddRef();
+        }
+
         DXGINet::IDXGIDevice ^IDXGIDeviceSubObject::GetDevice(System::Guid %guid)
         {
-            if(guid == D2DNet::D2DNetGUID::UID_IDXGIDevice)
+            if(guid == D2DNetGUID::UID_IDXGIDevice)
             {
                 ::IDXGIDevice *pDevice = __nullptr;
                 HRESULT hr = m_pSubObject->GetDevice(__uuidof(::IDXGIDevice), (void **)&pDevice);
@@ -36,7 +47,7 @@ namespace D2DNet
             else
             {
                 throw gcnew D2DNet::Direct2DNet::Exception::DxException(
-                    "Failed to get related IDXGIDevice", (int)DXGI_ERROR_INVALID_CALL);
+                    "Failed to get related IDXGIDevice", DXGI_ERROR_INVALID_CALL);
             }
         }
 

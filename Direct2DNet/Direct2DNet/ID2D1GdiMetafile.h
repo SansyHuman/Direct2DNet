@@ -27,6 +27,8 @@ namespace D2DNet
         public ref class ID2D1GdiMetafile : Direct2DNet::ID2D1Resource
         {
         internal:
+            ID2D1GdiMetafile() : Direct2DNet::ID2D1Resource() {}
+
             ID2D1GdiMetafile(
                 Direct2DNet::ID2D1Factory1 ^factory,
                 D2DNet::ComIO::Stream ^stream

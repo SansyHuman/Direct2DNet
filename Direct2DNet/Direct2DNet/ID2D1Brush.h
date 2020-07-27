@@ -21,6 +21,8 @@ namespace D2DNet
             ID2D1Brush(Direct2DNet::ID2D1Factory ^factory) : ID2D1Resource(factory) {}
 
         internal:
+            ID2D1Brush() : Direct2DNet::ID2D1Resource() {}
+
             // Called by ID2D1CommandSink
             ID2D1Brush(Direct2DNet::ID2D1Factory ^factory, ::ID2D1Brush *pBrush);
 

@@ -24,6 +24,8 @@ namespace D2DNet
         internal:
             ::IDWriteLocalizedStrings *m_pStrings;
 
+            IDWriteLocalizedStrings() : m_pStrings(nullptr) {}
+
             IDWriteLocalizedStrings(::IDWriteLocalizedStrings *pStrings) : m_pStrings(pStrings) {}
 
         public:
@@ -37,6 +39,8 @@ namespace D2DNet
                     return m_pStrings;
                 }
             }
+
+            virtual void HandleCOMInterface(void *obj);
 
             /// <summary>
             /// Gets the number of language/string pairs.

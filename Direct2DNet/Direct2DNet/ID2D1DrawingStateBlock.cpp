@@ -31,6 +31,19 @@ namespace D2DNet
             
         }
 
+        void ID2D1DrawingStateBlock::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Resource::HandleCOMInterface(obj);
+
+            ::IDWriteRenderingParams *params = __nullptr;
+            ((::ID2D1DrawingStateBlock *)m_pResource)->GetTextRenderingParams(&params);
+
+            if(!params)
+                m_params = nullptr;
+            else
+                m_params = gcnew DWriteNet::IDWriteRenderingParams(params);
+        }
+
         void ID2D1DrawingStateBlock::TextRenderingParams::set(DWriteNet::IDWriteRenderingParams ^value)
         {
             ((::ID2D1DrawingStateBlock *)m_pResource)->SetTextRenderingParams(
