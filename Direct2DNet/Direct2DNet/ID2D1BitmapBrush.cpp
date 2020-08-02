@@ -32,6 +32,22 @@ namespace D2DNet
             
         }
 
+        void ID2D1BitmapBrush::HandleCOMInterface(void *obj)
+        {
+            Direct2DNet::ID2D1Brush::HandleCOMInterface(obj);
+
+            ::ID2D1Bitmap *bitmap = __nullptr;
+            ((::ID2D1BitmapBrush *)m_pResource)->GetBitmap(&bitmap);
+            if(!bitmap)
+                m_bitmap = nullptr;
+            else
+            {
+                m_bitmap = gcnew Direct2DNet::ID2D1Bitmap();
+                m_bitmap->HandleCOMInterface(bitmap);
+                bitmap->Release();
+            }
+        }
+
         void ID2D1BitmapBrush::Bitmap::set(Direct2DNet::ID2D1Bitmap ^value)
         {
             ((::ID2D1BitmapBrush *)m_pResource)->SetBitmap(

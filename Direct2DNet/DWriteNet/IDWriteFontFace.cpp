@@ -113,6 +113,56 @@ namespace D2DNet
                 m_fontFiles[i] = gcnew DWriteNet::IDWriteFontFile(files[i]);
         }
 
+        HRESULT IDWriteFontFace::GetFiles(
+            UINT32 %numberOfFiles,
+            array<DWriteNet::IDWriteFontFile ^> ^fontFileBuffer)
+        {
+            if(!fontFileBuffer)
+            {
+                UINT32 cnt = 0;
+                HRESULT hr = m_pFace->GetFiles(&cnt, __nullptr);
+                numberOfFiles = cnt;
+                return hr;
+            }
+
+            if(numberOfFiles > fontFileBuffer->Length || fontFileBuffer->Length == 0)
+                return E_INVALIDARG;
+
+            if(m_fontFiles)
+            {
+                if(m_fontFiles->Length > numberOfFiles)
+                    return E_INVALIDARG;
+
+                m_fontFiles->CopyTo(fontFileBuffer, 0);
+
+                return S_OK;
+            }
+
+            UINT32 realNumberOfFiles = 0;
+            HRESULT hr = m_pFace->GetFiles(&realNumberOfFiles, __nullptr);
+            if(FAILED(hr))
+                return hr;
+
+            if(realNumberOfFiles > numberOfFiles)
+                return E_INVALIDARG;
+
+            std::vector<::IDWriteFontFile *> files(realNumberOfFiles);
+            hr = m_pFace->GetFiles(&realNumberOfFiles, files.data());
+
+            if(FAILED(hr))
+                return hr;
+
+            m_fontFiles = gcnew array<DWriteNet::IDWriteFontFile ^>(realNumberOfFiles);
+            for(UINT32 i = 0; i < realNumberOfFiles; i++)
+            {
+                m_fontFiles[i] = gcnew DWriteNet::IDWriteFontFile(files[i]);
+            }
+
+            m_fontFiles->CopyTo(fontFileBuffer, 0);
+
+            return hr;
+        }
+
         
         HRESULT IDWriteFontFace::GetDesignGlyphMetrics(
             array<UINT16> ^glyphIndices,

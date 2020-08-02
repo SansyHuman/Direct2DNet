@@ -112,7 +112,7 @@ namespace D2DNet
 
             m_space = (Direct2DNet::D2D1_COLOR_SPACE)((int)((::ID2D1ColorContext *)m_pResource)->GetColorSpace());
             unsigned int profileSize = ((::ID2D1ColorContext *)m_pResource)->GetProfileSize();
-            if(profileSize <= 0)
+            if(profileSize == 0)
             {
                 m_profile = nullptr;
             }
@@ -130,6 +130,44 @@ namespace D2DNet
                     m_profile = nullptr;
                 }
             }
+        }
+
+        HRESULT ID2D1ColorContext::GetProfile(array<unsigned char> ^profileBuffer)
+        {
+            if(ProfileSize == 0)
+                return S_OK;
+
+            if(profileBuffer->Length == 0)
+                return D2DERR_INSUFFICIENT_BUFFER;
+
+            if(m_profile)
+            {
+                if(m_profile->Length > profileBuffer->Length)
+                    return D2DERR_INSUFFICIENT_BUFFER;
+
+                m_profile->CopyTo(profileBuffer, 0);
+                return S_OK;
+            }
+
+            UINT32 profileSize = ProfileSize;
+            if(profileSize > profileBuffer->Length)
+                return D2DERR_INSUFFICIENT_BUFFER;
+
+            m_profile = gcnew array<unsigned char>(profileSize);
+
+            pin_ptr<BYTE> pBuf = &m_profile[0];
+            HRESULT hr = ((::ID2D1ColorContext *)m_pResource)->GetProfile((BYTE *)pBuf, profileSize);
+            pBuf = nullptr;
+
+            if(SUCCEEDED(hr))
+            {
+                m_profile->CopyTo(profileBuffer, 0);
+                return hr;
+            }
+
+            delete m_profile;
+            m_profile = nullptr;
+            return hr;
         }
 
     }

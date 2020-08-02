@@ -301,6 +301,8 @@ namespace D2DNet
 
     public delegate void DebugMessageHandler(System::String ^);
 
+    interface class IUnknown;
+
     public value struct DirectX abstract sealed
     {
     public:

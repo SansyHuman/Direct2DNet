@@ -7,6 +7,7 @@
 #include "ID2D1DCRenderTarget.h"
 #include "ID2D1Device.h"
 #include "ID2D1Device1.h"
+#include "ID2D1Device2.h"
 #include "ID2D1DeviceContext.h"
 #include "ID2D1DeviceContext1.h"
 #include "ID2D1DrawingStateBlock.h"

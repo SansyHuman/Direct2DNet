@@ -8,6 +8,7 @@
 #include "ID2D1Factory.h"
 #include "ID2D1Factory1.h"
 #include "ID2D1Factory2.h"
+#include "ID2D1Factory3.h"
 #include "../DXGINet/IDXGIDevice.h"
 #include "../DXGINet/IDXGISurface.h"
 #include "ID2D1Device.h"
@@ -84,6 +85,17 @@ namespace D2DNet
                     else
                     {
                         return (T)gcnew Direct2DNet::ID2D1Factory2(type);
+                    }
+                }
+                else if(factoryGuid == D2DNet::D2DNetGUID::UID_ID2D1Factory3)
+                {
+                    if(options.HasValue)
+                    {
+                        return (T)gcnew Direct2DNet::ID2D1Factory3(type, options.Value);
+                    }
+                    else
+                    {
+                        return (T)gcnew Direct2DNet::ID2D1Factory3(type);
                     }
                 }
                 else

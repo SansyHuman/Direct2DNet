@@ -59,13 +59,22 @@ namespace D2DNet
             /// <summary>
             /// Gets the font collection that contains the fonts.
             /// </summary>
-            property DWriteNet::IDWriteFontCollection ^FontCollection
-            {
-                DWriteNet::IDWriteFontCollection ^get()
-                {
-                    return m_fontCollection;
-                }
-            }
+            /// <param name="fontCollection">Receives the font collection object(out parameter).</param>
+            /// <returns>
+            /// Standard HRESULT error code.
+            /// </returns>
+            HRESULT GetFontCollection(
+                [OutAttribute] DWriteNet::IDWriteFontCollection ^%fontCollection
+            );
+
+            /// <summary>
+            /// Gets the font collection that contains the fonts.
+            /// </summary>
+            /// <returns>
+            /// (HRESULT, <see cref="DWriteNet::IDWriteFontCollection"/>) tuple. HRESULT is an error code.
+            /// <see cref="DWriteNet::IDWriteFontCollection"/> is the font collection
+            /// </returns>
+            System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^> GetFontCollection();
 
             /// <summary>
             /// Gets the number of fonts in the font list.

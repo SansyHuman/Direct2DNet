@@ -57,13 +57,12 @@ namespace D2DNet
             /// <summary>
             /// Gets the font family to which the specified font belongs.
             /// </summary>
-            property DWriteNet::IDWriteFontFamily ^FontFamily
-            {
-                DWriteNet::IDWriteFontFamily ^get()
-                {
-                    return m_fontFamily;
-                }
-            }
+            /// <returns>
+            /// Standard HRESULT error code.
+            /// </returns>
+            HRESULT GetFontFamily(
+                [OutAttribute] DWriteNet::IDWriteFontFamily ^%fontFamily
+            );
 
             /// <summary>
             /// Gets the weight of the specified font.

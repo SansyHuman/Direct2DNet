@@ -42,6 +42,17 @@ namespace D2DNet
                     return gcnew Direct2DNet::ID2D1Factory2(type);
                 }
             }
+            else if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory3)
+            {
+                if(options.HasValue)
+                {
+                    return gcnew Direct2DNet::ID2D1Factory3(type, options.Value);
+                }
+                else
+                {
+                    return gcnew Direct2DNet::ID2D1Factory3(type);
+                }
+            }
             else
             {
                 throw gcnew Direct2DNet::Exception::DxException(

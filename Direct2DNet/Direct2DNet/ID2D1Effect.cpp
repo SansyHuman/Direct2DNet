@@ -8,7 +8,7 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ID2D1Effect::ID2D1Effect(Direct2DNet::ID2D1DeviceContext ^deviceContext, System::Guid %effectId)
-            : Direct2DNet::ID2D1Properties(), m_factory(deviceContext->Factory)
+            : Direct2DNet::ID2D1Properties()
         {
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Properties *> ppProperties = &m_pProperties;
@@ -47,13 +47,6 @@ namespace D2DNet
                     );
                 }
             }
-
-            ::ID2D1Image *output = __nullptr;
-            ((::ID2D1Effect *)m_pProperties)->GetOutput(&output);
-            ::ID2D1Factory *factory = __nullptr;
-            output->GetFactory(&factory);
-
-            m_factory = gcnew Direct2DNet::ID2D1Factory(factory);
         }
 
         void ID2D1Effect::SetInput(
@@ -111,7 +104,11 @@ namespace D2DNet
 
             ((::ID2D1Effect *)m_pProperties)->GetOutput(&pImage);
 
-            return gcnew Direct2DNet::ID2D1Image(m_factory, pImage);
+            Direct2DNet::ID2D1Image ^image = gcnew Direct2DNet::ID2D1Image();
+            image->HandleCOMInterface(pImage);
+            pImage->Release();
+
+            return image;
         }
 
         void ID2D1Effect::SetInputEffect(

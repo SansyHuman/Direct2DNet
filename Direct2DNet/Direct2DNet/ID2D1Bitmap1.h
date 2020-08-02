@@ -71,17 +71,15 @@ namespace D2DNet
             }
 
             /// <summary>
-            /// Gets the DXGI surface from the corresponding bitmap, if the bitmap was
-            /// created from a device derived from a D3D device. If there is no surface,
-            /// null is returned.
+            /// Retrieves the DXGI surface from the corresponding bitmap, if the bitmap was
+            /// created from a device derived from a D3D device.
             /// </summary>
-            property DXGINet::IDXGISurface ^Surface
-            {
-                DXGINet::IDXGISurface ^get()
-                {
-                    return m_dxgiSurface;
-                }
-            }
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT GetSurface(
+                [OutAttribute] DXGINet::IDXGISurface ^%dxgiSurface
+            );
 
             /// <summary>
             /// Maps the given bitmap into memory. The bitmap must have been created with the

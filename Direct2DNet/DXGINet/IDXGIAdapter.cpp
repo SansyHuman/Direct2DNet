@@ -36,7 +36,7 @@ namespace D2DNet
             m_pAdapter->AddRef();
         }
 
-        DXGINet::IDXGIFactory ^IDXGIAdapter::GetParentFactory(System::Guid %guid)
+        HRESULT IDXGIAdapter::GetParentFactory(System::Guid %guid, DXGINet::IDXGIFactory ^%factory)
         {
             if(guid == D2DNetGUID::UID_IDXGIFactory)
             {
@@ -44,17 +44,19 @@ namespace D2DNet
                 HRESULT hr = m_pAdapter->GetParent(__uuidof(::IDXGIFactory), (void **)&pFactory);
 
                 if(FAILED(hr))
-                    throw gcnew D2DNet::Direct2DNet::Exception::DxException(
-                        "Failed to get parent IDXGIFactory", (int)hr);
+                {
+                    factory = nullptr;
+                    return hr;
+                }
 
-                return gcnew DXGINet::IDXGIFactory(pFactory);
+                factory = gcnew DXGINet::IDXGIFactory(pFactory);
+                return hr;
             }
             else
             {
-                throw gcnew D2DNet::Direct2DNet::Exception::DxException(
-                    "Failed to get parent IDXGIFactory", DXGI_ERROR_INVALID_CALL);
+                factory = nullptr;
+                return DXGI_ERROR_INVALID_CALL;
             }
         }
-
     }
 }

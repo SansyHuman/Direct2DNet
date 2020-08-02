@@ -40,7 +40,7 @@ namespace D2DNet
 
         public:
             /// <summary>
-            /// Create <see cref="Direct2DNet::ID2D1Factory1"/> object.
+            /// Create <see cref="Direct2DNet::ID2D1Factory2"/> object.
             /// The type of the object can determine whether the factory
             /// and the derived resources can be invoked from single thread
             /// or multi thread.
@@ -52,7 +52,7 @@ namespace D2DNet
             ID2D1Factory2(Direct2DNet::D2D1_FACTORY_TYPE type);
 
             /// <summary>
-            /// Create <see cref="Direct2DNet::ID2D1Factory1"/> object.
+            /// Create <see cref="Direct2DNet::ID2D1Factory2"/> object.
             /// The type of the object can determine whether the factory
             /// and the derived resources can be invoked from single thread
             /// or multi thread.

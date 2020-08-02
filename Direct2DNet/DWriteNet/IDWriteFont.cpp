@@ -56,6 +56,28 @@ namespace D2DNet
                 m_fontFamily = gcnew DWriteNet::IDWriteFontFamily(fontFamily);
         }
 
+        HRESULT IDWriteFont::GetFontFamily(DWriteNet::IDWriteFontFamily ^%fontFamily)
+        {
+            if(m_fontFamily)
+            {
+                fontFamily = m_fontFamily;
+                return S_OK;
+            }
+
+            ::IDWriteFontFamily *nfontFamily;
+            HRESULT hr = m_pFont->GetFontFamily(&nfontFamily);
+
+            if(FAILED(hr) || !nfontFamily)
+            {
+                fontFamily = nullptr;
+                return hr;
+            }
+
+            m_fontFamily = gcnew DWriteNet::IDWriteFontFamily(nfontFamily);
+            fontFamily = m_fontFamily;
+            return hr;
+        }
+
         HRESULT IDWriteFont::GetFaceNames(DWriteNet::IDWriteLocalizedStrings ^%names)
         {
             ::IDWriteLocalizedStrings *pStrings = __nullptr;

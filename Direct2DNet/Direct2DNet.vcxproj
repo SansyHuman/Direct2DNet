@@ -155,6 +155,7 @@
     <ClInclude Include="Direct2DNet\ID2D1DCRenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1Device.h" />
     <ClInclude Include="Direct2DNet\ID2D1Device1.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Device2.h" />
     <ClInclude Include="Direct2DNet\ID2D1DeviceContext.h" />
     <ClInclude Include="Direct2DNet\ID2D1DeviceContext1.h" />
     <ClInclude Include="Direct2DNet\ID2D1DrawingStateBlock.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Direct2DNet\ID2D1EllipseGeometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory1.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory2.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Factory3.h" />
     <ClInclude Include="Direct2DNet\ID2D1GdiInteropRenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1GdiMetafile.h" />
     <ClInclude Include="Direct2DNet\ID2D1GdiMetafileSink.h" />
@@ -269,6 +271,7 @@
     <ClCompile Include="Direct2DNet\ID2D1DCRenderTarget.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Device.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Device1.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Device2.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DeviceContext.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DeviceContext1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DrawingStateBlock.cpp" />
@@ -276,6 +279,7 @@
     <ClCompile Include="Direct2DNet\ID2D1Effect.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Factory1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Factory2.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Factory3.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GdiInteropRenderTarget.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GdiMetafile.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GdiMetafileSink.cpp" />
@@ -355,6 +359,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Diagnostics.Tracing" />
     <Reference Include="System.Xml" />

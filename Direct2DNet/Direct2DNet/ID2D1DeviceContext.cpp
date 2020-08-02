@@ -83,14 +83,10 @@ namespace D2DNet
             ::ID2D1Image *target = __nullptr;
 
             ((::ID2D1DeviceContext *)m_pResource)->GetDevice(&device);
-            if(!device)
-                m_device = nullptr;
-            else
-            {
-                ::ID2D1Factory1 *factory = __nullptr;
-                device->GetFactory((::ID2D1Factory **)&factory);
-                m_device = gcnew Direct2DNet::ID2D1Device(gcnew Direct2DNet::ID2D1Factory1(factory), device);
-            }
+
+            ::ID2D1Factory1 *factory = __nullptr;
+            device->GetFactory((::ID2D1Factory **)&factory);
+            m_device = gcnew Direct2DNet::ID2D1Device(gcnew Direct2DNet::ID2D1Factory1(factory), device);
 
             ((::ID2D1DeviceContext *)m_pResource)->GetTarget(&target);
             if(!target)

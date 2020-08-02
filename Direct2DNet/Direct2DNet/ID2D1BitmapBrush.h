@@ -39,6 +39,8 @@ namespace D2DNet
             );
 
         public:
+            virtual void HandleCOMInterface(void *obj) override;
+
             /// <summary>
             /// Gets and sets how the bitmap is to be treated outside of its natural extent on the X
             /// axis.

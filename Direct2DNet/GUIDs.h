@@ -55,6 +55,7 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
         D2DNET_GUID(ID2D1DCRenderTarget);
         D2DNET_GUID(ID2D1Device);
         D2DNET_GUID(ID2D1Device1);
+        D2DNET_GUID(ID2D1Device2);
         D2DNET_GUID(ID2D1DeviceContext);
         D2DNET_GUID(ID2D1DeviceContext1);
         D2DNET_GUID(ID2D1DrawingStateBlock);
@@ -158,6 +159,7 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             D2DNET_GET_GUID(Direct2DNet, ID2D1DCRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Device, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Device1, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1Device2, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DeviceContext, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DeviceContext1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DrawingStateBlock, guid);

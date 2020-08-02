@@ -27,7 +27,6 @@ namespace D2DNet
         {
         private:
             array<Direct2DNet::ID2D1Image ^> ^m_inputs;
-            Direct2DNet::ID2D1Factory ^m_factory;
 
         internal:
             ID2D1Effect() : Direct2DNet::ID2D1Properties() {}

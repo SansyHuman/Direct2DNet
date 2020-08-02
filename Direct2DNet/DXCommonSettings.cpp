@@ -1,5 +1,6 @@
 #include "DXCommonSettings.h"
 #include "Direct2DNet/Exception/DXException.h"
+#include "IUnknown.h"
 
 namespace D2DNet
 {
@@ -42,5 +43,4 @@ namespace D2DNet
     {
         DirectX::OnDebugMessage(message);
     }
-
 }

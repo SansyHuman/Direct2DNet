@@ -462,6 +462,12 @@
     <ClInclude Include="DWriteNet\DWriteError.h">
       <Filter>헤더 파일\DWriteNet\core</Filter>
     </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Factory3.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Device2.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -737,8 +743,14 @@
     <ClCompile Include="DWriteNet\IDWriteGlyphRunAnalysis.cpp">
       <Filter>소스 파일\DWriteNet\glyph</Filter>
     </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Factory3.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
     <ClCompile Include="DWriteNet\DWriteError.cpp">
-      <Filter>헤더 파일\DWriteNet\core</Filter>
+      <Filter>소스 파일\DWriteNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Device2.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

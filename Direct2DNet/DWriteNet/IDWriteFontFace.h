@@ -77,21 +77,19 @@ namespace D2DNet
             }
 
             /// <summary>
-            /// Obtains the font files representing a font face. If failed to obtain the font files, then
-            /// this property returns null.
+            /// Obtains the font files representing a font face.
             /// </summary>
-            property array<DWriteNet::IDWriteFontFile ^> ^Files
-            {
-                array<DWriteNet::IDWriteFontFile ^> ^get()
-                {
-                    if(!m_fontFiles)
-                        return nullptr;
-
-                    array<DWriteNet::IDWriteFontFile ^> ^value = gcnew array<DWriteNet::IDWriteFontFile ^> (m_fontFiles->Length);
-                    m_fontFiles->CopyTo(value, 0);
-                    return value;
-                }
-            }
+            /// <param name="numberOfFiles">The number of files representing the font face.</param>
+            /// <param name="fontFileBuffer">User provided array that stores font files representing the
+            /// font face. This parameter can be null if the user is only interested in the number of files
+            /// representing the font face.</param>
+            /// <returns>
+            /// Standard HRESULT error code.
+            /// </returns>
+            HRESULT GetFiles(
+                UINT32 %numberOfFiles,
+                [OptionalAttribute] array<DWriteNet::IDWriteFontFile ^> ^fontFileBuffer
+            );
 
             /// <summary>
             /// Obtains the zero-based index of the font face in its font file or files. If the font

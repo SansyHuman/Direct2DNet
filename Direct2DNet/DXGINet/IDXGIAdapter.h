@@ -52,8 +52,10 @@ namespace D2DNet
                 }
             }
 
-            DXGINet::IDXGIFactory ^GetParentFactory(
-                [InteropServices::InAttribute][IsReadOnlyAttribute] System::Guid %guid);
+            HRESULT GetParentFactory(
+                [InteropServices::InAttribute][IsReadOnlyAttribute] System::Guid %guid,
+                [InteropServices::OutAttribute] DXGINet::IDXGIFactory ^%factory
+            );
 
         };
     }

@@ -57,6 +57,45 @@ namespace D2DNet
                 m_fontCollection = gcnew DWriteNet::IDWriteFontCollection(collection);
         }
 
+        HRESULT IDWriteFontList::GetFontCollection(DWriteNet::IDWriteFontCollection ^%fontCollection)
+        {
+            if(m_fontCollection)
+            {
+                fontCollection = m_fontCollection;
+                return S_OK;
+            }
+
+            ::IDWriteFontCollection *collection = __nullptr;
+            HRESULT hr = m_pList->GetFontCollection(&collection);
+            if(FAILED(hr) || !collection)
+            {
+                fontCollection = nullptr;
+                return hr;
+            }
+
+            m_fontCollection = gcnew DWriteNet::IDWriteFontCollection(collection);
+            fontCollection = m_fontCollection;
+            return hr;
+        }
+
+        System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^> IDWriteFontList::GetFontCollection()
+        {
+            if(m_fontCollection)
+            {
+                return System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^>(S_OK, m_fontCollection);
+            }
+
+            ::IDWriteFontCollection *collection = __nullptr;
+            HRESULT hr = m_pList->GetFontCollection(&collection);
+            if(FAILED(hr) || !collection)
+            {
+                return System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^>(hr, nullptr);
+            }
+
+            m_fontCollection = gcnew DWriteNet::IDWriteFontCollection(collection);
+            return System::ValueTuple<HRESULT, DWriteNet::IDWriteFontCollection ^>(hr, m_fontCollection);
+        }
+
         HRESULT IDWriteFontList::GetFont(UINT32 index, DWriteNet::IDWriteFont ^%font)
         {
             ::IDWriteFont *pFont = __nullptr;

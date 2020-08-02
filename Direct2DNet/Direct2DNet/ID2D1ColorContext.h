@@ -53,22 +53,24 @@ namespace D2DNet
                 }
             }
 
-            /// <summary>
-            /// Gets the color profile bytes.
-            /// </summary>
-            property array<unsigned char> ^Profile
+            property UINT32 ProfileSize
             {
-                array<unsigned char> ^get()
+                UINT32 get()
                 {
-                    if(m_profile == nullptr)
-                        return nullptr;
-
-                    array<unsigned char> ^value = gcnew array<unsigned char>(m_profile->Length);
-                    m_profile->CopyTo(value, 0);
-
-                    return value;
+                    return ((::ID2D1ColorContext *)m_pResource)->GetProfileSize();
                 }
             }
+
+            /// <summary>
+            /// Retrieves the color profile bytes.
+            /// </summary>
+            /// <param name="profileBuffer">The array to retrieve the profile bytes.</param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
+            /// </returns>
+            HRESULT GetProfile(
+                array<unsigned char> ^profileBuffer
+            );
         };
     }
 }

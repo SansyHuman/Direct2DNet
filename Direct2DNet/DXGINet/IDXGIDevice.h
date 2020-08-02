@@ -37,7 +37,9 @@ namespace D2DNet
 
             virtual void HandleCOMInterface(void *obj);
 
-            DXGINet::IDXGIAdapter ^GetAdapter();
+            HRESULT GetAdapter(
+                [System::Runtime::InteropServices::OutAttribute] DXGINet::IDXGIAdapter ^%adapter
+            );
         };
     }
 }

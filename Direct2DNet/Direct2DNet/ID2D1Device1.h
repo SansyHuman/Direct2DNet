@@ -18,6 +18,7 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ref class ID2D1Factory2;
+        ref class ID2D1Factory3;
         ref class ID2D1DeviceContext1;
 
         /// <summary>
@@ -31,6 +32,10 @@ namespace D2DNet
             ID2D1Device1() : Direct2DNet::ID2D1Device() {}
 
             ID2D1Device1(Direct2DNet::ID2D1Factory2 ^factory, DXGINet::IDXGIDevice ^device);
+
+        protected:
+            ID2D1Device1(Direct2DNet::ID2D1Factory3 ^factory)
+                : Direct2DNet::ID2D1Device((Direct2DNet::ID2D1Factory2 ^)factory) {}
 
         public:
             /// <summary>

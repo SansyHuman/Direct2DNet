@@ -96,6 +96,28 @@ namespace D2DNet
             m_options = (Direct2DNet::D2D1_BITMAP_OPTIONS)((int)((::ID2D1Bitmap1 *)m_pResource)->GetOptions());
         }
 
+        HRESULT ID2D1Bitmap1::GetSurface(DXGINet::IDXGISurface ^%dxgiSurface)
+        {
+            if(m_dxgiSurface)
+            {
+                dxgiSurface = m_dxgiSurface;
+                return S_OK;
+            }
+
+            ::IDXGISurface *surface = __nullptr;
+            HRESULT hr = ((::ID2D1Bitmap1 *)m_pResource)->GetSurface(&surface);
+
+            if(FAILED(hr) || !surface)
+            {
+                dxgiSurface = nullptr;
+                return hr;
+            }
+
+            m_dxgiSurface = gcnew DXGINet::IDXGISurface(surface);
+            dxgiSurface = m_dxgiSurface;
+            return hr;
+        }
+
         System::ValueTuple<HRESULT, Direct2DNet::D2D1_MAPPED_RECT> ID2D1Bitmap1::Map(
             Direct2DNet::D2D1_MAP_OPTIONS options)
         {

@@ -48,7 +48,7 @@ namespace D2DNet
             {
                 bool get()
                 {
-                    return m_pThread->GetMultithreadProtected();
+                    return System::Convert::ToBoolean(m_pThread->GetMultithreadProtected());
                 }
             }
 

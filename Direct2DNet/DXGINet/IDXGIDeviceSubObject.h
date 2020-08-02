@@ -36,8 +36,9 @@ namespace D2DNet
 
             virtual void HandleCOMInterface(void *obj);
 
-            DXGINet::IDXGIDevice ^GetDevice(
-                [InteropServices::InAttribute][CompilerServices::IsReadOnlyAttribute] System::Guid %guid
+            HRESULT GetDevice(
+                [InteropServices::InAttribute][CompilerServices::IsReadOnlyAttribute] System::Guid %guid,
+                [InteropServices::OutAttribute] DXGINet::IDXGIDevice ^%device
             );
         };
     }

@@ -35,18 +35,20 @@ namespace D2DNet
             m_pDevice->AddRef();
         }
 
-        DXGINet::IDXGIAdapter ^IDXGIDevice::GetAdapter()
+        HRESULT IDXGIDevice::GetAdapter(DXGINet::IDXGIAdapter ^%adapter)
         {
             ::IDXGIAdapter *pAdapter = __nullptr;
 
             HRESULT hr = m_pDevice->GetAdapter(&pAdapter);
 
             if(FAILED(hr))
-                throw gcnew D2DNet::Direct2DNet::Exception::DxException(
-                    "Failed to get IDXGIAdapter", hr
-                );
+            {
+                adapter = nullptr;
+                return hr;
+            }
 
-            return gcnew DXGINet::IDXGIAdapter(pAdapter);
+            adapter = gcnew DXGINet::IDXGIAdapter(pAdapter);
+            return hr;
         }
 
     }
