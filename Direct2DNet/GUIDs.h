@@ -4,6 +4,7 @@
 #include "Direct2DNet/D2DNet_brush.h"
 #include "Direct2DNet/D2DNet_geometry.h"
 #include "Direct2DNet/D2DNet_image.h"
+#include "Direct2DNet/D2DNet_effect.h"
 
 #include "Direct3D11Net/D3D11Net_core.h"
 
@@ -13,6 +14,8 @@
 #include "DWriteNet/DWNet_font.h"
 #include "DWriteNet/DWNet_glyph.h"
 #include "DWriteNet/DWNet_text.h"
+
+#include "WICNet/WICNet_core.h"
 
 #include "DXCommonSettings.h"
 
@@ -45,7 +48,7 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
     /// <summary>
     /// GUID holder of all D2DNet classes.
     /// </summary>
-    public value struct D2DNetGUID abstract sealed
+    public ref class D2DNetGUID abstract sealed
     {
     public:
         D2DNET_GUID(ID2D1BitmapRenderTarget);
@@ -56,14 +59,18 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
         D2DNET_GUID(ID2D1Device);
         D2DNET_GUID(ID2D1Device1);
         D2DNET_GUID(ID2D1Device2);
+        D2DNET_GUID(ID2D1Device3);
         D2DNET_GUID(ID2D1DeviceContext);
         D2DNET_GUID(ID2D1DeviceContext1);
+        D2DNET_GUID(ID2D1DeviceContext2);
+        D2DNET_GUID(ID2D1DeviceContext3);
         D2DNET_GUID(ID2D1DrawingStateBlock);
         D2DNET_GUID(ID2D1DrawingStateBlock1);
         D2DNET_GUID(ID2D1Factory);
         D2DNET_GUID(ID2D1Factory1);
         D2DNET_GUID(ID2D1Factory2);
         D2DNET_GUID(ID2D1Factory3);
+        D2DNET_GUID(ID2D1Factory4);
         D2DNET_GUID(ID2D1GdiInteropRenderTarget);
         D2DNET_GUID(ID2D1HwndRenderTarget);
         D2DNET_GUID(ID2D1Layer);
@@ -87,6 +94,9 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
         D2DNET_GUID(ID2D1Geometry);
         D2DNET_GUID(ID2D1GeometryGroup);
         D2DNET_GUID(ID2D1GeometryRealization);
+        D2DNET_GUID(ID2D1GradientMesh);
+        D2DNET_GUID(ID2D1Ink);
+        D2DNET_GUID(ID2D1InkStyle);
         D2DNET_GUID(ID2D1Mesh);
         D2DNET_GUID(ID2D1PathGeometry);
         D2DNET_GUID(ID2D1PathGeometry1);
@@ -97,10 +107,15 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
         D2DNET_GUID(ID2D1Bitmap);
         D2DNET_GUID(ID2D1Bitmap1);
         D2DNET_GUID(ID2D1ColorContext);
-        D2DNET_GUID(ID2D1Effect);
         D2DNET_GUID(ID2D1GdiMetafile);
         D2DNET_GUID(ID2D1GdiMetafileSink);
         D2DNET_GUID(ID2D1Image);
+        D2DNET_GUID(ID2D1ImageSource);
+        D2DNET_GUID(ID2D1SpriteBatch);
+        D2DNET_GUID(ID2D1TransformedImageSource);
+
+        D2DNET_GUID(ID2D1Effect);
+        D2DNET_GUID(ID2D1LookupTable3D);
         D2DNET_GUID(ID2D1Properties);
 
 
@@ -113,7 +128,10 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
         D2DNET_GUID(IDXGIDevice);
         D2DNET_GUID(IDXGIDeviceSubObject);
         D2DNET_GUID(IDXGIFactory);
+        D2DNET_GUID(IDXGIKeyedMutex);
         D2DNET_GUID(IDXGIObject);
+        D2DNET_GUID(IDXGIOutput);
+        D2DNET_GUID(IDXGIResource);
         D2DNET_GUID(IDXGISurface);
         D2DNET_GUID(IDXGISwapChain);
 
@@ -122,7 +140,7 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
         D2DNET_GUID(IDWriteFactory);
         D2DNET_GUID(IDWriteGdiInterop);
         D2DNET_GUID(IDWriteLocalizedStrings);
-        D2DNET_GUID(IDWriteRenderingParams);        
+        D2DNET_GUID(IDWriteRenderingParams);
 
         D2DNET_GUID(IDWriteFont);
         D2DNET_GUID(IDWriteFontCollection);
@@ -142,6 +160,18 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
         D2DNET_GUID(IDWriteTextFormat);
         D2DNET_GUID(IDWriteTextLayout);
 
+
+        D2DNET_GUID(IWICBitmapCodecInfo);
+        D2DNET_GUID(IWICBitmapDecoder);
+        D2DNET_GUID(IWICBitmapDecoderInfo);
+        D2DNET_GUID(IWICBitmapFrameDecode);
+        D2DNET_GUID(IWICBitmapSource);
+        D2DNET_GUID(IWICComponentInfo);
+        D2DNET_GUID(IWICFormatConverter);
+        D2DNET_GUID(IWICImagingFactory);
+        D2DNET_GUID(IWICMetadataQueryReader);
+        D2DNET_GUID(IWICPalette);
+
     internal:
         static System::Collections::Generic::Dictionary<System::Guid, System::Type ^> ^uidTypePairs;
 
@@ -160,14 +190,18 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             D2DNET_GET_GUID(Direct2DNet, ID2D1Device, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Device1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Device2, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1Device3, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DeviceContext, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DeviceContext1, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1DeviceContext2, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1DeviceContext3, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DrawingStateBlock, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1DrawingStateBlock1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory2, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Factory3, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1Factory4, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1GdiInteropRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1HwndRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Layer, guid);
@@ -191,6 +225,9 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             D2DNET_GET_GUID(Direct2DNet, ID2D1Geometry, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1GeometryGroup, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1GeometryRealization, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1GradientMesh, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1Ink, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1InkStyle, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Mesh, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1PathGeometry, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1PathGeometry1, guid);
@@ -201,13 +238,18 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             D2DNET_GET_GUID(Direct2DNet, ID2D1Bitmap, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Bitmap1, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1ColorContext, guid);
-            D2DNET_GET_GUID(Direct2DNet, ID2D1Effect, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1GdiMetafile, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1GdiMetafileSink, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Image, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1ImageSource, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1SpriteBatch, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1TransformedImageSource, guid);
+
+            D2DNET_GET_GUID(Direct2DNet, ID2D1Effect, guid);
+            D2DNET_GET_GUID(Direct2DNet::Effects, ID2D1LookupTable3D, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Properties, guid);
 
-            
+
             D2DNET_GET_GUID(Direct3D11Net, ID3D11Device, guid);
             D2DNET_GET_GUID(Direct3D11Net, ID3D11DeviceChild, guid);
             D2DNET_GET_GUID(Direct3D11Net, ID3D11DeviceContext, guid);
@@ -217,7 +259,10 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             D2DNET_GET_GUID(DXGINet, IDXGIDevice, guid);
             D2DNET_GET_GUID(DXGINet, IDXGIDeviceSubObject, guid);
             D2DNET_GET_GUID(DXGINet, IDXGIFactory, guid);
+            D2DNET_GET_GUID(DXGINet, IDXGIKeyedMutex, guid);
             D2DNET_GET_GUID(DXGINet, IDXGIObject, guid);
+            D2DNET_GET_GUID(DXGINet, IDXGIOutput, guid);
+            D2DNET_GET_GUID(DXGINet, IDXGIResource, guid);
             D2DNET_GET_GUID(DXGINet, IDXGISurface, guid);
             D2DNET_GET_GUID(DXGINet, IDXGISwapChain, guid);
 
@@ -226,7 +271,7 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             D2DNET_GET_GUID(DWriteNet, IDWriteFactory, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteGdiInterop, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteLocalizedStrings, guid);
-            D2DNET_GET_GUID(DWriteNet, IDWriteRenderingParams, guid);          
+            D2DNET_GET_GUID(DWriteNet, IDWriteRenderingParams, guid);
 
             D2DNET_GET_GUID(DWriteNet, IDWriteFont, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteFontCollection, guid);
@@ -245,6 +290,18 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             D2DNET_GET_GUID(DWriteNet, IDWriteTextAnalyzer, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteTextFormat, guid);
             D2DNET_GET_GUID(DWriteNet, IDWriteTextLayout, guid);
+
+
+            D2DNET_GET_GUID(WICNet, IWICBitmapCodecInfo, guid);
+            D2DNET_GET_GUID(WICNet, IWICBitmapDecoder, guid);
+            D2DNET_GET_GUID(WICNet, IWICBitmapDecoderInfo, guid);
+            D2DNET_GET_GUID(WICNet, IWICBitmapFrameDecode, guid);
+            D2DNET_GET_GUID(WICNet, IWICBitmapSource, guid);
+            D2DNET_GET_GUID(WICNet, IWICComponentInfo, guid);
+            D2DNET_GET_GUID(WICNet, IWICFormatConverter, guid);
+            D2DNET_GET_GUID(WICNet, IWICImagingFactory, guid);
+            D2DNET_GET_GUID(WICNet, IWICMetadataQueryReader, guid);
+            D2DNET_GET_GUID(WICNet, IWICPalette, guid);
         }
     };
 }

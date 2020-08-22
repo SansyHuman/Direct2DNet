@@ -7,37 +7,12 @@ namespace D2DNet
 {
     namespace DXGINet
     {
-        IDXGIDeviceSubObject::~IDXGIDeviceSubObject()
-        {
-            this->!IDXGIDeviceSubObject();
-        }
-
-        IDXGIDeviceSubObject::!IDXGIDeviceSubObject()
-        {
-            if(m_pSubObject)
-            {
-                m_pSubObject->Release();
-                m_pSubObject = nullptr;
-            }
-        }
-
-        void IDXGIDeviceSubObject::HandleCOMInterface(void *obj)
-        {
-            if(m_pSubObject)
-            {
-                m_pSubObject->Release();
-            }
-
-            m_pSubObject = (::IDXGIDeviceSubObject *)obj;
-            m_pSubObject->AddRef();
-        }
-
         HRESULT IDXGIDeviceSubObject::GetDevice(
             System::Guid %guid,
             DXGINet::IDXGIDevice ^%device)
         {
             ::IDXGIDevice *pDevice = __nullptr;
-            HRESULT hr = m_pSubObject->GetDevice(DirectX::ToNativeGUID(guid), (void **)&pDevice);
+            HRESULT hr = ((::IDXGIDeviceSubObject *)m_pObj)->GetDevice(DirectX::ToNativeGUID(guid), (void **)&pDevice);
 
             if(FAILED(hr) || !pDevice)
             {

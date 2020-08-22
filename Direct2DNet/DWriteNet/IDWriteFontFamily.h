@@ -80,7 +80,6 @@ namespace D2DNet
             /// <param name="weight">Requested font weight.</param>
             /// <param name="stretch">Requested font stretch.</param>
             /// <param name="style">Requested font style.</param>
-            /// <param name="matchingFont">Receives the newly created font object(out parameter).</param>
             /// <returns>
             /// (HRESULT, <see cref="DWriteNet::IDWriteFont"/>) tuple.
             /// HRESULT is an error code. if failed, <see cref="DWriteNet::IDWriteFont"/> is null.

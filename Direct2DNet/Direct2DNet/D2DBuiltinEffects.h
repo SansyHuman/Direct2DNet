@@ -21,7 +21,7 @@ namespace Direct2DNet
         /// <summary>
         /// GUID holder of all Direct2D builtin effects.
         /// </summary>
-        public value struct D2DBuiltinEffects abstract sealed
+        public ref class D2DBuiltinEffects abstract sealed
         {
         public:
             D2DEFFECT_GUID(CLSID_D2D12DAffineTransform);

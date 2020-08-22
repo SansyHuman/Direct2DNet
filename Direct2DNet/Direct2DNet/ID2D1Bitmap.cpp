@@ -2,6 +2,7 @@
 #include "ID2D1Factory.h"
 #include "ID2D1RenderTarget.h"
 #include "ID2D1DeviceContext.h"
+#include "../WICNet/IWICBitmapSource.h"
 #include "../DXCommonSettings.h"
 
 namespace D2DNet
@@ -47,14 +48,16 @@ namespace D2DNet
         {
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
+            pin_ptr<Direct2DNet::D2D1_BITMAP_PROPERTIES> pProp = &bitmapProperties;
             hr = ((::ID2D1RenderTarget *)renderTarget->m_pResource)->CreateBitmap(
                 static_cast<::D2D1_SIZE_U>(size),
                 srcData,
                 pitch,
-                static_cast<::D2D1_BITMAP_PROPERTIES>(bitmapProperties),
+                reinterpret_cast<::D2D1_BITMAP_PROPERTIES *>(pProp),
                 (::ID2D1Bitmap **)ppResource
             );
             ppResource = nullptr;
+            pProp = nullptr;
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Bitmap", (int)hr);
@@ -71,13 +74,43 @@ namespace D2DNet
         {
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
+            pin_ptr<Direct2DNet::D2D1_BITMAP_PROPERTIES> pProp = &bitmapProperties;
             hr = ((::ID2D1RenderTarget *)renderTarget->m_pResource)->CreateSharedBitmap(
                 D2DNet::DirectX::ToNativeGUID(guid),
                 data->NativePointer,
-                &static_cast<::D2D1_BITMAP_PROPERTIES>(bitmapProperties),
+                reinterpret_cast<::D2D1_BITMAP_PROPERTIES *>(pProp),
                 (::ID2D1Bitmap **)ppResource
             );
             ppResource = nullptr;
+            pProp = nullptr;
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Bitmap", (int)hr);
+
+            UpdateBitmapInfo();
+        }
+
+        ID2D1Bitmap::ID2D1Bitmap(
+            Direct2DNet::ID2D1RenderTarget ^renderTarget,
+            WICNet::IWICBitmapSource ^wicBitmapSource,
+            System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES> %bitmapProperties)
+            : Direct2DNet::ID2D1Image(renderTarget->m_factory)
+        {
+            HRESULT hr = S_OK;
+
+            pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
+            pin_ptr<Direct2DNet::D2D1_BITMAP_PROPERTIES> pProperties = nullptr;
+            if(bitmapProperties.HasValue)
+                pProperties = &bitmapProperties.Value;
+
+            hr = ((::ID2D1RenderTarget *)renderTarget->m_pResource)->CreateBitmapFromWicBitmap(
+                wicBitmapSource->m_pSource,
+                reinterpret_cast<::D2D1_BITMAP_PROPERTIES *>(pProperties),
+                (::ID2D1Bitmap **)ppResource
+            );
+
+            ppResource = nullptr;
+            pProperties = nullptr;
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Bitmap", (int)hr);

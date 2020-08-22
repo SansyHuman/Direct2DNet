@@ -7,6 +7,21 @@ namespace D2DNet
 {
     namespace Direct2DNet
     {
+        ID2D1Factory3::ID2D1Factory3(Direct2DNet::D2D1_FACTORY_TYPE type, System::Guid guid)
+            : Direct2DNet::ID2D1Factory2(type, guid)
+        {
+            
+        }
+
+        ID2D1Factory3::ID2D1Factory3(
+            Direct2DNet::D2D1_FACTORY_TYPE type,
+            Direct2DNet::D2D1_FACTORY_OPTIONS %options,
+            System::Guid guid)
+            : Direct2DNet::ID2D1Factory2(type, options, guid)
+        {
+            
+        }
+
         ID2D1Factory3::ID2D1Factory3(Direct2DNet::D2D1_FACTORY_TYPE type)
             : Direct2DNet::ID2D1Factory2(type, D2DNetGUID::UID_ID2D1Factory3)
         {

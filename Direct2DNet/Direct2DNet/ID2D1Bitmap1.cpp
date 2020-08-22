@@ -51,7 +51,7 @@ namespace D2DNet
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
             hr = ((::ID2D1DeviceContext *)deviceContext->m_pResource)->CreateBitmapFromDxgiSurface(
-                (::IDXGISurface *)surface->m_pSubObject,
+                (::IDXGISurface *)surface->m_pObj,
                 static_cast<::D2D1_BITMAP_PROPERTIES1>(bitmapProperties),
                 (::ID2D1Bitmap1 **)ppResource
             );

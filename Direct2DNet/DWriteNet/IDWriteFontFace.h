@@ -404,7 +404,6 @@ namespace D2DNet
             /// created with CLEARTYPE_NATURAL_QUALITY.
             /// </param>
             /// <param name="glyphIndices">An array of glyph indices to compute the metrics for.</param>
-            /// <param name="glyphCount">The number of elements in the glyphIndices array.</param>
             /// <param name="glyphMetrics">Array of DWRITE_GLYPH_METRICS structures filled by this function.
             /// The metrics returned by this function are in font design units.</param>
             /// <param name="transform">Optional transform applied to the glyphs and their positions.

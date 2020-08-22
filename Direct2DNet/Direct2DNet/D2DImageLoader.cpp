@@ -1,4 +1,6 @@
 #include "D2DImageLoader.h"
+#include "../DXCommonSettings.h"
+#include "../WICNet/IWICPalette.h"
 
 namespace D2DNet
 {
@@ -30,15 +32,43 @@ namespace D2DNet
             }
         }
 
-        Direct2DNet::ID2D1Bitmap ^D2DImageLoader::LoadBitmapFromFile(Direct2DNet::ID2D1RenderTarget ^renderTarget, System::String ^filePath)
+        Direct2DNet::ID2D1Bitmap ^D2DImageLoader::LoadBitmapFromFile(
+            Direct2DNet::ID2D1RenderTarget ^renderTarget,
+            System::String ^filePath,
+            System::Nullable<System::Guid> format,
+            System::Nullable<WICNet::WICBitmapDitherType> dither,
+            System::Nullable<double> alphaThresholdPercent,
+            System::Nullable<WICNet::WICBitmapPaletteType> paletteTranslate,
+            WICNet::IWICPalette ^palette
+        )
         {
+            if(!format.HasValue)
+                format = WICNet::PixelFormatGUID::Format32bppPBGRA;
+            
+            if(!dither.HasValue)
+                dither = WICNet::WICBitmapDitherType::None;
+
+            if(!alphaThresholdPercent.HasValue)
+                alphaThresholdPercent = 0;
+
+            if(!paletteTranslate.HasValue)
+                paletteTranslate = WICNet::WICBitmapPaletteType::Custom;
+
             marshal_context context;
 
             PCWSTR nativePath = context.marshal_as<const wchar_t *>(filePath);
 
             HRESULT hr = S_OK;
             ::ID2D1Bitmap *pBitmap = __nullptr;
-            hr = LoadFromFile((::ID2D1RenderTarget *)renderTarget->m_pResource, nativePath, &pBitmap);
+            hr = LoadFromFile(
+                (::ID2D1RenderTarget *)renderTarget->m_pResource,
+                nativePath,
+                DirectX::ToNativeGUID(format.Value),
+                (::WICBitmapDitherType)((DWORD)dither.Value),
+                alphaThresholdPercent.Value,
+                (::WICBitmapPaletteType)((DWORD)paletteTranslate.Value),
+                palette ? palette->m_pPalette : __nullptr,
+                &pBitmap);
 
             if(FAILED(hr))
             {
@@ -54,6 +84,11 @@ namespace D2DNet
         HRESULT D2DImageLoader::LoadFromFile(
             ::ID2D1RenderTarget *pRenderTarget,
             PCWSTR uri,
+            GUID %format,
+            ::WICBitmapDitherType dither,
+            double alphaThresholdPercent,
+            ::WICBitmapPaletteType paletteTranslate,
+            ::IWICPalette *pPalette,
             ::ID2D1Bitmap **ppBitmap)
         {
             HRESULT hr = S_OK;
@@ -79,7 +114,13 @@ namespace D2DNet
             if(FAILED(hr))
                 goto RES_REL;
 
-            hr = pConverter->Initialize(pSource, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, __nullptr, 0.0f, WICBitmapPaletteTypeMedianCut);
+            hr = pConverter->Initialize(
+                pSource,
+                format,
+                dither,
+                pPalette,
+                alphaThresholdPercent,
+                paletteTranslate);
 
             if(FAILED(hr))
                 goto RES_REL;

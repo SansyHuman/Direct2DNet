@@ -17,22 +17,18 @@ namespace D2DNet
             System::Nullable<DWriteNet::DWRITE_MATRIX> transform)
         {
             ::DWRITE_GLYPH_RUN run = static_cast<::DWRITE_GLYPH_RUN>(glyphRun);
-            pin_ptr<DWriteNet::DWRITE_MATRIX> pTransform = nullptr;
-            if(transform.HasValue)
-                pTransform = &transform.Value;
             pin_ptr<::IDWriteGlyphRunAnalysis *> ppAnal = &m_pAnal;
 
             HRESULT hr = factory->m_pFactory->CreateGlyphRunAnalysis(
                 &run,
                 pixelsPerDip,
-                reinterpret_cast<::DWRITE_MATRIX *>(pTransform),
+                transform.HasValue ? reinterpret_cast<::DWRITE_MATRIX *>(&transform.Value) : __nullptr,
                 (::DWRITE_RENDERING_MODE)((int)renderingMode),
                 (::DWRITE_MEASURING_MODE)((int)measuringMode),
                 baselineOriginX,
                 baselineOriginY,
                 (::IDWriteGlyphRunAnalysis **)ppAnal
             );
-            pTransform = nullptr;
             ppAnal = nullptr;
 
             if(FAILED(hr))

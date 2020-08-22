@@ -10,6 +10,14 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ID2D1DeviceContext1::ID2D1DeviceContext1(
+            Direct2DNet::ID2D1Device2 ^device,
+            Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options)
+            : Direct2DNet::ID2D1DeviceContext((Direct2DNet::ID2D1Device1 ^)device, options)
+        {
+            
+        }
+
+        ID2D1DeviceContext1::ID2D1DeviceContext1(
             Direct2DNet::ID2D1Device1 ^device,
             Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options)
             : Direct2DNet::ID2D1DeviceContext(device, options)

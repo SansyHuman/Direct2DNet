@@ -9,8 +9,6 @@ namespace D2DNet
 {
     namespace Direct2DNet
     {
-
-
         /// <summary>
         /// Represents an x-coordinate and y-coordinate pair in two-dimensional space.
         /// </summary>
@@ -459,7 +457,7 @@ namespace D2DNet
             CLOCKWISE = 1,
 
             [System::ObsoleteAttribute("Do not use this value.", true)]
-        FORCE_DWORD = 0xffffffff
+            FORCE_DWORD = 0xffffffff
         };
 
         /// <summary>
@@ -479,7 +477,7 @@ namespace D2DNet
             LARGE = 1,
 
             [System::ObsoleteAttribute("Do not use this value.", true)]
-        FORCE_DWORD = 0xffffffff
+            FORCE_DWORD = 0xffffffff
         };
 
         /// <summary>
@@ -1084,7 +1082,7 @@ namespace D2DNet
             /// </summary>
             /// <param name="angleX">Skew angle in x axis. It is measured in degrees
             /// counterclockwise from y axis.</param>
-            /// <param name="scaleY">Skew angle in y axis. It is measured in degrees
+            /// <param name="angleY">Skew angle in y axis. It is measured in degrees
             /// clockwise from x axis.</param>
             /// <param name="center">The point about which the skew is performed.</param>
             static Direct2DNet::D2D1_MATRIX_3X2_F Skew(float angleX, float angleY,
@@ -1126,9 +1124,7 @@ namespace D2DNet
             {
                 ::D2D1_MATRIX_3X2_F temp = D2D1::Matrix3x2F(_11, _12, _21, _22, _31, _32);
 
-                pin_ptr<::D2D1_MATRIX_3X2_F> pTemp = &temp;
-                bool result = !!::D2D1InvertMatrix((::D2D1_MATRIX_3X2_F *)pTemp);
-                pTemp = nullptr;
+                bool result = !!::D2D1InvertMatrix(&temp);
 
                 if(result)
                 {
@@ -1754,5 +1750,184 @@ namespace D2DNet
             }
         };
 
+        /// <summary>
+        /// Represents a point, radius pair that makes up part of a D2D1_INK_BEZIER_SEGMENT.
+        /// </summary>
+        public value struct D2D1_INK_POINT
+        {
+            FLOAT x;
+            FLOAT y;
+            FLOAT radius;
+
+            D2D1_INK_POINT(float x, float y, float radius) : x(x), y(y), radius(radius) {}
+        };
+
+        /// <summary>
+        /// Represents a Bezier segment to be used in the creation of an ID2D1Ink object.
+        /// This structure differs from D2D1_BEZIER_SEGMENT in that it is composed of
+        /// D2D1_INK_POINT s, which contain a radius in addition to x- and y-coordinates.
+        /// </summary>
+        public value struct D2D1_INK_BEZIER_SEGMENT
+        {
+            D2D1_INK_POINT point1;
+            D2D1_INK_POINT point2;
+            D2D1_INK_POINT point3;
+
+            D2D1_INK_BEZIER_SEGMENT(D2D1_INK_POINT point1, D2D1_INK_POINT point2, D2D1_INK_POINT point3)
+                : point1(point1), point2(point2), point3(point3) {}
+        };
+
+        /// <summary>
+        /// Specifies how to render gradient mesh edges.
+        /// </summary>
+        public enum class D2D1_PATCH_EDGE_MODE
+        {
+            /// <summary>
+            /// Render this edge aliased.
+            /// </summary>
+            ALIASED = 0,
+
+            /// <summary>
+            /// Render this edge antialiased.
+            /// </summary>
+            ANTIALIASED = 1,
+
+            /// <summary>
+            /// Render this edge aliased and inflated out slightly.
+            /// </summary>
+            ALIASED_INFLATED = 2,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
+        /// Represents a tensor patch with 16 control points, 4 corner colors, and boundary
+        /// flags. An ID2D1GradientMesh is made up of 1 or more gradient mesh patches. Use
+        /// the GradientMeshPatch function or the GradientMeshPatchFromCoonsPatch function
+        /// to create one.
+        /// </summary>
+        public value struct D2D1_GRADIENT_MESH_PATCH
+        {
+            /// <summary>
+            /// The gradient mesh patch control point at position 00.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point00;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 01.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point01;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 02.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point02;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 03.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point03;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 10.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point10;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 11.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point11;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 12.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point12;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 13.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point13;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 20.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point20;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 21.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point21;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 22.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point22;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 23.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point23;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 30.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point30;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 31.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point31;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 32.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point32;
+
+            /// <summary>
+            /// The gradient mesh patch control point at position 33.
+            /// </summary>
+            Direct2DNet::D2D1_POINT_2F point33;
+
+            /// <summary>
+            /// The color associated with control point at position 00.
+            /// </summary>
+            Direct2DNet::D2D1_COLOR_F color00;
+
+            /// <summary>
+            /// The color associated with control point at position 03.
+            /// </summary>
+            Direct2DNet::D2D1_COLOR_F color03;
+
+            /// <summary>
+            /// The color associated with control point at position 30.
+            /// </summary>
+            Direct2DNet::D2D1_COLOR_F color30;
+
+            /// <summary>
+            /// The color associated with control point at position 33.
+            /// </summary>
+            Direct2DNet::D2D1_COLOR_F color33;
+
+            /// <summary>
+            /// The edge mode for the top edge of the patch.
+            /// </summary>
+            Direct2DNet::D2D1_PATCH_EDGE_MODE topEdgeMode;
+
+            /// <summary>
+            /// The edge mode for the left edge of the patch.
+            /// </summary>
+            Direct2DNet::D2D1_PATCH_EDGE_MODE leftEdgeMode;
+
+            /// <summary>
+            /// The edge mode for the bottom edge of the patch.
+            /// </summary>
+            Direct2DNet::D2D1_PATCH_EDGE_MODE bottomEdgeMode;
+
+            /// <summary>
+            /// The edge mode for the right edge of the patch.
+            /// </summary>
+            Direct2DNet::D2D1_PATCH_EDGE_MODE rightEdgeMode;
+        };
     }
 }

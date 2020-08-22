@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Direct2DNet", "Direct2DNet\Direct2DNet.vcxproj", "{5FB60762-2D30-4712-BFA1-8FB9AC3C983B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Direct2DNetExtension", "Direct2DNetExtension\Direct2DNetExtension.csproj", "{B7BCFEB0-13E8-4F09-85C7-E5A5FFC641D4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5FB60762-2D30-4712-BFA1-8FB9AC3C983B} = {5FB60762-2D30-4712-BFA1-8FB9AC3C983B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

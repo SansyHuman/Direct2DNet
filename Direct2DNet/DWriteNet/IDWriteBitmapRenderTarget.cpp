@@ -83,11 +83,8 @@ namespace D2DNet
         HRESULT GdiInteropBitmapRenderTarget::SetCurrentTransform(
             System::Nullable<DWriteNet::DWRITE_MATRIX> transform)
         {
-            pin_ptr<DWriteNet::DWRITE_MATRIX> pTransform = nullptr;
-            if(transform.HasValue)
-                pTransform = &transform.Value;
             return m_pTarget->SetCurrentTransform(
-                reinterpret_cast<::DWRITE_MATRIX *>(pTransform)
+                transform.HasValue ? reinterpret_cast<::DWRITE_MATRIX *>(&transform.Value) : __nullptr
             );
         }
 

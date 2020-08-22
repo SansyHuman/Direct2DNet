@@ -33,6 +33,24 @@ namespace D2DNet
         /// </summary>
         [System::ObsoleteAttribute("This method is primarily for internal purpose, and could be unsafe.")]
         void HandleCOMInterface(void *obj);
+
+        /// <summary>
+        /// Receives the native pointer to the COM interface and decreases the reference count of the
+        /// COM object.
+        /// </summary>
+        /// <returns>
+        /// New reference count of the object.
+        /// </returns>
+        static ULONG Release(void *obj);
+
+        /// <summary>
+        /// Receives the native pointer to the COM interface and increases the reference count of the
+        /// COM object.
+        /// </summary>
+        /// <returns>
+        /// New reference count of the object.
+        /// </returns>
+        static ULONG AddRef(void *obj);
     };
 
     [System::Runtime::CompilerServices::ExtensionAttribute]
@@ -58,7 +76,7 @@ namespace D2DNet
         /// <summary>
         /// Queries a COM object for a wrapper to one of its interface; identifying the interface by a GUID.
         /// </summary>
-        /// <param name="queryObj">The guid of a object to query for.</param>
+        /// <param name="riid">The guid of a object to query for.</param>
         /// <param name="queryObj">An object to query for(out parameter).</param>
         /// <returns>
         /// HRESULT error code.

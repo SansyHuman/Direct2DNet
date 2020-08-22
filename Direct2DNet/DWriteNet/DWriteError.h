@@ -18,8 +18,9 @@ namespace D2DNet
         /// <summary>
         /// Contains DirectWrite error codes.
         /// </summary>
-        public value struct DWriteError abstract sealed
+        public ref class DWriteError abstract sealed
         {
+        public:
             /// <summary>
             /// Indicates an error in an input file such as a font file.
             /// </summary>

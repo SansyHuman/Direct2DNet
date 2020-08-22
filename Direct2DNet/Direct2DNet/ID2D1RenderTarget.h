@@ -26,6 +26,11 @@ namespace D2DNet
         ref class IDXGISurface;
     }
 
+    namespace WICNet
+    {
+        ref class IWICBitmapSource;
+    }
+
     namespace Direct2DNet
     {
         ref class ID2D1Bitmap;
@@ -106,7 +111,21 @@ namespace D2DNet
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties
             );
 
-            // CreateBitmapFromWicBitmap
+            /// <summary>
+            /// Create a D2D bitmap by copying a WIC bitmap.
+            /// </summary>
+             /// <param name="wicBitmapSource">The WIC bitmap to copy.</param>
+            /// <param name="bitmapProperties">The pixel format and DPI of the bitmap to create.
+            /// The pixel format must match the pixel format of wicBitmapSource, or the method will fail.
+            /// To prevent a mismatch, you can pass null. If both dpiX and dpiY are 0.0f, the default DPI,
+            /// 96, is used. DPI information embedded in wicBitmapSource is ignored.</param>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the bitmap.
+            /// </exception>
+            Direct2DNet::ID2D1Bitmap ^CreateBitmapFromWicBitmap(
+                WICNet::IWICBitmapSource ^wicBitmapSource,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES> bitmapProperties
+            );
 
             /// <summary>
             /// Create a D2D bitmap by sharing bits from another resource. The bitmap must be
@@ -495,11 +514,9 @@ namespace D2DNet
             {
                 Direct2DNet::D2D1_MATRIX_3X2_F get()
                 {
-                    ::D2D1_MATRIX_3X2_F temp;
-                    pin_ptr<::D2D1_MATRIX_3X2_F> pTemp = &temp;
-                    ((::ID2D1RenderTarget *)m_pResource)->GetTransform((::D2D1_MATRIX_3X2_F *)pTemp);
-                    pTemp = nullptr;
-                    return static_cast<Direct2DNet::D2D1_MATRIX_3X2_F>(temp);
+                    Direct2DNet::D2D1_MATRIX_3X2_F temp;
+                    ((::ID2D1RenderTarget *)m_pResource)->GetTransform((::D2D1_MATRIX_3X2_F *)&temp);
+                    return temp;
                 }
 
                 void set(Direct2DNet::D2D1_MATRIX_3X2_F value)

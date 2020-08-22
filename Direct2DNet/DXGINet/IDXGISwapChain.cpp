@@ -1,7 +1,9 @@
 #include "IDXGISwapChain.h"
 #include "IDXGIFactory.h"
 #include "IDXGISurface.h"
+#include "IDXGIOutput.h"
 #include "../GUIDs.h"
+#include "../DXCommonSettings.h"
 
 namespace D2DNet
 {
@@ -14,8 +16,8 @@ namespace D2DNet
             : DXGINet::IDXGIDeviceSubObject()
         {
             HRESULT hr = S_OK;
-            pin_ptr<::IDXGIDeviceSubObject *> ppSubObject = &m_pSubObject;
-            hr = factory->m_pFactory->CreateSwapChain(
+            pin_ptr<::IDXGIObject *> ppSubObject = &m_pObj;
+            hr = ((::IDXGIFactory *)(factory->m_pObj))->CreateSwapChain(
                 (::IUnknown *)device->NativePointer,
                 &static_cast<::DXGI_SWAP_CHAIN_DESC>(desc),
                 (::IDXGISwapChain **)ppSubObject
@@ -29,38 +31,159 @@ namespace D2DNet
 
         HRESULT IDXGISwapChain::Present(unsigned int syncInterval, DXGINet::DXGI_PRESENT flags)
         {
-            return ((::IDXGISwapChain *)m_pSubObject)->Present(syncInterval, (UINT)flags);
+            return ((::IDXGISwapChain *)m_pObj)->Present(syncInterval, (UINT)flags);
         }
 
-        DXGINet::IDXGISurface ^IDXGISwapChain::GetBufferAsDXGISurface(unsigned int buffer, System::Guid %guid)
+        HRESULT IDXGISwapChain::GetBufferAsDXGISurface(
+            unsigned int buffer,
+            System::Guid %guid,
+            DXGINet::IDXGISurface ^%surface)
         {
             if(guid == D2DNet::D2DNetGUID::UID_IDXGISurface)
             {
                 ::IDXGISurface *pSurface = __nullptr;
-                HRESULT hr = ((::IDXGISwapChain *)m_pSubObject)->GetBuffer(
+                HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetBuffer(
                     buffer,
                     __uuidof(::IDXGISurface),
                     (void **)&pSurface
                 );
 
                 if(FAILED(hr))
-                    throw gcnew D2DNet::Direct2DNet::Exception::DxException(
-                        "Failed to get buffer as IDXGISurface.", (int)hr);
+                {
+                    surface = nullptr;
+                    return hr;
+                }
 
-                return gcnew DXGINet::IDXGISurface(pSurface);
+                surface = gcnew DXGINet::IDXGISurface(pSurface);
+                return hr;
             }
             else
             {
-                throw gcnew D2DNet::Direct2DNet::Exception::DxException(
-                    "Failed to get buffer as IDXGISurface.", (int)DXGI_ERROR_INVALID_CALL);
+                surface = nullptr;
+                return DXGI_ERROR_INVALID_CALL;
             }
+        }
+
+        generic<typename T> where T : D2DNet::IUnknown
+        HRESULT D2DNet::DXGINet::IDXGISwapChain::GetBuffer(UINT buffer, T %surface)
+        {
+            ::IUnknown *pSurface = __nullptr;
+
+            try
+            {
+                System::Type ^bufferType = T::typeid;
+                InteropServices::GuidAttribute ^bufferUidAttr = (InteropServices::GuidAttribute ^)System::Attribute::GetCustomAttribute(bufferType, InteropServices::GuidAttribute::typeid);
+                ::GUID bufferUid = DirectX::ToNativeGUID(System::Guid(bufferUidAttr->Value));
+
+                HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetBuffer(
+                    buffer,
+                    bufferUid,
+                    (void **)&pSurface
+                );
+
+                if(FAILED(hr) || !pSurface)
+                {
+                    return hr;
+                }
+
+                surface = (T)System::Activator::CreateInstance(bufferType, true);
+                surface->HandleCOMInterface(pSurface);
+
+                return hr;
+            }
+            catch(System::Exception ^e)
+            {
+                return e->HResult;
+            }
+            finally
+            {
+                if(pSurface)
+                {
+                    pSurface->Release();
+                    pSurface = __nullptr;
+                }
+            }
+        }
+
+        HRESULT IDXGISwapChain::GetBuffer(UINT buffer, System::Guid %guid, D2DNet::IUnknown ^%surface)
+        {
+            ::IUnknown *pSurface = __nullptr;
+
+            try
+            {
+                if(!D2DNetGUID::uidTypePairs->ContainsKey(guid))
+                {
+                    surface = nullptr;
+                    return DXGI_ERROR_INVALID_CALL;
+                }
+                System::Type ^bufferType = D2DNetGUID::uidTypePairs[guid];
+
+                ::GUID bufferUid = DirectX::ToNativeGUID(guid);
+
+                HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetBuffer(
+                    buffer,
+                    bufferUid,
+                    (void **)&pSurface
+                );
+
+                if(FAILED(hr) || !pSurface)
+                {
+                    surface = nullptr;
+                    return hr;
+                }
+
+                surface = (D2DNet::IUnknown ^)System::Activator::CreateInstance(bufferType, true);
+                surface->HandleCOMInterface(pSurface);
+
+                return hr;
+            }
+            catch(System::Exception ^ e)
+            {
+                return e->HResult;
+            }
+            finally
+            {
+                if(pSurface)
+                {
+                    pSurface->Release();
+                    pSurface = __nullptr;
+                }
+            }
+        }
+
+        HRESULT IDXGISwapChain::SetFullscreenState(bool fullscreen, DXGINet::IDXGIOutput ^target)
+        {
+            return ((::IDXGISwapChain *)m_pObj)->SetFullscreenState(
+                System::Convert::ToInt32(fullscreen),
+                target ? (::IDXGIOutput *)target->m_pObj : __nullptr
+            );
+        }
+
+        HRESULT IDXGISwapChain::GetFullscreenState(bool %fullscreen, DXGINet::IDXGIOutput ^%target)
+        {
+            BOOL Fullscreen = FALSE;
+            ::IDXGIOutput *pTarget = __nullptr;
+            HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetFullscreenState(
+                &Fullscreen, &pTarget
+            );
+
+            if(FAILED(hr) || !pTarget)
+            {
+                fullscreen = System::Convert::ToBoolean(Fullscreen);
+                target = nullptr;
+                return hr;
+            }
+
+            fullscreen = System::Convert::ToBoolean(Fullscreen);
+            target = gcnew DXGINet::IDXGIOutput(pTarget);
+            return hr;
         }
 
         System::ValueTuple<HRESULT, DXGINet::DXGI_SWAP_CHAIN_DESC> IDXGISwapChain::GetDesc()
         {
-            ::DXGI_SWAP_CHAIN_DESC nativeDesc;
+            ::DXGI_SWAP_CHAIN_DESC nativeDesc = { 0 };
 
-            HRESULT hr = ((::IDXGISwapChain *)m_pSubObject)->GetDesc(&nativeDesc);
+            HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetDesc(&nativeDesc);
 
             return System::ValueTuple<HRESULT, DXGINet::DXGI_SWAP_CHAIN_DESC>(
                 hr,
@@ -70,9 +193,9 @@ namespace D2DNet
 
         HRESULT IDXGISwapChain::GetDesc(DXGINet::DXGI_SWAP_CHAIN_DESC %desc)
         {
-            ::DXGI_SWAP_CHAIN_DESC nativeDesc;
+            ::DXGI_SWAP_CHAIN_DESC nativeDesc = { 0 };
 
-            HRESULT hr = ((::IDXGISwapChain *)m_pSubObject)->GetDesc(&nativeDesc);
+            HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetDesc(&nativeDesc);
             desc = static_cast<DXGINet::DXGI_SWAP_CHAIN_DESC>(nativeDesc);
 
             return hr;
@@ -85,7 +208,7 @@ namespace D2DNet
             DXGINet::DXGI_FORMAT newFormat,
             DXGINet::DXGI_SWAP_CHAIN_FLAG swapChainFlags)
         {
-            return ((::IDXGISwapChain *)m_pSubObject)->ResizeBuffers(
+            return ((::IDXGISwapChain *)m_pObj)->ResizeBuffers(
                 bufferCount,
                 width,
                 height,
@@ -96,16 +219,30 @@ namespace D2DNet
 
         HRESULT IDXGISwapChain::ResizeTarget(DXGINet::DXGI_MODE_DESC %newTargetParameters)
         {
-            return ((::IDXGISwapChain *)m_pSubObject)->ResizeTarget(
+            return ((::IDXGISwapChain *)m_pObj)->ResizeTarget(
                 &static_cast<::DXGI_MODE_DESC>(newTargetParameters)
             );
         }
 
+        HRESULT IDXGISwapChain::GetContainingOutput(DXGINet::IDXGIOutput ^%output)
+        {
+            ::IDXGIOutput *pOutput = __nullptr;
+            HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetContainingOutput(&pOutput);
+            if(FAILED(hr) || !pOutput)
+            {
+                output = nullptr;
+                return hr;
+            }
+
+            output = gcnew DXGINet::IDXGIOutput(pOutput);
+            return hr;
+        }
+
         System::ValueTuple<HRESULT, DXGINet::DXGI_FRAME_STATISTICS> IDXGISwapChain::GetFrameStatistics()
         {
-            ::DXGI_FRAME_STATISTICS nativeStats;
+            ::DXGI_FRAME_STATISTICS nativeStats = { 0 };
 
-            HRESULT hr = ((::IDXGISwapChain *)m_pSubObject)->GetFrameStatistics(&nativeStats);
+            HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetFrameStatistics(&nativeStats);
 
             return System::ValueTuple<HRESULT, DXGINet::DXGI_FRAME_STATISTICS>(
                 hr,
@@ -115,19 +252,17 @@ namespace D2DNet
 
         HRESULT IDXGISwapChain::GetFrameStatistics(DXGINet::DXGI_FRAME_STATISTICS %stats)
         {
-            ::DXGI_FRAME_STATISTICS nativeStats;
-
-            HRESULT hr = ((::IDXGISwapChain *)m_pSubObject)->GetFrameStatistics(&nativeStats);
-            stats = static_cast<DXGINet::DXGI_FRAME_STATISTICS>(nativeStats);
-
-            return hr;
+            pin_ptr<DXGINet::DXGI_FRAME_STATISTICS> pStats = &stats;
+            return ((::IDXGISwapChain *)m_pObj)->GetFrameStatistics(
+                (::DXGI_FRAME_STATISTICS *)pStats
+            );
         }
 
         System::ValueTuple<HRESULT, unsigned int> IDXGISwapChain::GetLastPresentCount()
         {
             unsigned int count = 0;
 
-            HRESULT hr = ((::IDXGISwapChain *)m_pSubObject)->GetLastPresentCount(&count);
+            HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetLastPresentCount(&count);
 
             return System::ValueTuple<HRESULT, unsigned int>(hr, count);
         }
@@ -136,7 +271,7 @@ namespace D2DNet
         {
             unsigned int count = 0;
 
-            HRESULT hr = ((::IDXGISwapChain *)m_pSubObject)->GetLastPresentCount(&count);
+            HRESULT hr = ((::IDXGISwapChain *)m_pObj)->GetLastPresentCount(&count);
             lastPresentCount = count;
 
             return hr;

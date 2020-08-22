@@ -28,6 +28,18 @@ namespace D2DNet
         internal:
             ID2D1Factory3() : Direct2DNet::ID2D1Factory2() {}
 
+        protected:
+            ID2D1Factory3(
+                Direct2DNet::D2D1_FACTORY_TYPE type,
+                System::Guid guid
+            );
+
+            ID2D1Factory3(
+                Direct2DNet::D2D1_FACTORY_TYPE type,
+                Direct2DNet::D2D1_FACTORY_OPTIONS %options,
+                System::Guid guid
+            );
+
         public:
             /// <summary>
             /// Create <see cref="Direct2DNet::ID2D1Factory3"/> object.

@@ -16,6 +16,11 @@ namespace D2DNet
         ref class IDXGISurface;
     }
 
+    namespace WICNet
+    {
+        ref class IWICBitmapSource;
+    }
+
     namespace Direct2DNet
     {
         ref class ID2D1Factory;
@@ -59,6 +64,12 @@ namespace D2DNet
                 System::Guid %guid,
                 D2DNet::IUnknown ^data,
                 Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties
+            );
+
+            ID2D1Bitmap(
+                Direct2DNet::ID2D1RenderTarget ^renderTarget,
+                WICNet::IWICBitmapSource ^wicBitmapSource,
+                System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES> %bitmapProperties
             );
 
         protected:

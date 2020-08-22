@@ -62,7 +62,7 @@ namespace D2DNet
             if(!D2DNetGUID::uidTypePairs->ContainsKey(riid))
             {
                 queryObj = nullptr;
-                return E_INVALIDARG;
+                return E_NOINTERFACE;
             }
             System::Type ^queryType = D2DNetGUID::uidTypePairs[riid];
             if(originType == queryType)
@@ -97,6 +97,16 @@ namespace D2DNet
                 pQueryObj = __nullptr;
             }
         }
+    }
+
+    ULONG IUnknown::Release(void *obj)
+    {
+        return ((::IUnknown *)obj)->Release();
+    }
+
+    ULONG IUnknown::AddRef(void *obj)
+    {
+        return ((::IUnknown *)obj)->AddRef();
     }
 
 }

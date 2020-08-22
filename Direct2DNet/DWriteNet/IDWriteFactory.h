@@ -252,7 +252,6 @@ namespace D2DNet
             /// and for cases where text scalability is desired, CreateTextLayout should be used instead.
             /// </summary>
             /// <param name="string">The string to layout.</param>
-            /// <param name="stringLength">The length of the string.</param>
             /// <param name="textFormat">The format to apply to the string.</param>
             /// <param name="layoutWidth">Width of the layout box.</param>
             /// <param name="layoutHeight">Height of the layout box.</param>

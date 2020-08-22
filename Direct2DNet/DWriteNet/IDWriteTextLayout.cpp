@@ -528,9 +528,9 @@ namespace D2DNet
             );
         }
 
-        HRESULT IDWriteTextLayout::GetOverhangMetrics(DWriteNet::DWRITE_OVERHANG_METRICS %textMetrics)
+        HRESULT IDWriteTextLayout::GetOverhangMetrics(DWriteNet::DWRITE_OVERHANG_METRICS %overhangs)
         {
-            pin_ptr<DWriteNet::DWRITE_OVERHANG_METRICS> pMetrics = &textMetrics;
+            pin_ptr<DWriteNet::DWRITE_OVERHANG_METRICS> pMetrics = &overhangs;
             return ((::IDWriteTextLayout *)m_pFormat)->GetOverhangMetrics(
                 reinterpret_cast<::DWRITE_OVERHANG_METRICS *>(pMetrics)
             );

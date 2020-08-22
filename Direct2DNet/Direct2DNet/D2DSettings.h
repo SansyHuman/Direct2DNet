@@ -1866,24 +1866,101 @@ namespace D2DNet
         /// </summary>
         public enum class D2D1_PROPERTY_TYPE
         {
+            /// <summary>
+            /// An unknown property.
+            /// </summary>
             UNKNOWN = 0,
+
+            /// <summary>
+            /// An arbitrary-length string.
+            /// </summary>
             STRING = 1,
+
+            /// <summary>
+            /// A 32-bit integer value constrained to be either 0 or 1.
+            /// </summary>
             BOOL = 2,
+
+            /// <summary>
+            /// An unsigned 32-bit integer.
+            /// </summary>
             UINT32 = 3,
+
+            /// <summary>
+            /// A signed 32-bit integer.
+            /// </summary>
             INT32 = 4,
+
+            /// <summary>
+            /// A 32-bit float.
+            /// </summary>
             FLOAT = 5,
+
+            /// <summary>
+            /// Two 32-bit float values.
+            /// </summary>
             VECTOR2 = 6,
+
+            /// <summary>
+            /// Three 32-bit float values.
+            /// </summary>
             VECTOR3 = 7,
+
+            /// <summary>
+            /// Four 32-bit float values.
+            /// </summary>
             VECTOR4 = 8,
+
+            /// <summary>
+            /// An arbitrary number of bytes.
+            /// </summary>
             BLOB = 9,
+
+            /// <summary>
+            /// A returned COM or nano-COM interface.
+            /// </summary>
             IUNKNOWN = 10,
+
+            /// <summary>
+            /// An enumeration. The value should be treated as a UINT32 with a defined array of fields
+            /// to specify the bindings to human-readable strings.
+            /// </summary>
             ENUM = 11,
+
+            /// <summary>
+            /// An enumeration. The value is the count of sub-properties in the array. The set of array
+            /// elements will be contained in the sub-property.
+            /// </summary>
             ARRAY = 12,
+
+            /// <summary>
+            /// A CLSID.
+            /// </summary>
             CLSID = 13,
+
+            /// <summary>
+            /// A 3x2 matrix of float values.
+            /// </summary>
             MATRIX_3X2 = 14,
+
+            /// <summary>
+            /// A 4x3 matrix of float values.
+            /// </summary>
             MATRIX_4X3 = 15,
+
+            /// <summary>
+            /// A 4x4 matrix of float values.
+            /// </summary>
             MATRIX_4X4 = 16,
+
+            /// <summary>
+            /// A 5x4 matrix of float values.
+            /// </summary>
             MATRIX_5X4 = 17,
+
+            /// <summary>
+            /// A nano-COM color context interface pointer.
+            /// </summary>
             COLOR_CONTEXT = 18,
 
             [System::ObsoleteAttribute("Do not use this value.", true)]
@@ -1896,15 +1973,54 @@ namespace D2DNet
         /// </summary>
         public enum class D2D1_PROPERTY : unsigned int
         {
+            /// <summary>
+            /// The CLSID of the effect.
+            /// </summary>
             CLSID = 0x80000000,
+
+            /// <summary>
+            /// The name of the effect.
+            /// </summary>
             DISPLAYNAME = 0x80000001,
+
+            /// <summary>
+            /// The author of the effect.
+            /// </summary>
             AUTHOR = 0x80000002,
+
+            /// <summary>
+            /// The category of the effect.
+            /// </summary>
             CATEGORY = 0x80000003,
+
+            /// <summary>
+            /// The description of the effect.
+            /// </summary>
             DESCRIPTION = 0x80000004,
+
+            /// <summary>
+            /// The names of the effect's inputs.
+            /// </summary>
             INPUTS = 0x80000005,
+
+            /// <summary>
+            /// The output of the effect should be cached.
+            /// </summary>
             CACHED = 0x80000006,
+
+            /// <summary>
+            /// The buffer precision of the effect output.
+            /// </summary>
             PRECISION = 0x80000007,
+
+            /// <summary>
+            /// The minimum number of inputs supported by the effect.
+            /// </summary>
             MIN_INPUTS = 0x80000008,
+
+            /// <summary>
+            /// The maximum number of inputs supported by the effect.
+            /// </summary>
             MAX_INPUTS = 0x80000009,
 
             [System::ObsoleteAttribute("Do not use this value.", true)]
@@ -1917,12 +2033,39 @@ namespace D2DNet
         /// </summary>
         public enum class D2D1_SUBPROPERTY : unsigned int
         {
+            /// <summary>
+            /// The name for the parent property.
+            /// </summary>
             DISPLAYNAME = 0x80000000,
+
+            /// <summary>
+            /// A Boolean indicating whether the parent property is writeable.
+            /// </summary>
             ISREADONLY = 0x80000001,
+
+            /// <summary>
+            /// The minimum value that can be set to the parent property.
+            /// </summary>
             MIN = 0x80000002,
+
+            /// <summary>
+            /// The maximum value that can be set to the parent property.
+            /// </summary>
             MAX = 0x80000003,
+
+            /// <summary>
+            /// The default value of the parent property.
+            /// </summary>
             DEFAULT = 0x80000004,
+            /// <summary>
+            /// An array of name/index pairs that indicate the possible values that can be set to the
+            /// parent property.
+            /// </summary>
             FIELDS = 0x80000005,
+
+            /// <summary>
+            /// An index sub-property used by the elements of the D2D1_SUBPROPERTY::FIELDS array.
+            /// </summary>
             INDEX = 0x80000006,
 
             [System::ObsoleteAttribute("Do not use this value.", true)]
@@ -2370,6 +2513,198 @@ namespace D2DNet
             /// The device and its associated device contexts are given a lower priority than others.
             /// </summary>
             LOW = 1,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+
+        /// <summary>
+        /// Specifies the appearance of the ink nib (pen tip) as part of an
+        /// D2D1_INK_STYLE_PROPERTIES structure.
+        /// </summary>
+        public enum class D2D1_INK_NIB_SHAPE
+        {
+            /// <summary>
+            /// The pen tip is circular.
+            /// </summary>
+            ROUND = 0,
+
+            /// <summary>
+            /// The pen tip is square.
+            /// </summary>
+            SQUARE = 1,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
+        /// Defines the general pen tip shape and the transform used in an ID2D1InkStyle
+        /// object.
+        /// </summary>
+        public value struct D2D1_INK_STYLE_PROPERTIES
+        {
+            /// <summary>
+            /// The general shape of the nib used to draw a given ink object.
+            /// </summary>
+            Direct2DNet::D2D1_INK_NIB_SHAPE nibShape;
+
+            /// <summary>
+            /// The transform applied to shape of the nib. _31 and _32 are ignored.
+            /// </summary>
+            Direct2DNet::D2D1_MATRIX_3X2_F nibTransform;
+
+            D2D1_INK_STYLE_PROPERTIES(
+                Direct2DNet::D2D1_INK_NIB_SHAPE nibShape,
+                Direct2DNet::D2D1_MATRIX_3X2_F nibTransform
+            ) : nibShape(nibShape), nibTransform(nibTransform) {}
+        };
+
+        /// <summary>
+        /// Option flags controlling primary conversion performed by
+        /// CreateImageSourceFromDxgi, if any.
+        /// </summary>
+        [System::FlagsAttribute]
+        public enum class D2D1_IMAGE_SOURCE_FROM_DXGI_OPTIONS
+        {
+            /// <summary>
+            /// No primary conversion is performed.
+            /// </summary>
+            NONE = 0,
+
+            /// <summary>
+            /// Low quality primary conversion is performed.
+            /// </summary>
+            LOW_QUALITY_PRIMARY_CONVERSION = 1,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
+        /// Specifies the orientation of an image.
+        /// </summary>
+        public enum class D2D1_ORIENTATION
+        {
+            /// <summary>
+            /// The orientation is unchanged.
+            /// </summary>
+            DEFAULT = 1,
+
+            /// <summary>
+            /// The image is flipped horizontally.
+            /// </summary>
+            FLIP_HORIZONTAL = 2,
+
+            /// <summary>
+            /// The image is rotated clockwise 180 degrees.
+            /// </summary>
+            ROTATE_CLOCKWISE180 = 3,
+
+            /// <summary>
+            /// The image is rotated clockwise 180 degrees, then flipped horizontally.
+            /// </summary>
+            ROTATE_CLOCKWISE180_FLIP_HORIZONTAL = 4,
+
+            /// <summary>
+            /// The image is rotated clockwise 90 degrees, then flipped horizontally.
+            /// </summary>
+            ROTATE_CLOCKWISE90_FLIP_HORIZONTAL = 5,
+
+            /// <summary>
+            /// The image is rotated clockwise 270 degrees.
+            /// </summary>
+            ROTATE_CLOCKWISE270 = 6,
+
+            /// <summary>
+            /// The image is rotated clockwise 270 degrees, then flipped horizontally.
+            /// </summary>
+            ROTATE_CLOCKWISE270_FLIP_HORIZONTAL = 7,
+
+            /// <summary>
+            /// The image is rotated clockwise 90 degrees.
+            /// </summary>
+            ROTATE_CLOCKWISE90 = 8,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
+        /// Option flags for transformed image sources.
+        /// </summary>
+        [System::FlagsAttribute]
+        public enum class D2D1_TRANSFORMED_IMAGE_SOURCE_OPTIONS
+        {
+            NONE = 0,
+
+            /// <summary>
+            /// Prevents the image source from being automatically scaled (by a ratio of the
+            /// context DPI divided by 96) while drawn.
+            /// </summary>
+            DISABLE_DPI_SCALE = 1,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
+
+        /// <summary>
+        /// Properties of a transformed image source.
+        /// </summary>
+        public value struct D2D1_TRANSFORMED_IMAGE_SOURCE_PROPERTIES
+        {
+            /// <summary>
+            /// The orientation at which the image source is drawn.
+            /// </summary>
+            Direct2DNet::D2D1_ORIENTATION orientation;
+
+            /// <summary>
+            /// The horizontal scale factor at which the image source is drawn.
+            /// </summary>
+            FLOAT scaleX;
+
+            /// <summary>
+            /// The vertical scale factor at which the image source is drawn.
+            /// </summary>
+            FLOAT scaleY;
+
+            /// <summary>
+            /// The interpolation mode used when the image source is drawn.  This is ignored if
+            /// the image source is drawn using the DrawImage method, or using an image brush.
+            /// </summary>
+            Direct2DNet::D2D1_INTERPOLATION_MODE interpolationMode;
+
+            /// <summary>
+            /// Option flags.
+            /// </summary>
+            Direct2DNet::D2D1_TRANSFORMED_IMAGE_SOURCE_OPTIONS options;
+
+            D2D1_TRANSFORMED_IMAGE_SOURCE_PROPERTIES(
+                Direct2DNet::D2D1_ORIENTATION orientation,
+                FLOAT scaleX,
+                FLOAT scaleY,
+                Direct2DNet::D2D1_INTERPOLATION_MODE interpolationMode,
+                Direct2DNet::D2D1_TRANSFORMED_IMAGE_SOURCE_OPTIONS options
+            ) : orientation(orientation), scaleX(scaleX), scaleY(scaleY), interpolationMode(interpolationMode),
+                options(options) {}
+        };
+
+        /// <summary>
+        /// Specifies additional aspects of how a sprite batch is to be drawn.
+        /// </summary>
+        [System::FlagsAttribute]
+        public enum class D2D1_SPRITE_OPTIONS
+        {
+            /// <summary>
+            /// Use default sprite rendering behavior.
+            /// </summary>
+            NONE = 0,
+
+            /// <summary>
+            /// Bitmap interpolation will be clamped to the sprite's source rectangle.
+            /// </summary>
+            CLAMP_TO_SOURCE_RECTANGLE = 1,
 
             [System::ObsoleteAttribute("Do not use this value.", true)]
             FORCE_DWORD = 0xffffffff

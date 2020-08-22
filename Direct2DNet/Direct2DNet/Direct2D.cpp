@@ -53,10 +53,21 @@ namespace D2DNet
                     return gcnew Direct2DNet::ID2D1Factory3(type);
                 }
             }
+            else if(guid == D2DNet::D2DNetGUID::UID_ID2D1Factory4)
+            {
+                if(options.HasValue)
+                {
+                    return gcnew Direct2DNet::ID2D1Factory4(type, options.Value);
+                }
+                else
+                {
+                    return gcnew Direct2DNet::ID2D1Factory4(type);
+                }
+            }
             else
             {
                 throw gcnew Direct2DNet::Exception::DxException(
-                    "Failed to create the factory.", E_INVALIDARG
+                    "Failed to create the factory.", E_NOINTERFACE
                 );
             }
         }
@@ -173,6 +184,73 @@ namespace D2DNet
 
             return Direct2D::DEFAULT_FLATTENING_TOLERANCE /
                 (absMaxZoomFactor * ComputeMaximumScaleFactor(dpiDependentTransform));
+        }
+
+        Direct2DNet::D2D1_GRADIENT_MESH_PATCH Direct2D::GradientMeshPatchFromCoonsPatch(
+            Direct2DNet::D2D1_POINT_2F point0,
+            Direct2DNet::D2D1_POINT_2F point1,
+            Direct2DNet::D2D1_POINT_2F point2,
+            Direct2DNet::D2D1_POINT_2F point3,
+            Direct2DNet::D2D1_POINT_2F point4,
+            Direct2DNet::D2D1_POINT_2F point5,
+            Direct2DNet::D2D1_POINT_2F point6,
+            Direct2DNet::D2D1_POINT_2F point7,
+            Direct2DNet::D2D1_POINT_2F point8,
+            Direct2DNet::D2D1_POINT_2F point9,
+            Direct2DNet::D2D1_POINT_2F point10,
+            Direct2DNet::D2D1_POINT_2F point11,
+            Direct2DNet::D2D1_COLOR_F color0,
+            Direct2DNet::D2D1_COLOR_F color1,
+            Direct2DNet::D2D1_COLOR_F color2,
+            Direct2DNet::D2D1_COLOR_F color3,
+            Direct2DNet::D2D1_PATCH_EDGE_MODE topEdgeMode,
+            Direct2DNet::D2D1_PATCH_EDGE_MODE leftEdgeMode,
+            Direct2DNet::D2D1_PATCH_EDGE_MODE bottomEdgeMode,
+            Direct2DNet::D2D1_PATCH_EDGE_MODE rightEdgeMode)
+        {
+            Direct2DNet::D2D1_GRADIENT_MESH_PATCH newPatch;
+            newPatch.point00 = point0;
+            newPatch.point01 = point1;
+            newPatch.point02 = point2;
+            newPatch.point03 = point3;
+            newPatch.point13 = point4;
+            newPatch.point23 = point5;
+            newPatch.point33 = point6;
+            newPatch.point32 = point7;
+            newPatch.point31 = point8;
+            newPatch.point30 = point9;
+            newPatch.point20 = point10;
+            newPatch.point10 = point11;
+
+            ::D2D1GetGradientMeshInteriorPointsFromCoonsPatch(
+                (::D2D1_POINT_2F *)&point0,
+                (::D2D1_POINT_2F *)&point1,
+                (::D2D1_POINT_2F *)&point2,
+                (::D2D1_POINT_2F *)&point3,
+                (::D2D1_POINT_2F *)&point4,
+                (::D2D1_POINT_2F *)&point5,
+                (::D2D1_POINT_2F *)&point6,
+                (::D2D1_POINT_2F *)&point7,
+                (::D2D1_POINT_2F *)&point8,
+                (::D2D1_POINT_2F *)&point9,
+                (::D2D1_POINT_2F *)&point10,
+                (::D2D1_POINT_2F *)&point11,
+                (::D2D1_POINT_2F *)&newPatch.point11,
+                (::D2D1_POINT_2F *)&newPatch.point12,
+                (::D2D1_POINT_2F *)&newPatch.point21,
+                (::D2D1_POINT_2F *)&newPatch.point22
+            );
+
+            newPatch.color00 = color0;
+            newPatch.color03 = color1;
+            newPatch.color33 = color2;
+            newPatch.color30 = color3;
+            newPatch.topEdgeMode = topEdgeMode;
+            newPatch.leftEdgeMode = leftEdgeMode;
+            newPatch.bottomEdgeMode = bottomEdgeMode;
+            newPatch.rightEdgeMode = rightEdgeMode;
+
+            return newPatch;
         }
 
     }

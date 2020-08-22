@@ -24,8 +24,9 @@ namespace D2DNet
         /// <summary>
         /// Contains Direct2D error codes.
         /// </summary>
-        public value struct D2DError abstract sealed
+        public ref class D2DError abstract sealed
         {
+        public:
             /// <summary>
             /// The number is invalid.
             /// </summary>

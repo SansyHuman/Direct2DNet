@@ -451,10 +451,6 @@ namespace D2DNet
             pin_ptr<UINT16> pGlyphInds = &glyphIndices[0];
             pin_ptr<DWriteNet::DWRITE_SHAPING_GLYPH_PROPERTIES> pGlyphProps = &glyphProps[0];
 
-            pin_ptr<DWriteNet::DWRITE_MATRIX> pTranform = nullptr;
-            if(transform.HasValue)
-                pTranform = &transform.Value;
-
             pin_ptr<DWriteNet::DWRITE_SCRIPT_ANALYSIS> pAnal = &scriptAnalysis;
 
             const WCHAR *nativeLocale = !localeName ? __nullptr : context.marshal_as<const WCHAR *>(localeName);
@@ -495,7 +491,7 @@ namespace D2DNet
                     fontFace->m_pFace,
                     fontEmSize,
                     pixelsPerDip,
-                    reinterpret_cast<::DWRITE_MATRIX *>(pTranform),
+                    transform.HasValue ? reinterpret_cast<::DWRITE_MATRIX *>(&transform.Value) : __nullptr,
                     System::Convert::ToInt32(useGdiNatural),
                     System::Convert::ToInt32(isSideways),
                     System::Convert::ToInt32(isRightToLeft),
@@ -527,7 +523,7 @@ namespace D2DNet
                     fontFace->m_pFace,
                     fontEmSize,
                     pixelsPerDip,
-                    reinterpret_cast<::DWRITE_MATRIX *>(pTranform),
+                    transform.HasValue ? reinterpret_cast<::DWRITE_MATRIX *>(&transform.Value) : __nullptr,
                     System::Convert::ToInt32(useGdiNatural),
                     System::Convert::ToInt32(isSideways),
                     System::Convert::ToInt32(isRightToLeft),

@@ -13,29 +13,26 @@ namespace D2DNet
     {
         ref class IDXGIDevice;
 
-        [System::Runtime::InteropServices::GuidAttribute("3d3e0379-f9de-4d58-bb6c-18d62992f1a6")]
-        public ref class IDXGIDeviceSubObject abstract : DXGINet::IDXGIObject
-        {
-        internal:
-            ::IDXGIDeviceSubObject *m_pSubObject;
+        // Done.
 
+        /// <summary>
+        /// Inherited from objects that are tied to the device so that they can retrieve a pointer to it.
+        /// </summary>
+        [System::Runtime::InteropServices::GuidAttribute("3d3e0379-f9de-4d58-bb6c-18d62992f1a6")]
+        public ref class IDXGIDeviceSubObject : DXGINet::IDXGIObject
+        {
         protected:
-            IDXGIDeviceSubObject() : m_pSubObject(nullptr) {}
+            IDXGIDeviceSubObject() : DXGINet::IDXGIObject() {}
 
         public:
-            ~IDXGIDeviceSubObject();
-            !IDXGIDeviceSubObject();
-
-            property void *NativePointer
-            {
-                virtual void *get()
-                {
-                    return m_pSubObject;
-                }
-            }
-
-            virtual void HandleCOMInterface(void *obj);
-
+            /// <summary>
+            /// Retrieves the device.
+            /// </summary>
+            /// <param name="guid">The reference id for the device.</param>
+            /// <param name="device">The device(out parameter).</param>
+            /// <returns>
+            /// A code that indicates success or failure.
+            /// </returns>
             HRESULT GetDevice(
                 [InteropServices::InAttribute][CompilerServices::IsReadOnlyAttribute] System::Guid %guid,
                 [InteropServices::OutAttribute] DXGINet::IDXGIDevice ^%device

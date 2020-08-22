@@ -178,12 +178,12 @@ namespace D2DNet
             if(!sinkOpened)
                 throw gcnew Direct2DNet::Exception::DxException("The geometry sink for this path geometry is not opened.", D2DERR_WRONG_STATE);
 
-            std::vector<::D2D1_POINT_2F> nativePoints;
+            if(points->Length == 0)
+                return;
 
-            for(int i = 0; i < points->Length; i++)
-                nativePoints.push_back(static_cast<::D2D1_POINT_2F>(points[i]));
+            pin_ptr<Direct2DNet::D2D1_POINT_2F> pPoints = &points[0];
 
-            m_pSink->AddLines(nativePoints.data(), points->Length);
+            m_pSink->AddLines(reinterpret_cast<::D2D1_POINT_2F *>(pPoints), points->Length);
         }
 
         void ID2D1PathGeometry::AddBezier(Direct2DNet::D2D1_BEZIER_SEGMENT %bezier)
@@ -199,12 +199,12 @@ namespace D2DNet
             if(!sinkOpened)
                 throw gcnew Direct2DNet::Exception::DxException("The geometry sink for this path geometry is not opened.", D2DERR_WRONG_STATE);
 
-            std::vector<::D2D1_BEZIER_SEGMENT> nativeBeziers;
+            if(beziers->Length == 0)
+                return;
 
-            for(int i = 0; i < beziers->Length; i++)
-                nativeBeziers.push_back(static_cast<::D2D1_BEZIER_SEGMENT>(beziers[i]));
+            pin_ptr<Direct2DNet::D2D1_BEZIER_SEGMENT> pBeziers = &beziers[0];
 
-            m_pSink->AddBeziers(nativeBeziers.data(), beziers->Length);
+            m_pSink->AddBeziers(reinterpret_cast<::D2D1_BEZIER_SEGMENT *>(pBeziers), beziers->Length);
         }
 
         void ID2D1PathGeometry::AddQuadraticBezier(Direct2DNet::D2D1_QUADRATIC_BEZIER_SEGMENT %bezier)
@@ -220,12 +220,12 @@ namespace D2DNet
             if(!sinkOpened)
                 throw gcnew Direct2DNet::Exception::DxException("The geometry sink for this path geometry is not opened.", D2DERR_WRONG_STATE);
 
-            std::vector<::D2D1_QUADRATIC_BEZIER_SEGMENT> nativeBeziers;
+            if(beziers->Length == 0)
+                return;
 
-            for(int i = 0; i < beziers->Length; i++)
-                nativeBeziers.push_back(static_cast<::D2D1_QUADRATIC_BEZIER_SEGMENT>(beziers[i]));
+            pin_ptr<Direct2DNet::D2D1_QUADRATIC_BEZIER_SEGMENT> pBeziers = &beziers[0];
 
-            m_pSink->AddQuadraticBeziers(nativeBeziers.data(), beziers->Length);
+            m_pSink->AddQuadraticBeziers(reinterpret_cast<::D2D1_QUADRATIC_BEZIER_SEGMENT *>(pBeziers), beziers->Length);
         }
 
         void ID2D1PathGeometry::AddArc(Direct2DNet::D2D1_ARC_SEGMENT %arc)

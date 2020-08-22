@@ -18,7 +18,11 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ref class ID2D1Factory3;
+        ref class ID2D1Factory4;
+        ref class ID2D1DeviceContext2;
         ref class ID2D1Bitmap;
+
+        // Done.
 
         /// <summary>
         /// Represents a resource domain whose objects and device contexts can be used
@@ -29,7 +33,7 @@ namespace D2DNet
         [System::Runtime::InteropServices::GuidAttribute("a44472e1-8dfb-4e60-8492-6e2861c9ca8b")]
         public ref class ID2D1Device2 : Direct2DNet::ID2D1Device1
         {
-        private:
+        protected:
             DXGINet::IDXGIDevice ^m_device;
 
         internal:
@@ -37,8 +41,22 @@ namespace D2DNet
 
             ID2D1Device2(Direct2DNet::ID2D1Factory3 ^factory, DXGINet::IDXGIDevice ^device);
 
+        protected:
+            ID2D1Device2(Direct2DNet::ID2D1Factory4 ^factory, DXGINet::IDXGIDevice ^device)
+                : Direct2DNet::ID2D1Device1((Direct2DNet::ID2D1Factory3 ^)factory), m_device(device) {}
+
         public:
             virtual void HandleCOMInterface(void *obj) override;
+
+            /// <summary>
+            /// Creates a new device context with no initially assigned target.
+            /// </summary>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the context.
+            /// </exception>
+            Direct2DNet::ID2D1DeviceContext2 ^CreateDeviceContext2(
+                Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options
+            );
 
             /// <summary>
             /// Flush all device contexts that reference a given bitmap.

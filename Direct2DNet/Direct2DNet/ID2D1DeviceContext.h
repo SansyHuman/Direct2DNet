@@ -232,7 +232,7 @@ namespace D2DNet
             /// <summary>
             /// Gets the world-space bounds of an image with the world transform of the context applied.
             /// </summary>
-            /// <param name="localBounds">Bounds of the image(out parameter).</param>
+            /// <param name="worldBounds">Bounds of the image(out parameter).</param>
             /// <returns>
             /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
             /// </returns>
@@ -421,6 +421,12 @@ namespace D2DNet
                 [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_COMPOSITE_MODE> compositeMode
             );
 
+            /// <summary>
+            /// Draw a metafile to the device context.
+            /// </summary>
+            /// <param name="gdiMetafile">The metafile to draw.</param>
+            /// <param name="targetOffset">Optional offset from the upper left corner of the render target.
+            /// </param>
             void DrawGdiMetafile(
                 Direct2DNet::ID2D1GdiMetafile ^gdiMetafile,
                 [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_POINT_2F> targetOffset

@@ -109,6 +109,24 @@
     <Filter Include="소스 파일\DWriteNet\glyph">
       <UniqueIdentifier>{a193d4bb-a367-4253-b4e6-1441a2bfdceb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Direct2DNet\effect">
+      <UniqueIdentifier>{59f0123e-267a-420d-a08b-01f1204d74f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Direct2DNet\effect">
+      <UniqueIdentifier>{c0220635-16bd-4421-a6b9-534097c8b616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\WICNet">
+      <UniqueIdentifier>{dee2beb4-013b-4a93-9e4e-e22fcc87be55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\WICNet">
+      <UniqueIdentifier>{dac120d3-d8dc-4ef5-9ab3-fdd7a1ef052a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\WICNet\core">
+      <UniqueIdentifier>{303362d0-9b5b-46f3-b0e7-bba77750e666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\WICNet\core">
+      <UniqueIdentifier>{2bb8ab63-0638-4a0e-9ea5-afad11c48f2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -333,15 +351,6 @@
     <ClInclude Include="Direct2DNet\ID2D1GradientStopCollection1.h">
       <Filter>헤더 파일\Direct2DNet\brush</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1Properties.h">
-      <Filter>헤더 파일\Direct2DNet\image</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\D2DBuiltinEffects.h">
-      <Filter>헤더 파일\Direct2DNet\image</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct2DNet\ID2D1Effect.h">
-      <Filter>헤더 파일\Direct2DNet\image</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2DNet\ID2D1ImageBrush.h">
       <Filter>헤더 파일\Direct2DNet\brush</Filter>
     </ClInclude>
@@ -467,6 +476,102 @@
     </ClInclude>
     <ClInclude Include="Direct2DNet\ID2D1Device2.h">
       <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGIOutput.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGIKeyedMutex.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DXGINet\IDXGIResource.h">
+      <Filter>헤더 파일\DXGINet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1DeviceContext2.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Ink.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1InkStyle.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1GradientMesh.h">
+      <Filter>헤더 파일\Direct2DNet\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Effect.h">
+      <Filter>헤더 파일\Direct2DNet\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DBuiltinEffects.h">
+      <Filter>헤더 파일\Direct2DNet\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Properties.h">
+      <Filter>헤더 파일\Direct2DNet\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\D2DNet_effect.h">
+      <Filter>헤더 파일\Direct2DNet\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1LookupTable3D.h">
+      <Filter>헤더 파일\Direct2DNet\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1ImageSource.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1TransformedImageSource.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Factory4.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1Device3.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1DeviceContext3.h">
+      <Filter>헤더 파일\Direct2DNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1SpriteBatch.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\WICNetHeaders.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICObject.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICImagingFactory.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\WICNet_core.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICBitmapDecoder.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\WICSettings.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICBitmapSource.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICBitmapFrameDecode.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICFormatConverter.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICPalette.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICComponentInfo.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICBitmapCodecInfo.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICBitmapDecoderInfo.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICMetadataQueryReader.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -620,12 +725,6 @@
     <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection1.cpp">
       <Filter>소스 파일\Direct2DNet\brush</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1Properties.cpp">
-      <Filter>소스 파일\Direct2DNet\image</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct2DNet\ID2D1Effect.cpp">
-      <Filter>소스 파일\Direct2DNet\image</Filter>
-    </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1Image.cpp">
       <Filter>소스 파일\Direct2DNet\image</Filter>
     </ClCompile>
@@ -751,6 +850,87 @@
     </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1Device2.cpp">
       <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGIObject.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGIKeyedMutex.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGIOutput.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DXGINet\IDXGIResource.cpp">
+      <Filter>소스 파일\DXGINet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1DeviceContext2.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Ink.cpp">
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1InkStyle.cpp">
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Effect.cpp">
+      <Filter>소스 파일\Direct2DNet\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Properties.cpp">
+      <Filter>소스 파일\Direct2DNet\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1GradientMesh.cpp">
+      <Filter>소스 파일\Direct2DNet\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1LookupTable3D.cpp">
+      <Filter>소스 파일\Direct2DNet\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1ImageSource.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1TransformedImageSource.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Factory4.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1Device3.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1DeviceContext3.cpp">
+      <Filter>소스 파일\Direct2DNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1SpriteBatch.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICImagingFactory.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICBitmapDecoder.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICBitmapSource.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICBitmapFrameDecode.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICFormatConverter.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICComponentInfo.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICPalette.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICBitmapCodecInfo.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICBitmapDecoderInfo.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICMetadataQueryReader.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

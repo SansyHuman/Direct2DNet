@@ -7,10 +7,12 @@ namespace D2DNet
 {
     namespace DWriteNet
     {
+        /// <summary>
+        /// Class that contains DirectWrite constants and helper functions.
+        /// </summary>
         public ref class DirectWrite abstract sealed
         {
         public:
-
             /// <summary>
             /// Creates an OpenType tag as a 32bit integer such that
             /// the first character in the tag is the lowest byte,

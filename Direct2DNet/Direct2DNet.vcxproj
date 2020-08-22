@@ -82,6 +82,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>dxgi.lib;dxguid.lib;d2d1.lib;d3d11.lib;dwrite.lib;WindowsCodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -95,6 +96,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>dxgi.lib;dxguid.lib;d2d1.lib;d3d11.lib;dwrite.lib;WindowsCodecs.lib;shcore.lib;runtimeobject.lib;uuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -108,6 +110,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>dxgi.lib;dxguid.lib;d2d1.lib;d3d11.lib;dwrite.lib;WindowsCodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -121,6 +124,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>dxgi.lib;dxguid.lib;d2d1.lib;d3d11.lib;dwrite.lib;WindowsCodecs.lib;shcore.lib;runtimeobject.lib;uuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -136,6 +140,7 @@
     <ClInclude Include="Direct2DNet\D2DMath.h" />
     <ClInclude Include="Direct2DNet\D2DNet_brush.h" />
     <ClInclude Include="Direct2DNet\D2DNet_core.h" />
+    <ClInclude Include="Direct2DNet\D2DNet_effect.h" />
     <ClInclude Include="Direct2DNet\D2DNet_geometry.h" />
     <ClInclude Include="Direct2DNet\D2DNet_image.h" />
     <ClInclude Include="Direct2DNet\D2DSettings.h" />
@@ -156,8 +161,11 @@
     <ClInclude Include="Direct2DNet\ID2D1Device.h" />
     <ClInclude Include="Direct2DNet\ID2D1Device1.h" />
     <ClInclude Include="Direct2DNet\ID2D1Device2.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Device3.h" />
     <ClInclude Include="Direct2DNet\ID2D1DeviceContext.h" />
     <ClInclude Include="Direct2DNet\ID2D1DeviceContext1.h" />
+    <ClInclude Include="Direct2DNet\ID2D1DeviceContext2.h" />
+    <ClInclude Include="Direct2DNet\ID2D1DeviceContext3.h" />
     <ClInclude Include="Direct2DNet\ID2D1DrawingStateBlock.h" />
     <ClInclude Include="Direct2DNet\ID2D1DrawingStateBlock1.h" />
     <ClInclude Include="Direct2DNet\ID2D1Effect.h" />
@@ -165,19 +173,25 @@
     <ClInclude Include="Direct2DNet\ID2D1Factory1.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory2.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory3.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Factory4.h" />
     <ClInclude Include="Direct2DNet\ID2D1GdiInteropRenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1GdiMetafile.h" />
     <ClInclude Include="Direct2DNet\ID2D1GdiMetafileSink.h" />
     <ClInclude Include="Direct2DNet\ID2D1Geometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1GeometryGroup.h" />
     <ClInclude Include="Direct2DNet\ID2D1GeometryRealization.h" />
+    <ClInclude Include="Direct2DNet\ID2D1GradientMesh.h" />
     <ClInclude Include="Direct2DNet\ID2D1GradientStopCollection.h" />
     <ClInclude Include="Direct2DNet\ID2D1GradientStopCollection1.h" />
     <ClInclude Include="Direct2DNet\ID2D1HwndRenderTarget.h" />
     <ClInclude Include="Direct2DNet\ID2D1Image.h" />
     <ClInclude Include="Direct2DNet\ID2D1ImageBrush.h" />
+    <ClInclude Include="Direct2DNet\ID2D1ImageSource.h" />
+    <ClInclude Include="Direct2DNet\ID2D1Ink.h" />
+    <ClInclude Include="Direct2DNet\ID2D1InkStyle.h" />
     <ClInclude Include="Direct2DNet\ID2D1Layer.h" />
     <ClInclude Include="Direct2DNet\ID2D1LinearGradientBrush.h" />
+    <ClInclude Include="Direct2DNet\ID2D1LookupTable3D.h" />
     <ClInclude Include="Direct2DNet\ID2D1Mesh.h" />
     <ClInclude Include="Direct2DNet\ID2D1Multithread.h" />
     <ClInclude Include="Direct2DNet\ID2D1NativeGeometryInfoContainer.h" />
@@ -190,9 +204,11 @@
     <ClInclude Include="Direct2DNet\ID2D1Resource.h" />
     <ClInclude Include="Direct2DNet\ID2D1RoundedRectangleGeometry.h" />
     <ClInclude Include="Direct2DNet\ID2D1SolidColorBrush.h" />
+    <ClInclude Include="Direct2DNet\ID2D1SpriteBatch.h" />
     <ClInclude Include="Direct2DNet\ID2D1StrokeStyle.h" />
     <ClInclude Include="Direct2DNet\ID2D1StrokeStyle1.h" />
     <ClInclude Include="Direct2DNet\ID2D1TransformedGeometry.h" />
+    <ClInclude Include="Direct2DNet\ID2D1TransformedImageSource.h" />
     <ClInclude Include="Direct2DNet\IDirect2DObject.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory.h" />
     <ClInclude Include="Direct3D11Net\D3D11NetHeaders.h" />
@@ -245,12 +261,29 @@
     <ClInclude Include="DXGINet\IDXGIDevice.h" />
     <ClInclude Include="DXGINet\IDXGIDeviceSubObject.h" />
     <ClInclude Include="DXGINet\IDXGIFactory.h" />
+    <ClInclude Include="DXGINet\IDXGIKeyedMutex.h" />
     <ClInclude Include="DXGINet\IDXGIObject.h" />
+    <ClInclude Include="DXGINet\IDXGIOutput.h" />
+    <ClInclude Include="DXGINet\IDXGIResource.h" />
     <ClInclude Include="DXGINet\IDXGISurface.h" />
     <ClInclude Include="DXGINet\IDXGISwapChain.h" />
     <ClInclude Include="GUIDs.h" />
     <ClInclude Include="IUnknown.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="WICNet\IWICBitmapCodecInfo.h" />
+    <ClInclude Include="WICNet\IWICBitmapDecoder.h" />
+    <ClInclude Include="WICNet\IWICBitmapDecoderInfo.h" />
+    <ClInclude Include="WICNet\IWICBitmapFrameDecode.h" />
+    <ClInclude Include="WICNet\IWICBitmapSource.h" />
+    <ClInclude Include="WICNet\IWICComponentInfo.h" />
+    <ClInclude Include="WICNet\IWICFormatConverter.h" />
+    <ClInclude Include="WICNet\IWICImagingFactory.h" />
+    <ClInclude Include="WICNet\IWICMetadataQueryReader.h" />
+    <ClInclude Include="WICNet\IWICObject.h" />
+    <ClInclude Include="WICNet\IWICPalette.h" />
+    <ClInclude Include="WICNet\WICNetHeaders.h" />
+    <ClInclude Include="WICNet\WICNet_core.h" />
+    <ClInclude Include="WICNet\WICSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ComIO\Stream.cpp" />
@@ -272,32 +305,43 @@
     <ClCompile Include="Direct2DNet\ID2D1Device.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Device1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Device2.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Device3.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DeviceContext.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DeviceContext1.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1DeviceContext2.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1DeviceContext3.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DrawingStateBlock.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1DrawingStateBlock1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Effect.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Factory1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Factory2.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Factory3.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Factory4.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GdiInteropRenderTarget.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GdiMetafile.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GdiMetafileSink.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GeometryGroup.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GeometryRealization.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1GradientMesh.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1GradientStopCollection1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Image.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1ImageBrush.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1ImageSource.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1Ink.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1InkStyle.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Layer.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1LinearGradientBrush.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1LookupTable3D.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Mesh.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Multithread.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1PathGeometry1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Properties.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1RadialGradientBrush.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1SpriteBatch.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1StrokeStyle1.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1TransformedGeometry.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1TransformedImageSource.cpp" />
     <ClCompile Include="Direct3D11Net\ID3D11Device.cpp" />
     <ClCompile Include="Direct3D11Net\ID3D11DeviceChild.cpp" />
     <ClCompile Include="Direct3D11Net\ID3D11DeviceContext.cpp" />
@@ -330,10 +374,24 @@
     <ClCompile Include="DXGINet\IDXGIDevice.cpp" />
     <ClCompile Include="DXGINet\IDXGIDeviceSubObject.cpp" />
     <ClCompile Include="DXGINet\IDXGIFactory.cpp" />
+    <ClCompile Include="DXGINet\IDXGIKeyedMutex.cpp" />
+    <ClCompile Include="DXGINet\IDXGIObject.cpp" />
+    <ClCompile Include="DXGINet\IDXGIOutput.cpp" />
+    <ClCompile Include="DXGINet\IDXGIResource.cpp" />
     <ClCompile Include="DXGINet\IDXGISurface.cpp" />
     <ClCompile Include="DXGINet\IDXGISwapChain.cpp" />
     <ClCompile Include="GUIDs.cpp" />
     <ClCompile Include="IUnknown.cpp" />
+    <ClCompile Include="WICNet\IWICBitmapCodecInfo.cpp" />
+    <ClCompile Include="WICNet\IWICBitmapDecoder.cpp" />
+    <ClCompile Include="WICNet\IWICBitmapDecoderInfo.cpp" />
+    <ClCompile Include="WICNet\IWICBitmapFrameDecode.cpp" />
+    <ClCompile Include="WICNet\IWICBitmapSource.cpp" />
+    <ClCompile Include="WICNet\IWICComponentInfo.cpp" />
+    <ClCompile Include="WICNet\IWICFormatConverter.cpp" />
+    <ClCompile Include="WICNet\IWICImagingFactory.cpp" />
+    <ClCompile Include="WICNet\IWICMetadataQueryReader.cpp" />
+    <ClCompile Include="WICNet\IWICPalette.cpp" />
     <Text Include="..\LICENSE">
       <FileType>Text</FileType>
     </Text>

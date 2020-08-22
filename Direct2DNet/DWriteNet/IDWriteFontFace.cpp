@@ -134,6 +134,7 @@ namespace D2DNet
                     return E_INVALIDARG;
 
                 m_fontFiles->CopyTo(fontFileBuffer, 0);
+                numberOfFiles = m_fontFiles->Length;
 
                 return S_OK;
             }
@@ -159,6 +160,7 @@ namespace D2DNet
             }
 
             m_fontFiles->CopyTo(fontFileBuffer, 0);
+            numberOfFiles = realNumberOfFiles;
 
             return hr;
         }
@@ -353,18 +355,14 @@ namespace D2DNet
             System::Nullable<DWriteNet::DWRITE_MATRIX> transform)
         {
             pin_ptr<DWriteNet::DWRITE_FONT_METRICS> pMetrics = &fontFaceMetrics;
-            pin_ptr<DWriteNet::DWRITE_MATRIX> pTransform = nullptr;
-            if(transform.HasValue)
-                pTransform = &transform.Value;
 
             HRESULT hr = m_pFace->GetGdiCompatibleMetrics(
                 emSize,
                 pixelsPerDip,
-                reinterpret_cast<::DWRITE_MATRIX *>(pTransform),
+                transform.HasValue ? reinterpret_cast<::DWRITE_MATRIX *>(&transform.Value) : __nullptr,
                 reinterpret_cast<::DWRITE_FONT_METRICS *>(pMetrics)
             );
 
-            pTransform = nullptr;
             pMetrics = nullptr;
             
             return hr;
@@ -377,18 +375,14 @@ namespace D2DNet
         {
             DWriteNet::DWRITE_FONT_METRICS metrics;
             pin_ptr<DWriteNet::DWRITE_FONT_METRICS> pMetrics = &metrics;
-            pin_ptr<DWriteNet::DWRITE_MATRIX> pTransform = nullptr;
-            if(transform.HasValue)
-                pTransform = &transform.Value;
 
             HRESULT hr = m_pFace->GetGdiCompatibleMetrics(
                 emSize,
                 pixelsPerDip,
-                reinterpret_cast<::DWRITE_MATRIX *>(pTransform),
+                transform.HasValue ? reinterpret_cast<::DWRITE_MATRIX *>(&transform.Value) : __nullptr,
                 reinterpret_cast<::DWRITE_FONT_METRICS *>(pMetrics)
             );
 
-            pTransform = nullptr;
             pMetrics = nullptr;
 
             return System::ValueTuple<HRESULT, DWriteNet::DWRITE_FONT_METRICS>(hr, metrics);
@@ -410,14 +404,11 @@ namespace D2DNet
 
             pin_ptr<UINT16> pIndices = &glyphIndices[0];
             pin_ptr<DWriteNet::DWRITE_GLYPH_METRICS> pMetrics = &glyphMetrics[0];
-            pin_ptr<DWriteNet::DWRITE_MATRIX> pTransform = nullptr;
-            if(transform.HasValue)
-                pTransform = &transform.Value;
 
             HRESULT hr = m_pFace->GetGdiCompatibleGlyphMetrics(
                 emSize,
                 pixelsPerDip,
-                reinterpret_cast<::DWRITE_MATRIX *>(pTransform),
+                transform.HasValue ? reinterpret_cast<::DWRITE_MATRIX *>(&transform.Value) : __nullptr,
                 System::Convert::ToInt32(useGdiNatural),
                 (UINT16 *)pIndices,
                 (UINT32)glyphIndices->Length,
@@ -427,7 +418,6 @@ namespace D2DNet
 
             pIndices = nullptr;
             pMetrics = nullptr;
-            pTransform = nullptr;
 
             if(FAILED(hr))
             {

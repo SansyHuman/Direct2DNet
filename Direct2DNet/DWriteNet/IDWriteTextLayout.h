@@ -478,7 +478,7 @@ namespace D2DNet
             /// is allowed to draw them in any variety of styles.
             /// </remarks>
             HRESULT GetOverhangMetrics(
-                [OutAttribute] DWriteNet::DWRITE_OVERHANG_METRICS %textMetrics
+                [OutAttribute] DWriteNet::DWRITE_OVERHANG_METRICS %overhangs
             );
 
             /// <summary>

@@ -13,6 +13,7 @@ namespace D2DNet
     namespace Direct2DNet
     {
         ref class ID2D1Device1;
+        ref class ID2D1Device2;
         ref class ID2D1Geometry;
         ref class ID2D1StrokeStyle;
         ref class ID2D1Brush;
@@ -24,6 +25,12 @@ namespace D2DNet
         [System::Runtime::InteropServices::GuidAttribute("d37f57e4-6908-459f-a199-e72f24f79987")]
         public ref class ID2D1DeviceContext1 : Direct2DNet::ID2D1DeviceContext
         {
+        protected:
+            ID2D1DeviceContext1(
+                Direct2DNet::ID2D1Device2 ^device,
+                Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options
+            );
+
         internal:
             ID2D1DeviceContext1() : Direct2DNet::ID2D1DeviceContext() {}
 

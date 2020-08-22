@@ -14,22 +14,13 @@ namespace D2DNet
 
             pin_ptr<::IDWriteFontFile *> ppFile = &m_pFile;
 
-            ::FILETIME *pTime = __nullptr;
-            pin_ptr<InteropServices::ComTypes::FILETIME> pMTime = nullptr;
-            if(lastWriteTime.HasValue)
-            {
-                pMTime = &lastWriteTime.Value;
-                pTime = reinterpret_cast<::FILETIME *>(pMTime);
-            }
-
             HRESULT hr = factory->m_pFactory->CreateFontFileReference(
                 context.marshal_as<const WCHAR *>(filePath),
-                pTime,
+                lastWriteTime.HasValue ? reinterpret_cast<::FILETIME *>(&lastWriteTime.Value) : __nullptr,
                 (::IDWriteFontFile **)ppFile
             );
 
             ppFile = nullptr;
-            pMTime = nullptr;
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create IDWriteFontFile.", (int)hr);

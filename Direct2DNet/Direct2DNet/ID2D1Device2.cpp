@@ -1,6 +1,7 @@
 #include "ID2D1Device2.h"
 #include "ID2D1Factory3.h"
 #include "../DXGINet/IDXGIDevice.h"
+#include "ID2D1DeviceContext2.h"
 #include "ID2D1Bitmap.h"
 
 namespace D2DNet
@@ -13,7 +14,7 @@ namespace D2DNet
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
             hr = ((::ID2D1Factory3 *)factory->m_pFactory)->CreateDevice(
-                device->m_pDevice,
+                (::IDXGIDevice *)device->m_pObj,
                 (::ID2D1Device2 **)ppResource
             );
             ppResource = nullptr;
@@ -32,6 +33,12 @@ namespace D2DNet
                 m_device = nullptr;
             else
                 m_device = gcnew DXGINet::IDXGIDevice(device);
+        }
+
+        Direct2DNet::ID2D1DeviceContext2 ^ID2D1Device2::CreateDeviceContext2(
+            Direct2DNet::D2D1_DEVICE_CONTEXT_OPTIONS options)
+        {
+            return gcnew Direct2DNet::ID2D1DeviceContext2(this, options);
         }
 
         void ID2D1Device2::FlushDeviceContexts(Direct2DNet::ID2D1Bitmap ^bitmap)

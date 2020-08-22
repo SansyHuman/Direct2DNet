@@ -116,7 +116,7 @@ namespace D2DNet
             /// The flow direction must be perpendicular to the reading direction.
             /// Setting both to a vertical direction or both to horizontal yields
             /// <see cref="DWriteNet::DWriteError::E_FLOWDIRECTIONCONFLICTS"/> when calling GetMetrics or Draw.
-            /// </remark>
+            /// </remarks>
             HRESULT SetFlowDirection(DWriteNet::DWRITE_FLOW_DIRECTION flowDirection);
 
             /// <summary>
@@ -262,8 +262,8 @@ namespace D2DNet
             /// Gets line spacing.
             /// </summary>
             /// <param name="lineSpacingMethod">The line spacing method(out parameter).</param>
-            /// <param name="trimming">The distance between one baseline to another.(out parameter).</param>
-            /// <param name="trimming">The distance from top of line to baseline(out parameter).</param>
+            /// <param name="lineSpacing">The distance between one baseline to another.(out parameter).</param>
+            /// <param name="baseline">The distance from top of line to baseline(out parameter).</param>
             /// <returns>
             /// If this method succeeds, it returns S_OK(0). Otherwise, it returns an error code.
             /// </returns>

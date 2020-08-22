@@ -15,7 +15,7 @@ namespace D2DNet
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
             hr = ((::ID2D1Factory1 *)factory->m_pFactory)->CreateDevice(
-                device->m_pDevice,
+                (::IDXGIDevice *)device->m_pObj,
                 (::ID2D1Device **)ppResource
             );
             ppResource = nullptr;
@@ -32,7 +32,7 @@ namespace D2DNet
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
             hr = D2D1CreateDevice(
-                device->m_pDevice,
+                (::IDXGIDevice *)device->m_pObj,
                 creationProperties.HasValue ? &static_cast<::D2D1_CREATION_PROPERTIES>(creationProperties.Value) : __nullptr,
                 (::ID2D1Device **)ppResource
             );

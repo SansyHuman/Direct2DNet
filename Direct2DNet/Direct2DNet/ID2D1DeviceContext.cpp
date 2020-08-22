@@ -53,7 +53,7 @@ namespace D2DNet
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Resource *> ppRenderTarget = &m_pResource;
             hr = D2D1CreateDeviceContext(
-                (::IDXGISurface *)dxgiSurface->m_pSubObject,
+                (::IDXGISurface *)dxgiSurface->m_pObj,
                 creationProperties.HasValue ? &static_cast<::D2D1_CREATION_PROPERTIES>(creationProperties.Value) : __nullptr,
                 (::ID2D1DeviceContext **)ppRenderTarget
             );
@@ -318,19 +318,13 @@ namespace D2DNet
             if(!measuringMode.HasValue)
                 measuringMode = DWriteNet::DWRITE_MEASURING_MODE::NATURAL;
 
-            pin_ptr<DWriteNet::DWRITE_GLYPH_RUN_DESCRIPTION> pDesc = nullptr;
-            if(glyphRunDescription.HasValue)
-                pDesc = &glyphRunDescription.Value;
-
             ((::ID2D1DeviceContext *)m_pResource)->DrawGlyphRun(
                 static_cast<::D2D1_POINT_2F>(baselineOrigin),
                 &static_cast<::DWRITE_GLYPH_RUN>(glyphRun),
-                reinterpret_cast<::DWRITE_GLYPH_RUN_DESCRIPTION *>(pDesc),
+                glyphRunDescription.HasValue ? reinterpret_cast<::DWRITE_GLYPH_RUN_DESCRIPTION *>(&glyphRunDescription.Value) : __nullptr,
                 (::ID2D1Brush *)foregroundBrush->m_pResource,
                 (::DWRITE_MEASURING_MODE)((int)measuringMode.Value)
             );
-
-            pDesc = nullptr;
         }
 
         void ID2D1DeviceContext::DrawImage(

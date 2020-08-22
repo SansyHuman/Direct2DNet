@@ -13,7 +13,7 @@ namespace D2DNet
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
             hr = ((::ID2D1Factory2 *)factory->m_pFactory)->CreateDevice(
-                device->m_pDevice,
+                (::IDXGIDevice *)device->m_pObj,
                 (::ID2D1Device1 **)ppResource
             );
             ppResource = nullptr;

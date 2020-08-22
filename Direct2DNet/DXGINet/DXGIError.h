@@ -10,11 +10,16 @@ namespace D2DNet
 #define DXGINET_ERROR(x) literal HRESULT E_ ## x = DXGI_ERROR_ ## x
 #endif
 
+#ifndef DXGINET_STATUS
+#define DXGINET_STATUS(x) literal HRESULT x = DXGI_STATUS_ ## x
+#endif
+
         /// <summary>
         /// Contains DXGI error codes.
         /// </summary>
-        public value struct DXGIError abstract sealed
+        public ref class DXGIError abstract sealed
         {
+        public:
             /// <summary>
             /// You tried to use a resource to which you did not have the required access privileges.
             /// This error is most typically caused when you write to a shared resource with read-only access.
@@ -153,6 +158,55 @@ namespace D2DNet
             /// not execute or schedule the operation.
             /// </summary>
             DXGINET_ERROR(WAS_STILL_DRAWING);
+        };
+
+        /// <summary>
+        /// Contains DXGI status codes.
+        /// </summary>
+        public ref class DXGIStatus abstract sealed
+        {
+        public:
+            /// <summary>
+            /// The window content is not visible. When receiving this status, an application can stop
+            /// rendering and use DXGI_PRESENT_TEST to determine when to resume rendering.
+            /// </summary>
+            DXGINET_STATUS(OCCLUDED);
+
+            /// <summary>
+            /// The Present operation was partially invisible to the user.
+            /// </summary>
+            DXGINET_STATUS(CLIPPED);
+
+            /// <summary>
+            /// The driver is requesting that the DXGI runtime not use shared resources to communicate with
+            /// the Desktop Window Manager.
+            /// </summary>
+            DXGINET_STATUS(NO_REDIRECTION);
+
+            /// <summary>
+            /// The Present operation was not visible because the Windows session has switched to another
+            /// desktop (for example, ctrl-alt-del).
+            /// </summary>
+            DXGINET_STATUS(NO_DESKTOP_ACCESS);
+
+            /// <summary>
+            /// The Present operation was not visible because the target monitor was being used for some
+            /// other purpose.
+            /// </summary>
+            DXGINET_STATUS(GRAPHICS_VIDPN_SOURCE_IN_USE);
+
+            /// <summary>
+            /// The desktop display mode has been changed, there might be color conversion/stretching.
+            /// The application should call IDXGISwapChain::ResizeBuffers to match the new display mode.
+            /// </summary>
+            DXGINET_STATUS(MODE_CHANGED);
+
+            /// <summary>
+            /// IDXGISwapChain::ResizeTarget and IDXGISwapChain::SetFullscreenState will return
+            /// MODE_CHANGE_IN_PROGRESS if a fullscreen/windowed mode transition is occurring
+            /// when either API is called.
+            /// </summary>
+            DXGINET_STATUS(MODE_CHANGE_IN_PROGRESS);
         };
     }
 }

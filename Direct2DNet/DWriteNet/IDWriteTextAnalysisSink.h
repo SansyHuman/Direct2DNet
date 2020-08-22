@@ -214,9 +214,9 @@ namespace D2DNet
             /// <returns>
             /// A successful code or error code to abort analysis.
             /// </returns>
-            /// <remark>
+            /// <remarks>
             /// Do not modify the value of the struct pointed by <paramref name="lineBreakpoints"/> pointer.
-            /// </remark>
+            /// </remarks>
             virtual HRESULT SetLineBreakpoints(
                 UINT32 textPosition,
                 UINT32 textLength,
@@ -254,12 +254,12 @@ namespace D2DNet
             /// <returns>
             /// A successful code or error code to abort analysis.
             /// </returns>
-            /// <remark>
+            /// <remarks>
             /// Unlike script and bidi analysis, where every character passed to the
             /// analyzer has a result, this will only be called for those ranges where
             /// substitution is applicable. For any other range, you will simply not
             /// be called.
-            /// </remark>
+            /// </remarks>
             virtual HRESULT SetNumberSubstitution(
                 UINT32 textPosition,
                 UINT32 textLength,

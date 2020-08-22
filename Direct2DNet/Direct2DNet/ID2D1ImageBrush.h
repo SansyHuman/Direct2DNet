@@ -129,11 +129,9 @@ namespace D2DNet
 
                 void set(Direct2DNet::D2D1_RECT_F value)
                 {
-                    pin_ptr<Direct2DNet::D2D1_RECT_F> pValue = &value;
                     ((::ID2D1ImageBrush *)m_pResource)->SetSourceRectangle(
-                        reinterpret_cast<::D2D1_RECT_F *>(pValue)
+                        reinterpret_cast<::D2D1_RECT_F *>(&value)
                     );
-                    pValue = nullptr;
                 }
             }
         };

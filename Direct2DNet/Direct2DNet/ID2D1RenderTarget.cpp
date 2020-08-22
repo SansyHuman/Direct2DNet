@@ -32,7 +32,7 @@ namespace D2DNet
             HRESULT hr = S_OK;
             pin_ptr<::ID2D1Resource *> ppRenderTarget = &m_pResource;
             hr = factory->m_pFactory->CreateDxgiSurfaceRenderTarget(
-                (::IDXGISurface *)surface->m_pSubObject,
+                (::IDXGISurface *)surface->m_pObj,
                 &static_cast<::D2D1_RENDER_TARGET_PROPERTIES>(properties),
                 (::ID2D1RenderTarget **)ppRenderTarget
             );
@@ -69,6 +69,13 @@ namespace D2DNet
             Direct2DNet::D2D1_BITMAP_PROPERTIES %bitmapProperties)
         {
             return gcnew Direct2DNet::ID2D1Bitmap(this, size, srcData, pitch, bitmapProperties);
+        }
+
+        Direct2DNet::ID2D1Bitmap ^ID2D1RenderTarget::CreateBitmapFromWicBitmap(
+            WICNet::IWICBitmapSource ^wicBitmapSource,
+            System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES> bitmapProperties)
+        {
+            return gcnew Direct2DNet::ID2D1Bitmap(this, wicBitmapSource, bitmapProperties);
         }
 
         generic<typename T> where T : D2DNet::IUnknown
@@ -313,8 +320,8 @@ namespace D2DNet
                 AntialiasMode = Direct2DNet::D2D1_ANTIALIAS_MODE::ALIASED;
                 D2DNet::DirectX::PrintDebugMessage("Direct2DNet Warning: You tried to fill opacity mask when the antialias mode of the render target is not D2D1_ANTIALIAS_MODE::ALIASED. Forced to change to aliased mode.");
             }
-            ::D2D1_RECT_F destRect;
-            ::D2D1_RECT_F srcRect;
+            ::D2D1_RECT_F destRect = { 0 };
+            ::D2D1_RECT_F srcRect = { 0 };
 
             if(destinationRectangle.HasValue)
                 destRect = static_cast<::D2D1_RECT_F>(destinationRectangle.Value);

@@ -9,6 +9,7 @@
 #include "ID2D1Factory1.h"
 #include "ID2D1Factory2.h"
 #include "ID2D1Factory3.h"
+#include "ID2D1Factory4.h"
 #include "../DXGINet/IDXGIDevice.h"
 #include "../DXGINet/IDXGISurface.h"
 #include "ID2D1Device.h"
@@ -25,13 +26,40 @@ namespace D2DNet
 {
     namespace Direct2DNet
     {
+        /// <summary>
+        /// Class that contains Direct2D constants and helper functions.
+        /// </summary>
         public ref class Direct2D abstract sealed
         {
         public:
+            /// <summary>
+            /// Used when packing input layout elements. It indicates that the elements must be
+            /// packed contiguously.
+            /// </summary>
             literal int APPEND_ALIGNED_ELEMENT = D2D1_APPEND_ALIGNED_ELEMENT;
+
+            /// <summary>
+            /// The default tolerance for geometric flattening operations.
+            /// </summary>
             literal float DEFAULT_FLATTENING_TOLERANCE = D2D1_DEFAULT_FLATTENING_TOLERANCE;
+
+            /// <summary>
+            /// Defines an invalid property index.
+            /// </summary>
             literal unsigned int INVALID_PROPERTY_INDEX = D2D1_INVALID_PROPERTY_INDEX;
+
+            /// <summary>
+            /// Reserved; don't use.
+            /// </summary>
             literal unsigned long long INVALID_TAG = D2D1_INVALID_TAG;
+
+            /// <summary>
+            /// The number of nits that sRGB or scRGB color space uses for SDR white, or floating point
+            /// values of 1.0f. This value is constant only when the color space uses scene-referred
+            /// luminance, which is true for high dynamic range (HDR) content. If the color space uses
+            /// display-referred luminance instead, then the SDR white level should be queried from the
+            /// display.
+            /// </summary>
             literal float SCENE_REFERRED_SDR_WHITE_LEVEL = D2D1_SCENE_REFERRED_SDR_WHITE_LEVEL;
 
             /// <summary>
@@ -98,10 +126,21 @@ namespace D2DNet
                         return (T)gcnew Direct2DNet::ID2D1Factory3(type);
                     }
                 }
+                else if(factoryGuid == D2DNet::D2DNetGUID::UID_ID2D1Factory4)
+                {
+                    if(options.HasValue)
+                    {
+                        return (T)gcnew Direct2DNet::ID2D1Factory4(type, options.Value);
+                    }
+                    else
+                    {
+                        return (T)gcnew Direct2DNet::ID2D1Factory4(type);
+                    }
+                }
                 else
                 {
                     throw gcnew Direct2DNet::Exception::DxException(
-                        "Failed to create the factory.", E_INVALIDARG
+                        "Failed to create the factory.", E_NOINTERFACE
                     );
                 }
             }
@@ -249,6 +288,92 @@ namespace D2DNet
                 [OptionalAttribute] System::Nullable<float> dpiX,
                 [OptionalAttribute] System::Nullable<float> dpiY,
                 [OptionalAttribute] System::Nullable<float> maxZoomFactor
+            );
+
+            /// <summary>
+            /// Creates a D2D1_GRADIENT_MESH_PATCH from a given Coons patch description.
+            /// </summary>
+            /// <param name="point0">
+            /// The coordinate-space location of the control point at position 0.
+            /// </param>
+            /// <param name="point1">
+            /// The coordinate-space location of the control point at position 1.
+            /// </param>
+            /// <param name="point2">
+            /// The coordinate-space location of the control point at position 2.
+            /// </param>
+            /// <param name="point3">
+            /// The coordinate-space location of the control point at position 3.
+            /// </param>
+            /// <param name="point4">
+            /// The coordinate-space location of the control point at position 4.
+            /// </param>
+            /// <param name="point5">
+            /// The coordinate-space location of the control point at position 5.
+            /// </param>
+            /// <param name="point6">
+            /// The coordinate-space location of the control point at position 6.
+            /// </param>
+            /// <param name="point7">
+            /// The coordinate-space location of the control point at position 7.
+            /// </param>
+            /// <param name="point8">
+            /// The coordinate-space location of the control point at position 8.
+            /// </param>
+            /// <param name="point9">
+            /// The coordinate-space location of the control point at position 9.
+            /// </param>
+            /// <param name="point10">
+            /// The coordinate-space location of the control point at position 10.
+            /// </param>
+            /// <param name="point11">
+            /// The coordinate-space location of the control point at position 11.
+            /// </param>
+            /// <param name="color0">
+            /// The color associated with the control point at position 0.
+            /// </param>
+            /// <param name="color1">
+            /// The color associated with the control point at position 1.
+            /// </param>
+            /// <param name="color2">
+            /// The color associated with the control point at position 2.
+            /// </param>
+            /// <param name="color3">
+            /// The color associated with the control point at position 3.
+            /// </param>
+            /// <param name="topEdgeMode">
+            /// Specifies how to render the top edge of the mesh.
+            /// </param>
+            /// <param name="leftEdgeMode">
+            /// Specifies how to render the left edge of the mesh.
+            /// </param>
+            /// <param name="bottomEdgeMode">
+            /// Specifies how to render the bottom edge of the mesh.
+            /// </param>
+            /// <param name="rightEdgeMode">
+            /// Specifies how to render the right edge of the mesh.
+            /// </param>
+            static Direct2DNet::D2D1_GRADIENT_MESH_PATCH GradientMeshPatchFromCoonsPatch(
+                Direct2DNet::D2D1_POINT_2F point0,
+                Direct2DNet::D2D1_POINT_2F point1,
+                Direct2DNet::D2D1_POINT_2F point2,
+                Direct2DNet::D2D1_POINT_2F point3,
+                Direct2DNet::D2D1_POINT_2F point4,
+                Direct2DNet::D2D1_POINT_2F point5,
+                Direct2DNet::D2D1_POINT_2F point6,
+                Direct2DNet::D2D1_POINT_2F point7,
+                Direct2DNet::D2D1_POINT_2F point8,
+                Direct2DNet::D2D1_POINT_2F point9,
+                Direct2DNet::D2D1_POINT_2F point10,
+                Direct2DNet::D2D1_POINT_2F point11,
+                Direct2DNet::D2D1_COLOR_F color0,
+                Direct2DNet::D2D1_COLOR_F color1,
+                Direct2DNet::D2D1_COLOR_F color2,
+                Direct2DNet::D2D1_COLOR_F color3,
+                Direct2DNet::D2D1_PATCH_EDGE_MODE topEdgeMode,
+                Direct2DNet::D2D1_PATCH_EDGE_MODE leftEdgeMode,
+                Direct2DNet::D2D1_PATCH_EDGE_MODE bottomEdgeMode,
+                Direct2DNet::D2D1_PATCH_EDGE_MODE rightEdgeMode
             );
         };
     }
