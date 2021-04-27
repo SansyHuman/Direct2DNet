@@ -7,5 +7,6 @@
 #include "ID2D1GdiMetafileSink.h"
 #include "ID2D1Image.h"
 #include "ID2D1ImageSource.h"
+#include "ID2D1ImageSourceFromWic.h"
 #include "ID2D1SpriteBatch.h"
 #include "ID2D1TransformedImageSource.h"

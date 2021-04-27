@@ -1,5 +1,5 @@
 #include "IWICBitmapDecoderInfo.h"
-#include "../ComIO/Stream.h"
+#include "../ComIO/IStream.h"
 #include "IWICBitmapDecoder.h"
 
 namespace D2DNet
@@ -42,7 +42,7 @@ namespace D2DNet
             return hr;
         }
 
-        HRESULT IWICBitmapDecoderInfo::MatchesPattern(ComIO::Stream ^stream, bool %matches)
+        HRESULT IWICBitmapDecoderInfo::MatchesPattern(ComIO::IStream ^stream, bool %matches)
         {
             BOOL match = FALSE;
             HRESULT hr = ((::IWICBitmapDecoderInfo *)m_pInfo)->MatchesPattern(stream->m_pStream, &match);
@@ -50,7 +50,7 @@ namespace D2DNet
             return hr;
         }
 
-        System::ValueTuple<HRESULT, bool> IWICBitmapDecoderInfo::MatchesPattern(ComIO::Stream ^stream)
+        System::ValueTuple<HRESULT, bool> IWICBitmapDecoderInfo::MatchesPattern(ComIO::IStream ^stream)
         {
             BOOL match = FALSE;
             HRESULT hr = ((::IWICBitmapDecoderInfo *)m_pInfo)->MatchesPattern(stream->m_pStream, &match);

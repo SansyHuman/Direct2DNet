@@ -18,6 +18,8 @@ namespace D2DNet
         ref class ID2D1Image;
         ref class ID2D1Factory;
 
+        // Done.
+
         /// <summary>
         /// The effect interface. Properties control how the effect is rendered. The effect
         /// is Drawn with the DrawImage call.

@@ -13,7 +13,7 @@ namespace D2DNet
 {
     namespace ComIO
     {
-        ref class Stream;
+        ref class IStream;
     }
 
     namespace WICNet
@@ -21,6 +21,7 @@ namespace D2DNet
         ref class IWICBitmapDecoder;
         ref class IWICPalette;
         ref class IWICFormatConverter;
+        ref class IWICComponentInfo;
 
         /// <summary>
         /// Exposes methods used to create components for the Windows Imaging Component (WIC) such as
@@ -36,6 +37,9 @@ namespace D2DNet
 
         public:
             IWICImagingFactory(D2DNet::CLSCTX clsContext);
+
+            ~IWICImagingFactory();
+            !IWICImagingFactory();
 
             property void *NativePointer
             {
@@ -92,7 +96,7 @@ namespace D2DNet
             /// Thrown when it failed to create the decoder.
             /// </exception>
             WICNet::IWICBitmapDecoder ^CreateDecoderFromStream(
-                ComIO::Stream ^stream,
+                ComIO::IStream ^stream,
                 WICNet::WICDecodeOptions metadataOptions,
                 [OptionalAttribute] System::Nullable<System::Guid> guidVendor
             );
@@ -120,7 +124,20 @@ namespace D2DNet
                 [OptionalAttribute] System::Nullable<System::Guid> guidVendor
             );
 
-            // CreateComponentInfo
+            /// <summary>
+            /// Creates a new instance of the <see cref="WICNet::IWICComponentInfo"/> class for the
+            /// given component class identifier (CLSID).
+            /// </summary>
+            /// <param name="clsidComponent">
+            /// The CLSID for the desired component. The list of CLSID is in the
+            /// <see cref="WICNet::WICClassID"/> class.
+            /// </param>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the info.
+            /// </exception>
+            WICNet::IWICComponentInfo ^CreateComponentInfo(
+                [InAttribute][IsReadOnlyAttribute] System::Guid %clsidComponent
+            );
 
             /// <summary>
             /// Creates a new instance of <see cref="WICNet::IWICBitmapDecoder"/>.
@@ -141,7 +158,7 @@ namespace D2DNet
                 [OptionalAttribute] System::Nullable<System::Guid> guidVendor
             );
 
-            // CreateEncoder
+            // TODO: CreateEncoder
 
             /// <summary>
             /// Creates a new instance of the <see cref="WICNet::IWICPalette"/> class.

@@ -1,4 +1,6 @@
 #include "IWICComponentInfo.h"
+#include "IWICImagingFactory.h"
+#include "../DXCommonSettings.h"
 
 #include <vector>
 
@@ -6,6 +8,35 @@ namespace D2DNet
 {
     namespace WICNet
     {
+        IWICComponentInfo::IWICComponentInfo(WICNet::IWICImagingFactory ^factory, System::Guid %clsid)
+        {
+            HRESULT hr = S_OK;
+
+            pin_ptr<::IWICComponentInfo *> ppInfo = &m_pInfo;
+            hr = factory->m_pFactory->CreateComponentInfo(
+                DirectX::ToNativeGUID(clsid),
+                (::IWICComponentInfo **)ppInfo
+            );
+            ppInfo = nullptr;
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create IWICComponentInfo", (int)hr);
+        }
+
+        IWICComponentInfo::~IWICComponentInfo()
+        {
+            this->!IWICComponentInfo();
+        }
+
+        IWICComponentInfo::!IWICComponentInfo()
+        {
+            if(m_pInfo)
+            {
+                m_pInfo->Release();
+                m_pInfo = nullptr;
+            }
+        }
+
         void IWICComponentInfo::HandleCOMInterface(void *obj)
         {
             if(m_pInfo)

@@ -16,6 +16,8 @@ namespace D2DNet
 {
     namespace Direct2DNet
     {
+        // Done.
+
         /// <summary>
         /// Represents a set of run-time bindable and discoverable properties that allow a
         /// data-driven application to modify the state of a Direct2D effect.

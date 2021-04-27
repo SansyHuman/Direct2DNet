@@ -5,7 +5,7 @@
 #include "ID2D1PathGeometry1.h"
 #include "ID2D1DrawingStateBlock1.h"
 #include "ID2D1GdiMetafile.h"
-#include "../ComIO/Stream.h"
+#include "../ComIO/IStream.h"
 #include "ID2D1Properties.h"
 #include "../GUIDs.h"
 #include "../DXCommonSettings.h"
@@ -82,9 +82,38 @@ namespace D2DNet
             );
         }
 
-        Direct2DNet::ID2D1GdiMetafile ^ID2D1Factory1::CreateGdiMetafile(ComIO::Stream ^metafileStream)
+        Direct2DNet::ID2D1GdiMetafile ^ID2D1Factory1::CreateGdiMetafile(ComIO::IStream ^metafileStream)
         {
             return gcnew Direct2DNet::ID2D1GdiMetafile(this, metafileStream);
+        }
+
+        HRESULT ID2D1Factory1::GetRegisteredEffects(
+            array<System::Guid> ^effects,
+            UINT32 %effectsReturned,
+            UINT32 %effectsRegistered)
+        {
+            if(!effects || effects->Length == 0)
+            {
+                UINT32 returned = 0, registered = 0;
+                HRESULT hr = ((::ID2D1Factory1 *)m_pFactory)->GetRegisteredEffects(
+                    __nullptr, 0, &returned, &registered
+                );
+                effectsReturned = returned;
+                effectsRegistered = registered;
+                return hr;
+            }
+
+            UINT32 effectsCount = effects->Length;
+            UINT32 returned = 0, registered = 0;
+            pin_ptr<System::Guid> pEffects = &effects[0];
+            HRESULT hr = ((::ID2D1Factory1 *)m_pFactory)->GetRegisteredEffects(
+                (::CLSID *)pEffects, effectsCount, &returned, &registered
+            );
+            pEffects = nullptr;
+
+            effectsReturned = returned;
+            effectsRegistered = registered;
+            return hr;
         }
 
         HRESULT ID2D1Factory1::GetEffectProperties(

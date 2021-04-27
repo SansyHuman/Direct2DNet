@@ -19,6 +19,8 @@ namespace D2DNet
         ref class ID2D1Brush;
         ref class ID2D1GeometryRealization;
 
+        // Done.
+
         /// <summary>
         /// Enables creation and drawing of geometry realization objects.
         /// </summary>

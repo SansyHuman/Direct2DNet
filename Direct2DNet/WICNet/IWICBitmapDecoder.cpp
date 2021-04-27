@@ -1,12 +1,15 @@
 #include "IWICBitmapDecoder.h"
 #include "IWICImagingFactory.h"
-#include "../ComIO/Stream.h"
+#include "../ComIO/IStream.h"
 #include "../DXCommonSettings.h"
 #include "IWICBitmapSource.h"
 #include "IWICBitmapFrameDecode.h"
 #include "IWICBitmapDecoderInfo.h"
 #include "IWICPalette.h"
+#include "IWICMetadataQueryReader.h"
+#include "IWICColorContext.h"
 
+#include <vector>
 #include <msclr/marshal.h>
 
 using namespace msclr::interop;
@@ -47,7 +50,7 @@ namespace D2DNet
 
         IWICBitmapDecoder::IWICBitmapDecoder(
             WICNet::IWICImagingFactory ^factory,
-            ComIO::Stream ^stream,
+            ComIO::IStream ^stream,
             WICNet::WICDecodeOptions metadataOptions,
             System::Nullable<System::Guid> %guidVendor)
         {
@@ -129,6 +132,20 @@ namespace D2DNet
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create IWICBitmapDecoder", (int)hr);
         }
 
+        IWICBitmapDecoder::~IWICBitmapDecoder()
+        {
+            this->!IWICBitmapDecoder();
+        }
+
+        IWICBitmapDecoder::!IWICBitmapDecoder()
+        {
+            if(m_pDecoder)
+            {
+                m_pDecoder->Release();
+                m_pDecoder = nullptr;
+            }
+        }
+
         void IWICBitmapDecoder::HandleCOMInterface(void *obj)
         {
             if(m_pDecoder)
@@ -141,7 +158,7 @@ namespace D2DNet
         }
 
         HRESULT IWICBitmapDecoder::QueryCapability(
-            ComIO::Stream ^stream,
+            ComIO::IStream ^stream,
             WICNet::WICBitmapDecoderCapabilities %capability)
         {
             DWORD cap = 0;
@@ -153,7 +170,7 @@ namespace D2DNet
         }
 
         System::ValueTuple<HRESULT, WICNet::WICBitmapDecoderCapabilities> IWICBitmapDecoder::QueryCapability(
-            ComIO::Stream ^stream)
+            ComIO::IStream ^stream)
         {
             DWORD cap = 0;
 
@@ -165,7 +182,7 @@ namespace D2DNet
                 );
         }
 
-        HRESULT IWICBitmapDecoder::Initialize(ComIO::Stream ^stream, WICNet::WICDecodeOptions cacheOptions)
+        HRESULT IWICBitmapDecoder::Initialize(ComIO::IStream ^stream, WICNet::WICDecodeOptions cacheOptions)
         {
             return m_pDecoder->Initialize(stream->m_pStream, (::WICDecodeOptions)(DWORD)(cacheOptions));
         }
@@ -199,6 +216,21 @@ namespace D2DNet
             return m_pDecoder->CopyPalette(palette->m_pPalette);
         }
 
+        HRESULT IWICBitmapDecoder::GetMetadataQueryReader(
+            WICNet::IWICMetadataQueryReader ^%metadataQueryReader)
+        {
+            ::IWICMetadataQueryReader *reader = __nullptr;
+            HRESULT hr = m_pDecoder->GetMetadataQueryReader(&reader);
+            if(FAILED(hr) || !reader)
+            {
+                metadataQueryReader = nullptr;
+                return hr;
+            }
+
+            metadataQueryReader = gcnew WICNet::IWICMetadataQueryReader(reader);
+            return hr;
+        }
+
         HRESULT IWICBitmapDecoder::GetPreview(WICNet::IWICBitmapSource ^%bitmapSource)
         {
             ::IWICBitmapSource *source = __nullptr;
@@ -211,6 +243,45 @@ namespace D2DNet
             }
 
             bitmapSource = gcnew WICNet::IWICBitmapSource(source);
+            return hr;
+        }
+
+        HRESULT IWICBitmapDecoder::GetColorContexts(
+            array<WICNet::IWICColorContext ^> ^colorContexts,
+            UINT %cActualCount)
+        {
+            if(!colorContexts)
+            {
+                UINT actual = 0;
+                HRESULT hr = m_pDecoder->GetColorContexts(0, __nullptr, &actual);
+                cActualCount = actual;
+                return hr;
+            }
+
+            UINT cCount = colorContexts->Length;
+            if(cCount == 0)
+            {
+                UINT actual = 0;
+                HRESULT hr = m_pDecoder->GetColorContexts(0, __nullptr, &actual);
+                cActualCount = actual;
+                return hr;
+            }
+
+            std::vector<::IWICColorContext *> contexts(cCount);
+            UINT actual = 0;
+            HRESULT hr = m_pDecoder->GetColorContexts(cCount, contexts.data(), &actual);
+            if(FAILED(hr))
+            {
+                cActualCount = actual;
+                return hr;
+            }
+
+            for(UINT i = 0; i < actual; i++)
+            {
+                colorContexts[i] = gcnew WICNet::IWICColorContext(contexts[i]);
+            }
+
+            cActualCount = actual;
             return hr;
         }
 

@@ -8,6 +8,11 @@
 
 namespace D2DNet
 {
+    namespace WICNet
+    {
+        ref class IWICColorContext;
+    }
+
     namespace Direct2DNet
     {
         ref class ID2D1DeviceContext;
@@ -38,6 +43,11 @@ namespace D2DNet
             );
 
             ID2D1ColorContext(Direct2DNet::ID2D1Factory1 ^factory, ::ID2D1ColorContext *pContext);
+
+            ID2D1ColorContext(
+                Direct2DNet::ID2D1DeviceContext ^deviceContext,
+                D2DNet::WICNet::IWICColorContext ^wicColorContext
+            );
 
         public:
             virtual void HandleCOMInterface(void *obj) override;

@@ -21,6 +21,8 @@ namespace D2DNet
         ref class ID2D1Factory3;
         ref class ID2D1DeviceContext1;
 
+        // Done.
+
         /// <summary>
         /// Represents a resource domain whose objects and device contexts can be used
         /// together.

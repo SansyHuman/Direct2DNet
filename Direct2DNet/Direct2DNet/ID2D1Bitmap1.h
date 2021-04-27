@@ -12,6 +12,11 @@ namespace D2DNet
         ref class IDXGISurface;
     }
 
+    namespace WICNet
+    {
+        ref class IWICBitmapSource;
+    }
+
     namespace Direct2DNet
     {
         ref class ID2D1ColorContext;
@@ -43,6 +48,12 @@ namespace D2DNet
                 Direct2DNet::ID2D1DeviceContext ^deviceContext,
                 DXGINet::IDXGISurface ^surface,
                 Direct2DNet::D2D1_BITMAP_PROPERTIES1 %bitmapProperties
+            );
+
+            ID2D1Bitmap1(
+                Direct2DNet::ID2D1DeviceContext ^deviceContext,
+                D2DNet::WICNet::IWICBitmapSource ^wicBitmapSource,
+                System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES1> %bitmapProperties
             );
 
         public:

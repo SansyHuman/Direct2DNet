@@ -3,6 +3,7 @@
 #include "../DXGINet/IDXGISurface.h"
 #include "ID2D1ColorContext.h"
 #include "ID2D1Factory1.h"
+#include "../WICNet/IWICBitmapSource.h"
 
 namespace D2DNet
 {
@@ -65,6 +66,58 @@ namespace D2DNet
             m_colorContext = bitmapProperties.colorContext;
             m_dxgiSurface = surface;
             m_options = bitmapProperties.bitmapOptions;
+        }
+
+        ID2D1Bitmap1::ID2D1Bitmap1(
+            Direct2DNet::ID2D1DeviceContext ^deviceContext,
+            D2DNet::WICNet::IWICBitmapSource ^wicBitmapSource,
+            System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES1> %bitmapProperties)
+            : Direct2DNet::ID2D1Bitmap(deviceContext)
+        {
+            HRESULT hr = S_OK;
+
+            pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
+            pin_ptr<Direct2DNet::D2D1_BITMAP_PROPERTIES1> pProperties = nullptr;
+            if(bitmapProperties.HasValue)
+                pProperties = &bitmapProperties.Value;
+
+            hr = ((::ID2D1DeviceContext *)deviceContext->m_pResource)->CreateBitmapFromWicBitmap(
+                wicBitmapSource->m_pSource,
+                reinterpret_cast<::D2D1_BITMAP_PROPERTIES1 *>(pProperties),
+                (::ID2D1Bitmap1 **)ppResource
+            );
+
+            ppResource = nullptr;
+            pProperties = nullptr;
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1Bitmap1", (int)hr);
+
+            UpdateBitmapInfo();
+
+            ::ID2D1ColorContext *context = __nullptr;
+            ((::ID2D1Bitmap1 *)m_pResource)->GetColorContext(&context);
+            if(!context)
+            {
+                m_colorContext = nullptr;
+            }
+            else
+            {
+                ::ID2D1Factory1 *factory = __nullptr;
+                ((::ID2D1Bitmap1 *)m_pResource)->GetFactory((::ID2D1Factory **) & factory);
+                m_colorContext = gcnew Direct2DNet::ID2D1ColorContext(
+                    gcnew Direct2DNet::ID2D1Factory1(factory), context
+                );
+            }
+
+            ::IDXGISurface *surface = __nullptr;
+            hr = ((::ID2D1Bitmap1 *)m_pResource)->GetSurface(&surface);
+            if(FAILED(hr) || !surface)
+                m_dxgiSurface = nullptr;
+            else
+                m_dxgiSurface = gcnew DXGINet::IDXGISurface(surface);
+
+            m_options = (Direct2DNet::D2D1_BITMAP_OPTIONS)((int)((::ID2D1Bitmap1 *)m_pResource)->GetOptions());
         }
 
         void ID2D1Bitmap1::HandleCOMInterface(void *obj)

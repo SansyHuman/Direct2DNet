@@ -1,6 +1,7 @@
 #include "ID2D1ColorContext.h"
 #include "ID2D1DeviceContext.h"
 #include "ID2D1Factory1.h"
+#include "../WICNet/IWICColorContext.h"
 
 namespace D2DNet
 {
@@ -96,6 +97,45 @@ namespace D2DNet
                 pin_ptr<unsigned char> pProfile = &m_profile[0];
 
                 HRESULT hr = ((::ID2D1ColorContext *)m_pResource)->GetProfile((BYTE *)pProfile, profileSize);
+                pProfile = nullptr;
+
+                if(FAILED(hr))
+                {
+                    delete m_profile;
+                    m_profile = nullptr;
+                }
+            }
+        }
+
+        ID2D1ColorContext::ID2D1ColorContext(
+            Direct2DNet::ID2D1DeviceContext ^deviceContext,
+            D2DNet::WICNet::IWICColorContext ^wicColorContext)
+            : Direct2DNet::ID2D1Resource(deviceContext->m_factory)
+        {
+            HRESULT hr = S_OK;
+
+            pin_ptr<::ID2D1Resource *> ppResource = &m_pResource;
+            hr = ((::ID2D1DeviceContext *)deviceContext->m_pResource)->CreateColorContextFromWicColorContext(
+                wicColorContext->m_pContext,
+                (::ID2D1ColorContext **)ppResource
+            );
+            ppResource = nullptr;
+
+            if(FAILED(hr))
+                throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1ColorContext", (int)hr);
+
+            m_space = (Direct2DNet::D2D1_COLOR_SPACE)((int)((::ID2D1ColorContext *)m_pResource)->GetColorSpace());
+            unsigned int profileSize = ((::ID2D1ColorContext *)m_pResource)->GetProfileSize();
+            if(profileSize <= 0)
+            {
+                m_profile = nullptr;
+            }
+            else
+            {
+                m_profile = gcnew array<unsigned char>(profileSize);
+                pin_ptr<unsigned char> pProfile = &m_profile[0];
+
+                hr = ((::ID2D1ColorContext *)m_pResource)->GetProfile((BYTE *)pProfile, profileSize);
                 pProfile = nullptr;
 
                 if(FAILED(hr))

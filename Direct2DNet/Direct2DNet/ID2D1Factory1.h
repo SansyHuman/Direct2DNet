@@ -14,7 +14,7 @@ namespace D2DNet
 
     namespace ComIO
     {
-        ref class Stream;
+        ref class IStream;
     }
 
     namespace Direct2DNet
@@ -134,7 +134,7 @@ namespace D2DNet
             /// <exception cref="Direct2DNet::Exception::DxException">
             /// Thrown when it failed to create the metafile.
             /// </exception>
-            Direct2DNet::ID2D1GdiMetafile ^CreateGdiMetafile(ComIO::Stream ^metafileStream);
+            Direct2DNet::ID2D1GdiMetafile ^CreateGdiMetafile(ComIO::IStream ^metafileStream);
 
             // RegisterEffectFromStream
 
@@ -142,7 +142,21 @@ namespace D2DNet
 
             // UnregisterEffect
 
-            // GetRegisteredEffects
+            /// <summary>
+            /// This returns all of the registered effects in the process, including any
+            /// built-in effects.
+            /// </summary>
+            /// <param name="effects">The array buffer to receive all registers effects.
+            /// Set to null if no effects are retrieved.</param>
+            /// <param name="effectsReturned">The number of effects returned into the passed in
+            /// effects array(out parameter).</param>
+            /// <param name="effectsRegistered">The number of effects currently registered in
+            /// the system(out parameter).</param>
+            HRESULT GetRegisteredEffects(
+                array<System::Guid> ^effects,
+                [OutAttribute] UINT32 %effectsReturned,
+                [OutAttribute] UINT32 %effectsRegistered
+            );
 
             /// <summary>
             /// This retrieves the effect properties for the given effect, all of the effect

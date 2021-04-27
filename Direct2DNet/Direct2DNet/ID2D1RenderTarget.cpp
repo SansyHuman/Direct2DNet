@@ -72,7 +72,7 @@ namespace D2DNet
         }
 
         Direct2DNet::ID2D1Bitmap ^ID2D1RenderTarget::CreateBitmapFromWicBitmap(
-            WICNet::IWICBitmapSource ^wicBitmapSource,
+            D2DNet::WICNet::IWICBitmapSource ^wicBitmapSource,
             System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES> bitmapProperties)
         {
             return gcnew Direct2DNet::ID2D1Bitmap(this, wicBitmapSource, bitmapProperties);

@@ -10,6 +10,11 @@ using namespace System::Runtime::CompilerServices;
 
 namespace D2DNet
 {
+    namespace WICNet
+    {
+        ref class IWICBitmapSource;
+    }
+
     namespace Direct2DNet
     {
         namespace Effects
@@ -26,6 +31,7 @@ namespace D2DNet
         ref class ID2D1Brush;
         ref class ID2D1GdiMetafile;
         ref class ID2D1TransformedImageSource;
+        ref class ID2D1ImageSourceFromWic;
 
         // Done.
 
@@ -91,7 +97,29 @@ namespace D2DNet
                 ... array<Direct2DNet::D2D1_GRADIENT_MESH_PATCH> ^patches
             );
 
-            // CreateImageSourceFromWic
+            /// <summary>
+            /// Creates an image source object from a WIC bitmap source, while populating all pixel
+            /// memory within the image source. The image is loaded andstored while using a minimal amount
+            /// of memory.
+            /// </summary>
+            /// <param name="wicBitmapSource">
+            /// The WIC bitmap source to create the image source from.
+            /// </param>
+            /// <param name="loadingOptions">
+            /// Options for creating the image source.
+            /// </param>
+            /// <param name="alphaMode">
+            /// The alpha mode of the image; this is determined automatically from the source¡¯s pixel format
+            /// if <see cref="Direct2DNet::D2D1_ALPHA_MODE::UNKNOWN"/> is passed.
+            /// </param>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the image source.
+            /// </exception>
+            Direct2DNet::ID2D1ImageSourceFromWic ^CreateImageSourceFromWic(
+                D2DNet::WICNet::IWICBitmapSource ^wicBitmapSource,
+                Direct2DNet::D2D1_IMAGE_SOURCE_LOADING_OPTIONS loadingOptions,
+                Direct2DNet::D2D1_ALPHA_MODE alphaMode
+            );
 
             /// <summary>
             /// Creates a 3D lookup table for mapping a 3-channel input to a 3-channel output.

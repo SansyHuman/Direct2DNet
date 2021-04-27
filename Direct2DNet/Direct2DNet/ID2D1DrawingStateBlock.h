@@ -17,6 +17,8 @@ namespace D2DNet
         ref class ID2D1Factory;
         ref class ID2D1Factory1;
 
+        // Done.
+
         /// <summary>
         /// Represents the drawing state of a render target: the antialiasing mode,
         /// transform, tags, and text-rendering options.

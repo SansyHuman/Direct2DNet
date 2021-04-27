@@ -35,6 +35,12 @@ namespace D2DNet
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create ID2D1ImageSource", (int)hr);
         }
 
+        ID2D1ImageSource::ID2D1ImageSource(Direct2DNet::ID2D1DeviceContext2 ^context)
+            : Direct2DNet::ID2D1Image(context->m_factory)
+        {
+            
+        }
+
         HRESULT ID2D1ImageSource::OfferResources()
         {
             return ((::ID2D1ImageSource *)m_pResource)->OfferResources();

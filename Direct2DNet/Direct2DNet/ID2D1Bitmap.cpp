@@ -92,7 +92,7 @@ namespace D2DNet
 
         ID2D1Bitmap::ID2D1Bitmap(
             Direct2DNet::ID2D1RenderTarget ^renderTarget,
-            WICNet::IWICBitmapSource ^wicBitmapSource,
+            D2DNet::WICNet::IWICBitmapSource ^wicBitmapSource,
             System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES> %bitmapProperties)
             : Direct2DNet::ID2D1Image(renderTarget->m_factory)
         {

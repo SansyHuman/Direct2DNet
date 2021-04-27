@@ -11,6 +11,8 @@ namespace D2DNet
     {
         ref class ID2D1DeviceContext;
 
+        // Done.
+
         /// <summary>
         /// Represents an collection of gradient stops that can then be the source resource
         /// for either a linear or radial gradient brush.

@@ -12,6 +12,11 @@ namespace D2DNet
         ref class ID2D1DeviceContext;
         ref class ID2D1Image;
 
+        // Done.
+
+        /// <summary>
+        /// Represents a brush based on an ID2D1Image.
+        /// </summary>
         [System::Runtime::InteropServices::GuidAttribute("fe9e984d-3f95-407c-b5db-cb94d4e8f87c")]
         public ref class ID2D1ImageBrush : Direct2DNet::ID2D1Brush
         {

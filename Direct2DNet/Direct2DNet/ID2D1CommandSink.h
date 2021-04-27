@@ -373,6 +373,8 @@ namespace D2DNet
         ref class ID2D1Mesh;
         ref class ID2D1Layer;
 
+        // Done.
+
         /// <summary>
         /// Caller-supplied implementation of an interface to receive the recorded command
         /// list.

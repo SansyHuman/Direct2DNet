@@ -17,6 +17,20 @@ namespace D2DNet
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create IWICPalette", (int)hr);
         }
 
+        IWICPalette::~IWICPalette()
+        {
+            this->!IWICPalette();
+        }
+
+        IWICPalette::!IWICPalette()
+        {
+            if(m_pPalette)
+            {
+                m_pPalette->Release();
+                m_pPalette = nullptr;
+            }
+        }
+
         void IWICPalette::HandleCOMInterface(void *obj)
         {
             if(m_pPalette)

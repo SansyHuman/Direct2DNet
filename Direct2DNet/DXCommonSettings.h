@@ -891,7 +891,13 @@ namespace D2DNet
         /// </summary>
         PS_DLL = 0x80000000
     };
-    
+
+    /// <summary>
+    /// Represents a decimal data type that provides a sign and scale for a number (as in coordinates.)
+    /// Decimal variables are stored as 96 - bit(12 - byte) unsigned integers scaled by a variable power of
+    /// 10. The power of 10 scaling factor specifies the number of digits to the right of the decimal
+    /// point, and ranges from 0 to 28.
+    /// </summary>
     [InteropServices::StructLayoutAttribute(InteropServices::LayoutKind::Explicit)]
     public value struct DECIMAL
     {
@@ -920,6 +926,10 @@ namespace D2DNet
         ULONGLONG lo64;
     };
 
+    /// <summary>
+    /// A currency number stored as an 8-byte, two's complement integer, scaled by 10,000 to give a
+    /// fixed-point number with 15 digits to the left of the decimal point and 4 digits to the right.
+    /// </summary>
     [InteropServices::StructLayoutAttribute(InteropServices::LayoutKind::Explicit)]
     public value struct CY
     {
@@ -940,15 +950,29 @@ namespace D2DNet
         BYTE *pClipData;
     };
 
+    /// <summary>
+    /// The BSTRBLOB structure is used by some implementations of the IPropertyStorage interface when
+    /// marshaling BSTRs on systems which don't support BSTR marshaling.
+    /// </summary>
     public value struct BSTRBLOB
     {
         ULONG cbSize;
         BYTE *pData;
     };
 
+    /// <summary>
+    /// The BLOB structure, derived from Binary Large Object, contains information about a block of data.
+    /// </summary>
     public value struct BLOB
     {
+        /// <summary>
+        /// Size of the block of data pointed to by pBlobData, in bytes.
+        /// </summary>
         ULONG cbSize;
+
+        /// <summary>
+        /// Pointer to a block of data.
+        /// </summary>
         BYTE *pBlobData;
     };
 
@@ -958,19 +982,122 @@ namespace D2DNet
         System::IntPtr pStream;
     };
 
+    /// <summary>
+    /// Represents the bounds of one dimension of the array.
+    /// </summary>
     public value struct SAFEARRAYBOUND
     {
+        /// <summary>
+        /// The number of elements in the dimension.
+        /// </summary>
         ULONG cElements;
+
+        /// <summary>
+        /// The lower bound of the dimension.
+        /// </summary>
         LONG lLbound;
     };
 
+    /// <summary>
+    /// Safe array flags.
+    /// </summary>
+    [System::FlagsAttribute]
+    public enum class FADF : USHORT
+    {
+        /// <summary>
+        /// An array that is allocated on the stack. 
+        /// </summary>
+        AUTO = FADF_AUTO,
+
+        /// <summary>
+        /// An array that is statically allocated. 
+        /// </summary>
+        STATIC = FADF_STATIC,
+
+        /// <summary>
+        /// An array that is embedded in a structure. 
+        /// </summary>
+        EMBEDDED = FADF_EMBEDDED,
+
+        /// <summary>
+        /// An array that may not be resized or reallocated. 
+        /// </summary>
+        FIXEDSIZE = FADF_FIXEDSIZE,
+
+        /// <summary>
+        /// An array that contains records.
+        /// </summary>
+        RECORD = FADF_RECORD,
+
+        /// <summary>
+        /// An array that has an IID identifying interface.
+        /// </summary>
+        HAVEIID = FADF_HAVEIID,
+
+        /// <summary>
+        /// An array that has a variant type.
+        /// </summary>
+        HAVEVARTYPE = FADF_HAVEVARTYPE,
+
+        /// <summary>
+        /// An array of BSTRs.
+        /// </summary>
+        BSTR = FADF_BSTR,
+
+        /// <summary>
+        /// An array of IUnknown.
+        /// </summary>
+        UNKNOWN	= FADF_UNKNOWN,
+
+        /// <summary>
+        /// An array of IDispatch.
+        /// </summary>
+        DISPATCH = FADF_DISPATCH,
+
+        /// <summary>
+        /// An array of VARIANTs
+        /// </summary>
+        VARIANT = FADF_VARIANT,
+
+        /// <summary>
+        /// Bits reserved for future use.
+        /// </summary>
+        RESERVED = FADF_RESERVED,
+    };
+
+    /// <summary>
+    /// Represents a safe array.
+    /// </summary>
     public value struct SAFEARRAY
     {
+        /// <summary>
+        /// The number of dimensions.
+        /// </summary>
         USHORT cDims;
-        USHORT fFeatures;
+
+        /// <summary>
+        /// Flags.
+        /// </summary>
+        FADF fFeatures;
+
+        /// <summary>
+        /// The size of an array element.
+        /// </summary>
         ULONG cbElements;
+
+        /// <summary>
+        /// The number of times the array has been locked without a corresponding unlock.
+        /// </summary>
         ULONG cLocks;
+
+        /// <summary>
+        /// The data.
+        /// </summary>
         PVOID pvData;
+
+        /// <summary>
+        /// One bound for each dimension.
+        /// </summary>
         SAFEARRAYBOUND rgsabound;
     };
 
@@ -1106,6 +1233,260 @@ namespace D2DNet
     {
         ULONG cElems;
         D2DNet::PROPVARIANT *pElems;
+    };
+
+    /// <summary>
+    /// Specifies the variant types.
+    /// </summary>
+    public enum class VARENUM : ::VARTYPE
+    {
+        /// <summary>
+        /// Not specified.
+        /// </summary>
+        VT_EMPTY = 0,
+
+        /// <summary>
+        /// Null.
+        /// </summary>
+        VT_NULL = 1,
+
+        /// <summary>
+        /// A 2-byte integer.
+        /// </summary>
+        VT_I2 = 2,
+
+        /// <summary>
+        /// A 4-byte integer.
+        /// </summary>
+        VT_I4 = 3,
+
+        /// <summary>
+        /// A 4-byte real.
+        /// </summary>
+        VT_R4 = 4,
+
+        /// <summary>
+        /// A 4-byte real.
+        /// </summary>
+        VT_R8 = 5,
+
+        /// <summary>
+        /// Currency.
+        /// </summary>
+        VT_CY = 6,
+
+        /// <summary>
+        /// A date.
+        /// </summary>
+        VT_DATE = 7,
+
+        /// <summary>
+        /// A string.
+        /// </summary>
+        VT_BSTR = 8,
+
+        /// <summary>
+        /// An IDispatch pointer.
+        /// </summary>
+        VT_DISPATCH = 9,
+
+        /// <summary>
+        /// An SCODE value.
+        /// </summary>
+        VT_ERROR = 10,
+
+        /// <summary>
+        /// A Boolean value. True is -1 and false is 0.
+        /// </summary>
+        VT_BOOL = 11,
+
+        /// <summary>
+        /// A variant pointer.
+        /// </summary>
+        VT_VARIANT = 12,
+
+        /// <summary>
+        /// An IUnknown pointer.
+        /// </summary>
+        VT_UNKNOWN = 13,
+
+        /// <summary>
+        /// A 16-byte fixed-pointer value.
+        /// </summary>
+        VT_DECIMAL = 14,
+
+        /// <summary>
+        /// A character.
+        /// </summary>
+        VT_I1 = 16,
+
+        /// <summary>
+        /// An unsigned character.
+        /// </summary>
+        VT_UI1 = 17,
+
+        /// <summary>
+        /// An unsigned short.
+        /// </summary>
+        VT_UI2 = 18,
+
+        /// <summary>
+        /// An unsigned long.
+        /// </summary>
+        VT_UI4 = 19,
+
+        /// <summary>
+        /// A 64-bit integer.
+        /// </summary>
+        VT_I8 = 20,
+        
+        /// <summary>
+        /// A 64-bit unsigned integer.
+        /// </summary>
+        VT_UI8 = 21,
+
+        /// <summary>
+        /// An integer.
+        /// </summary>
+        VT_INT = 22,
+
+        /// <summary>
+        /// An unsigned integer.
+        /// </summary>
+        VT_UINT = 23,
+
+        /// <summary>
+        /// A C-style void.
+        /// </summary>
+        VT_VOID = 24,
+
+        /// <summary>
+        /// An HRESULT value.
+        /// </summary>
+        VT_HRESULT = 25,
+
+        /// <summary>
+        /// A pointer type.
+        /// </summary>
+        VT_PTR = 26,
+
+        /// <summary>
+        /// A safe array. Use VT_ARRAY in VARIANT.
+        /// </summary>
+        VT_SAFEARRAY = 27,
+
+        /// <summary>
+        /// A C-style array.
+        /// </summary>
+        VT_CARRAY = 28,
+
+        /// <summary>
+        /// A user-defined type.
+        /// </summary>
+        VT_USERDEFINED = 29,
+
+        /// <summary>
+        /// A null-terminated string.
+        /// </summary>
+        VT_LPSTR = 30,
+
+        /// <summary>
+        /// A wide null-terminated string.
+        /// </summary>
+        VT_LPWSTR = 31,
+
+        /// <summary>
+        /// A user-defined type.
+        /// </summary>
+        VT_RECORD = 36,
+
+        /// <summary>
+        /// A signed machine register size width.
+        /// </summary>
+        VT_INT_PTR = 37,
+
+        /// <summary>
+        /// An unsigned machine register size width.
+        /// </summary>
+        VT_UINT_PTR = 38,
+
+        /// <summary>
+        /// A FILETIME value.
+        /// </summary>
+        VT_FILETIME = 64,
+
+        /// <summary>
+        /// Length-prefixed bytes.
+        /// </summary>
+        VT_BLOB = 65,
+
+        /// <summary>
+        /// The name of the stream follows.
+        /// </summary>
+        VT_STREAM = 66,
+
+        /// <summary>
+        /// The name of the storage follows.
+        /// </summary>
+        VT_STORAGE = 67,
+
+        /// <summary>
+        /// The stream contains an object.
+        /// </summary>
+        VT_STREAMED_OBJECT = 68,
+
+        /// <summary>
+        /// The storage contains an object.
+        /// </summary>
+        VT_STORED_OBJECT = 69,
+
+        /// <summary>
+        /// The blob contains an object.
+        /// </summary>
+        VT_BLOB_OBJECT = 70,
+
+        /// <summary>
+        /// A clipboard format.
+        /// </summary>
+        VT_CF = 71,
+
+        /// <summary>
+        /// A class ID.
+        /// </summary>
+        VT_CLSID = 72,
+
+        /// <summary>
+        /// A stream with a GUID version.
+        /// </summary>
+        VT_VERSIONED_STREAM = 73,
+
+        /// <summary>
+        /// Reserved.
+        /// </summary>
+        VT_BSTR_BLOB = 0xfff,
+
+        /// <summary>
+        /// A simple counted array.
+        /// </summary>
+        VT_VECTOR = 0x1000,
+
+        /// <summary>
+        /// A SAFEARRAY pointer.
+        /// </summary>
+        VT_ARRAY = 0x2000,
+
+        /// <summary>
+        /// A void pointer for local use.
+        /// </summary>
+        VT_BYREF = 0x4000,
+
+        VT_RESERVED = 0x8000,
+
+        VT_ILLEGAL = 0xffff,
+
+        VT_ILLEGALMASKED = 0xfff,
+
+        VT_TYPEMASK = 0xfff
     };
 
     [InteropServices::StructLayoutAttribute(InteropServices::LayoutKind::Explicit)]

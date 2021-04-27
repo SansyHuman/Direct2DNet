@@ -16,6 +16,8 @@ namespace D2DNet
     {
         ref class ID2D1Factory1;
 
+        // Done.
+
         /// <summary>
         /// Represents drawing state.
         /// </summary>

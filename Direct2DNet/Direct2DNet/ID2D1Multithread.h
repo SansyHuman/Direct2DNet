@@ -9,6 +9,8 @@ namespace D2DNet
 {
     namespace Direct2DNet
     {
+        // Done.
+
         /// <summary>
         /// A locking mechanism from a Direct2D factory that Direct2D uses to control
         /// exclusive resource access in an app that is uses multiple threads.

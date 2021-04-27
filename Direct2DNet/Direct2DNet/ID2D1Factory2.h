@@ -16,6 +16,8 @@ namespace D2DNet
     {
         ref class ID2D1Device1;
 
+        // Done.
+
         /// <summary>
         /// Creates Direct2D resources. This interface also enables the creation of
         /// ID2D1Device1 objects.

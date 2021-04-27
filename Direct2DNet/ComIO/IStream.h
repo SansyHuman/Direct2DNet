@@ -16,19 +16,19 @@ namespace D2DNet
 {
     namespace ComIO
     {
-        public ref class Stream : D2DNet::IUnknown
+        public ref class IStream : D2DNet::IUnknown
         {
         internal:
             ::IStream *m_pStream;
             ::IRandomAccessStream *m_pRandomStream;
 
         private:
-            Stream() : m_pStream(nullptr), m_pRandomStream(nullptr) {}
+            IStream() : m_pStream(nullptr), m_pRandomStream(nullptr) {}
 
         public:
-            Stream(System::String ^filename, ComIO::BSOS_OPTIONS options);
-            ~Stream();
-            !Stream();
+            IStream(System::String ^filename, ComIO::BSOS_OPTIONS options);
+            ~IStream();
+            !IStream();
 
             property void *NativePointer
             {
@@ -77,7 +77,7 @@ namespace D2DNet
             );
 
             HRESULT CopyTo(
-                ComIO::Stream ^stm,
+                ComIO::IStream ^stm,
                 [InteropServices::InAttribute][IsReadOnlyAttribute] D2DNet::ULARGE_INTEGER %cb,
                 [InteropServices::OutAttribute] D2DNet::ULARGE_INTEGER %cbRead,
                 [InteropServices::OutAttribute] D2DNet::ULARGE_INTEGER %cbWritten
@@ -105,7 +105,7 @@ namespace D2DNet
             );
 
             HRESULT Clone(
-                [InteropServices::OutAttribute] ComIO::Stream ^%stm
+                [InteropServices::OutAttribute] ComIO::IStream ^%stm
             );
         };
     }

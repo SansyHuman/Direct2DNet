@@ -14,6 +14,7 @@
 #include "ID2D1Layer.h"
 #include "ID2D1Brush.h"
 #include "../DXGINet/IDXGISurface.h"
+#include "../WICNet/IWICBitmapSource.h"
 #include "../DXCommonSettings.h"
 
 namespace D2DNet
@@ -108,6 +109,13 @@ namespace D2DNet
             return gcnew Direct2DNet::ID2D1Bitmap1(this, size, sourceData, pitch, bitmapProperties);
         }
 
+        Direct2DNet::ID2D1Bitmap1 ^ID2D1DeviceContext::CreateBitmapFromWicBitmap(
+            D2DNet::WICNet::IWICBitmapSource ^wicBitmapSource,
+            System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES1> bitmapProperties)
+        {
+            return gcnew Direct2DNet::ID2D1Bitmap1(this, wicBitmapSource, bitmapProperties);
+        }
+
         Direct2DNet::ID2D1ColorContext ^ID2D1DeviceContext::CreateColorContext(
             Direct2DNet::D2D1_COLOR_SPACE space,
             array<unsigned char> ^profile)
@@ -125,6 +133,12 @@ namespace D2DNet
             System::String ^filename)
         {
             return gcnew Direct2DNet::ID2D1ColorContext(this, filename);
+        }
+
+        Direct2DNet::ID2D1ColorContext ^ID2D1DeviceContext::CreateColorContextFromWicColorContext(
+            D2DNet::WICNet::IWICColorContext ^wicColorContext)
+        {
+            return gcnew Direct2DNet::ID2D1ColorContext(this, wicColorContext);
         }
 
         Direct2DNet::ID2D1Bitmap1 ^ID2D1DeviceContext::CreateBitmapFromDxgiSurface(

@@ -2709,5 +2709,41 @@ namespace D2DNet
             [System::ObsoleteAttribute("Do not use this value.", true)]
             FORCE_DWORD = 0xffffffff
         };
+
+        /// <summary>
+        /// Option flags controlling how images sources are loaded during
+        /// CreateImageSourceFromWic.
+        /// </summary>
+        [System::FlagsAttribute]
+        public enum class D2D1_IMAGE_SOURCE_LOADING_OPTIONS
+        {
+            /// <summary>
+            /// No options are used.
+            /// </summary>
+            NONE = 0,
+
+            /// <summary>
+            /// Indicates the image source should release its reference to the WIC bitmap source after it
+            /// has initialized. By default, the image source retains a reference to the WIC bitmap source
+            /// for the lifetime of the object to enable quality and speed optimizations for printing.
+            /// This option disables that optimization.
+            /// </summary>
+            RELEASE_SOURCE = 1,
+
+            /// <summary>
+            /// Indicates the image source should only populate subregions of the image cache on-demand.
+            /// You can control this behavior using the
+            /// <see cref="Direct2DNet::ID2D1ImageSourceFromWic::EnsureCached"/> and
+            /// <see cref="Direct2DNet::ID2D1ImageSourceFromWic::TrimCache"/> methods. This options
+            /// provides the ability to improve memory usage by only keeping needed portions of the image in
+            /// memory. This option requires that the image source has a reference to the WIC bitmap
+            /// source,and is incompatible with
+            /// <see cref="Direct2DNet::D2D1_IMAGE_SOURCE_LOADING_OPTIONS::RELEASE_SOURCE"/>.
+            /// </summary>
+            CACHE_ON_DEMAND = 2,
+
+            [System::ObsoleteAttribute("Do not use this value.", true)]
+            FORCE_DWORD = 0xffffffff
+        };
     }
 }

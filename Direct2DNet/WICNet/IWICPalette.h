@@ -31,6 +31,9 @@ namespace D2DNet
             IWICPalette(WICNet::IWICImagingFactory ^factory);
 
         public:
+            ~IWICPalette();
+            !IWICPalette();
+
             property void *NativePointer
             {
                 virtual void *get()

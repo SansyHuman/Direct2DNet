@@ -11,7 +11,7 @@ namespace D2DNet
 {
     namespace ComIO
     {
-        ref class Stream;
+        ref class IStream;
     }
 
     namespace WICNet
@@ -90,7 +90,7 @@ namespace D2DNet
             /// If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
             /// </returns>
             HRESULT MatchesPattern(
-                ComIO::Stream ^stream,
+                ComIO::IStream ^stream,
                 [OutAttribute] bool %matches
             );
 
@@ -106,7 +106,7 @@ namespace D2DNet
             /// HRESULT error code. bool is true if the patterns match; otherwise, false.
             /// </returns>
             System::ValueTuple<HRESULT, bool> MatchesPattern(
-                ComIO::Stream ^stream
+                ComIO::IStream ^stream
             );
 
             /// <summary>

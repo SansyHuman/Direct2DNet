@@ -329,6 +329,8 @@ namespace D2DNet
             }
         };
 
+        // Done.
+
         /// <summary>
         /// This interface performs all the same functions as the existing ID2D1CommandSink
         /// interface. It also enables access to the new primitive blend modes, MIN and ADD,

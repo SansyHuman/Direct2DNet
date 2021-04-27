@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Direct2DNet_common.h"
+
 #include "Direct2DNet/D2DNet_core.h"
 #include "Direct2DNet/D2DNet_brush.h"
 #include "Direct2DNet/D2DNet_geometry.h"
@@ -51,6 +53,9 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
     public ref class D2DNetGUID abstract sealed
     {
     public:
+        D2DNET_GUID(IEnumString);
+
+
         D2DNET_GUID(ID2D1BitmapRenderTarget);
         D2DNET_GUID(ID2D1CommandList);
         D2DNET_GUID(ID2D1CommandSink);
@@ -111,6 +116,7 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
         D2DNET_GUID(ID2D1GdiMetafileSink);
         D2DNET_GUID(ID2D1Image);
         D2DNET_GUID(ID2D1ImageSource);
+        D2DNET_GUID(ID2D1ImageSourceFromWic);
         D2DNET_GUID(ID2D1SpriteBatch);
         D2DNET_GUID(ID2D1TransformedImageSource);
 
@@ -164,8 +170,10 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
         D2DNET_GUID(IWICBitmapCodecInfo);
         D2DNET_GUID(IWICBitmapDecoder);
         D2DNET_GUID(IWICBitmapDecoderInfo);
+        D2DNET_GUID(IWICBitmapEncoder);
         D2DNET_GUID(IWICBitmapFrameDecode);
         D2DNET_GUID(IWICBitmapSource);
+        D2DNET_GUID(IWICColorContext);
         D2DNET_GUID(IWICComponentInfo);
         D2DNET_GUID(IWICFormatConverter);
         D2DNET_GUID(IWICImagingFactory);
@@ -181,6 +189,9 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             uidTypePairs = gcnew System::Collections::Generic::Dictionary<System::Guid, System::Type ^>();
 
             GuidAttribute ^guid;
+
+            D2DNET_GET_GUID(D2DNet, IEnumString, guid);
+
 
             D2DNET_GET_GUID(Direct2DNet, ID2D1BitmapRenderTarget, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1CommandList, guid);
@@ -242,6 +253,7 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             D2DNET_GET_GUID(Direct2DNet, ID2D1GdiMetafileSink, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1Image, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1ImageSource, guid);
+            D2DNET_GET_GUID(Direct2DNet, ID2D1ImageSourceFromWic, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1SpriteBatch, guid);
             D2DNET_GET_GUID(Direct2DNet, ID2D1TransformedImageSource, guid);
 
@@ -295,8 +307,10 @@ uidTypePairs->Add(System::Guid(attributeHolder->Value), namespace ## :: ## type 
             D2DNET_GET_GUID(WICNet, IWICBitmapCodecInfo, guid);
             D2DNET_GET_GUID(WICNet, IWICBitmapDecoder, guid);
             D2DNET_GET_GUID(WICNet, IWICBitmapDecoderInfo, guid);
+            D2DNET_GET_GUID(WICNet, IWICBitmapEncoder, guid);
             D2DNET_GET_GUID(WICNet, IWICBitmapFrameDecode, guid);
             D2DNET_GET_GUID(WICNet, IWICBitmapSource, guid);
+            D2DNET_GET_GUID(WICNet, IWICColorContext, guid);
             D2DNET_GET_GUID(WICNet, IWICComponentInfo, guid);
             D2DNET_GET_GUID(WICNet, IWICFormatConverter, guid);
             D2DNET_GET_GUID(WICNet, IWICImagingFactory, guid);

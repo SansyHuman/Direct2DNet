@@ -12,6 +12,8 @@ namespace D2DNet
 {
     namespace Direct2DNet
     {
+        // Done.
+
         /// <summary>
         /// Provides access to an device context that can accept GDI drawing commands.
         /// </summary>

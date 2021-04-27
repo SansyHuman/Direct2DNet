@@ -11,7 +11,7 @@ namespace D2DNet
 {
     namespace ComIO
     {
-        ref class Stream;
+        ref class IStream;
     }
 
     namespace Direct2DNet
@@ -31,7 +31,7 @@ namespace D2DNet
 
             ID2D1GdiMetafile(
                 Direct2DNet::ID2D1Factory1 ^factory,
-                D2DNet::ComIO::Stream ^stream
+                D2DNet::ComIO::IStream ^stream
             );
 
             // Used in ID2D1CommandSink

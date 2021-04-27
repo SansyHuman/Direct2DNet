@@ -114,7 +114,7 @@ namespace D2DNet
             /// <summary>
             /// Create a D2D bitmap by copying a WIC bitmap.
             /// </summary>
-             /// <param name="wicBitmapSource">The WIC bitmap to copy.</param>
+            /// <param name="wicBitmapSource">The WIC bitmap to copy.</param>
             /// <param name="bitmapProperties">The pixel format and DPI of the bitmap to create.
             /// The pixel format must match the pixel format of wicBitmapSource, or the method will fail.
             /// To prevent a mismatch, you can pass null. If both dpiX and dpiY are 0.0f, the default DPI,
@@ -123,7 +123,7 @@ namespace D2DNet
             /// Thrown when it failed to create the bitmap.
             /// </exception>
             Direct2DNet::ID2D1Bitmap ^CreateBitmapFromWicBitmap(
-                WICNet::IWICBitmapSource ^wicBitmapSource,
+                D2DNet::WICNet::IWICBitmapSource ^wicBitmapSource,
                 [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES> bitmapProperties
             );
 

@@ -9,7 +9,7 @@ namespace D2DNet
 {
     namespace ComIO
     {
-        ref class Stream;
+        ref class IStream;
     }
 
     namespace WICNet
@@ -19,6 +19,10 @@ namespace D2DNet
         ref class IWICBitmapFrameDecode;
         ref class IWICBitmapDecoderInfo;
         ref class IWICPalette;
+        ref class IWICMetadataQueryReader;
+        ref class IWICColorContext;
+
+        // Done.
 
         /// <summary>
         /// Exposes methods that represent a decoder. The interface provides access to the decoder's
@@ -44,7 +48,7 @@ namespace D2DNet
             // CreateDecoderFromStream
             IWICBitmapDecoder(
                 WICNet::IWICImagingFactory ^factory,
-                ComIO::Stream ^stream,
+                ComIO::IStream ^stream,
                 WICNet::WICDecodeOptions metadataOptions,
                 System::Nullable<System::Guid> %guidVendor
             );
@@ -70,6 +74,9 @@ namespace D2DNet
             );
 
         public:
+            ~IWICBitmapDecoder();
+            !IWICBitmapDecoder();
+
             property void *NativePointer
             {
                 virtual void *get()
@@ -93,7 +100,7 @@ namespace D2DNet
             /// If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
             /// </returns>
             HRESULT QueryCapability(
-                ComIO::Stream ^stream,
+                ComIO::IStream ^stream,
                 [OutAttribute] WICNet::WICBitmapDecoderCapabilities %capability
             );
 
@@ -109,7 +116,7 @@ namespace D2DNet
             /// <see cref="WICNet::WICBitmapDecoderCapabilities"/> is the capabilities of the decoder.
             /// </returns>
             System::ValueTuple<HRESULT, WICNet::WICBitmapDecoderCapabilities> QueryCapability(
-                ComIO::Stream ^stream
+                ComIO::IStream ^stream
             );
 
             /// <summary>
@@ -125,7 +132,7 @@ namespace D2DNet
             /// If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
             /// </returns>
             HRESULT Initialize(
-                ComIO::Stream ^stream,
+                ComIO::IStream ^stream,
                 WICNet::WICDecodeOptions cacheOptions
             );
 
@@ -171,7 +178,18 @@ namespace D2DNet
                 WICNet::IWICPalette ^palette
             );
 
-            // GetMetadataQueryReader
+            /// <summary>
+            /// Retrieves the metadata query reader from the decoder.
+            /// </summary>
+            /// <param name="metadataQueryReader">
+            /// A parameter that receives the decoder's <see cref="WICNet::IWICMetadataQueryReader"/>.
+            /// </param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
+            /// </returns>
+            HRESULT GetMetadataQueryReader(
+                [OutAttribute] WICNet::IWICMetadataQueryReader ^%metadataQueryReader
+            );
 
             /// <summary>
             /// Retrieves a preview image, if supported.
@@ -186,7 +204,22 @@ namespace D2DNet
                 [OutAttribute] WICNet::IWICBitmapSource ^%bitmapSource
             );
 
-            // GetColorContexts
+            /// <summary>
+            /// Retrieves the <see cref="WICNet::IWICColorContext"/> objects of the image.
+            /// </summary>
+            /// <param name="colorContexts">
+            /// An array that receives the <see cref="WICNet::IWICColorContext"/> objects.
+            /// </param>
+            /// <param name="cActualCount">
+            /// A parameter that receives the number of color contexts contained in the image.
+            /// </param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
+            /// </returns>
+            HRESULT GetColorContexts(
+                array<WICNet::IWICColorContext ^> ^colorContexts,
+                UINT %cActualCount
+            );
 
             /// <summary>
             /// Retrieves a bitmap thumbnail of the image, if one exists

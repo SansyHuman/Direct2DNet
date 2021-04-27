@@ -16,6 +16,12 @@ namespace D2DNet
         ref class IDXGISurface;
     }
 
+    namespace WICNet
+    {
+        ref class IWICBitmapSource;
+        ref class IWICColorContext;
+    }
+
     namespace Direct2DNet
     {
         ref class ID2D1Device;
@@ -31,6 +37,8 @@ namespace D2DNet
         ref class ID2D1CommandList;
         ref class ID2D1GdiMetafile;
         ref class ID2D1Layer;
+
+        // Done.
 
         /// <summary>
         /// The device context represents a set of state and a command buffer that is used
@@ -78,7 +86,19 @@ namespace D2DNet
                 [InAttribute][IsReadOnlyAttribute] Direct2DNet::D2D1_BITMAP_PROPERTIES1 %bitmapProperties
             );
 
-            // CreateBitmapFromWicBitmap
+            /// <summary>
+            /// Create a D2D bitmap by copying a WIC bitmap.
+            /// </summary>
+            /// <param name="wicBitmapSource">The WIC bitmap to copy.</param>
+            /// <param name="bitmapProperties">A bitmap properties structure that specifies bitmap
+            /// creation options.</param>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the bitmap.
+            /// </exception>
+            Direct2DNet::ID2D1Bitmap1 ^CreateBitmapFromWicBitmap(
+                D2DNet::WICNet::IWICBitmapSource ^wicBitmapSource,
+                [OptionalAttribute] System::Nullable<Direct2DNet::D2D1_BITMAP_PROPERTIES1> bitmapProperties
+            );
 
             /// <summary>
             /// Creates a color context.
@@ -110,7 +130,19 @@ namespace D2DNet
                 System::String ^filename
             );
 
-            // CreateColorContextFromWicColorContext
+            /// <summary>
+            /// Creates a color context from an <see cref="WICNet::IWICColorContext"/>.
+            /// The D2D1ColorContext space of the resulting context varies.
+            /// </summary>
+            /// <param name="wicColorContext">
+            /// The <see cref="WICNet::IWICColorContext"/> used to initialize the color context.
+            /// </param>
+            /// <exception cref="Direct2DNet::Exception::DxException">
+            /// Thrown when it failed to create the color context.
+            /// </exception>
+            Direct2DNet::ID2D1ColorContext ^CreateColorContextFromWicColorContext(
+                D2DNet::WICNet::IWICColorContext ^wicColorContext
+            );
 
             /// <summary>
             /// Creates a bitmap from a DXGI surface with a set of extended properties.

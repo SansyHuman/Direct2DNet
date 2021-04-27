@@ -133,7 +133,7 @@
   <ItemGroup>
     <ClInclude Include="ComIO\ComIOHeaders.h" />
     <ClInclude Include="ComIO\ComIOSettings.h" />
-    <ClInclude Include="ComIO\Stream.h" />
+    <ClInclude Include="ComIO\IStream.h" />
     <ClInclude Include="Direct2DNet\D2DBuiltinEffects.h" />
     <ClInclude Include="Direct2DNet\D2DError.h" />
     <ClInclude Include="Direct2DNet\D2DImageLoader.h" />
@@ -187,6 +187,7 @@
     <ClInclude Include="Direct2DNet\ID2D1Image.h" />
     <ClInclude Include="Direct2DNet\ID2D1ImageBrush.h" />
     <ClInclude Include="Direct2DNet\ID2D1ImageSource.h" />
+    <ClInclude Include="Direct2DNet\ID2D1ImageSourceFromWic.h" />
     <ClInclude Include="Direct2DNet\ID2D1Ink.h" />
     <ClInclude Include="Direct2DNet\ID2D1InkStyle.h" />
     <ClInclude Include="Direct2DNet\ID2D1Layer.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Direct2DNet\ID2D1TransformedImageSource.h" />
     <ClInclude Include="Direct2DNet\IDirect2DObject.h" />
     <ClInclude Include="Direct2DNet\ID2D1Factory.h" />
+    <ClInclude Include="Direct2DNet_common.h" />
     <ClInclude Include="Direct3D11Net\D3D11NetHeaders.h" />
     <ClInclude Include="Direct3D11Net\D3D11Net_core.h" />
     <ClInclude Include="Direct3D11Net\D3D11Settings.h" />
@@ -268,13 +270,16 @@
     <ClInclude Include="DXGINet\IDXGISurface.h" />
     <ClInclude Include="DXGINet\IDXGISwapChain.h" />
     <ClInclude Include="GUIDs.h" />
+    <ClInclude Include="IEnumString.h" />
     <ClInclude Include="IUnknown.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="WICNet\IWICBitmapCodecInfo.h" />
     <ClInclude Include="WICNet\IWICBitmapDecoder.h" />
     <ClInclude Include="WICNet\IWICBitmapDecoderInfo.h" />
+    <ClInclude Include="WICNet\IWICBitmapEncoder.h" />
     <ClInclude Include="WICNet\IWICBitmapFrameDecode.h" />
     <ClInclude Include="WICNet\IWICBitmapSource.h" />
+    <ClInclude Include="WICNet\IWICColorContext.h" />
     <ClInclude Include="WICNet\IWICComponentInfo.h" />
     <ClInclude Include="WICNet\IWICFormatConverter.h" />
     <ClInclude Include="WICNet\IWICImagingFactory.h" />
@@ -286,7 +291,7 @@
     <ClInclude Include="WICNet\WICSettings.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ComIO\Stream.cpp" />
+    <ClCompile Include="ComIO\IStream.cpp" />
     <ClCompile Include="Direct2DNet\D2DError.cpp" />
     <ClCompile Include="Direct2DNet\D2DImageLoader.cpp" />
     <ClCompile Include="Direct2DNet\D2DSettings.cpp" />
@@ -328,6 +333,7 @@
     <ClCompile Include="Direct2DNet\ID2D1Image.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1ImageBrush.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1ImageSource.cpp" />
+    <ClCompile Include="Direct2DNet\ID2D1ImageSourceFromWic.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Ink.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1InkStyle.cpp" />
     <ClCompile Include="Direct2DNet\ID2D1Layer.cpp" />
@@ -381,12 +387,15 @@
     <ClCompile Include="DXGINet\IDXGISurface.cpp" />
     <ClCompile Include="DXGINet\IDXGISwapChain.cpp" />
     <ClCompile Include="GUIDs.cpp" />
+    <ClCompile Include="IEnumString.cpp" />
     <ClCompile Include="IUnknown.cpp" />
     <ClCompile Include="WICNet\IWICBitmapCodecInfo.cpp" />
     <ClCompile Include="WICNet\IWICBitmapDecoder.cpp" />
     <ClCompile Include="WICNet\IWICBitmapDecoderInfo.cpp" />
+    <ClCompile Include="WICNet\IWICBitmapEncoder.cpp" />
     <ClCompile Include="WICNet\IWICBitmapFrameDecode.cpp" />
     <ClCompile Include="WICNet\IWICBitmapSource.cpp" />
+    <ClCompile Include="WICNet\IWICColorContext.cpp" />
     <ClCompile Include="WICNet\IWICComponentInfo.cpp" />
     <ClCompile Include="WICNet\IWICFormatConverter.cpp" />
     <ClCompile Include="WICNet\IWICImagingFactory.cpp" />

@@ -240,7 +240,7 @@ namespace D2DNet
                 [OptionalAttribute] D2DNet::DWriteNet::IDWriteRenderingParams ^textRenderingParams
             );
 
-            // CreateWicBitmapRenderTarget
+            //TODO: CreateWicBitmapRenderTarget
 
             /// <summary>
             /// Creates a render target that appears on the display.

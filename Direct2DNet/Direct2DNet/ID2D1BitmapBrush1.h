@@ -12,6 +12,11 @@ namespace D2DNet
         ref class ID2D1DeviceContext;
         ref class ID2D1Bitmap;
 
+        // Done.
+
+        /// <summary>
+        /// Paints an area with a bitmap.
+        /// </summary>
         [System::Runtime::InteropServices::GuidAttribute("41343a53-e41a-49a2-91cd-21793bbb62e5")]
         public ref class ID2D1BitmapBrush1 : Direct2DNet::ID2D1BitmapBrush
         {

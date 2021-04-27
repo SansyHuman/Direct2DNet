@@ -8,11 +8,17 @@
 #include <msclr/marshal.h>
 
 using namespace msclr::interop;
+using namespace System::Runtime::InteropServices;
+using namespace System::Runtime::CompilerServices;
 
 namespace D2DNet
 {
+    ref class IEnumString;
+
     namespace WICNet
     {
+        // Done.
+
         /// <summary>
         /// Exposes methods that represent a decoder. The interface provides access to the decoder's
         /// properties such as global thumbnails (if supported), frames, and palette.
@@ -25,7 +31,12 @@ namespace D2DNet
 
             IWICMetadataQueryReader() : m_pReader(nullptr) {}
 
+            IWICMetadataQueryReader(::IWICMetadataQueryReader *pReader) : m_pReader(pReader) {}
+
         public:
+            ~IWICMetadataQueryReader();
+            !IWICMetadataQueryReader();
+
             property void *NativePointer
             {
                 virtual void *get()
@@ -78,6 +89,21 @@ namespace D2DNet
             HRESULT GetMetadataByName(
                 System::String ^name,
                 [OutAttribute] D2DNet::PROPVARIANT %varValue
+            );
+
+            /// <summary>
+            /// Gets an enumerator of all metadata items at the current relative location within the
+            /// metadata hierarchy.
+            /// </summary>
+            /// <param name="enumString">
+            /// A parameter that receives a pointer to the IEnumString interface for the
+            /// enumerator that contains query strings that can be used in the current IWICMetadataQueryReader.
+            /// </param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
+            /// </returns>
+            HRESULT GetEnumerator(
+                [OutAttribute] D2DNet::IEnumString ^%enumString
             );
         };
     }

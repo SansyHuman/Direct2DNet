@@ -1,4 +1,5 @@
 #include "IWICMetadataQueryReader.h"
+#include "../IEnumString.h"
 
 #include <vector>
 
@@ -6,6 +7,20 @@ namespace D2DNet
 {
     namespace WICNet
     {
+        IWICMetadataQueryReader::~IWICMetadataQueryReader()
+        {
+            this->!IWICMetadataQueryReader();
+        }
+
+        IWICMetadataQueryReader::!IWICMetadataQueryReader()
+        {
+            if(m_pReader)
+            {
+                m_pReader->Release();
+                m_pReader = nullptr;
+            }
+        }
+
         void IWICMetadataQueryReader::HandleCOMInterface(void *obj)
         {
             if(m_pReader)
@@ -62,6 +77,20 @@ namespace D2DNet
                 context.marshal_as<LPCWSTR>(name),
                 (::PROPVARIANT *)pVar
             );
+        }
+
+        HRESULT IWICMetadataQueryReader::GetEnumerator(D2DNet::IEnumString ^%enumString)
+        {
+            ::IEnumString *str = __nullptr;
+            HRESULT hr = m_pReader->GetEnumerator(&str);
+            if(FAILED(hr) || !str)
+            {
+                enumString = nullptr;
+                return hr;
+            }
+
+            enumString = gcnew D2DNet::IEnumString(str);
+            return hr;
         }
 
     }

@@ -12,6 +12,8 @@ namespace D2DNet
 {
     namespace WICNet
     {
+        ref class IWICImagingFactory;
+
         // Done.
 
         /// <summary>
@@ -27,7 +29,16 @@ namespace D2DNet
 
             IWICComponentInfo(::IWICComponentInfo *pInfo) : m_pInfo(pInfo) {}
 
+            // CreateComponentInfo
+            IWICComponentInfo(
+                WICNet::IWICImagingFactory ^factory,
+                System::Guid %clsid
+            );
+
         public:
+            ~IWICComponentInfo();
+            !IWICComponentInfo();
+
             property void *NativePointer
             {
                 virtual void *get()

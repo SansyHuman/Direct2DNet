@@ -38,6 +38,9 @@ namespace D2DNet
                 Direct2DNet::D2D1_IMAGE_SOURCE_FROM_DXGI_OPTIONS options
             );
 
+        protected:
+            ID2D1ImageSource(Direct2DNet::ID2D1DeviceContext2 ^context);
+
         public:
             /// <summary>
             /// Allows the operating system to free the video memory of resources by discarding their content.

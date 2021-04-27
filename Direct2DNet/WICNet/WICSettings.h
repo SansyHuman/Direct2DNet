@@ -877,39 +877,82 @@ namespace D2DNet
         /// Contains members that identify a pattern within an image file which can be used to identify
         /// a particular format.
         /// </summary>
+        [StructLayoutAttribute(LayoutKind::Explicit, Size = 40)]
         public value struct WICBitmapPattern
         {
         public:
             /// <summary>
             /// The offset the pattern is located in the file.
             /// </summary>
+            [FieldOffsetAttribute(0)]
             D2DNet::ULARGE_INTEGER position;
 
             /// <summary>
             /// The pattern length.
             /// </summary>
+            [FieldOffsetAttribute(8)]
             ULONG length;
 
             /// <summary>
             /// The actual pattern.
             /// </summary>
+            [FieldOffsetAttribute(16)]
             BYTE *pattern;
 
             /// <summary>
             /// The pattern mask.
             /// </summary>
+            [FieldOffsetAttribute(24)]
             BYTE *mask;
 
             /// <summary>
             /// The end of the stream.
             /// </summary>
+            [FieldOffsetAttribute(32)]
             bool endOfStream;
+        };
 
-        private:
-            char pad1;
-            char pad2;
-            char pad3;
-            int pad4;
+        /// <summary>
+        /// Specifies the color context types.
+        /// </summary>
+        public enum class WICColorContextType
+        {
+            /// <summary>
+            /// An uninitialized color context.
+            /// </summary>
+            Uninitialized = 0,
+
+            /// <summary>
+            /// A color context that is a full ICC color profile.
+            /// </summary>
+            Profile = 0x1,
+
+            /// <summary>
+            /// A color context that is one of a number of set color spaces (sRGB, AdobeRGB) that are
+            /// defined in the EXIF specification.
+            /// </summary>
+            ExifColorSpace = 0x2
+        };
+
+        /// <summary>
+        /// Specifies the cache options available for an encoder.
+        /// </summary>
+        public enum class WICBitmapEncoderCacheOption
+        {
+            /// <summary>
+            /// The encoder is cached in memory. This option is not supported.
+            /// </summary>
+            CacheInMemory = 0,
+
+            /// <summary>
+            /// The encoder is cached to a temporary file. This option is not supported.
+            /// </summary>
+            CacheTempFile = 0x1,
+
+            /// <summary>
+            /// The encoder is not cached.
+            /// </summary>
+            NoCache = 0x2,
         };
     }
 }

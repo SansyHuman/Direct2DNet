@@ -2,6 +2,7 @@
 #include "IWICBitmapDecoder.h"
 #include "IWICPalette.h"
 #include "IWICFormatConverter.h"
+#include "IWICComponentInfo.h"
 
 namespace D2DNet
 {
@@ -22,6 +23,20 @@ namespace D2DNet
 
             if(FAILED(hr))
                 throw gcnew Direct2DNet::Exception::DxException("Failed to create IWICImagingFactory", (int)hr);
+        }
+
+        IWICImagingFactory::~IWICImagingFactory()
+        {
+            this->!IWICImagingFactory();
+        }
+
+        IWICImagingFactory::!IWICImagingFactory()
+        {
+            if(m_pFactory)
+            {
+                m_pFactory->Release();
+                m_pFactory = nullptr;
+            }
         }
 
         void IWICImagingFactory::HandleCOMInterface(void *obj)
@@ -50,7 +65,7 @@ namespace D2DNet
             );
         }
 
-        WICNet::IWICBitmapDecoder ^IWICImagingFactory::CreateDecoderFromStream(ComIO::Stream ^stream, WICNet::WICDecodeOptions metadataOptions, System::Nullable<System::Guid> guidVendor)
+        WICNet::IWICBitmapDecoder ^IWICImagingFactory::CreateDecoderFromStream(ComIO::IStream ^stream, WICNet::WICDecodeOptions metadataOptions, System::Nullable<System::Guid> guidVendor)
         {
             return gcnew WICNet::IWICBitmapDecoder(
                 this,
@@ -71,6 +86,11 @@ namespace D2DNet
                 metadataOptions,
                 guidVendor
             );
+        }
+
+        WICNet::IWICComponentInfo ^IWICImagingFactory::CreateComponentInfo(System::Guid %clsidComponent)
+        {
+            return gcnew WICNet::IWICComponentInfo(this, clsidComponent);
         }
 
         WICNet::IWICBitmapDecoder ^IWICImagingFactory::CreateDecoder(

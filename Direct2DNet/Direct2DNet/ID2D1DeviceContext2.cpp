@@ -5,6 +5,7 @@
 #include "ID2D1GradientMesh.h"
 #include "ID2D1LookupTable3D.h"
 #include "ID2D1ImageSource.h"
+#include "ID2D1ImageSourceFromWic.h"
 #include "ID2D1Brush.h"
 #include "ID2D1GdiMetafile.h"
 #include "ID2D1TransformedImageSource.h"
@@ -53,6 +54,14 @@ namespace D2DNet
             ...array<Direct2DNet::D2D1_GRADIENT_MESH_PATCH> ^patches)
         {
             return gcnew Direct2DNet::ID2D1GradientMesh(this, patches);
+        }
+
+        Direct2DNet::ID2D1ImageSourceFromWic ^ID2D1DeviceContext2::CreateImageSourceFromWic(
+            D2DNet::WICNet::IWICBitmapSource ^wicBitmapSource,
+            Direct2DNet::D2D1_IMAGE_SOURCE_LOADING_OPTIONS loadingOptions,
+            Direct2DNet::D2D1_ALPHA_MODE alphaMode)
+        {
+            return gcnew Direct2DNet::ID2D1ImageSourceFromWic(this, wicBitmapSource, loadingOptions, alphaMode);
         }
 
         Direct2DNet::Effects::ID2D1LookupTable3D ^ID2D1DeviceContext2::CreateLookupTable3D(

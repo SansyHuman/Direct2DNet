@@ -1,10 +1,25 @@
 #include "IWICBitmapSource.h"
+#include "IWICPalette.h"
 #include "../DXCommonSettings.h"
 
 namespace D2DNet
 {
     namespace WICNet
     {
+        IWICBitmapSource::~IWICBitmapSource()
+        {
+            this->!IWICBitmapSource();
+        }
+
+        IWICBitmapSource::!IWICBitmapSource()
+        {
+            if(m_pSource)
+            {
+                m_pSource->Release();
+                m_pSource = nullptr;
+            }
+        }
+
         void IWICBitmapSource::HandleCOMInterface(void *obj)
         {
             if(m_pSource)
@@ -59,6 +74,11 @@ namespace D2DNet
             HRESULT hr = m_pSource->GetResolution(&x, &y);
 
             return System::ValueTuple<HRESULT, double, double>(hr, x, y);
+        }
+
+        HRESULT IWICBitmapSource::CopyPalette(WICNet::IWICPalette ^palette)
+        {
+            return m_pSource->CopyPalette(palette->m_pPalette);
         }
 
         HRESULT IWICBitmapSource::CopyPixels(

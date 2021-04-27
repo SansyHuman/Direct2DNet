@@ -1,13 +1,13 @@
 #include "ID2D1GdiMetafile.h"
 #include "ID2D1Factory1.h"
 #include "ID2D1GdiMetafileSink.h"
-#include "../ComIO/Stream.h"
+#include "../ComIO/IStream.h"
 
 namespace D2DNet
 {
     namespace Direct2DNet
     {
-        ID2D1GdiMetafile::ID2D1GdiMetafile(Direct2DNet::ID2D1Factory1 ^factory, D2DNet::ComIO::Stream ^stream)
+        ID2D1GdiMetafile::ID2D1GdiMetafile(Direct2DNet::ID2D1Factory1 ^factory, D2DNet::ComIO::IStream ^stream)
             : Direct2DNet::ID2D1Resource(factory)
         {
             HRESULT hr = S_OK;

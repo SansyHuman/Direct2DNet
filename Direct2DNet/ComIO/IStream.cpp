@@ -1,10 +1,10 @@
-#include "Stream.h"
+#include "IStream.h"
 
 namespace D2DNet
 {
     namespace ComIO
     {
-        Stream::Stream(System::String ^filename, ComIO::BSOS_OPTIONS options)
+        IStream::IStream(System::String ^filename, ComIO::BSOS_OPTIONS options)
         {
             HRESULT hr = S_OK;
 
@@ -37,12 +37,12 @@ namespace D2DNet
             }
         }
 
-        Stream::~Stream()
+        IStream::~IStream()
         {
-            this->!Stream();
+            this->!IStream();
         }
 
-        Stream::!Stream()
+        IStream::!IStream()
         {
             if(m_pRandomStream)
             {
@@ -57,7 +57,7 @@ namespace D2DNet
             }
         }
 
-        HRESULT Stream::Read(array<BYTE> ^pv, ULONG cb, ULONG %cbRead)
+        HRESULT IStream::Read(array<BYTE> ^pv, ULONG cb, ULONG %cbRead)
         {
             pin_ptr<BYTE> nativepv = &pv[0];
             pin_ptr<ULONG> pCbRead = &cbRead;
@@ -65,7 +65,7 @@ namespace D2DNet
             return m_pStream->Read((void *)nativepv, cb, (ULONG *)pCbRead);
         }
 
-        HRESULT Stream::Write(array<BYTE> ^pv, ULONG cb, ULONG %cbWritten)
+        HRESULT IStream::Write(array<BYTE> ^pv, ULONG cb, ULONG %cbWritten)
         {
             pin_ptr<BYTE> nativepv = &pv[0];
             pin_ptr<ULONG> pCbWritten = &cbWritten;
@@ -73,7 +73,7 @@ namespace D2DNet
             return m_pStream->Write((void *)nativepv, cb, (ULONG *)pCbWritten);
         }
 
-        HRESULT Stream::Seek(D2DNet::LARGE_INTEGER %dlibMove, DWORD dwOrigin, D2DNet::ULARGE_INTEGER %libNewPosition)
+        HRESULT IStream::Seek(D2DNet::LARGE_INTEGER %dlibMove, DWORD dwOrigin, D2DNet::ULARGE_INTEGER %libNewPosition)
         {
             pin_ptr<D2DNet::ULARGE_INTEGER> pLibNewPosition = &libNewPosition;
 
@@ -84,12 +84,12 @@ namespace D2DNet
             );
         }
 
-        HRESULT Stream::SetSize(D2DNet::ULARGE_INTEGER %libNewSize)
+        HRESULT IStream::SetSize(D2DNet::ULARGE_INTEGER %libNewSize)
         {
             return m_pStream->SetSize(static_cast<::ULARGE_INTEGER>(libNewSize));
         }
 
-        HRESULT Stream::CopyTo(ComIO::Stream ^stm, D2DNet::ULARGE_INTEGER %cb, D2DNet::ULARGE_INTEGER %cbRead, D2DNet::ULARGE_INTEGER %cbWritten)
+        HRESULT IStream::CopyTo(ComIO::IStream ^stm, D2DNet::ULARGE_INTEGER %cb, D2DNet::ULARGE_INTEGER %cbRead, D2DNet::ULARGE_INTEGER %cbWritten)
         {
             pin_ptr<D2DNet::ULARGE_INTEGER> pCbRead = &cbRead;
             pin_ptr<D2DNet::ULARGE_INTEGER> pCbWritten = &cbWritten;
@@ -102,17 +102,17 @@ namespace D2DNet
             );
         }
 
-        HRESULT Stream::Commit(ComIO::STGC grfCommitFlags)
+        HRESULT IStream::Commit(ComIO::STGC grfCommitFlags)
         {
             return m_pStream->Commit((DWORD)grfCommitFlags);
         }
 
-        HRESULT Stream::Revert()
+        HRESULT IStream::Revert()
         {
             return m_pStream->Revert();
         }
 
-        HRESULT Stream::LockRegion(D2DNet::ULARGE_INTEGER %libOffset, D2DNet::ULARGE_INTEGER %cb, ComIO::LOCKTYPE lockType)
+        HRESULT IStream::LockRegion(D2DNet::ULARGE_INTEGER %libOffset, D2DNet::ULARGE_INTEGER %cb, ComIO::LOCKTYPE lockType)
         {
             return m_pStream->LockRegion(
                 static_cast<::ULARGE_INTEGER>(libOffset),
@@ -121,7 +121,7 @@ namespace D2DNet
             );
         }
 
-        HRESULT Stream::UnlockRegion(D2DNet::ULARGE_INTEGER %libOffset, D2DNet::ULARGE_INTEGER %cb, ComIO::LOCKTYPE lockType)
+        HRESULT IStream::UnlockRegion(D2DNet::ULARGE_INTEGER %libOffset, D2DNet::ULARGE_INTEGER %cb, ComIO::LOCKTYPE lockType)
         {
             return m_pStream->UnlockRegion(
                 static_cast<::ULARGE_INTEGER>(libOffset),
@@ -130,7 +130,7 @@ namespace D2DNet
             );
         }
 
-        HRESULT Stream::Stat(InteropServices::ComTypes::STATSTG %statstg, ComIO::STATFLAG grfStatFlag)
+        HRESULT IStream::Stat(InteropServices::ComTypes::STATSTG %statstg, ComIO::STATFLAG grfStatFlag)
         {
             ::STATSTG stat = { 0 };
             HRESULT hr = m_pStream->Stat(&stat, (DWORD)grfStatFlag);
@@ -153,9 +153,9 @@ namespace D2DNet
             return hr;
         }
 
-        HRESULT Stream::Clone(ComIO::Stream ^%stm)
+        HRESULT IStream::Clone(ComIO::IStream ^%stm)
         {
-            ComIO::Stream ^clone = gcnew ComIO::Stream();
+            ComIO::IStream ^clone = gcnew ComIO::IStream();
 
             pin_ptr<::IStream *> ppCloneStream = &clone->m_pStream;
             HRESULT hr = m_pStream->Clone((::IStream **)ppCloneStream);

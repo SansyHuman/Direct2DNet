@@ -12,6 +12,10 @@ namespace D2DNet
 {
     namespace WICNet
     {
+        ref class IWICPalette;
+
+        // Done.
+
         /// <summary>
         /// Exposes methods that refers to a source from which pixels are retrieved, but cannot be written
         /// back to.
@@ -27,6 +31,9 @@ namespace D2DNet
             IWICBitmapSource(::IWICBitmapSource *pSource) : m_pSource(pSource) {}
 
         public:
+            ~IWICBitmapSource();
+            !IWICBitmapSource();
+
             property void *NativePointer
             {
                 virtual void *get()
@@ -105,7 +112,19 @@ namespace D2DNet
             /// </returns>
             System::ValueTuple<HRESULT, double, double> GetResolution();
 
-            // CopyPalette
+            /// <summary>
+            /// Retrieves the color table for indexed pixel formats.
+            /// </summary>
+            /// <param name="palette">
+            /// An <see cref="WICNet::IWICPalette"/>. A palette can be created using the
+            /// <see cref="WICNet::IWICImagingFactory::CreatePalette"/> method.
+            /// </param>
+            /// <returns>
+            /// If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
+            /// </returns>
+            HRESULT CopyPalette(
+                WICNet::IWICPalette ^palette
+            );
 
             /// <summary>
             /// Instructs the object to produce pixels.

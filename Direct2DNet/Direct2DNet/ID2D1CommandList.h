@@ -12,6 +12,8 @@ namespace D2DNet
         ref class ID2D1DeviceContext;
         ref class ID2D1CommandSink;
 
+        // Done.
+
         /// <summary>
         /// Represents a sequence of commands that can be recorded and played back.
         /// </summary>

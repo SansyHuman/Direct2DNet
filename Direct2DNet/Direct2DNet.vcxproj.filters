@@ -387,9 +387,6 @@
     <ClInclude Include="Direct2DNet\ID2D1GeometryRealization.h">
       <Filter>헤더 파일\Direct2DNet\geometry</Filter>
     </ClInclude>
-    <ClInclude Include="ComIO\Stream.h">
-      <Filter>헤더 파일\ComIO</Filter>
-    </ClInclude>
     <ClInclude Include="ComIO\ComIOHeaders.h">
       <Filter>헤더 파일\ComIO</Filter>
     </ClInclude>
@@ -571,6 +568,24 @@
       <Filter>헤더 파일\WICNet\core</Filter>
     </ClInclude>
     <ClInclude Include="WICNet\IWICMetadataQueryReader.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="ComIO\IStream.h">
+      <Filter>헤더 파일\ComIO</Filter>
+    </ClInclude>
+    <ClInclude Include="IEnumString.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet_common.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICColorContext.h">
+      <Filter>헤더 파일\WICNet\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DNet\ID2D1ImageSourceFromWic.h">
+      <Filter>헤더 파일\Direct2DNet\image</Filter>
+    </ClInclude>
+    <ClInclude Include="WICNet\IWICBitmapEncoder.h">
       <Filter>헤더 파일\WICNet\core</Filter>
     </ClInclude>
   </ItemGroup>
@@ -767,9 +782,6 @@
     <ClCompile Include="Direct2DNet\ID2D1GeometryRealization.cpp">
       <Filter>소스 파일\Direct2DNet\geometry</Filter>
     </ClCompile>
-    <ClCompile Include="ComIO\Stream.cpp">
-      <Filter>소스 파일\ComIO</Filter>
-    </ClCompile>
     <ClCompile Include="Direct2DNet\ID2D1GdiMetafile.cpp">
       <Filter>소스 파일\Direct2DNet\image</Filter>
     </ClCompile>
@@ -930,6 +942,21 @@
       <Filter>소스 파일\WICNet\core</Filter>
     </ClCompile>
     <ClCompile Include="WICNet\IWICMetadataQueryReader.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="ComIO\IStream.cpp">
+      <Filter>소스 파일\ComIO</Filter>
+    </ClCompile>
+    <ClCompile Include="IEnumString.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICColorContext.cpp">
+      <Filter>소스 파일\WICNet\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DNet\ID2D1ImageSourceFromWic.cpp">
+      <Filter>소스 파일\Direct2DNet\image</Filter>
+    </ClCompile>
+    <ClCompile Include="WICNet\IWICBitmapEncoder.cpp">
       <Filter>소스 파일\WICNet\core</Filter>
     </ClCompile>
   </ItemGroup>
